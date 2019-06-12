@@ -40,9 +40,9 @@
 
             <form>
                 <div class="form-sheet">
-                   <div class="form-field title">
-                       <label class="hidden" translate>role.name</label>
-                       <input type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
+                   <div class="form-field">
+                       <label translate>role.name</label>
+                       <input type="text" placeholder="{{'role.name'}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
                    </div>
 
                     <div class="form-field">
@@ -52,6 +52,7 @@
 
                    <fieldset>
                        <legend translate>role.permissions</legend>
+                       <p translate>settings.roles.roles_description</p>
 
                        <div class="alert" ng-hide="permissions.length">
                            <p ng-hide="permissions.length"><em translate>empty.permission</em></p>

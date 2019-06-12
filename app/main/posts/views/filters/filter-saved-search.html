@@ -3,7 +3,7 @@
     <div class="custom-select" ng-model-options="{ updateOn: 'default' }">
         <select
                 ng-model="selectedSavedSearch"
-                ng-options="search.name
+                ng-options="search.name | translate
                         for
                         search in searches
                         track by search.id"

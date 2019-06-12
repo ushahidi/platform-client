@@ -35,15 +35,15 @@
                         <div class="line"></div>
                     </div>
                 </button>
-                        
+
                 </div>
             </div>
             <!-- end toolbar -->
 
             <form name="form">
                 <div class="form-sheet">
-                   <div class="form-field title">
-                       <label class="hidden" translate>webhook.name</label>
+                   <div class="form-field">
+                       <label translate>webhook.name</label>
                        <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
@@ -82,7 +82,7 @@
                       </div>
                       <div data-fieldgroup-target="import_to_survey-survey" class="init active">
                         <p data-fieldgroup-target="hide-author-message" class="init" ng-class="{'active' : formEnabled}" translate-values="{ provider: provider.name }" translate="" >
-                          <em>
+                          <em translate="settings.webhooks.enable_source_destination_desc">
                             This webhook will only be applied to Surveys of the selected type.
                           </em>
                         </p>
@@ -152,7 +152,7 @@
                                     </tr>
                                     <tr>
                                       <td>
-                                        <span>
+                                        <span translate="settings.webhooks.destination">
                                           Destination
                                         </span>
                                       </td><td>

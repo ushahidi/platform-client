@@ -16,6 +16,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
     function PostViewMapLink($scope, element, attrs, controller) {
         var map, markers;
+        var geoJsonLayers = [];
         var limit = 200;
         var requestBlockSize = 5;
         var numberOfChunks = 0;
@@ -75,9 +76,13 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function clearData() {
-            if (markers) {
-                map.removeLayer(markers);
+            if (geoJsonLayers.length > 0) {
+                angular.forEach(geoJsonLayers, function (layer) {
+                    //map.removeLayer(layer)
+                    layer.clearLayers();
+                });
                 markers = undefined;
+                geoJsonLayers = [];
             }
         }
 
@@ -100,6 +105,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 markers = geojson;
             }
             markers.addTo(map);
+            geoJsonLayers.push(markers);
 
             if (posts.features.length > 0) {
                 map.fitBounds(geojson.getBounds());

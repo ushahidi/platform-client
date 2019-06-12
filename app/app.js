@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Migration React / Redux imports
 /* eslint-disable */
 import thunk from "redux-thunk";
@@ -28,19 +29,51 @@ require("ng-redux");
 require("./common/common-module.js");
 require("./main/main-module.js");
 require("./settings/settings.module.js");
+=======
+require('angular');
+require('@uirouter/angularjs');
+require('angular-resource');
+require('angular-translate');
+require('angular-translate-loader-static-files');
+require('angular-ui-bootstrap');
+require('angular-datepicker/build/angular-datepicker');
+require('angular-sanitize');
+require('angular-elastic');
+require('angular-filter');
+require('angular-local-storage');
+require('checklist-model');
+require('ngGeolocation/ngGeolocation');
+require('ng-showdown');
+window.d3 = require('d3'); // Required for nvd3
+require('./common/wrapper/nvd3-wrapper');
+require('angular-nvd3/src/angular-nvd3');
+require('angular-cache');
+require('angular-linkify');
+require('ngtweet');
+
+// Load ushahidi modules
+require('./common/common-module.js');
+require('./main/main-module.js');
+require('./settings/settings.module.js');
+import ravenModule from './common/raven/raven';
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
 
 // Load platform-pattern-library CSS
 require("ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css");
 require("ushahidi-platform-pattern-library/assets/css/style.min.css");
 require("../sass/vendor.scss");
 
+<<<<<<< HEAD
 // Stub ngRaven module incase its not configured
 angular.module("ngRaven", []);
 
+=======
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
+<<<<<<< HEAD
 let backendUrl = (window.ushahidi.backendUrl = (
         window.ushahidi.backendUrl || BACKEND_URL
     ).replace(/\/$/, "")),
@@ -51,6 +84,12 @@ let backendUrl = (window.ushahidi.backendUrl = (
     apiUrl = (window.ushahidi.apiUrl = `${backendUrl}/api/v3`),
     platform_websocket_redis_adapter_url =
         window.ushahidi.platform_websocket_redis_adapter_url || "",
+=======
+var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
+    intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
+    appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
+    apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
     claimedAnonymousScopes = [
         'posts',
         'country_codes',
@@ -73,6 +112,7 @@ let backendUrl = (window.ushahidi.backendUrl = (
         'csv'
     ];
 
+<<<<<<< HEAD
 angular
     .module("app", [
         "checklist-model",
@@ -95,6 +135,30 @@ angular
         "ushahidi.settings",
         "ui.bootstrap.dropdown",
         "ngRedux"
+=======
+angular.module('app',
+    [
+        'checklist-model',
+        'monospaced.elastic',
+        'ui.router',
+        'ngResource',
+        'LocalStorageModule',
+        'pascalprecht.translate',
+        'ui.bootstrap.pagination',
+        'angular-datepicker',
+        'angular.filter',
+        'ng-showdown',
+        'ngGeolocation',
+        'nvd3',
+        'angular-cache',
+        'linkify',
+        ravenModule,
+        'ushahidi.common',
+        'ushahidi.main',
+        'ushahidi.settings',
+        'ui.bootstrap.dropdown',
+        'ngtweet'
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
     ])
     .constant('CONST', {
         BACKEND_URL              : backendUrl,
@@ -108,7 +172,6 @@ angular
         CLAIMED_USER_SCOPES      : ['*'],
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
-        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url,
         EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000
     })
     .config([
@@ -155,6 +218,7 @@ angular
         require("imports-loader?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate");
         return L;
     })
+<<<<<<< HEAD
     .factory("moment", () => require("moment"))
     .factory("io", () => require("socket.io-client"))
     .factory("BootstrapConfig", [
@@ -166,6 +230,19 @@ angular
         }
     ])
     .factory("Sortable", () => require("sortablejs"))
+=======
+    .factory('moment', function () {
+        return require('moment');
+    })
+    .factory('BootstrapConfig', ['_', function (_) {
+        return window.ushahidi.bootstrapConfig ?
+            _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
+            { map: {}, site: {}, features: {} };
+    }])
+    .factory('Sortable', function () {
+        return require('sortablejs');
+    })
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
     // inject the router instance into a `run` block by name
     // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
     //     // * uncomment this to enable the visualizer *
@@ -173,6 +250,7 @@ angular
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
+<<<<<<< HEAD
     .run([
         "$rootScope",
         "LoadingProgress",
@@ -205,3 +283,19 @@ angular
         );
     });
 /* eslint-enable */
+=======
+    .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
+        // this handles the loading-state app-wide
+        LoadingProgress.watchTransitions();
+        if (window.ushahidi.gaEnabled) {
+            $transitions.onSuccess({}, function (transition) {
+                window.ga('send', 'pageview',  $uiRouter.urlRouter.location);
+            });
+        }
+    }])
+    .run(['DemoDeploymentService', function (DemoDeploymentService) {
+        angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
+        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
+        DemoDeploymentService.demoCheck();
+    }]);
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68

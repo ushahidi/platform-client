@@ -185,9 +185,7 @@ function PostDataEditorController(
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
-        if ($scope.post.id) {
-            PostLockService.createSocketListener();
-        }
+
     }
 
     function setVisibleStage(stageId) {

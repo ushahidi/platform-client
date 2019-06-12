@@ -1,0 +1,170 @@
+
+<div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>nav.export</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+        <span class="label hidden" translate>app.show_more_less</span>
+    </span>
+</div>
+
+
+<main role="main">
+    <div class="progress-bar" ng-show="isLoading()">
+        <span>
+        ..
+        </span>
+    </div>
+    
+    <div class="main-col">
+        <div class="form-sheet hdx">
+            <div class="form-sheet-summary">
+                <h2 class="form-sheet-title" translate>{{title}}</h2>
+                <p translate>{{description}}</p>
+            </div>
+            <img class="field-logo" src="/img/hdx-logo.png" />
+            <div class="form-field" ng-if="!showProgress">
+                <h3 translate="data_export.privacy_title">Privacy Settings</h3>
+                <p translate="data_export.privacy_desc">You have a choice of sharing your dataset publicly or restricting access to other members of the organisation which owns the dataset.</p>
+            </div>
+
+            <form name="metadata" ng-show="!showProgress">
+                <fieldset>
+                    <legend class="required" translate="data_export.this_dataset">This data set is:</legend>
+                    <div class="form-field radio">
+                        <label for="private" translate="data_export.private_desc"></label>
+                        <input id="private" type="radio" ng-value="true" ng-model="details.private">
+                    </div>
+                    <div class="form-field radio">
+                        <label for="public" translate="data_export.public_desc"></label>
+                        <input id="public" ng-value="false" ng-model="details.private" type="radio">
+
+                    </div>
+                </fieldset>
+
+                <div class="form-field">
+                    <h3 translate="data_export.dataset">Dataset Title & Description</h3>
+                    <p translate="data_export.dataset_desc">When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also,
+                        avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.</p>
+                    <p translate="data_export.dataset_example">Example dataset title: <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong></p>
+                </div>
+
+                <div class="form-field" ng-class="{
+                        'error': metadata.title.$invalid && metadata.title.$dirty,
+                        'success': !metadata.title.$invalid && metadata.title.$dirty
+                    }">
+                    <label class="required" translate="data_export.dataset_title">Title of data set</label>
+                    <input name="title" placeholder="e.g a descriptive title" ng-model="details.dataset_title" ng-required="true" type="text">
+                    <div
+                        class="alert error"
+                        ng-show="metadata.title.$invalid && metadata.title.$dirty"
+                        ng-repeat="(error, value) in metadata.title.$error"
+                    >
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                        </svg>
+                        <p translate="{{'data_export.validation.title'}}"></p>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <h3 translate="data_export.metadata_title">Metadata</h3>
+                    <p translate="data_export.metadata_desc">Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields</p>
+                </div>
+
+                <div class="form-field" ng-class="{
+                    'error': metadata.source.$invalid && metadata.source.$dirty,
+                    'success': !metadata.source.$invalid && metadata.source.$dirty
+                }">
+                    <label for="source" class="required" translate="data_export.source">Source</label>
+                    <input name="source" ng-required="true" placeholder="Add the source of the data" ng-model="details.source" type="text">
+                    <div
+                        class="alert error"
+                        ng-show="metadata.source.$invalid && metadata.source.$dirty"
+                        ng-repeat="(error, value) in metadata.source.$error"
+                    >
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                        </svg>
+                        <p translate="{{'data_export.validation.source.' + error}}"></p>
+                    </div>
+                </div>
+
+                <div class="form-field" ng-class="{
+                    'error': metadata.organisation.$invalid && metadata.organisation.$dirty,
+                    'success': !metadata.organisation.$invalid && metadata.organisation.$dirty
+                }">
+                    <label class="required" for="organisation" translate="data_export.organisation">Organisation</label>
+                    <div class="custom-select" >
+                        <select name="organisation" ng-required="true" id="organisation" ng-model="details.organisation">
+                            <option value="" translate="data_export.select_organisation">Select an organisation</option>
+                            <option ng-repeat="organisation in organisations" ng-value="organisation">{{organisation.name}}</option>
+                        </select>
+                    </div>
+                    <div
+                        class="alert error"
+                        ng-show="metadata.organisation.$invalid && metadata.organisation.$dirty"
+                        ng-repeat="(error, value) in metadata.organisation.$error"
+                    >
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                        </svg>
+                        <p translate="{{'data_export.validation.organisation'}}"></p>
+                    </div>
+                </div>
+
+                <div class="form-field" ng-class="{
+                    'error': metadata.license.$invalid && metadata.license.$dirty,
+                    'success': !metadata.license.$invalid && metadata.license.$dirty
+                }">
+                    <label class="required" for="license" translate="data_export.license">License</label>
+                    <div class="custom-select">
+                        <select id="license" ng-required="true" name="license" ng-model="details.license_id">
+                            <option value="" translate="data_export.add_license">Add license</option>
+                            <option ng-repeat="license in licenses" ng-value="license.id">{{license.name}}</option>
+                        </select>
+                    </div>
+                    <a href="#" class="link-blue">
+                        <svg class="iconic">
+                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                        </svg>
+                        {{'data_export.read_more_licenses' | translate}}
+                    </a>
+                    <div
+                        class="alert error"
+                        ng-show="metadata.license.$invalid && metadata.license.$dirty"
+                        ng-repeat="(error, value) in metadata.license.$error"
+                    >
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                        </svg>
+                        <p translate="{{'data_export.validation.license'}}"></p>
+                    </div>
+                </div>
+
+                <div
+                    class="form-field alert error"
+                    ng-show="error"
+                >
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                    </svg>
+                    <p translate="data_export.validation.all_fields">Please fill in all required fields</p>
+                </div>
+
+                <div class="form-field button-group">
+                    <button class="button button-alpha" ng-click="uploadToHdx()" translate="data_export.submit_hdx">Submit to HDX Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>

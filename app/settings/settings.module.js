@@ -1,11 +1,22 @@
+<<<<<<< HEAD
 import { react2angular } from "react2angular";
 import angular from "angular";
 import TestRouteContainer from "./TestRouteContainer";
 import PersonContainer from "../react/settings/people/PersonContainer";
 import UserListContainer from "../react/settings/users/UserList/UserListContainer";
 import UserAvatar from "../react/settings/users/UserList/UserAvatar";
+<<<<<<< HEAD
 import UserName from "../react/settings/users/UserList/userName";
 import UserRole from "../react/settings/users/UserList/UserRole";
+=======
+=======
+angular.module('ushahidi.settings', [])
+.directive('afterImportCsv', require('./data-import/data-after-import.directive.js'))
+.directive('importerCsv', require('./data-import/data-import.directive.js'))
+.service('ImportNotify', require('./data-import/import.notify.service.js'))
+.directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
+>>>>>>> js-migration
 
 angular
     .module("ushahidi.settings", [])

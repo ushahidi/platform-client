@@ -75,14 +75,11 @@
                     </nav>
 
                 <div id="main-export" class="survey-details tabs-target" >
-                    <div class="form-field" ng-hide="hxlApiKey || !hxlEnabled">
+                    <div class="form-field" ng-hide="hxlApiKey || !hxlEnabled || loadingFeature">
                         <div class="alert" >
                             <p>{{'data_export.hxl_apikey_alert_1' | translate}}</p>
                             <p>{{'data_export.hxl_apikey_alert_2' | translate}}
-                            <a href="https://data.humdata.org/" class="link-blue" target="_blank">
-                                <svg class="iconic">
-                                    <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
-                                </svg>
+                            <a ui-sref="settings.userSettings" class="link-blue">
                                 {{'data_export.hxl_configure' | translate}}
                             </a>
                                 {{'data_export.hxl_apikey_alert_3' | translate}}

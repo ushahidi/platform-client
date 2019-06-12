@@ -13,9 +13,14 @@ angular.lazy()
         // Show loading
         angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
     })
-    .error(function () {
+    .error(function (error) {
         // Show error
-        angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
+        try {
+            error.data.errors[0].message &&
+            angular.element(document.getElementById('bootstrap-error-message')).html(error.data.errors[0].message);
+        } finally {
+            angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
+        }
     })
     .done(function () {
         // Hide loading

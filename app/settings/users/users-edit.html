@@ -40,8 +40,8 @@
 
             <form name="form">
                 <div class="form-sheet">
-                    <div class="form-field title" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
-                        <label class="hidden" translate>user.full_name</label>
+                    <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                        <label translate>user.full_name</label>
                         <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
                         <div ng-repeat="(error, value) in form.full_name.$error"
                             ng-show="form.full_name.$dirty"
@@ -88,7 +88,7 @@
                                 user.role
                             </span>
                             <span class="legend-label" ng-show="user.role">
-                                {{ roles[user.role].display_name }}
+                                {{ roles[user.role].display_name}}
                             </span>
                             <svg class="iconic chevron">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>

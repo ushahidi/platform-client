@@ -23,4 +23,8 @@ server/www/img/icons/
 server/www/
 app/locales/
 package-lock.json
+<<<<<<< HEAD
 app/stats.html
+=======
+app/stats.html
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
