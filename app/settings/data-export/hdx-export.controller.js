@@ -2,22 +2,24 @@ module.exports = [
     '$scope',
     '$rootScope',
     'Features',
-    '$location',
+    '$state',
     'HxlExport',
-    'DataExport',
     '_',
     'LoadingProgress',
+    '$anchorScroll',
     'Notify',
+    'DataExport',
 function (
     $scope,
     $rootScope,
     Features,
-    $location,
+    $state,
     HxlExport,
-    DataExport,
     _,
     LoadingProgress,
-    Notify
+    $anchorScroll,
+    Notify,
+    DataExport
 ) {
     $scope.selectHxlAttribute = selectHxlAttribute;
     $scope.addAnother = addAnother;
@@ -28,6 +30,7 @@ function (
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.getSelectedFields = getSelectedFields;
     $scope.hxlAttributeSelected = hxlAttributeSelected;
+    $scope.showProgress = false;
 
     // Change layout class
     $rootScope.setLayout('layout-c');
@@ -39,7 +42,7 @@ function (
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
         // Redirect to home if not enabled
         if (!$scope.hxlEnabled) {
-            return $location.path('/');
+            $state.go('posts.map.all');
         }
     });
 
@@ -67,7 +70,7 @@ function (
         // hack to not disable the value in the current dropdown
         let selectedHxlAttributes = angular.copy(formAttribute.selectedHxlAttributes);
         delete selectedHxlAttributes[index];
-        if (_.findWhere(selectedHxlAttributes, {id: hxlAttribute.id})) {
+        if (_.findWhere(selectedHxlAttributes, {attribute: hxlAttribute.attribute})) {
             disabled = true;
         }
         return disabled;
@@ -97,26 +100,79 @@ function (
                 }
             });
         });
+
+        if ($scope.fieldError && selectedFields.length > 0) {
+            $scope.fieldError = false;
+        }
         return selectedFields;
     }
 
     function selectTag(attribute) {
-        if (attribute.selectedTag && attribute.selectedTag.tag_name) {
-            attribute.pretty = '#' + attribute.selectedTag.tag_name;
-        } else {
-            attribute.pretty = '';
+        attribute.selected = [attribute.id];
+        attribute.hxl_label = createHxlLabel(attribute);
+        if (!attribute.selectedTag || !attribute.selectedTag.tag_name) {
+            addAnother(attribute);
         }
-        attribute.nbAttributes = 1;
-        attribute.selectedHxlAttributes = {};
+
+        attribute.selectedHxlAttributes = [];
     }
 
     function selectHxlAttribute(attribute) {
-        attribute.pretty = '#' + attribute.selectedTag.tag_name;
+        if (!needsMatchedAttribute(attribute)) {
+            attribute.hxl_label = createHxlLabel(attribute);
+        } else {
+            attribute = addGeoMatchedAttribute(attribute);
+        }
+        return attribute;
+    }
+    function addGeoMatchedAttribute(attribute) {
+        const hxl_attribute = attribute.selectedHxlAttributes[attribute.selectedHxlAttributes.length - 1];
+        // check if we have lat or lon and assign the correct opposite attribute for it
+        const opposite_attribute_str = hxl_attribute.attribute === 'lat' ? 'lon' : 'lat';
+        // If the label is not just #geo, it means the action is removing a tag instead of adding one,
+        // and we need to clear the label instead of adding to it
+        if (attribute.hxl_label[0] !== '#geo') {
+            attribute.hxl_label = ['#geo'];
+            attribute.selectedHxlAttributes = [];
+            attribute.nbAttributes--;
+        } else {
+            addAnother(attribute);
+            attribute.selectedHxlAttributes.push({attribute: opposite_attribute_str });
+            attribute.hxl_label = [
+                '#geo+lat',
+                '#geo+lon'
+            ];
+        }
+        return attribute;
+    }
+
+    /**
+     * Checks if we need a matched lat/lon attribute.
+     * Only applies to #geo tags with a lat/lon attribute selected
+     * @param attribute
+     * @param ignoreMatch
+     * @param needsMatchLatLon
+     * @returns {*}
+     */
+    function needsMatchedAttribute(attribute) {
+        if (attribute.selectedTag.tag_name !== 'geo') {
+            return false;
+        }
+        let needs_match = _.filter(attribute.selectedHxlAttributes, (selected) => {
+            return selected.attribute === 'lon' || selected.attribute === 'lat';
+        }).length;
+        return needs_match === 1;
+    }
+
+    function createHxlLabel(attribute) {
+        if (!attribute.selectedTag) {
+            return [];
+        }
+        let label = '#' + attribute.selectedTag.tag_name;
         _.each(attribute.selectedHxlAttributes, (hxl_attribute) => {
-            if (hxl_attribute !== '') {
-                attribute.pretty = attribute.pretty + '+' + hxl_attribute.attribute;
-            }
+            label = label + '+' + hxl_attribute.attribute;
         });
+        return [label];
     }
 
     function formatIds() {
@@ -129,7 +185,7 @@ function (
                     if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
                         _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
                             let objWithAttr = angular.copy(obj);
-                            objWithAttr.hxl_attribute_id = parseInt(hxlAttribute.id);
+                            objWithAttr.hxl_attribute_id = parseInt(getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute).id);
                             hxlData.push(objWithAttr);
                         });
                     } else {
@@ -141,12 +197,18 @@ function (
         return hxlData;
     }
 
+    function getHxlAttributeByTagIdAndName(formAttribute, hxlAttributeName) {
+        const tag = _.findWhere(formAttribute.tags, {id: formAttribute.selectedTag.id});
+        return _.findWhere(tag.hxl_attributes, {attribute: hxlAttributeName});
+    }
+
     function exportData(sendToHDX) {
         if (formatIds().length === 0) {
-            // displaying notification if no fields are selected
-            var message =  '<p translate="data_export.no_fields"></p>';
-            Notify.notifyAction(message, null, false, 'warning', 'error');
+            // scrolling to top and display the error-message
+            $scope.fieldError = true;
+            $anchorScroll();
         } else {
+            $scope.fieldError = false;
             let title, description, button, cancel;
             let data = {
                 'fields': $scope.getSelectedFields(),
@@ -160,7 +222,7 @@ function (
                     'source' : ['sms','twitter','web','email']
                 },
                 'send_to_hdx': sendToHDX,
-                'include_hxl': sendToHDX,
+                'include_hxl': true,
                 'send_to_browser': !sendToHDX,
                 'hxl_heading_row': formatIds()
             };
@@ -178,8 +240,14 @@ function (
             cancel = 'data_export.go_back';
 
             Notify.confirmModal(title, null, description, `{fields: ${getSelectedFields().length}}`, button, cancel).then(() => {
-                DataExport.startExport(data);
-            });
+                    if (sendToHDX) {
+                        $state.go('settings.hdxDetails', {exportJob: data });
+                    } else {
+                        DataExport.startExport(data, sendToHDX).then((id) => {
+                            $scope.showProgress = true;
+                        });
+                    }
+                });
         }
     }
 }];

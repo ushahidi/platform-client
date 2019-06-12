@@ -54,7 +54,7 @@ describe('data-export-controller', function () {
         it('should initate data-export', function () {
             spyOn(DataExport, 'startExport');
             $scope.exportAll();
-            expect(DataExport.startExport).toHaveBeenCalledWith({});
+            expect(DataExport.startExport).toHaveBeenCalledWith({send_to_hdx: false, include_hxl: false, send_to_browser: true});
         });
         it('should show progress', function () {
             expect($scope.showProgress).toEqual(false);
@@ -95,7 +95,7 @@ describe('data-export-controller', function () {
             $scope.selectedFields = [1, 4, 7, 8, 10];
             spyOn(DataExport, 'startExport');
             $scope.exportSelected();
-            expect(DataExport.startExport).toHaveBeenCalledWith({fields: $scope.selectedFields});
+            expect(DataExport.startExport).toHaveBeenCalledWith({fields: $scope.selectedFields, send_to_hdx: false, include_hxl: false, send_to_browser: true});
         });
     });
     describe('attachAttributes-function', function () {

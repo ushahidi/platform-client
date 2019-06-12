@@ -166,7 +166,9 @@
     "ng-redux": "^3.5.2",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
+    "ngtweet": "^1.0.0",
     "nvd3": "^1.8.4",
+<<<<<<< HEAD
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -175,10 +177,13 @@
     "redux": "^4.0.0",
     "redux-create-reducer": "^1.1.2",
     "redux-thunk": "^2.2.0",
+=======
+    "raven-js": "^3.26.3",
+>>>>>>> 2c30357b72fd2cae08459753ed104a3bc15a8b68
     "socket.io-client": "2.0.3",
     "sortablejs": "^1.7.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.11.0-rc.3"
+    "ushahidi-platform-pattern-library": "^3.12.3"
   },
   "engines": {
     "node": ">=4.0"

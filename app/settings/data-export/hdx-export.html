@@ -6,7 +6,7 @@
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                 <li><a href="/settings" translate>app.settings</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.export</h1>
+            <h1 class="mode-context-title" translate>nav.export</h1>
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
@@ -25,7 +25,15 @@
         </div>
 
         <div class="main-col">
-            <div class="form-sheet">
+            <div class="form-sheet" ng-show="showProgress">
+                <div class="form-sheet-summary">
+                    <h2 class="form-sheet-title" translate>
+                        data_export.title_hxl
+                    </h2>
+                    <p translate>data_export.export_progress</p>
+                </div>
+            </div>
+            <div class="form-sheet" ng-show="!showProgress">
                 <div class="form-sheet-summary">
                 <h2 class="form-sheet-title">
                     {{'data_export.hxl_title' | translate}}
@@ -34,28 +42,28 @@
 
                 <p>
                     {{'data_export.hxl_instructions_1' | translate}}
-                    <a href="#" class="link-blue">
+                    <a href="https://data.humdata.org/" target="_blank" class="link-blue">
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
                         {{'data_export.hxl_instructions_2' | translate}}
                     </a>
                 {{'data_export.hxl_instructions_3' | translate}}
-                <a href="#" class="link-blue">
+                <a ui-sref="settings.userSettings" class="link-blue">
                     {{'data_export.hxl_instructions_4' | translate}}
                 </a>
                 {{'data_export.hxl_instructions_5' | translate}}
                 </p>
 
                 <p>{{'data_export.hxl_instructions_6' | translate}}
-                    <a href="#" class="link-blue">
+                    <a href="https://tools.humdata.org/examples/hxl/" target="_blank" class="link-blue">
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
                     {{'data_export.hxl_instructions_7' | translate}}
                     </a>
                     {{'data_export.hxl_instructions_8' |translate}}
-                    <a href="#" class="link-blue">
+                    <a href="http://hxlstandard.org/standard/1_1beta/postcards/" target="_blank" class="link-blue">
                         <svg class="iconic">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
@@ -63,7 +71,12 @@
                     </a>
                     .
                 </p>
-
+            </div>
+            <div class="form-field alert error" id="error" ng-show="fieldError">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                {{'data_export.no_fields_selected' | translate}}
             </div>
                 <fieldset ng-repeat="form in forms" ng-hide="form.targeted_survey === true">
                     <legend>
@@ -97,18 +110,18 @@
                                         type="checkbox"
                                         checklist-model="formAttribute.selected"
                                         checklist-value="formAttribute.id"
-                                        ng-selected="formAttribute.selected"
+                                        ng-checked="_.isEmpty(attribute.selected)"
                                     >
                                 </td>
                                 <td>
-                                    <p><bdi>{{formAttribute.label}}</bdi></p>
+                                    <p ng-click="formAttribute.selected = !formAttribute.selected"><bdi>{{formAttribute.label}}</bdi></p>
                                 </td>
                                 <td>
                                     <div class="custom-select">
                                         <select
                                             ng-model="formAttribute.selectedTag"
                                             ng-options="tag as tag.tag_name for tag in formAttribute.tags track by tag.id"
-                                            ng-disabled="!formAttribute.selected || formAttribute.selected.length < 1"
+
                                             ng-change="selectTag(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
@@ -116,17 +129,17 @@
                                     </div>
                                 </td>
                                 <td class="form-field">
-                                    <div class="custom-select" ng-repeat="a in range(formAttribute)">
+                                    <div class="custom-select" ng-repeat="index in range(formAttribute)">
                                         <select
-                                            ng-disabled="!formAttribute.selectedTag"
-                                            ng-model="formAttribute.selectedHxlAttributes[a]"
+                                            ng-disabled="!formAttribute.selectedTag && !formAttribute.selected"
+                                            ng-model="formAttribute.selectedHxlAttributes[index].attribute"
                                             ng-change="selectHxlAttribute(formAttribute)"
                                         >
                                             <option value=''>Leave empty</option>
                                             <option
-                                                ng-value="hxlAttribute"
+                                                ng-value="hxlAttribute.attribute"
                                                 ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
-                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, a)"
+                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, index)"
                                             >
                                                  {{hxlAttribute.attribute}}
                                             </option>
@@ -136,7 +149,7 @@
                                     <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
                                 </td>
                                 <td>
-                                    {{formAttribute.pretty}}
+                                    <span ng-repeat="hxl_label in formAttribute.hxl_label"><em>{{hxl_label}} </em></span>
                                 </td>
                             </tr>
                         </tbody>
@@ -154,3 +167,4 @@
         </div>
     </main>
 </div>
+    

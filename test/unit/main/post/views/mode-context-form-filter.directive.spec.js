@@ -68,12 +68,6 @@ describe('mode-context-form-filter directive', function () {
             isolateScope.goToUnmapped();
             expect($location.path()).toEqual('/views/data');
         });
-        it('should return the correct formatting for unmapped posts', function () {
-            isolateScope.unmapped = 1;
-            expect(isolateScope.getUnmapped()).toEqual('1 post');
-            isolateScope.unmapped = 2;
-            expect(isolateScope.getUnmapped()).toEqual('2 posts');
-        });
         it('should hide forms that are not selected', function () {
             isolateScope.hide(2);
             expect(isolateScope.filters.form.indexOf(2)).toEqual(-1);

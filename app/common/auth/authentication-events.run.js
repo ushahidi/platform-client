@@ -1,6 +1,8 @@
 module.exports = AuthenticationEvents;
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport) {
+
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport', 'DemoDeploymentService'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport, DemoDeploymentService) {
+
     let loginPath = null;
     $rootScope.currentUser = null;
     $rootScope.loggedin = false;
@@ -12,7 +14,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
 
     // todo: move to service
     $rootScope.hasManageSettingsPermission = function () {
-        return $rootScope.isAdmin() ? true : (_.intersection(($rootScope.currentUser || {}).permissions, ['Manage Users', 'Manage Settings', 'Bulk Data Import']).length > 0);
+        return $rootScope.isAdmin() ? true : (_.intersection(($rootScope.currentUser || {}).permissions, ['Manage Users', 'Manage Settings', 'Bulk Data Import and Export', 'Bulk Data Import']).length > 0);
     };
 
     // todo: move to service
@@ -69,8 +71,6 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function activate() {
         if (Authentication.getLoginStatus()) {
             doLogin(false, true);
-        } else {
-            doLogout(false);
         }
     }
 
@@ -79,8 +79,14 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function loadExportJob() {
-        if ($rootScope.hasPermission('Bulk Data Import')) {
+        if ($rootScope.hasPermission('Bulk Data Import and Export') || $rootScope.hasPermission('Bulk Data Import')) {
             DataExport.loadExportJob();
+        }
+    }
+
+    function loadImportJob() {
+        if ($rootScope.hasPermission('Bulk Data Import and Export') || $rootScope.hasPermission('Bulk Data Import')) {
+            DataImport.loadImportJob();
         }
     }
 
@@ -89,6 +95,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             .then(function () {
                 loadSessionData();
                 $rootScope.loggedin = true;
+                DemoDeploymentService.demoCheck();
 
                 /**
                  * adminUserSetup is called AFRTER the user has agreed to terms of service.
@@ -100,6 +107,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
                  */
                 adminUserSetup();
                 loadExportJob();
+                loadImportJob();
                 PostFilters.resetDefaults();
                 if (redirect) {
                     $location.url(redirect);
@@ -109,16 +117,13 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             });
     }
 
-    function doLogout(redirect) {
+    function doLogout() {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
-        // we don' wat to reload until after filters are correctly set with the backend default that the user
-        // would get when logged out
+        DemoDeploymentService.demoCheck();
+        // we don't want to reload until after filters are correctly set with
+        // the backend default that the user would get when logged out
         PostFilters.resetDefaults().then(function () {
-            if (redirect) {
-                $location.url(redirect);
-            }
-
             $state.go($state.$current.name ? $state.$current : 'map', null, { reload: true });
         });
     }

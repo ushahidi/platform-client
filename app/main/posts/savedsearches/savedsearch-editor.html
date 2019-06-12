@@ -2,12 +2,29 @@
 
     <div class="form-field title">
         <label translate>set.name_savedsearch</label>
-        <input type="text" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name" />
+        <input type="text" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name" translate/>
     </div>
 
     <div class="form-field">
         <label class="input-label" translate>set.description</label>
         <textarea ng-model="cpySavedSearch.description" />
+    </div>
+
+    <!-- Who can see? -->
+    <role-selector model="savedSearch" title="'app.who_can_see_this'"></role-selector>
+    <div class="modal-actions">
+        <div class="form-field">
+            <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
+            <button type="button" class="button-alpha modal-trigger" ng-show="!isSaving" ng-click="save(cpySavedSearch)" translate>app.save_and_close</button>
+            <button ng-click="saveSearch()" ng-show="isSaving" disabled class="button-beta" type="button">
+                <div class="loading">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <span class="button-label" translate="app.saving">Saving</span>
+            </button>
+        </div>
     </div>
 
     <div class="form-field switch" ng-if="featuredEnabled()">
@@ -31,22 +48,6 @@
         <div class="custom-select">
             <select ng-options="view.name as view.display_name for view in views" ng-model="cpySavedSearch.view">
             </select>
-        </div>
-    </div>
-    <!-- Who can see? -->
-    <role-selector model="savedSearch" title="'app.who_can_see_this'"></role-selector>
-    <div class="modal-actions">
-        <div class="form-field">
-            <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
-            <button type="button" class="button-alpha modal-trigger" ng-show="!isSaving" ng-click="save(cpySavedSearch)" translate>app.save_and_close</button>
-            <button ng-click="saveSearch()" ng-show="isSaving" disabled class="button-beta" type="button">
-            <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-            <span class="button-label" translate="app.saving">Saving</span>
-    </button>
         </div>
     </div>
 </div>
