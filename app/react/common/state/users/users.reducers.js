@@ -7,7 +7,8 @@ import {
 const initialState = {
     users: [],
     error: {},
-    isLoading: true
+    isLoading: true,
+    selectedUsers: []
 };
 
 export default function reducer(state = initialState, action) {

@@ -1,4 +1,4 @@
-<div ui-view>
+<user-list-container ui-view>
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
@@ -53,7 +53,7 @@
 
                 <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'realname'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
                     <div class="listing-item-select">
-                        <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
+                        <input type="Checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
                     </div>
 
                     <div class="listing-item-primary">
@@ -110,4 +110,4 @@
             </nav>
         </div>
     </main>
-</div>
+</user-list-container>
