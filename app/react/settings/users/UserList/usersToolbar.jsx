@@ -9,16 +9,16 @@ const UsersToolbar = props => (
     <div className="listing-toolbar">
         <div className="listing-toolbar-summary">
             {/* /* // TODO: Add number of selected users */}
-            {/*  TODO: Add deselect and select functions*/}
+            {/*  TODO: Add deselect and select functions */}
             {/* TODO: Add dropdown functionality */}
             {/* TODO: Add delete users function */}
             {/* TODO: Disable button when no users are selected */}
-            <strong></strong>
+            <strong />
             <button className="button-link">Deselect</button>
             <button className="button-link">Select all</button>
         </div>
 
-        <div class="listing-toolbar-actions">
+        <div className="listing-toolbar-actions">
             {/* <listing-toolbar entities="users" selected-set="selectedUsers"> */}
             <fieldset className="custom-fieldset init">
                 <legend className="dropdown-trigger init">
@@ -27,7 +27,7 @@ const UsersToolbar = props => (
                         <use
                             xmlnsXlink="http://www.w3.org/1999/xlink"
                             xlinkHref="/img/iconic-sprite.svg#chevron-bottom"
-                        ></use>
+                        />
                     </svg>
                 </legend>
                 <div className="dropdown-menu init">
@@ -46,7 +46,7 @@ const UsersToolbar = props => (
                     <use
                         xmlnsXlink="http://www.w3.org/1999/xlink"
                         xlinkHref="/img/iconic-sprite.svg#trash"
-                    ></use>
+                    />
                 </svg>
                 <span className="button-label hidden">nav.delete</span>
             </button>
