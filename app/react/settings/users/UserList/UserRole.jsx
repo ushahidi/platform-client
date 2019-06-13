@@ -6,7 +6,7 @@ const propTypes = {
 };
 
 const UserRole = props => (
-    <p class="listing-item-secondary">Role: {props.role}</p>
+    <p className="listing-item-secondary">Role: {props.role}</p>
     // <h2 className="listing-item-secondary">
     //     <a href={`/settings/users/${props.user.role}`}>{props.user.realname}</a>
     // </h2>
