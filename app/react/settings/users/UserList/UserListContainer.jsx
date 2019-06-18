@@ -8,10 +8,10 @@ import * as RolesActions from "react/common/state/roles/roles.actions";
 import { getUsers } from "react/common/state/users/users.reducers";
 import { getRoles } from "react/common/state/roles/roles.reducers";
 import UserAvatar from "./UserAvatar";
-import UserName from "./userName";
+import UserName from "./UserName";
 import UserRole from "./UserRole";
 import CheckBox from "./Checkbox.jsx";
-import UsersToolbar from "./usersToolbar.jsx";
+import UsersToolbar from "./UsersToolbar.jsx";
 
 const propTypes = {
     UsersActions: PropTypes.shape({
