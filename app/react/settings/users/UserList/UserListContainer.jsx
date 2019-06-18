@@ -58,10 +58,8 @@ class UserListContainer extends React.Component {
                                     realname={user.realname}
                                     avatar={user.gravatar}
                                 />
-                                <div className="listing-item">
                                     <UserName user={user} />
                                     <UserRole role="admin" />
-                                </div>
                             </div>
                         </div>
                     ))}
