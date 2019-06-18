@@ -1,7 +1,8 @@
 import {
     GET_USERS,
     RECEIVE_USERS,
-    HANDLE_REQUEST_FAILURE
+    HANDLE_REQUEST_FAILURE,
+    SELECT_USER
 } from "./users.actions";
 
 const initialState = {
@@ -31,6 +32,12 @@ export default function reducer(state = initialState, action) {
                 error: action.error,
                 isLoading: false
             };
+        case SELECT_USER:
+            return {
+                // keep existing roles in state if there are any?
+                ...state,
+                selectedUsers: [...state.selectedUsers, ...action.userId],
+            };
         default:
             return state;
     }
@@ -47,4 +54,7 @@ export function getUsers(state) {
 
 export function getUsersError(state) {
     return state.users.error;
+}
+export function getSelectedUsers(state) {
+    return state.users.selectedUsers;
 }

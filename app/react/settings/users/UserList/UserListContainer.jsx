@@ -36,10 +36,7 @@ class UserListContainer extends React.Component {
                 {/* TODO: Make the toolbar visible when users are selected */}
                 <div className="listing card toolbar-active">
                     <UsersToolbar
-                        roles={[
-                            { display_name: "admin" },
-                            { display_name: "members" }
-                        ]}
+                        roles={this.props.roles}
                     />
                     {this.props.users.length === 0 ? (
                         <div className="alert">
@@ -54,26 +51,17 @@ class UserListContainer extends React.Component {
                         <div id={`user-${user.id}`} className="listing-item">
                             <CheckBox userId={user.id} />
                             <div className="listing-item-primary">
-                                {/* <UserAvatar
-                                    key={user.id}
-                                    realname={user.realname}
-                                    avatar={user.gravatar}
-                                /> */}
-                                <div className="listing-item">
                             <UserAvatar
-                                key={user.id}
-                                realname={user.realname}
-                                avatar={user.gravatar}
-                            />
-                            <UserName user={user} />
-                            <UserRole role= "admin" />
-                        </div>
-
-                                <UserName user={user} />
-                                <p className="listing-item-secondary">
-                                    Role: Admin
-                                </p>
+                                        key={user.id}
+                                        realname={user.realname}
+                                        avatar={user.gravatar}
+                                    />
+                                <div className="listing-item">
+                                    <UserName user={user} />
+                                    <UserRole role="admin" />
+                                </div>
                             </div>
+
                         </div>
                     ))}
                 </div>
@@ -81,7 +69,7 @@ class UserListContainer extends React.Component {
         );
     }
 }
-
+//  {Start from here}
 function mapStateToProps(state) {
     return {
         users: getUsers(state),
