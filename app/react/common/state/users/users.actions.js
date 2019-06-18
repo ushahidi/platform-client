@@ -3,6 +3,7 @@ import UserEndpoints from "react/common/endpoints/users";
 export const GET_USERS = "GET_USERS";
 export const RECEIVE_USERS = "RECEIVE_USERS";
 export const HANDLE_REQUEST_FAILURE = "HANDLE_REQUEST_FAILURE";
+export const SELECT_USER = "SELECT_USER";
 
 export function receiveUsers(users) {
     return { type: RECEIVE_USERS, users };
@@ -21,4 +22,8 @@ export function requestUsers() {
             )
             .catch(error => dispatch(handleRequestFailure(error)));
     };
+}
+
+export function selectUser(userId) {
+    return { type: SELECT_USER, userId };
 }
