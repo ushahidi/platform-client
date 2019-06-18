@@ -22,7 +22,7 @@ export default function reducer(state = initialState, action) {
         case RECEIVE_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users],
+                users: [...action.users],
                 isLoading: false
             };
         case HANDLE_REQUEST_FAILURE:
@@ -36,7 +36,7 @@ export default function reducer(state = initialState, action) {
             return {
                 // keep existing roles in state if there are any?
                 ...state,
-                selectedUsers: [...state.selectedUsers, ...action.userId],
+                selectedUsers: [...state.selectedUsers, ...action.userId]
             };
         default:
             return state;
