@@ -35,9 +35,7 @@ class UserListContainer extends React.Component {
             <div className="main-col">
                 {/* TODO: Make the toolbar visible when users are selected */}
                 <div className="listing card toolbar-active">
-                    <UsersToolbar
-                        roles={this.props.roles}
-                    />
+                    <UsersToolbar roles={this.props.roles} />
                     {this.props.users.length === 0 ? (
                         <div className="alert">
                             <p>
@@ -48,20 +46,23 @@ class UserListContainer extends React.Component {
                         ""
                     )}
                     {this.props.users.map(user => (
-                        <div id={`user-${user.id}`} className="listing-item">
+                        <div
+                            id={`user-${user.id}`}
+                            key={user.id}
+                            className="listing-item"
+                        >
                             <CheckBox userId={user.id} />
                             <div className="listing-item-primary">
-                            <UserAvatar
-                                        key={user.id}
-                                        realname={user.realname}
-                                        avatar={user.gravatar}
-                                    />
+                                <UserAvatar
+                                    key={user.id}
+                                    realname={user.realname}
+                                    avatar={user.gravatar}
+                                />
                                 <div className="listing-item">
                                     <UserName user={user} />
                                     <UserRole role="admin" />
                                 </div>
                             </div>
-
                         </div>
                     ))}
                 </div>
