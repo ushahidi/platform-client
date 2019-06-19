@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const propTypes = {
-    roles: PropTypes.array.isRequired
+    roles: PropTypes.shape.isRequired
 };
 
 const UsersToolbar = props => (
     <div className="listing-toolbar">
         <div className="listing-toolbar-summary">
-            {/* /* // TODO: Add number of selected users */}
             {/*  TODO: Add deselect and select functions */}
             {/* TODO: Add dropdown functionality */}
             {/* TODO: Add delete users function */}
@@ -32,12 +31,12 @@ const UsersToolbar = props => (
                 </legend>
                 <div className="dropdown-menu init">
                     <div className="form-field radio">
-                        {props.roles.map(role => {
-                            <label>
-                                <input type="radio" name="role" />
+                        {props.roles.map((role, index) => (
+                            <label htmlFor={index}>
+                                <input id={index} type="radio" name="role" />
                                 {role.display_name}
-                            </label>;
-                        })}
+                            </label>
+                        ))}
                     </div>
                 </div>
             </fieldset>

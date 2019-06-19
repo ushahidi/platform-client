@@ -12,16 +12,19 @@ import UserName from "./UserName";
 import UserRole from "./UserRole";
 import CheckBox from "./Checkbox.jsx";
 import UsersToolbar from "./UsersToolbar.jsx";
+import { getSelectedUsers } from "../../../common/state/users/users.reducers";
 
 const propTypes = {
     UsersActions: PropTypes.shape({
-        requestUsers: PropTypes.func.isRequired
+        requestUsers: PropTypes.func.isRequired,
+        toggleUser: PropTypes.func.isRequired
     }).isRequired,
     RolesActions: PropTypes.shape({
         requestRoles: PropTypes.func.isRequired
     }).isRequired,
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
-    roles: PropTypes.arrayOf(PropTypes.object).isRequired
+    roles: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedUsers: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 class UserListContainer extends React.Component {
@@ -33,8 +36,14 @@ class UserListContainer extends React.Component {
     render() {
         return (
             <div className="main-col">
-                {/* TODO: Make the toolbar visible when users are selected */}
-                <div className="listing card toolbar-active">
+                {/* adding class "toolbar-active" if there are selected users */}
+                <div
+                    className={`listing card ${
+                        this.props.selectedUsers.length > 0
+                            ? "toolbar-active"
+                            : ""
+                    }`}
+                >
                     <UsersToolbar roles={this.props.roles} />
                     {this.props.users.length === 0 ? (
                         <div className="alert">
@@ -51,7 +60,18 @@ class UserListContainer extends React.Component {
                             key={user.id}
                             className="listing-item"
                         >
-                            <CheckBox userId={user.id} />
+                            {/* Sending the toggleUser action as a prop to the checkbox with handleChange */}
+                            <CheckBox
+                                userId={user.id}
+                                handleChange={
+                                    this.props.UsersActions.toggleUser
+                                }
+                                checked={
+                                    this.props.selectedUsers.indexOf(
+                                        user.id
+                                    ) !== -1
+                                }
+                            />
                             <div className="listing-item-primary">
                                 <UserAvatar
                                     key={user.id}
@@ -59,7 +79,7 @@ class UserListContainer extends React.Component {
                                     avatar={user.gravatar}
                                 />
                                 <UserName user={user} />
-                                <UserRole role="admin" />
+                                <UserRole userRole="admin" />
                             </div>
                         </div>
                     ))}
@@ -72,7 +92,8 @@ class UserListContainer extends React.Component {
 function mapStateToProps(state) {
     return {
         users: getUsers(state),
-        roles: getRoles(state)
+        roles: getRoles(state),
+        selectedUsers: getSelectedUsers(state)
     };
 }
 
