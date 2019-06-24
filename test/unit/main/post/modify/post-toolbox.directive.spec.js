@@ -1,4 +1,4 @@
-describe('post toolbox directive', function () {
+`describe('post toolbox directive', function () {
 
     var $rootScope,
         $scope,

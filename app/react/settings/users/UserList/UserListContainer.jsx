@@ -8,10 +8,10 @@ import * as RolesActions from "react/common/state/roles/roles.actions";
 import { getUsers } from "react/common/state/users/users.reducers";
 import { getRoles } from "react/common/state/roles/roles.reducers";
 import UserAvatar from "./UserAvatar";
-import UserName from "./UserName";
+import UserName from "./userName";
 import UserRole from "./UserRole";
 import CheckBox from "./Checkbox.jsx";
-import UsersToolbar from "./UsersToolbar.jsx";
+import UsersToolbar from "./usersToolbar.jsx";
 
 const propTypes = {
     UsersActions: PropTypes.shape({
@@ -31,11 +31,14 @@ class UserListContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.roles)
         return (
             <div className="main-col">
                 {/* TODO: Make the toolbar visible when users are selected */}
                 <div className="listing card toolbar-active">
-                    <UsersToolbar roles={this.props.roles} />
+                    <UsersToolbar
+                        roles={this.props.roles}
+                    />
                     {this.props.users.length === 0 ? (
                         <div className="alert">
                             <p>
@@ -46,21 +49,20 @@ class UserListContainer extends React.Component {
                         ""
                     )}
                     {this.props.users.map(user => (
-                        <div
-                            id={`user-${user.id}`}
-                            key={user.id}
-                            className="listing-item"
-                        >
+                        <div id={`user-${user.id}`} className="listing-item">
                             <CheckBox userId={user.id} />
                             <div className="listing-item-primary">
-                                <UserAvatar
-                                    key={user.id}
-                                    realname={user.realname}
-                                    avatar={user.gravatar}
-                                />
-                                <UserName user={user} />
-                                <UserRole role="admin" />
+                            <UserAvatar
+                                        key={user.id}
+                                        realname={user.realname}
+                                        avatar={user.gravatar}
+                                    />
+                                <div className="listing-item">
+                                    <UserName user={user} />
+                                    <UserRole role="admin" />
+                                </div>
                             </div>
+
                         </div>
                     ))}
                 </div>
