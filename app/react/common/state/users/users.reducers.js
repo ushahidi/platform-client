@@ -2,7 +2,7 @@ import {
     GET_USERS,
     RECEIVE_USERS,
     HANDLE_REQUEST_FAILURE,
-    SELECT_USER
+    TOGGLE_USER
 } from "./users.actions";
 
 const initialState = {
@@ -32,12 +32,26 @@ export default function reducer(state = initialState, action) {
                 error: action.error,
                 isLoading: false
             };
-        case SELECT_USER:
+        case TOGGLE_USER: {
+            const userId = action.userId.toString();
+            // checking if the user is already selected
+            const index = state.selectedUsers.indexOf(userId);
+            let newstate;
+            if (index !== -1) {
+                // if the user is selected, we remove the user from the state
+                newstate = [
+                    ...state.selectedUsers.slice(0, index),
+                    ...state.selectedUsers.slice(index + 1)
+                ];
+            } else {
+                // if the user is not selected, we add it to the state
+                newstate = [...state.selectedUsers, userId];
+            }
             return {
-                // keep existing roles in state if there are any?
                 ...state,
-                selectedUsers: [...state.selectedUsers, ...action.userId]
+                selectedUsers: newstate
             };
+        }
         default:
             return state;
     }
