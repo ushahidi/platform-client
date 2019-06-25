@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.shape.isRequired
 };
 
 const UserName = props => (

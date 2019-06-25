@@ -63,15 +63,15 @@
         <!--UserListContainer is supposed to replace the main-col div below (but not all functionality is yet migrated)-->
         <user-list-container></user-list-container>
         <div class="main-col">
-            <div
+            <!-- <div
                 class="listing card"
                 ng-class="{'toolbar-active': selectedUsers.length}"
             >
                 <div class="alert" ng-hide="users.length">
                     <p ng-hide="users.length"><em translate>empty.user</em></p>
-                </div>
+                </div> -->
 
-                <div
+                <!-- <div
                     id="user-{{ user.id }}"
                     class="listing-item"
                     ng-repeat="user in users | orderBy:'realname'"
@@ -114,7 +114,7 @@
                         >
                             Role: role_name
                         </p> -->
-                        <p
+                      <!--  <p
                             class="listing-item-secondary"
                             style="text-transform: capitalize"
                             ng-repeat="contact in user.contacts"
@@ -126,9 +126,9 @@
                         >
                             Contact_Type: contact
                         </p>
-                    </div>
-                </div>
-                <listing-toolbar entities="users" selected-set="selectedUsers">
+                    </div> -->
+                <!-- </div> -->
+                <!-- <listing-toolbar entities="users" selected-set="selectedUsers">
                     <fieldset class="custom-fieldset init" dropdown>
                         <legend
                             class="dropdown-trigger init"
@@ -175,7 +175,7 @@
                         </svg>
                         <span class="button-label hidden">nav.delete</span>
                     </button>
-                </listing-toolbar>
+                </listing-toolbar> -->
             </div>
             <nav class="pagination" ng-show="showPagination">
                 <ul

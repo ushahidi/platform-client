@@ -4,7 +4,7 @@ import TestRouteContainer from "./TestRouteContainer";
 import PersonContainer from "../react/settings/people/PersonContainer";
 import UserListContainer from "../react/settings/users/UserList/UserListContainer";
 import UserAvatar from "../react/settings/users/UserList/UserAvatar";
-import UserName from "../react/settings/users/UserList/userName";
+import UserName from "../react/settings/users/UserList/UserName";
 import UserRole from "../react/settings/users/UserList/UserRole";
 
 angular
