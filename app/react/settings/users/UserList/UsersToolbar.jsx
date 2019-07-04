@@ -6,6 +6,7 @@ const propTypes = {
     handleChange: PropTypes.func.isRequired
 };
 
+
 const UsersToolbar = props => (
     <div className="listing-toolbar">
         <div className="listing-toolbar-summary">

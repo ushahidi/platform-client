@@ -100,6 +100,4 @@ export function getUsersError(state) {
 export function getSelectedUsers(state) {
     return state.users.selectedUsers;
 }
-    export function getSelectedAllUsers(state) {
-        return state.users.selectedUsers;
-}
+
