@@ -2,7 +2,8 @@ import {
     GET_USERS,
     RECEIVE_USERS,
     HANDLE_REQUEST_FAILURE,
-    TOGGLE_USER
+    TOGGLE_USER,
+    TOGGLE_ALL
 } from "./users.actions";
 
 const initialState = {
@@ -52,6 +53,33 @@ export default function reducer(state = initialState, action) {
                 selectedUsers: newstate
             };
         }
+        case TOGGLE_ALL: {
+            let newstate;
+            if (action.selectAll) {
+                newstate = state.users.map(user => (
+                    user.id
+                ))
+            }
+                else {
+                    newstate = [];
+                }
+                console.log(newstate);
+
+                // return newState;
+                
+            
+            // const userId = action.userId.toString();
+            // // checking if the user is already selected
+            // const index = state.selectedUsers.indexOf(userId);
+            //  {
+            //     // if the user is not selected, we add it to the state
+            //     newstate = [...state.selectedUsers, userId];
+            // }
+            return {
+                ...state,
+                selectedUsers: newstate
+            };
+        }
         default:
             return state;
     }
@@ -71,4 +99,7 @@ export function getUsersError(state) {
 }
 export function getSelectedUsers(state) {
     return state.users.selectedUsers;
+}
+    export function getSelectedAllUsers(state) {
+        return state.users.selectedUsers;
 }

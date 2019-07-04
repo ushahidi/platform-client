@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const propTypes = {
-    roles: PropTypes.shape.isRequired
+    roles: PropTypes.shape.isRequired,
+    handleChange: PropTypes.func.isRequired
 };
 
 const UsersToolbar = props => (
@@ -13,8 +14,8 @@ const UsersToolbar = props => (
             {/* TODO: Add delete users function */}
             {/* TODO: Disable button when no users are selected */}
             <strong />
-            <button className="button-link">Deselect</button>
-            <button className="button-link">Select all</button>
+            <button onClick={(props)=>props.handleChange()} className="button-link">Deselect</button>
+            <button onClick={(props)=>props.handleChange(true)} className="button-link">Select all</button>
         </div>
 
         <div className="listing-toolbar-actions">

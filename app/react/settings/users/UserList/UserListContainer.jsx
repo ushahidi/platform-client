@@ -17,7 +17,8 @@ import { getSelectedUsers } from "../../../common/state/users/users.reducers";
 const propTypes = {
     UsersActions: PropTypes.shape({
         requestUsers: PropTypes.func.isRequired,
-        toggleUser: PropTypes.func.isRequired
+        toggleUser: PropTypes.func.isRequired,
+         toggleAll: PropTypes.func.isRequired
     }).isRequired,
     RolesActions: PropTypes.shape({
         requestRoles: PropTypes.func.isRequired
@@ -34,6 +35,7 @@ class UserListContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.selectedUsers)
         return (
             <div className="main-col">
                 {/* adding class "toolbar-active" if there are selected users */}
@@ -44,7 +46,7 @@ class UserListContainer extends React.Component {
                             : ""
                     }`}
                 >
-                    <UsersToolbar roles={this.props.roles} />
+                    <UsersToolbar handleChange={this.props.UsersActions.toggleAll} roles={this.props.roles} />
                     {this.props.users.length === 0 ? (
                         <div className="alert">
                             <p>
@@ -72,6 +74,7 @@ class UserListContainer extends React.Component {
                                     ) !== -1
                                 }
                             />
+                            
                             <div className="listing-item-primary">
                                 <UserAvatar
                                     key={user.id}
