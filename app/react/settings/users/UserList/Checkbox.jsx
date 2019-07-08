@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 
 const propTypes = {
     userId: PropTypes.number.isRequired,
-    handleChange: PropTypes.func.isRequired
+    handleChange: PropTypes.func.isRequired,
+    checked: PropTypes.bool.isRequired
 };
 class CheckBox extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class CheckBox extends React.Component {
                     type="Checkbox"
                     value={this.props.userId}
                     onChange={this.toggleUser}
+                    checked={this.props.checked}
                 />
             </div>
         );
