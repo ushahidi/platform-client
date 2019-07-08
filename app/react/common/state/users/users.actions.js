@@ -27,7 +27,8 @@ export function requestUsers() {
 
 export function toggleUser(userId) {
     return function action(dispatch) {
-        dispatch({ type: TOGGLE_USER, userId });
+        const id = parseInt(userId, 10);
+        dispatch({ type: TOGGLE_USER, id });
     };
 }
 

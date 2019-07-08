@@ -34,9 +34,8 @@ export default function reducer(state = initialState, action) {
                 isLoading: false
             };
         case TOGGLE_USER: {
-            const userId = action.userId.toString();
             // checking if the user is already selected
-            const index = state.selectedUsers.indexOf(userId);
+            const index = state.selectedUsers.indexOf(action.id);
             let newstate;
             if (index !== -1) {
                 // if the user is selected, we remove the user from the state
@@ -46,7 +45,7 @@ export default function reducer(state = initialState, action) {
                 ];
             } else {
                 // if the user is not selected, we add it to the state
-                newstate = [...state.selectedUsers, userId];
+                newstate = [...state.selectedUsers, action.id];
             }
             return {
                 ...state,
@@ -56,18 +55,12 @@ export default function reducer(state = initialState, action) {
         case TOGGLE_ALL: {
             let newstate;
             if (action.selectAll) {
-                newstate = state.users.map(user => (
-                    user.id
-                ))
+                newstate = state.users.map(user => user.id);
+            } else {
+                newstate = [];
             }
-                else {
-                    newstate = [];
-                }
-                console.log(newstate);
+            // return newState;
 
-                // return newState;
-                
-            
             // const userId = action.userId.toString();
             // // checking if the user is already selected
             // const index = state.selectedUsers.indexOf(userId);
@@ -100,4 +93,3 @@ export function getUsersError(state) {
 export function getSelectedUsers(state) {
     return state.users.selectedUsers;
 }
-
