@@ -18,8 +18,12 @@ import karma     from 'karma';
 import jscs      from 'gulp-jscs';
 import fs        from 'fs';
 import log       from 'fancy-log';
+import c         from 'ansi-colors';
 import PluginError from 'plugin-error';
+import isUrl from 'is-url';
 import minimist  from 'minimist'; 
+import fetch from 'node-fetch';
+
 const argv = minimist(process.argv.slice(2));
 
 let root = 'app';
@@ -250,3 +254,92 @@ gulp.task('release', (done) => {
 });
 
 gulp.task('default', ['watch']);
+
+
+gulp.task('verify', () => {
+  if (isCheckDisabled('ALL')) {
+    log.info(c.green('USH_DISABLE_CHECKS is ALL, skipping verification process.'));
+    return;
+  }
+  verifyEnv();
+  verifyTransifex();
+  verifyNetwork();
+
+});
+function verifyNetwork(){
+  if (isCheckDisabled('NETWORK')) {
+    log.info(c.green('USH_DISABLE_CHECKS contains NETWORK, skipping API connectivity verification process.'));
+    return;
+  }
+  fetch(`${process.env.BACKEND_URL}/api/v3/config`)
+  .then(function(response) {
+    switch (response.status) {
+      case '200': 
+        log.success(c.green('The server responded with a 200 code. This is the expected result.'));
+        break;
+      
+    }
+    if (response.status !== '200') {
+      
+    }
+    log.info(`The server said: ${c.green(response.statusText)}. Contine.`);
+  }).catch(error => {
+    log.error(c.red('The server could not be reached or there was an error in the request'));
+    log.error(c.red(error));
+  });
+}
+
+function verifyEnv() {
+  if (isCheckDisabled('ENV')) {
+    log.info(c.green('USH_DISABLE_CHECKS contains ENV, skipping ENV verification process.'));
+    return;
+  }
+  try {
+    fs.accessSync('.env');
+  } catch (e) {
+    log.error(c.red('.env file not found. Please create the .env file in the project\'s root directory.'));
+  }
+
+  if (!process.env.BACKEND_URL) {
+    log.error(
+      c.red('BACKEND_URL not found in .env file. ' + 
+            'Please add this URL to the .env file to connect to the Ushahidi platform server.'
+          )
+      );
+  }
+  if (process.env.BACKEND_URL && !isUrl(process.env.BACKEND_URL)) {
+    log.error(
+      c.red('BACKEND_URL found in .env file. Is not a valid URL.' + 
+            'Please fix the API endpoint URL in the .env file to connect to the Ushahidi platform server.'
+          )
+      );
+  }
+}
+function verifyTransifex() {
+  
+  if (isCheckDisabled('TRANSIFEX')) {
+    log.info(c.green('USH_DISABLE_CHECKS contains TRANSIFEX, skipping TRANSIFEX verification process.'));
+    return;
+  }
+  if (!process.env.TX_USERNAME || !process.env.TX_PASSWORD) {
+    log.warn(
+      c.yellow('TX_USERNAME and TX_PASSWORD not found in .env file.' +
+                    'This might be ok if you are only using English, ' +
+                    'but it will not allow you to use any other languages.'
+                  )
+    );
+    log.warn(
+      c.yellow('If you need languages other than English, you will need to create a transifex account ' + 
+              'and setup the TX_USERNAME and TX_PASSWORD variables in the .env file')
+    );
+  }
+
+}
+
+function isCheckDisabled(name) {
+  if (!process.env.USH_DISABLE_CHECKS) {
+    return false;
+  }
+  const checks = process.env.USH_DISABLE_CHECKS.split(',');
+  return checks.indexOf(name) >= 0;
+}
