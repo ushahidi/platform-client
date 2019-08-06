@@ -4,6 +4,11 @@ import c         from 'ansi-colors';
 import isUrl from 'is-url';
 import fs        from 'fs';
 import fetch from 'node-fetch';
+import * as forms from '../mocked_backend/api/v3/forms.json';
+import * as tags from '../mocked_backend/api/v3/tags.json';
+import * as features from '../mocked_backend/api/v3/config/features.json';
+import * as map from '../mocked_backend/api/v3/config/map.json';
+
 
 module.exports.verifyNetwork = function() {
     if (isCheckDisabled('NETWORK')) {
@@ -115,12 +120,64 @@ module.exports.verifyEndpointStatus = function() {
     });
 };
 
+module.exports.verifyEndpointStructure = function() {
+    if (isCheckDisabled('ENDPOINTS_STRUCTURE')) {
+            log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STRUCTURE, skipping ENDPOINTS_STRUCTURE verification process.'));
+            return;
+    }
+    const endpoints = ['tags', 'forms', 'config/features', 'config/map'];
+    const requests = endpoints.map(function(endpoint) {
+        return fetch(`${process.env.BACKEND_URL}/api/v3/${endpoint}`);
+    });
+
+    Promise.all(requests)
+    .then(function(responses) {
+        responses.forEach(function(response) {
+            response.json().then(function(jsonData) {
+                let structure = {};
+                    switch (response.url.substring(response.url.lastIndexOf('/') + 1)) {
+                        case 'tags':
+                            structure = tags.default;
+                            break;
+                        case 'forms':
+                            structure = forms.default;
+                            break;
+                        case 'features':
+                            structure = features.default;
+                            break;
+                        case 'map':
+                            structure = map.default;
+                            break;
+                    }
+                    log.info(c.bold(`Structure-result for ${response.url}:`));
+                    if (compareKeys(jsonData, structure)) {
+                        log.info(c.green(`The structure for ${response.url} matches the expected, all good!`));
+                    } else {
+                        log.info(c.red(`Oh noes, the structure for ${response.url} does not match the expected `));
+                        log.info(c.red(`Make sure you have set up the database correctly and ran all migrations.`));
+                        log.info(c.red(`Hint: Check the logs in the platform-api for further error-logs`));
+                    }
+            });
+        });
+    }).catch(error => {
+        log.error(c.red('The server could not be reached or there was an error in the request'));
+        log.error(c.red('Make sure your platform-api is running'));
+        log.error(c.red(error));
+    });
+};
+
 const isCheckDisabled = function(name) {
     if (!process.env.USH_DISABLE_CHECKS) {
         return false;
     }
     const checks = process.env.USH_DISABLE_CHECKS.split(',');
     return checks.indexOf(name) >= 0;
+};
+
+const compareKeys = function(a, b) {
+    const aKeys = Object.keys(a).sort();
+    const bKeys = Object.keys(b).sort();
+    return JSON.stringify(aKeys) === JSON.stringify(bKeys);
 };
 
 module.exports.isCheckDisabled = isCheckDisabled;
