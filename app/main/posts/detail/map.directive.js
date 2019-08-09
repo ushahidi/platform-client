@@ -46,8 +46,12 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
             // Create the map
             .then(addGeoJSONToMap)
             .then((data) => {
-                // Save points to scope
-                $scope.features = data.geojson.features.filter(f => f.geometry.type === 'Point');
+                if (data.geojson) {
+                    // Save points to scope
+                    $scope.features = data.geojson.features.filter(f => f.geometry.type === 'Point');
+                } else {
+                    $scope.features = [];
+                }
             })
             ;
 
