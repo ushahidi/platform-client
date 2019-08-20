@@ -9,7 +9,6 @@ import * as tags from '../mocked_backend/api/v3/tags.json';
 import * as features from '../mocked_backend/api/v3/config/features.json';
 import * as map from '../mocked_backend/api/v3/config/map.json';
 
-
 module.exports.verifyNetwork = function() {
     if (isCheckDisabled('NETWORK')) {
       log.info(c.green('USH_DISABLE_CHECKS contains NETWORK, skipping API connectivity verification process.'));
@@ -163,6 +162,100 @@ module.exports.verifyEndpointStructure = function() {
         log.error(c.red('The server could not be reached or there was an error in the request'));
         log.error(c.red('Make sure your platform-api is running'));
         log.error(c.red(error));
+    });
+};
+
+module.exports.verifyOauth = function () {
+    if (isCheckDisabled('ENDPOINTS_STRUCTURE')) {
+        log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STRUCTURE, skipping ENDPOINTS_STRUCTURE verification process.'));
+        return;
+    }
+
+    let body = JSON.stringify({
+        grant_type: 'client_credentials',
+        client_id: process.env.OAUTH_CLIENT_ID || 'ushahidiui',
+        client_secret: process.env.OAUTH_CLIENT_SECRET || '35e7f0bca957836d05ca0492211b0ac707671261',
+        scope: 'forms'});
+
+    fetch(`${process.env.BACKEND_URL}/oauth/token`, {
+        method:'POST',
+        body: body,
+        headers: {'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json'}
+    })
+    .then(function(response) {
+        log.info(c.bold(`Status-result for ${response.url}:`));
+        log.info(`The server responded with a ${response.status} code.`);        
+        switch (response.status.toString()) {
+            case '200':
+                log.info(c.green('All is good. This is the expected result.'));
+                response.json().then(jsonData=>{
+                    log.info(c.bold(`Structure-result for ${response.url}:`));
+                    checkOauthStructure(jsonData);
+                    checkToken(jsonData.access_token);
+                });
+                break;
+            case '500':
+                log.error(c.red('Oh noes. This does not look good.'));
+                log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
+                break;
+            case '401':
+                log.error(c.red('Make sure your database-migrations has ran'));    
+                log.error(c.red('If you have added your own client id and name, make sure the values in the .env file matches the database.'));
+                log.error(c.red('Make sure your database-migrations has ran'));
+                break;
+        }
+    }).catch(error => {
+        log.error(c.red('The server could not be reached or there was an error in the request'));
+        log.error(c.red('Make sure your platform-api is running'));
+        log.error(c.red(error));
+    });
+};
+
+const checkOauthStructure = function (jsonData) {
+        let structure = { token_type: 'Bearer', expires_in: '', access_token: ''};
+        if (compareKeys(jsonData, structure)) {
+            log.info(c.green(`The structure for ${jsonData.url} matches the expected, all good!`));
+        } else {
+            log.info(c.red(`Oh noes, the structure for ${jsonData.url} does not match the expected `));
+            log.info(c.red(`Make sure you have set up the database correctly and ran all migrations.`));
+            log.info(c.red(`Hint: Check the logs in the platform-api for further error-logs`));
+        }
+};
+
+const checkToken = function (token) {
+    fetch(`${process.env.BACKEND_URL}/api/v3/forms`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(function (response) {
+        log.info(c.bold(`Result for token-check:`));
+        log.info(`The server responded with a ${response.status} code.`);
+        switch (response.status.toString()) {
+            case '200':
+                log.info(c.green('All is good. This is the expected result.'));
+                break;
+            case '500':
+                log.error(c.red('Oh noes. This does not look good.'));
+                log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
+                break;
+            case '401':
+                log.error(c.red('Did you add your own client_secret and client_key?'));
+                log.error(c.red('Make sure you updated the database with the same values'));
+                log.error(c.red('If you did not add your own secret and key, check that the database-migration has ran.'));
+                break;
+            case '403':
+                log.error(c.red('There is a problem with the oauth-scopes'));
+                log.error(c.red('Check that your api is set up and that all migrations has ran.'));
+                break;
+        }
+    }).catch(err => {
+        log.error(c.red('The server could not be reached or there was an error in the request'));
+        log.error(c.red('Make sure your platform-api is running'));
+        log.error(c.red(err));
     });
 };
 

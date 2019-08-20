@@ -264,4 +264,5 @@ gulp.task('verify', () => {
   verifier.verifyNetwork();
   verifier.verifyEndpointStatus();
   verifier.verifyEndpointStructure();
+  verifier.verifyOauth();
 });
