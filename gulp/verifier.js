@@ -14,28 +14,7 @@ module.exports.verifyNetwork = function() {
       log.info(c.green('USH_DISABLE_CHECKS contains NETWORK, skipping API connectivity verification process.'));
       return;
     }
-    fetch(`${process.env.BACKEND_URL}/api/v3/config`)
-    .then(function(response) {
-      log.info(`The server responded with a ${response.status} code.`);
-      switch (response.status.toString()) {
-        case '200':
-          log.info(c.green('All is good. This is the expected result.'));
-          break;
-        case '500':
-          log.error(c.red('Oh noes. This does not look good.'));
-          log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
-          break;
-        case '404':
-          log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
-          break;
-        // case '403':
-        //   log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
-        //   break;
-      }
-    }).catch(error => {
-      log.error(c.red('The server could not be reached or there was an error in the request'));
-      log.error(c.red(error));
-    });
+    checkStatus('api/v3/config');
 };
 
 module.exports.verifyEnv = function() {
@@ -90,32 +69,8 @@ module.exports.verifyEndpointStatus = function() {
             return;
     }
     const endpoints = ['tags', 'forms', 'config/features', 'config/map'];
-    const requests = endpoints.map(function(endpoint) {
-        return fetch(`${process.env.BACKEND_URL}/api/v3/${endpoint}`);
-    });
-
-    Promise.all(requests)
-    .then(function(responses) {
-        responses.forEach(function(response) {
-            log.info(c.bold(`Status-result for ${response.url}:`));
-            log.info(`The server responded with a ${response.status} code.`);
-            switch (response.status.toString()) {
-                case '200':
-                    log.info(c.green('All is good. This is the expected result.'));
-                    break;
-                case '500':
-                    log.error(c.red('Oh noes. This does not look good.'));
-                    log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
-                    break;
-                case '404':
-                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
-                    break;
-            }
-        });
-    }).catch(error => {
-        log.error(c.red('The server could not be reached or there was an error in the request'));
-        log.error(c.red('Make sure your platform-api is running'));
-        log.error(c.red(error));
+    endpoints.forEach(function(endpoint) {
+        checkStatus(`api/v3/${endpoint}`);
     });
 };
 
@@ -148,14 +103,8 @@ module.exports.verifyEndpointStructure = function() {
                             structure = map.default;
                             break;
                     }
-                    log.info(c.bold(`Structure-result for ${response.url}:`));
-                    if (compareKeys(jsonData, structure)) {
-                        log.info(c.green(`The structure for ${response.url} matches the expected, all good!`));
-                    } else {
-                        log.info(c.red(`Oh noes, the structure for ${response.url} does not match the expected `));
-                        log.info(c.red(`Make sure you have set up the database correctly and ran all migrations.`));
-                        log.info(c.red(`Hint: Check the logs in the platform-api for further error-logs`));
-                    }
+                    
+                    checkStructure(jsonData, structure, response.url);
             });
         });
     }).catch(error => {
@@ -190,7 +139,8 @@ module.exports.verifyOauth = function () {
                 log.info(c.green('All is good. This is the expected result.'));
                 response.json().then(jsonData=>{
                     log.info(c.bold(`Structure-result for ${response.url}:`));
-                    checkOauthStructure(jsonData);
+                    let preferedStructure = { token_type: 'Bearer', expires_in: '', access_token: ''};
+                    checkStructure(jsonData, preferedStructure, response.url);
                     checkToken(jsonData.access_token);
                 });
                 break;
@@ -199,7 +149,7 @@ module.exports.verifyOauth = function () {
                 log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
                 break;
             case '401':
-                log.error(c.red('Make sure your database-migrations has ran'));    
+                log.error(c.red('Make sure your database-migrations has ran'));
                 log.error(c.red('If you have added your own client id and name, make sure the values in the .env file matches the database.'));
                 log.error(c.red('Make sure your database-migrations has ran'));
                 break;
@@ -209,17 +159,6 @@ module.exports.verifyOauth = function () {
         log.error(c.red('Make sure your platform-api is running'));
         log.error(c.red(error));
     });
-};
-
-const checkOauthStructure = function (jsonData) {
-        let structure = { token_type: 'Bearer', expires_in: '', access_token: ''};
-        if (compareKeys(jsonData, structure)) {
-            log.info(c.green(`The structure for ${jsonData.url} matches the expected, all good!`));
-        } else {
-            log.info(c.red(`Oh noes, the structure for ${jsonData.url} does not match the expected `));
-            log.info(c.red(`Make sure you have set up the database correctly and ran all migrations.`));
-            log.info(c.red(`Hint: Check the logs in the platform-api for further error-logs`));
-        }
 };
 
 const checkToken = function (token) {
@@ -267,10 +206,43 @@ const isCheckDisabled = function(name) {
     return checks.indexOf(name) >= 0;
 };
 
-const compareKeys = function(a, b) {
+const checkStructure = function(a, b, url) {
     const aKeys = Object.keys(a).sort();
     const bKeys = Object.keys(b).sort();
-    return JSON.stringify(aKeys) === JSON.stringify(bKeys);
+    log.info(c.bold(`Structure-result for ${url}:`));
+    if (JSON.stringify(aKeys) === JSON.stringify(bKeys)) {
+        log.info(c.green(`The structure for ${url} matches the expected, all good!`));
+    } else {
+        log.info(c.red(`Oh noes, the structure for ${url} does not match the expected `));
+        log.info(c.red(`Make sure you have set up the database correctly and ran all migrations.`));
+    }
 };
 
+const checkStatus = function (url) {
+    fetch(`${process.env.BACKEND_URL}/${url}`)
+            .then(response=>{
+                log.info(c.bold(`Status-result for ${response.url}:`));
+                log.info(`The server responded with a ${response.status} code.`);
+                switch (response.status.toString()) {
+                  case '200':
+                    log.info(c.green('All is good. This is the expected result.'));
+                    break;
+                  case '500':
+                    log.error(c.red('Oh noes. This does not look good.'));
+                    log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
+                    break;
+                  case '404':
+                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
+                    break;
+                  case '403':
+                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
+                    break;
+                }
+                return response;
+              }).catch(error => {
+                log.error(c.red('The server could not be reached or there was an error in the request'));
+                log.error(c.red(error));
+                return error;
+            });
+};
 module.exports.isCheckDisabled = isCheckDisabled;
