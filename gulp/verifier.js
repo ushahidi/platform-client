@@ -31,14 +31,14 @@ module.exports.verifyEnv = function() {
     if (!process.env.BACKEND_URL) {
         log.error(
         c.red('BACKEND_URL not found in .env file. ' +
-                'Please add this URL to the .env file to connect to the Ushahidi platform server.'
+                'Please add this URL to the .env file to connect to the Platform API.'
             )
         );
     }
     if (process.env.BACKEND_URL && !isUrl(process.env.BACKEND_URL)) {
         log.error(
         c.red('BACKEND_URL found in .env file. Is not a valid URL.' +
-                'Please fix the API endpoint URL in the .env file to connect to the Ushahidi platform server.'
+                'Please fix the BACKEND_URL in the .env file to connect to the Platform API.'
             )
         );
     }
@@ -109,7 +109,7 @@ module.exports.verifyEndpointStructure = function() {
         });
     }).catch(error => {
         log.error(c.red('The server could not be reached or there was an error in the request'));
-        log.error(c.red('Make sure your platform-api is running'));
+        log.error(c.red('Make sure your Platform API is running'));
         log.error(c.red(error));
     });
 };
@@ -138,7 +138,6 @@ module.exports.verifyOauth = function () {
             case '200':
                 log.info(c.green('All is good. This is the expected result.'));
                 response.json().then(jsonData=>{
-                    log.info(c.bold(`Structure-result for ${response.url}:`));
                     let preferedStructure = { token_type: 'Bearer', expires_in: '', access_token: ''};
                     checkStructure(jsonData, preferedStructure, response.url);
                     checkToken(jsonData.access_token);
@@ -146,17 +145,16 @@ module.exports.verifyOauth = function () {
                 break;
             case '500':
                 log.error(c.red('Oh noes. This does not look good.'));
-                log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
+                log.eror(c.red('Please check storage/logs in the Platform API, and see what the logs say about this error.'));
                 break;
             case '401':
-                log.error(c.red('Make sure your database-migrations has ran'));
+                log.error(c.red('Make sure your database-migrations has ran by running ./phinx migrate in the root directory of the platform API'));
                 log.error(c.red('If you have added your own client id and name, make sure the values in the .env file matches the database.'));
-                log.error(c.red('Make sure your database-migrations has ran'));
                 break;
         }
     }).catch(error => {
         log.error(c.red('The server could not be reached or there was an error in the request'));
-        log.error(c.red('Make sure your platform-api is running'));
+        log.error(c.red('Make sure your Platform API is running'));
         log.error(c.red(error));
     });
 };
@@ -179,21 +177,21 @@ const checkToken = function (token) {
                 break;
             case '500':
                 log.error(c.red('Oh noes. This does not look good.'));
-                log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
+                log.eror(c.red('Please check storage/logs in the Platform API, and see what the logs say about this error.'));
                 break;
             case '401':
                 log.error(c.red('Did you add your own client_secret and client_key?'));
                 log.error(c.red('Make sure you updated the database with the same values'));
-                log.error(c.red('If you did not add your own secret and key, check that the database-migration has ran.'));
+                log.error(c.red('If you did not add your own secret and key, check that the database-migration has ran, by running ./phinx migrate in the root directory of the Platform API.'));
                 break;
             case '403':
                 log.error(c.red('There is a problem with the oauth-scopes'));
-                log.error(c.red('Check that your api is set up and that all migrations has ran.'));
+                log.error(c.red('Check that your Platform API is set up and that all migrations has ran.'));
                 break;
         }
     }).catch(err => {
         log.error(c.red('The server could not be reached or there was an error in the request'));
-        log.error(c.red('Make sure your platform-api is running'));
+        log.error(c.red('Make sure your Platform API is running'));
         log.error(c.red(err));
     });
 };
@@ -214,7 +212,8 @@ const checkStructure = function(a, b, url) {
         log.info(c.green(`The structure for ${url} matches the expected, all good!`));
     } else {
         log.info(c.red(`Oh noes, the structure for ${url} does not match the expected `));
-        log.info(c.red(`Make sure you have set up the database correctly and ran all migrations.`));
+        log.info(c.red(`Make sure you have set up the database correctly `));
+        log.info(c.red(`Check that all migrations has ran. You can check this by running ./phinx migrate in the root directory of the Platform API.`));
     }
 };
 
@@ -229,13 +228,13 @@ const checkStatus = function (url) {
                     break;
                   case '500':
                     log.error(c.red('Oh noes. This does not look good.'));
-                    log.eror(c.red('Please check storage/logs in the platform-api, and see what the API logs say about this error.'));
+                    log.eror(c.red('Please check storage/logs in the Platform API, and see what the logs say about this error.'));
                     break;
                   case '404':
-                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
+                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your Platform API.'));
                     break;
                   case '403':
-                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your platform API.'));
+                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your Platform API.'));
                     break;
                 }
                 return response;
