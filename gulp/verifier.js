@@ -159,6 +159,22 @@ module.exports.verifyOauth = function () {
     });
 };
 
+module.exports.verifyAPIEnvs = function () {
+    if (isCheckDisabled('ENDPOINTS_STRUCTURE')) {
+        log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STRUCTURE, skipping ENDPOINTS_STRUCTURE verification process.'));
+        return;
+    }
+    verifyAPI('api/v3/verifier/env');
+};
+
+module.exports.verifyDbConnection = function () {
+    if (isCheckDisabled('ENDPOINTS_STRUCTURE')) {
+        log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STRUCTURE, skipping ENDPOINTS_STRUCTURE verification process.'));
+        return;
+    }
+    verifyAPI('api/v3/verifier/db');
+};
+
 const checkToken = function (token) {
     fetch(`${process.env.BACKEND_URL}/api/v3/forms`, {
         method: 'GET',
@@ -215,6 +231,17 @@ const checkStructure = function(a, b, url) {
         log.info(c.red(`Make sure you have set up the database correctly `));
         log.info(c.red(`Check that all migrations has ran. You can check this by running ./phinx migrate in the root directory of the Platform API.`));
     }
+};
+const verifyAPI = function (url) {
+    fetch(`${process.env.BACKEND_URL}/${url}`)
+    .then(response=>{
+        log.info(c.bold(`Verifier result for ${response.url}:`));
+            response.json()
+            .then(data => {
+                log.info(data);
+            });
+        });
+
 };
 
 const checkStatus = function (url) {

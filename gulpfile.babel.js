@@ -265,4 +265,6 @@ gulp.task('verify', () => {
   verifier.verifyEndpointStatus();
   verifier.verifyEndpointStructure();
   verifier.verifyOauth();
+  verifier.verifyAPIEnvs();
+  verifier.verifyDbConnection();
 });
