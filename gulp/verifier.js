@@ -1,47 +1,45 @@
 
 import log       from 'fancy-log';
 import c         from 'ansi-colors';
-import isUrl from 'is-url';
-import fs        from 'fs';
 import fetch from 'node-fetch';
 import * as forms from '../mocked_backend/api/v3/forms.json';
 import * as tags from '../mocked_backend/api/v3/tags.json';
 import * as features from '../mocked_backend/api/v3/config/features.json';
 import * as map from '../mocked_backend/api/v3/config/map.json';
+import * as verifier from '../app/common/verifier/verifier.js';
 
 module.exports.verifyNetwork = function() {
-    if (isCheckDisabled('NETWORK')) {
-      log.info(c.green('USH_DISABLE_CHECKS contains NETWORK, skipping API connectivity verification process.'));
-      return;
+    let checkDisabled = verifier.isCheckDisabled('NETWORK');
+    if (checkDisabled) {
+        log.info(c.bold('Checking network:'));
+        formatMessage(checkDisabled.messages, checkDisabled.type);
+        return;
     }
-    checkStatus('api/v3/config');
+
+    verifier.verifyStatus(`${process.env.BACKEND_URL}/api/v3/config`)
+        .then(response => {
+        log.info(c.bold('Checking network:'));
+        log.info(`The server responded with a ${response.status} code.`);
+        response.messages.forEach(message => {
+            formatMessage(message, response.type);
+        });
+    });
 };
 
 module.exports.verifyEnv = function() {
-    if (isCheckDisabled('ENV')) {
-        log.info(c.green('USH_DISABLE_CHECKS contains ENV, skipping ENV verification process.'));
+    let checkDisabled = verifier.isCheckDisabled('ENV');
+    if (checkDisabled) {
+        log.info(c.bold('Checking .env-variables:'));
+        formatMessage(checkDisabled.messages, checkDisabled.type);
         return;
     }
-    try {
-        fs.accessSync('.env');
-    } catch (e) {
-        log.error(c.red('.env file not found. Please create the .env file in the project\'s root directory.'));
-    }
 
-    if (!process.env.BACKEND_URL) {
-        log.error(
-        c.red('BACKEND_URL not found in .env file. ' +
-                'Please add this URL to the .env file to connect to the Platform API.'
-            )
-        );
-    }
-    if (process.env.BACKEND_URL && !isUrl(process.env.BACKEND_URL)) {
-        log.error(
-        c.red('BACKEND_URL found in .env file. Is not a valid URL.' +
-                'Please fix the BACKEND_URL in the .env file to connect to the Platform API.'
-            )
-        );
-    }
+    let envCheck = verifier.verifyEnv();
+
+    log.info(c.bold(`Checking .env-variables:`));
+    envCheck.messages.forEach(message => {
+        formatMessage(message, envCheck.type);
+    });
 };
 
 module.exports.verifyTransifex = function() {
@@ -49,28 +47,31 @@ module.exports.verifyTransifex = function() {
         log.info(c.green('USH_DISABLE_CHECKS contains TRANSIFEX, skipping TRANSIFEX verification process.'));
         return;
     }
-    if (!process.env.TX_USERNAME || !process.env.TX_PASSWORD) {
-        log.warn(
-        c.yellow('TX_USERNAME and TX_PASSWORD not found in .env file.' +
-                        'This might be ok if you are only using English, ' +
-                        'but it will not allow you to use any other languages.'
-                    )
-        );
-        log.warn(
-        c.yellow('If you need languages other than English, you will need to create a transifex account ' +
-                'and setup the TX_USERNAME and TX_PASSWORD variables in the .env file')
-        );
-    }
+    let transifexCheck = verifier.verifyTransifex();
+    log.info(c.bold(`Checking credentials for Transifex:`));
+    transifexCheck.messages.forEach(message => {
+        formatMessage(message, transifexCheck.type);
+    });
 };
 
 module.exports.verifyEndpointStatus = function() {
-    if (isCheckDisabled('ENDPOINTS_STATUS')) {
-            log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STATUS, skipping ENDPOINTS_STATUS verification process.'));
-            return;
+    let checkDisabled = verifier.isCheckDisabled('ENDPOINT_STATUS');
+    if (checkDisabled) {
+        log.info(c.bold('Checking status for endpoints:'));
+        formatMessage(checkDisabled.messages, checkDisabled.type);
+        return;
     }
     const endpoints = ['tags', 'forms', 'config/features', 'config/map'];
     endpoints.forEach(function(endpoint) {
-        checkStatus(`api/v3/${endpoint}`);
+        verifier.verifyStatus(`${process.env.BACKEND_URL}/api/v3/${endpoint}`)
+        .then(response => {
+            log.info(c.bold('Checking status for endpoints:'));
+            log.info(c.bold(`Status-result for ${response.url}:`));
+            log.info(`The server responded with a ${response.status} code.`);
+            response.messages.forEach(message => {
+                formatMessage(message, response.type);
+            });
+        });
     });
 };
 
@@ -217,31 +218,21 @@ const checkStructure = function(a, b, url) {
     }
 };
 
-const checkStatus = function (url) {
-    fetch(`${process.env.BACKEND_URL}/${url}`)
-            .then(response=>{
-                log.info(c.bold(`Status-result for ${response.url}:`));
-                log.info(`The server responded with a ${response.status} code.`);
-                switch (response.status.toString()) {
-                  case '200':
-                    log.info(c.green('All is good. This is the expected result.'));
-                    break;
-                  case '500':
-                    log.error(c.red('Oh noes. This does not look good.'));
-                    log.eror(c.red('Please check storage/logs in the Platform API, and see what the logs say about this error.'));
-                    break;
-                  case '404':
-                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your Platform API.'));
-                    break;
-                  case '403':
-                    log.error(c.red('Make sure the API\'s BACKEND_URL in the .env file is the base URL to your Platform API.'));
-                    break;
-                }
-                return response;
-              }).catch(error => {
-                log.error(c.red('The server could not be reached or there was an error in the request'));
-                log.error(c.red(error));
-                return error;
-            });
+
+const formatMessage = function(message, type) {
+    switch (type) {
+        case 'confirmation':
+            log.info(c.green(message));
+            break;
+        case 'error':
+            log.error(c.red(message));
+            break;
+        case 'warning':
+            log.warn(c.yellow(message));
+            break;
+        default:
+            log.info(message);
+    }
 };
+
 module.exports.isCheckDisabled = isCheckDisabled;

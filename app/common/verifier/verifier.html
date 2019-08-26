@@ -1,0 +1,34 @@
+
+<!-- <verifier network="networkChecks" endpoints="endpointChecks"></verifier> -->
+
+<main role=main>
+        <div class="main-col">
+            <h1>Installer helper!</h1>
+            <h2>Checking network...</h2>
+            <div>
+                <strong>Status-result for {{networkCheck.url}}</strong>
+                <p>The server responded with a {{networkCheck.status}}-status code</p>    
+                <p ng-repeat="message in networkCheck.messages">{{message}}</p>
+            </div>
+            <h2>Checking endpoints...</h2>
+            <div ng-repeat="endpoint in endpointChecks">
+                <strong>Status-result for {{endpoint.url}}</strong>
+                    <p>The server responded with a {{endpoint.status}}-status code</p>    
+                    <p ng-repeat="message in endpoint.messages">{{message}}</p>
+                </div>
+            <h2>Checking Oauth-endpoint...</h2>
+            <div></div>
+            <h2>Checking environment variables in the client...</h2>
+            <div ng-repeat="result in envCheck.messages">
+                    <p>{{result}}</p>
+                </div>
+            <h2>Checking Transifex</h2>
+            <div ng-repeat="result in transifexCheck.messages">
+                    {{result}}
+            </div>
+            <h2>Checking Database-connection</h2>
+            <div></div>
+            <h2>Checking environment-variables in the API...</h2>
+    </div>
+    </main>
+    

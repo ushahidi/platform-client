@@ -137,5 +137,8 @@
     "ignore": [
       "ushahidi-platform-pattern-library"
     ]
+  },
+  "browser": {
+    "fs": false
   }
 }
