@@ -104,7 +104,8 @@ const verifyEndpointStructure = function (env) {
     return Promise.all(requests)
     .then(function (responses) {
         return responses.map(function (response) {
-            return response.json().then(function (jsonData) {
+            return response.json()
+            .then(function (jsonData) {
                 let structure = {};
                 switch (response.url.substring(response.url.lastIndexOf('/') + 1)) {
                     case 'tags':
@@ -121,6 +122,8 @@ const verifyEndpointStructure = function (env) {
                         break;
                 }
                 return checkStructure(jsonData, structure, response.url);
+            }).catch(error => {
+                return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error]};
             });
         });
     }).catch(error => {
@@ -144,6 +147,28 @@ const verifyOauth = function (env) {
     return {status: verifyStatus(`${env.BACKEND_URL}/oauth/token`, options), structure: checkTokenStructure(env, options), token: testToken(env, options)};
 };
 
+const verifyAPIEnvs = function (env) {
+    return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/env`);
+};
+
+const verifyDbConnection = function (env) {
+    return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/db`);
+};
+
+const checkAPI = function (url) {
+    return fetch(url)
+    .then(response => {
+        return response.json()
+        .then(jsonData => {
+            return jsonData;
+        })
+        .catch(error => {
+            return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error]};
+        });
+    });
+};
+
+
 const checkTokenStructure = function (env, options) {
     return fetch(`${env.BACKEND_URL}/oauth/token`, options)
         .then(function (response) {
@@ -152,14 +177,16 @@ const checkTokenStructure = function (env, options) {
                     return response.json().then(jsonData => {
                             let preferedStructure = { token_type: 'Bearer', expires_in: '', access_token: ''};
                             return checkStructure(jsonData, preferedStructure, response.url);
+                        }).catch(error => {
+                            return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error]};
                         });
                 case '500':
-                    return [{type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.'], url: response.url}];
+                    return {type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.'], url: response.url};
                 case '401':
-                    return [{type: 'error', messages: ['Make sure your database-migrations has ran by running ./phinx migrate in the root directory of the platform API','If you have added your own client id and name, make sure the values in the .env file matches the database.'], url: response.url}];
+                    return {type: 'error', messages: ['Make sure your database-migrations has ran by running ./phinx migrate in the root directory of the platform API','If you have added your own client id and name, make sure the values in the .env file matches the database.'], url: response.url};
             }
         }).catch(error => {
-            return [{type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.', error], url: env.BACKEND_URL}];
+            return {type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.', error], url: env.BACKEND_URL};
         });
 };
 
@@ -168,7 +195,8 @@ const testToken = function (env, options) {
         .then(function (response) {
             switch (response.status.toString()) {
                 case '200':
-                    return response.json().then(jsonData => {
+                    return response.json()
+                    .then(jsonData => {
                         return fetch(`${env.BACKEND_URL}/api/v3/forms`, {
                             method: 'GET',
                             headers: {
@@ -191,14 +219,16 @@ const testToken = function (env, options) {
                         }).catch(err => {
                             return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', err]};
                         });
+                    }).catch(error => {
+                        return {type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.', error], url: `${env.BACKEND_URL}/api/v3/forms`};
                     });
                 case '500':
-                    return [{type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.'], url: `${env.BACKEND_URL}/api/v3/forms`}];
+                    return {type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.'], url: `${env.BACKEND_URL}/api/v3/forms`};
                 case '401':
-                    return [{type: 'error', messages: ['Make sure your database-migrations has ran by running ./phinx migrate in the root directory of the platform API','If you have added your own client id and name, make sure the values in the .env file matches the database.'], url: response.url}];
+                    return {type: 'error', messages: ['Make sure your database-migrations has ran by running ./phinx migrate in the root directory of the platform API','If you have added your own client id and name, make sure the values in the .env file matches the database.'], url: response.url};
             }
         }).catch(error => {
-            return [{type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.', error], url: `${env.BACKEND_URL}/api/v3/forms`}];
+            return {type: 'error', messages: ['Oh noes. This does not look good.', 'Please check storage/logs in the Platform API, and see what the logs say about this error.', error], url: `${env.BACKEND_URL}/api/v3/forms`};
         });
 };
 
@@ -223,5 +253,4 @@ const checkStructure = function (a, b, url) {
 };
 
 module.exports = {
-    verifyStatus, verifyEndpointStatus, verifyEndpointStructure, verifyEnv, verifyOauth, verifyTransifex, isCheckDisabled
-};
+    verifyStatus, verifyEndpointStatus, verifyEndpointStructure, verifyEnv, verifyOauth, verifyTransifex, verifyDbConnection, verifyAPIEnvs, isCheckDisabled};

@@ -4,10 +4,9 @@ module.exports = [
     'CONST',
     'Verifier',
     function ($scope, CONST, Verifier) {
-        $scope.networkCheck;
-        $scope.envCheck;
         $scope.endpointStatuses = [];
         $scope.endpointStructureChecks = [];
+
         function activate() {
             checkNetwork();
             envCheck();
@@ -15,6 +14,8 @@ module.exports = [
             endpointStructureCheck();
             checkTransifex();
             verifyOauth();
+            verifyDbConnection();
+            verifyAPIEnvs();
         }
 
         function checkNetwork() {
@@ -53,6 +54,7 @@ module.exports = [
         function checkTransifex() {
             $scope.transifexCheck = Verifier.verifyTransifex(CONST);
         }
+
         function verifyOauth() {
             let results = Verifier.verifyOauth(CONST);
             results.status.then(status => {
@@ -67,6 +69,22 @@ module.exports = [
             });
             results.token.then(token=> {
                 $scope.oauthToken = token;
+                $scope.$apply();
+            });
+        }
+
+        function verifyDbConnection() {
+            Verifier.verifyDbConnection(CONST)
+            .then(response => {
+                $scope.dbConnection = response;
+                $scope.$apply();
+            });
+        }
+
+        function verifyAPIEnvs() {
+            Verifier.verifyAPIEnvs(CONST)
+            .then(response => {
+                $scope.apiEnvs = response;
                 $scope.$apply();
             });
         }

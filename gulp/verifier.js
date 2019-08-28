@@ -73,9 +73,9 @@ module.exports.verifyEndpointStructure = function() {
     }
     verifier.verifyEndpointStructure(process.env)
         .then(responses => {
+            log.info(c.bold(`Checking endpoint-structures`));
             responses.forEach(response => {
-                response.then(result=>{
-                    log.info(c.bold(`Structure-result for ${result.url}:`));
+                response.then(result => {
                     result.messages.forEach(message => {
                     formatMessage(message, result.type);
                 });
@@ -111,6 +111,38 @@ module.exports.verifyOauth = function () {
         token.messages.forEach(message => {
             formatMessage(message, token.type);
         });
+    });
+};
+
+module.exports.verifyAPIEnvs = function() {
+    verifier.verifyAPIEnvs(process.env)
+    .then(response => {
+        log.info(c.bold(`Checking the environment variables in the API`));
+        if (response.success) {
+           response.success.forEach(result=>{
+               formatMessage(result.message, 'confirmation');
+           });
+        } else if (response.error) {
+            response.error.forEach(result=>{
+                formatMessage(result.message, 'error');
+            });
+        }
+    });
+};
+
+module.exports.verifyDbConnection = function() {
+    verifier.verifyDbConnection(process.env)
+    .then(response => {
+        log.info(c.bold('Checking the database connection'));
+        if (response.success) {
+           response.success.forEach(result=>{
+               formatMessage(result.message, 'confirmation');
+           });
+        } else if (response.error) {
+            response.error.forEach(result=>{
+                formatMessage(result.message, 'error');
+            });
+        }
     });
 };
 

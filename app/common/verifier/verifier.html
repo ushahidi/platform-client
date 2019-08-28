@@ -46,10 +46,25 @@
             </div>
             <div>
                 <h2>Checking Database-connection</h2>
-                <div></div>
+                <div ng-if="dbConnection.success" ng-repeat="result in dbConnection.success">
+                    <p>{{result.message}}</p>
+                    <p>{{result.explainer}}</p>
+                </div>
+                <div ng-if="dbConnection.error" ng-repeat="result in dbConnection.error">
+                        <p>{{result.message}}</p>
+                        <p>{{result.explainer}}</p>
+                    </div>
             </div>
             <div>
                 <h2>Checking environment-variables in the API...</h2>
+                <div ng-if="apiEnvs.success" ng-repeat="result in apiEnvs.success">
+                        <p>{{result.message}}</p>
+                        <p>{{result.explainer}}</p>
+                    </div>
+                    <div ng-if="apiEnvs.error" ng-repeat="result in apiEnvs.error">
+                            <p>{{result.message}}</p>
+                            <p>{{result.explainer}}</p>
+                    </div>
             </div>
         </div>
     </main>
