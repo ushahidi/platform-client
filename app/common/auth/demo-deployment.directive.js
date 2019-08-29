@@ -33,8 +33,12 @@ function DemoDeploymentController(
     $scope.expired = false;
     $scope.days_remaining = 30;
     $scope.loggedin = $rootScope.loggedin;
-
     $scope.upgrade = upgrade;
+    $scope.close = function close() {
+        $rootScope.toggleModalVisible(false, true);
+        $rootScope.$emit('demoslider:close');
+    };
+
     activate();
 
     function activate() {
