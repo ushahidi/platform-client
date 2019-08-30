@@ -50,7 +50,7 @@
                     <p>{{result.message}}</p>
                     <p>{{result.explainer}}</p>
                 </div>
-                <div ng-if="dbConnection.error" ng-repeat="result in dbConnection.error">
+                <div ng-if="dbConnection.errors" ng-repeat="result in dbConnection.errors">
                         <p>{{result.message}}</p>
                         <p>{{result.explainer}}</p>
                     </div>
@@ -61,7 +61,7 @@
                         <p>{{result.message}}</p>
                         <p>{{result.explainer}}</p>
                     </div>
-                    <div ng-if="apiEnvs.error" ng-repeat="result in apiEnvs.error">
+                    <div ng-if="apiEnvs.errors" ng-repeat="result in apiEnvs.errors">
                             <p>{{result.message}}</p>
                             <p>{{result.explainer}}</p>
                     </div>

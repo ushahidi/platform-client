@@ -122,8 +122,8 @@ module.exports.verifyAPIEnvs = function() {
            response.success.forEach(result=>{
                formatMessage(result.message, 'confirmation');
            });
-        } else if (response.error) {
-            response.error.forEach(result=>{
+        } else if (response.errors) {
+            response.errors.forEach(result=>{
                 formatMessage(result.message, 'error');
             });
         }
@@ -138,8 +138,8 @@ module.exports.verifyDbConnection = function() {
            response.success.forEach(result=>{
                formatMessage(result.message, 'confirmation');
            });
-        } else if (response.error) {
-            response.error.forEach(result=>{
+        } else if (response.errors) {
+            response.errors.forEach(result=>{
                 formatMessage(result.message, 'error');
             });
         }
