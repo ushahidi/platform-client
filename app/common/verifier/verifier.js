@@ -1,6 +1,4 @@
-// import log       from 'fancy-log';
 import isUrl from 'is-url';
-import fs from 'fs';
 import fetch from 'node-fetch';
 import * as forms from '../../../mocked_backend/api/v3/forms.json';
 import * as tags from '../../../mocked_backend/api/v3/tags.json';
@@ -59,21 +57,16 @@ const verifyStatus = function (url, options) {
 
 const verifyEnv = function (env) {
     let messages = [];
-    try {
-        // fs is not working in the browser, how handle it?
-        fs.accessSync('.env');
-    } catch (e) {
-        messages.push('.env file not found. Please create the .env file in the project\'s root directory.');
-    }
 
     if (!env.BACKEND_URL) {
-        messages.push('BACKEND_URL not found in .env file.', 'Please add this URL to the .env file to connect to the Platform API.');
+        messages.push('BACKEND_URL not found in .env file.', 'Check you have added a .env file and that it contains the BACKEND_URL to connect to the Platform API.');
     }
 
     if (env.BACKEND_URL && !isUrl(env.BACKEND_URL)) {
         messages.push('BACKEND_URL found in .env file. Is not a valid URL.',
         'Please fix the BACKEND_URL in the .env file to connect to the Platform API.');
     }
+
     return messages.length > 0 ? {type: 'error', messages: messages} : {type: 'confirmation', messages: ['All good, the .env file contains required variables']};
 };
 
@@ -97,37 +90,34 @@ const verifyEndpointStatus = function (env) {
 
 const verifyEndpointStructure = function (env) {
     const endpoints = ['tags', 'forms', 'config/features', 'config/map'];
-    const requests = endpoints.map(function (endpoint) {
-        return fetch(`${env.BACKEND_URL}/api/v3/${endpoint}`);
-    });
-
-    return Promise.all(requests)
-    .then(function (responses) {
-        return responses.map(function (response) {
-            return response.json()
-            .then(function (jsonData) {
-                let structure = {};
-                switch (response.url.substring(response.url.lastIndexOf('/') + 1)) {
-                    case 'tags':
-                        structure = tags.default;
-                        break;
-                    case 'forms':
-                        structure = forms.default;
-                        break;
-                    case 'features':
-                        structure = features.default;
-                        break;
-                    case 'map':
-                        structure = map.default;
-                        break;
-                }
-                return checkStructure(jsonData, structure, response.url);
-            }).catch(error => {
-                return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error]};
-            });
+    return endpoints.map(function (endpoint) {
+        return fetch(`${env.BACKEND_URL}/api/v3/${endpoint}`)
+            .then(function (response) {
+                    return response.json()
+                        .then(function (jsonData) {
+                            let structure = {};
+                            switch (endpoint) {
+                                case 'tags':
+                                    structure = tags.default;
+                                    break;
+                                case 'forms':
+                                    structure = forms.default;
+                                    break;
+                                case 'config/features':
+                                    structure = features.default;
+                                    break;
+                                case 'config/map':
+                                    structure = map.default;
+                                    break;
+                            }
+                            return checkStructure(jsonData, structure, response.url);
+                        }).catch(error => {
+                        return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error], url: `${env.BACKEND_URL}/api/v3/${endpoint}`};
+                    });
+                })
+        .catch(error => {
+            return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error], url: `${env.BACKEND_URL}/api/v3/${endpoint}`};
         });
-    }).catch(error => {
-        return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error]};
     });
 };
 

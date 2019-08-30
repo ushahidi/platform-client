@@ -71,17 +71,14 @@ module.exports.verifyEndpointStructure = function() {
             log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STRUCTURE, skipping ENDPOINTS_STRUCTURE verification process.'));
             return;
     }
-    verifier.verifyEndpointStructure(process.env)
-        .then(responses => {
-            log.info(c.bold(`Checking endpoint-structures`));
-            responses.forEach(response => {
+    verifier.verifyEndpointStructure(process.env).forEach(response => {
                 response.then(result => {
+                    log.info(c.bold(`Structure-result for ${result.url}`));
                     result.messages.forEach(message => {
                     formatMessage(message, result.type);
                 });
             });
         });
-    });
 };
 
 module.exports.verifyOauth = function () {

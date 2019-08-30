@@ -1,4 +1,3 @@
-
 module.exports = [
     '$scope',
     'CONST',
@@ -19,8 +18,10 @@ module.exports = [
         }
 
         function checkNetwork() {
-            Verifier.verifyStatus(`${CONST.BACKEND_URL}/api/v3/config`, CONST)
-            .then(response => {
+            Verifier.verifyStatus(
+                `${CONST.BACKEND_URL}/api/v3/config`,
+                CONST
+            ).then(response => {
                 $scope.networkCheck = response;
                 $scope.$apply();
             });
@@ -32,7 +33,7 @@ module.exports = [
 
         function endpointStatusCheck() {
             Verifier.verifyEndpointStatus(CONST).forEach(response => {
-                response.then(result=> {
+                response.then(result => {
                     $scope.endpointStatuses.push(result);
                     $scope.$apply();
                 });
@@ -40,15 +41,12 @@ module.exports = [
         }
 
         function endpointStructureCheck() {
-            Verifier.verifyEndpointStructure(CONST)
-            .then(responses=> {
-                    responses.map(response=> {
-                            response.then(message=> {
-                                $scope.endpointStructureChecks.push(message);
-                                $scope.$apply();
-                            });
-                        });
+            Verifier.verifyEndpointStructure(CONST).forEach(response => {
+                response.then(result => {
+                    $scope.endpointStructureChecks.push(result);
+                    $scope.$apply();
                 });
+            });
         }
 
         function checkTransifex() {
@@ -60,30 +58,26 @@ module.exports = [
             results.status.then(status => {
                 $scope.oauthStatus = status;
                 $scope.$apply();
-
             });
-            results.structure.then(structure=> {
+            results.structure.then(structure => {
                 $scope.oauthStructure = structure;
                 $scope.$apply();
-
             });
-            results.token.then(token=> {
+            results.token.then(token => {
                 $scope.oauthToken = token;
                 $scope.$apply();
             });
         }
 
         function verifyDbConnection() {
-            Verifier.verifyDbConnection(CONST)
-            .then(response => {
+            Verifier.verifyDbConnection(CONST).then(response => {
                 $scope.dbConnection = response;
                 $scope.$apply();
             });
         }
 
         function verifyAPIEnvs() {
-            Verifier.verifyAPIEnvs(CONST)
-            .then(response => {
+            Verifier.verifyAPIEnvs(CONST).then(response => {
                 $scope.apiEnvs = response;
                 $scope.$apply();
             });
@@ -91,4 +85,3 @@ module.exports = [
         activate();
     }
 ];
-
