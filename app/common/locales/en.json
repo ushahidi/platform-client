@@ -122,6 +122,7 @@
         }
     },
     "demo_warnings" : {
+        "close": "Close",
         "visitor": {
             "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
             "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
