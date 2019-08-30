@@ -99,6 +99,7 @@ module.exports = {
     new webpack.DefinePlugin({
         BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined'),
         ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || 'dev'),
+        VERIFIER: JSON.stringify(process.env.VERIFIER || false),
         GIT_COMMIT: JSON.stringify(GIT_COMMIT || false)
     }),
 

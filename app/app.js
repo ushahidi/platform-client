@@ -36,6 +36,7 @@ window.ushahidi = window.ushahidi || {};
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
+    verifier = window.ushahidi.verifier = (window.ushahidi.verifier || VERIFIER),
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
