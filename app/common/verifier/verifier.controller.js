@@ -26,7 +26,7 @@ module.exports = [
         }
 
         function checkNetwork() {
-            const verifyNetwork = Verifier.verifyNetwork(CONST.BACKEND_URL);
+            const verifyNetwork = Verifier.verifyNetwork(CONST);
             if (!verifyNetwork) {
                 $scope.networkCheck = false;
             } else {

@@ -19,7 +19,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "jshint": "jshint .",
     "jscs": "gulp jscs",
-    "jscs-fix": "gulp jscsfix"
+    "jscs-fix": "gulp jscsfix",
+    "verify": "gulp verify"
   },
   "pre-commit": [
     "jshint",
