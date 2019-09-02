@@ -3,10 +3,18 @@ module.exports = [
     'CONST',
     'Verifier',
     function ($scope, CONST, Verifier) {
+        $scope.networkCheck = true;
+        $scope.envCheck = true;
         $scope.endpointStatuses = [];
         $scope.endpointStructureChecks = [];
-        $scope.isCheckDisabled = isCheckDisabled;
+        $scope.transifexCheck = true;
+        $scope.oauthCheck = true;
+        $scope.allDisabled = Verifier.isCheckDisabled(CONST, 'ALL');
+
         function activate() {
+            if ($scope.allDisabled) {
+                return;
+            }
             checkNetwork();
             envCheck();
             endpointStatusCheck();
@@ -18,11 +26,16 @@ module.exports = [
         }
 
         function checkNetwork() {
-            Verifier.verifyNetwork(CONST.BACKEND_URL)
-            .then(response => {
-                $scope.networkCheck = response;
-                $scope.$apply();
-            });
+            const verifyNetwork = Verifier.verifyNetwork(CONST.BACKEND_URL);
+            if (!verifyNetwork) {
+                $scope.networkCheck = false;
+            } else {
+                verifyNetwork
+                .then(response => {
+                    $scope.networkCheck = response;
+                    $scope.$apply();
+                });
+            }
         }
 
         function envCheck() {
@@ -30,21 +43,31 @@ module.exports = [
         }
 
         function endpointStatusCheck() {
-            Verifier.verifyEndpointStatus(CONST).forEach(response => {
-                response.then(result => {
-                    $scope.endpointStatuses.push(result);
-                    $scope.$apply();
+            const endpointStatusCheck = Verifier.verifyEndpointStatus(CONST);
+            if (!endpointStatusCheck) {
+                $scope.endpointStatuses = false;
+            } else {
+                endpointStatusCheck.forEach(response => {
+                    response.then(result => {
+                        $scope.endpointStatuses.push(result);
+                        $scope.$apply();
+                    });
                 });
-            });
+            }
         }
 
         function endpointStructureCheck() {
-            Verifier.verifyEndpointStructure(CONST).forEach(response => {
-                response.then(result => {
-                    $scope.endpointStructureChecks.push(result);
-                    $scope.$apply();
+            const endpointStructureCheck = Verifier.verifyEndpointStructure(CONST);
+            if (!endpointStructureCheck) {
+                $scope.endpointStructureChecks = false;
+            } else {
+                endpointStructureCheck.forEach(response => {
+                    response.then(result => {
+                        $scope.endpointStructureChecks.push(result);
+                        $scope.$apply();
+                    });
                 });
-            });
+            }
         }
 
         function checkTransifex() {
@@ -52,36 +75,48 @@ module.exports = [
         }
 
         function verifyOauth() {
-            let results = Verifier.verifyOauth(CONST);
-            results.status.then(status => {
-                $scope.oauthStatus = status;
-                $scope.$apply();
-            });
-            results.structure.then(structure => {
-                $scope.oauthStructure = structure;
-                $scope.$apply();
-            });
-            results.token.then(token => {
-                $scope.oauthToken = token;
-                $scope.$apply();
-            });
+            const results = Verifier.verifyOauth(CONST);
+            if (!results) {
+                $scope.oauthCheck = false;
+            } else {
+                results.status.then(status => {
+                    $scope.oauthStatus = status;
+                    $scope.$apply();
+                });
+                results.structure.then(structure => {
+                    $scope.oauthStructure = structure;
+                    $scope.$apply();
+                });
+                results.token.then(token => {
+                    $scope.oauthToken = token;
+                    $scope.$apply();
+                });
+            }
         }
 
         function verifyDbConnection() {
-            Verifier.verifyDbConnection(CONST).then(response => {
-                $scope.dbConnection = response;
-                $scope.$apply();
-            });
+            const dbCheck = Verifier.verifyDbConnection(CONST);
+            if (!dbCheck) {
+                $scope.dbConnection = false;
+            } else {
+                dbCheck
+                .then(response => {
+                    $scope.dbConnection = response;
+                    $scope.$apply();
+                });
+            }
         }
 
         function verifyAPIEnvs() {
-            Verifier.verifyAPIEnvs(CONST).then(response => {
-                $scope.apiEnvs = response;
-                $scope.$apply();
-            });
-        }
-        function isCheckDisabled(name) {
-            return Verifier.isCheckDisabled(CONST, name);
+            const apiEnvCheck = Verifier.verifyAPIEnvs(CONST);
+            if (!apiEnvCheck) {
+                $scope.apiEnvs = false;
+            } else {
+                apiEnvCheck.then(response => {
+                    $scope.apiEnvs = response;
+                    $scope.$apply();
+                });
+            }
         }
         activate();
     }

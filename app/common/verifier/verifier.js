@@ -55,17 +55,15 @@ const verifyStatus = function (url, options) {
         });
 };
 const verifyNetwork = function (env) {
-    const disabledCheck = isCheckDisabled(env, 'NETWORK');
-    if (disabledCheck) {
-        return disabledCheck;
+    if (isCheckDisabled(env, 'NETWORK')) {
+        return;
     }
-    return verifyStatus(`${env}/api/v3/config`);
+    return verifyStatus(`${env.BACKEND_URL}/api/v3/config`);
 };
 
 const verifyEnv = function (env) {
-    const disabledCheck = isCheckDisabled(env, 'ENV');
-    if (disabledCheck) {
-        return disabledCheck;
+    if (isCheckDisabled(env, 'ENV')) {
+        return;
     }
 
     let messages = [];
@@ -83,6 +81,9 @@ const verifyEnv = function (env) {
 };
 
 const verifyTransifex = function (env) {
+    if (isCheckDisabled(env, 'TRANSIFEX')) {
+        return;
+    }
     if (!env.TX_USERNAME || !env.TX_PASSWORD) {
         return {type: 'warning', messages: ['TX_USERNAME and TX_PASSWORD not found in .env file. This might be ok if you are only using English, but it will not allow you to use any other languages.', 'If you need languages other than English, you will need to create a transifex account and setup the TX_USERNAME and TX_PASSWORD variables in the .env file']};
     } else {
@@ -91,6 +92,9 @@ const verifyTransifex = function (env) {
 };
 
 const verifyEndpointStatus = function (env) {
+    if (isCheckDisabled(env, 'ENDPOINT_STATUS')) {
+        return;
+    }
     const endpoints = ['tags', 'forms', 'config/features', 'config/map'];
     return endpoints.map(function (endpoint) {
         return verifyStatus(`${env.BACKEND_URL}/api/v3/${endpoint}`)
@@ -101,6 +105,9 @@ const verifyEndpointStatus = function (env) {
 };
 
 const verifyEndpointStructure = function (env) {
+    if (isCheckDisabled(env, 'ENDPOINT_STRUCTURE')) {
+        return;
+    }
     const endpoints = ['tags', 'forms', 'config/features', 'config/map'];
     return endpoints.map(function (endpoint) {
         return fetch(`${env.BACKEND_URL}/api/v3/${endpoint}`)
@@ -134,6 +141,9 @@ const verifyEndpointStructure = function (env) {
 };
 
 const verifyOauth = function (env) {
+    if (isCheckDisabled(env, 'OAUTH')) {
+        return;
+    }
     let body = JSON.stringify({
         grant_type: 'client_credentials',
         client_id: env.OAUTH_CLIENT_ID || 'ushahidiui',
@@ -150,10 +160,16 @@ const verifyOauth = function (env) {
 };
 
 const verifyAPIEnvs = function (env) {
+    if (isCheckDisabled(env, 'API_ENVS')) {
+        return;
+    }
     return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/env`);
 };
 
 const verifyDbConnection = function (env) {
+    if (isCheckDisabled(env, 'DB_CONNECTION')) {
+        return;
+    }
     return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/db`);
 };
 
@@ -239,7 +255,7 @@ const isCheckDisabled = function (env, name) {
         return false;
     }
     const checks = env.USH_DISABLE_CHECKS.split(',');
-    return checks.indexOf(name) >= 0;
+    return checks.indexOf(name) >= 0 || checks.indexOf('ALL') >= 0;
 };
 
 const checkStructure = function (a, b, url) {
