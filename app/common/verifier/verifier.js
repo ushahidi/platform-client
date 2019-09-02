@@ -175,11 +175,11 @@ const verifyDbConnection = function (env) {
 
 const checkAPI = function (url) {
     return fetch(url)
+    .then(json => {
+        return json;
+    })
     .then(response => {
         return response.json();
-    })
-    .then(jsonData => {
-        return jsonData;
     })
     .catch(error => {
         console.log(error);
@@ -192,12 +192,10 @@ const checkAPI = function (url) {
                     explainer: 'Make sure your Platform API is running. <br/>' +
                                 'Check the storage/logs/lumen.log file in the API server root ' +
                                 'directory for details'
-                }
+                },
+                error
             ]
         };
-        if (error !== 'Unexpected token < in JSON at position 0') {
-            errors.errors.push(error);
-        }
         return errors;
     });
 };
