@@ -189,7 +189,7 @@ const checkAPI = function (url) {
                 {
                     type: 'error',
                     message: 'The server could not be reached or there was an error in the request',
-                    explainer: 'Make sure your Platform API is running. <br/>' +
+                    explainer: 'Make sure your Platform API is running.' +
                                 'Check the storage/logs/lumen.log file in the API server root ' +
                                 'directory for details'
                 },
