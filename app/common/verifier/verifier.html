@@ -2,11 +2,16 @@
     <layout-class layout="b"></layout-class>
     <main role="main">
         <div class="main-col">
-            <div class="listing card init">
+                <div class="listing card init" ng-if="isCheckDisabled('ALL')">
+
+                <strong>USH_DISABLE_CHECKS is set to ALL, all verification processes is turned off.</strong>
+                <p>If you believe this is wrong, check the .env file for the variable USH_DISABLE_CHECKS.</p>
+                </div>
+            <div class="listing card init" ng-if="!isCheckDisabled('ALL')">
                 <h1>Installer helper</h1>
                 <p>Check the messages below to get hints while installing the Ushahidi-platform!</p>
                 <div class="listing-item"></div>
-                <div class="listing-item">
+                <div class="listing-item" ng-if="!isCheckDisabled('NETWORK')">
                     <h3 class="list-item-title">Checking network...</h3>
                     <div class="listing-item">
                         <div class="listing-item-primary">
@@ -25,7 +30,7 @@
             </div>
             <div class="listing-item">
                 <h3 class="list-item-title">Checking endpoints...</h3>
-                <div class="listing-item" ng-repeat="endpoint in endpointStatuses">
+                <div class="listing-item" ng-repeat="endpoint in endpointStatuses" ng-if="!isCheckDisabled('ENDPOINT_STATUS')">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
                             <svg class="iconic">
@@ -39,7 +44,7 @@
                         <p ng-repeat="message in endpoint.messages">{{message}}</p>
                     </div>
                 </div>
-                <div class="listing-item" ng-repeat="endpoint in endpointStructureChecks">
+                <div class="listing-item" ng-repeat="endpoint in endpointStructureChecks" ng-if="!isCheckDisabled('ENDPOINT_STRUCTURE')">
                     <div class="listing-item-primary">
                             <div class="listing-item-image">
                                 <svg class="iconic"   >
@@ -53,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="listing-item">
+            <div class="listing-item" ng-if="!isCheckDisabled('OAUTH')">
                 <h3>Checking Oauth-endpoint...</h3>
                 <div class="listing-item">
                     <div class="listing-item-primary">
@@ -96,7 +101,7 @@
                     </div>
                 </div>
             </div>
-            <div class="listing-item">
+            <div class="listing-item" ng-if="!isCheckDisabled('ENV')">
                 <h3>Checking environment variables in the client...</h3>
                 <div class="listing-item">
                     <div class="listing-item-primary">
@@ -113,7 +118,7 @@
                     </div>
                 </div>
             </div>
-            <div class="listing-item">
+            <div class="listing-item" ng-if="!isCheckDisabled('TRANSIFEX')">
                 <h3>Checking Transifex</h3>
                 <div class="listing-item">
                     <div class="listing-item-primary">
@@ -130,7 +135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="listing-item">
+            <div class="listing-item" ng-if="!isCheckDisabled('DBCONNECTION')">
                 <h3>Checking Database-connection</h3>
                 <div class="listing-item">
                     <div class="listing-item-primary">
@@ -151,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            <div class="listing-item">
+            <div class="listing-item" ng-if="!isCheckDisabled('API_ENVS')">
                 <h3>Checking environment-variables in the API...</h3>
                 <div class="listing-item">
                     <div class="listing-item-primary">

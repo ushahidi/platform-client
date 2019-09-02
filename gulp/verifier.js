@@ -3,31 +3,24 @@ import c         from 'ansi-colors';
 import * as verifier from '../app/common/verifier/verifier.js';
 
 module.exports.verifyNetwork = function() {
-    let checkDisabled = verifier.isCheckDisabled('NETWORK');
-    if (checkDisabled) {
-        log.info(c.bold('Checking network:'));
-        formatMessage(checkDisabled.messages, checkDisabled.type);
+    if (verifier.isCheckDisabled(process.env, 'NETWORK')) {
         return;
     }
 
-    verifier.verifyStatus(`${process.env.BACKEND_URL}/api/v3/config`)
+    verifier.verifyNetwork(process.env)
         .then(response => {
-        log.info(c.bold('Checking network:'));
-        log.info(`The server responded with a ${response.status} code.`);
-        response.messages.forEach(message => {
-            formatMessage(message, response.type);
+            log.info(c.bold('Checking network:'));
+            log.info(`The server responded with a ${response.status} code.`);
+            response.messages.forEach(message => {
+                formatMessage(message, response.type);
+            });
         });
-    });
 };
 
 module.exports.verifyEnv = function() {
-    let checkDisabled = verifier.isCheckDisabled('ENV');
-    if (checkDisabled) {
-        log.info(c.bold('Checking .env-variables:'));
-        formatMessage(checkDisabled.messages, checkDisabled.type);
+    if (verifier.isCheckDisabled(process.env, 'ENV')) {
         return;
     }
-
     let envCheck = verifier.verifyEnv(process.env);
     log.info(c.bold(`Checking .env-variables:`));
     envCheck.messages.forEach(message => {
@@ -36,8 +29,7 @@ module.exports.verifyEnv = function() {
 };
 
 module.exports.verifyTransifex = function() {
-    if (isCheckDisabled('TRANSIFEX')) {
-        log.info(c.green('USH_DISABLE_CHECKS contains TRANSIFEX, skipping TRANSIFEX verification process.'));
+    if (verifier.isCheckDisabled(process.env, 'TRANSIFEX')) {
         return;
     }
     let transifexCheck = verifier.verifyTransifex(process.env);
@@ -48,10 +40,7 @@ module.exports.verifyTransifex = function() {
 };
 
 module.exports.verifyEndpointStatus = function() {
-    let checkDisabled = verifier.isCheckDisabled('ENDPOINT_STATUS');
-    if (checkDisabled) {
-        log.info(c.bold('Checking status for endpoints:'));
-        formatMessage(checkDisabled.messages, checkDisabled.type);
+    if (verifier.isCheckDisabled('ENDPOINT_STATUS')) {
         return;
     }
     verifier.verifyEndpointStatus(process.env).forEach(response => {
@@ -67,9 +56,8 @@ module.exports.verifyEndpointStatus = function() {
 };
 
 module.exports.verifyEndpointStructure = function() {
-    if (isCheckDisabled('ENDPOINTS_STRUCTURE')) {
-            log.info(c.green('USH_DISABLE_CHECKS contains ENDPOINTS_STRUCTURE, skipping ENDPOINTS_STRUCTURE verification process.'));
-            return;
+    if (verifier.isCheckDisabled('ENDPOINT_STRUCTURE')) {
+        return;
     }
     verifier.verifyEndpointStructure(process.env).forEach(response => {
                 response.then(result => {
@@ -82,8 +70,7 @@ module.exports.verifyEndpointStructure = function() {
 };
 
 module.exports.verifyOauth = function () {
-    if (isCheckDisabled('VERIFY_OAUTH')) {
-        log.info(c.green('USH_DISABLE_CHECKS contains VERIFY_OAUTH, skipping VERIFY_OAUTH verification process.'));
+    if (verifier.isCheckDisabled(process.env, 'OAUTH')) {
         return;
     }
 
@@ -112,6 +99,9 @@ module.exports.verifyOauth = function () {
 };
 
 module.exports.verifyAPIEnvs = function() {
+    if (verifier.isCheckDisabled(process.env, 'API_ENVS')) {
+        return;
+    }
     verifier.verifyAPIEnvs(process.env)
     .then(response => {
         log.info(c.bold(`Checking the environment variables in the API`));
@@ -128,6 +118,9 @@ module.exports.verifyAPIEnvs = function() {
 };
 
 module.exports.verifyDbConnection = function() {
+    if (verifier.isCheckDisabled(process.env, 'DBCONNECTION')) {
+        return;
+    }
     verifier.verifyDbConnection(process.env)
     .then(response => {
         log.info(c.bold('Checking the database connection'));
@@ -143,12 +136,8 @@ module.exports.verifyDbConnection = function() {
     });
 };
 
-const isCheckDisabled = function(name) {
-    if (!process.env.USH_DISABLE_CHECKS) {
-        return false;
-    }
-    const checks = process.env.USH_DISABLE_CHECKS.split(',');
-    return checks.indexOf(name) >= 0;
+module.exports.isCheckDisabled = function(name) {
+    return verifier.isCheckDisabled(process.env, name);
 };
 
 const formatMessage = function(message, type) {
@@ -166,5 +155,3 @@ const formatMessage = function(message, type) {
             log.info(message);
     }
 };
-
-module.exports.isCheckDisabled = isCheckDisabled;

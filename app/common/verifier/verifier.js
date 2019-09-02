@@ -54,8 +54,20 @@ const verifyStatus = function (url, options) {
             return results;
         });
 };
+const verifyNetwork = function (env) {
+    const disabledCheck = isCheckDisabled(env, 'NETWORK');
+    if (disabledCheck) {
+        return disabledCheck;
+    }
+    return verifyStatus(`${env}/api/v3/config`);
+};
 
 const verifyEnv = function (env) {
+    const disabledCheck = isCheckDisabled(env, 'ENV');
+    if (disabledCheck) {
+        return disabledCheck;
+    }
+
     let messages = [];
 
     if (!env.BACKEND_URL) {
@@ -227,9 +239,7 @@ const isCheckDisabled = function (env, name) {
         return false;
     }
     const checks = env.USH_DISABLE_CHECKS.split(',');
-    if (checks.indexOf(name) >= 0) {
-        return {type: 'warning', messages: `USH_DISABLE_CHECKS contains ${name}, skipping ${name} verification process.`};
-    }
+    return checks.indexOf(name) >= 0;
 };
 
 const checkStructure = function (a, b, url) {
@@ -243,4 +253,4 @@ const checkStructure = function (a, b, url) {
 };
 
 module.exports = {
-    verifyStatus, verifyEndpointStatus, verifyEndpointStructure, verifyEnv, verifyOauth, verifyTransifex, verifyDbConnection, verifyAPIEnvs, isCheckDisabled};
+    verifyNetwork, verifyEndpointStatus, verifyEndpointStructure, verifyEnv, verifyOauth, verifyTransifex, verifyDbConnection, verifyAPIEnvs, isCheckDisabled};

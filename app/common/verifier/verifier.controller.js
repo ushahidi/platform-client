@@ -5,7 +5,7 @@ module.exports = [
     function ($scope, CONST, Verifier) {
         $scope.endpointStatuses = [];
         $scope.endpointStructureChecks = [];
-
+        $scope.isCheckDisabled = isCheckDisabled;
         function activate() {
             checkNetwork();
             envCheck();
@@ -18,10 +18,8 @@ module.exports = [
         }
 
         function checkNetwork() {
-            Verifier.verifyStatus(
-                `${CONST.BACKEND_URL}/api/v3/config`,
-                CONST
-            ).then(response => {
+            Verifier.verifyNetwork(CONST.BACKEND_URL)
+            .then(response => {
                 $scope.networkCheck = response;
                 $scope.$apply();
             });
@@ -81,6 +79,9 @@ module.exports = [
                 $scope.apiEnvs = response;
                 $scope.$apply();
             });
+        }
+        function isCheckDisabled(name) {
+            return Verifier.isCheckDisabled(CONST, name);
         }
         activate();
     }
