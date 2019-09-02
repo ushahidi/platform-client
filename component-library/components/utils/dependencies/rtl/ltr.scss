@@ -1,0 +1,15 @@
+$rtl: false;
+$before: before;
+$after: after;
+$left: left;
+$right: right;
+
+@import "rtl-sass";
+// @import "../../dependencies";
+// // Hack: Include top level styles outside of namespace
+// @import "../../1_atoms/base";
+//
+// .ltr-namespace {
+// 	@import "test";
+// 	@import "../../style";
+// }

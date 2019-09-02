@@ -1,0 +1,28 @@
+// general styles needs to be imported here
+// (maybe there are another way but I never got to that)
+
+@import '../../utils/style.scss';
+
+/* if the styles need to be global and not have
+prefixed classnames, write like this: */
+
+:global {
+    .layout-g {
+
+    // add sass here
+    }
+}
+
+/* if the styles can be local, write like this: */
+
+:global(.layout-g) {
+
+    // add sass here
+
+    /*if one of the selectors need to be global in a
+    local sass-file, write like this for that specific selector:
+    :global(.selector) {
+
+    }
+    */
+}
