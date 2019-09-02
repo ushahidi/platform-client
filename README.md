@@ -130,5 +130,8 @@ Nginx users will have to manually configure rewriting in the site configuration 
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
-Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://www.ushahidi.com/support/get-involved)..
+Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://docs.ushahidi.com/platform-developer-documentation/). 
+
+[Code of Conduct](https://docs.ushahidi.com/platform-developer-documentation/code-of-conduct)
+
 
