@@ -161,14 +161,14 @@ const verifyOauth = function (env) {
 
 const verifyAPIEnvs = function (env) {
     if (isCheckDisabled(env, 'API_ENVS')) {
-        return;
+        return new Promise((resolve, reject) => resolve('DISABLED'));
     }
     return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/env`);
 };
 
 const verifyDbConnection = function (env) {
     if (isCheckDisabled(env, 'DB_CONNECTION')) {
-        return;
+        return new Promise((resolve, reject) => resolve('DISABLED'));
     }
     return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/db`);
 };
@@ -176,13 +176,29 @@ const verifyDbConnection = function (env) {
 const checkAPI = function (url) {
     return fetch(url)
     .then(response => {
-        return response.json()
-        .then(jsonData => {
-            return jsonData;
-        })
-        .catch(error => {
-            return {type: 'error', messages: ['The server could not be reached or there was an error in the request', 'Make sure your Platform API is running', error]};
-        });
+        return response.json();
+    })
+    .then(jsonData => {
+        return jsonData;
+    })
+    .catch(error => {
+        console.log(error);
+
+        const errors = {
+            errors: [
+                {
+                    type: 'error',
+                    message: 'The server could not be reached or there was an error in the request',
+                    explainer: 'Make sure your Platform API is running. <br/>' +
+                                'Check the storage/logs/lumen.log file in the API server root ' +
+                                'directory for details'
+                }
+            ]
+        };
+        if (error !== 'Unexpected token < in JSON at position 0') {
+            errors.errors.push(error);
+        }
+        return errors;
     });
 };
 

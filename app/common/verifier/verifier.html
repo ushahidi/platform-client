@@ -15,15 +15,15 @@
                 <div class="listing-item" ng-if="!networkCheck">
                     <p>Check is disabled. If you think this is incorrect, please check USH_DISABLED_CHECKS in your .env-file.</p>
                 </div>
-                    <div class="listing-item" ng-if="networkCheck">
-                        <div class="listing-item-primary">
-                            <div class="listing-item-image">
-                                <svg class="iconic">
-                                    <use style="fill: #de0000" ng-if="networkCheck.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
-                                    <use style="fill: #4fab2f" ng-if="networkCheck.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
-                                    <use style="fill: #FFC334" ng-if="networkCheck.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                                </svg>
-                            </div>
+                <div class="listing-item" ng-if="networkCheck">
+                    <div class="listing-item-primary">
+                        <div class="listing-item-image">
+                            <svg class="iconic">
+                                <use style="fill: #de0000" ng-if="networkCheck.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
+                                <use style="fill: #4fab2f" ng-if="networkCheck.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
+                                <use style="fill: #FFC334" ng-if="networkCheck.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                        </div>
                         <strong class="list-item-secondary" ng-if="networkCheck.url">Status-result for {{networkCheck.url}}</strong>
                         <p ng-if="networkCheck.status">The server responded with a {{networkCheck.status}}-status code</p>
                         <p class="class="list-item-secondary" ng-repeat="message in networkCheck.messages">{{message}}</p>

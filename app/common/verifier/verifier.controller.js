@@ -95,28 +95,25 @@ module.exports = [
         }
 
         function verifyDbConnection() {
-            const dbCheck = Verifier.verifyDbConnection(CONST);
-            if (!dbCheck) {
-                $scope.dbConnection = false;
-            } else {
-                dbCheck
-                .then(response => {
-                    $scope.dbConnection = response;
+            Verifier.verifyDbConnection(CONST).then(dbCheck => {
+                if (dbCheck === 'DISABLED') {
+                    $scope.dbConnection = false;
+                } else {
+                    $scope.dbConnection = dbCheck;
                     $scope.$apply();
-                });
-            }
+                }
+            });
         }
 
         function verifyAPIEnvs() {
-            const apiEnvCheck = Verifier.verifyAPIEnvs(CONST);
-            if (!apiEnvCheck) {
-                $scope.apiEnvs = false;
-            } else {
-                apiEnvCheck.then(response => {
-                    $scope.apiEnvs = response;
+            Verifier.verifyAPIEnvs(CONST).then(apiEnvCheck => {
+                if (apiEnvCheck === 'DISABLED') {
+                    $scope.apiEnvs = false;
+                } else {
+                    $scope.apiEnvs = apiEnvCheck;
                     $scope.$apply();
-                });
-            }
+                }
+            });
         }
         activate();
     }

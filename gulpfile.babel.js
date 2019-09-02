@@ -92,6 +92,11 @@ gulp.task('build', ['dist']);
  */
 gulp.task('heroku:dev', ['dist']);
 
+gulp.task('watch:verifier', () => {
+  process.env.VERIFIER = true;
+  gulp.run('dev');
+});
+
 gulp.task('dev:verifier', () => {
   process.env.VERIFIER = true;
   gulp.run('dev');

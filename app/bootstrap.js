@@ -9,7 +9,7 @@ angular.lazy()
             .then(function (response) {
                 window.ushahidi.bootstrapConfig = response.data.results;
             });
-        }   
+        }
     }])
     .loading(function () {
         // Show loading
