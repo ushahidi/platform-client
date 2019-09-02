@@ -41,12 +41,15 @@
       <section class="form-sheet">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
-        <div class="form-field title survey-title">
+        <div class="form-field survey">
           <!--  TODO: add placeholder text-->
-            <label class="hidden" translate>survey.survey_name</label>
+            <label translate>survey.survey_name</label>
             <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
 
-            <label class="hidden" translate>app.description</label>
+        </div>
+
+          <div class="form-field survey">
+            <label translate>app.description</label>
             <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
         </div>
 

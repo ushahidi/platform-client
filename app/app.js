@@ -154,12 +154,12 @@ angular.module('app',
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
-    .run(['$rootScope', 'LoadingProgress', '$transitions', function ($rootScope, LoadingProgress, $transitions) {
+    .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
         if (window.ushahidi.gaEnabled) {
             $transitions.onSuccess({}, function (transition) {
-                window.ga('send', 'pageview', transition.to().url);
+                window.ga('send', 'pageview',  $uiRouter.urlRouter.location);
             });
         }
     }])
