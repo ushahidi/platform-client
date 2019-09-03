@@ -1,0 +1,198 @@
+:global {
+    .layout-g {
+
+    .mode-bar {
+    @include clearfix;
+    position: fixed;
+    width: 100%;
+    background-color: $black;
+    @include equal-radius(0);
+    z-index: $modebar;
+
+    @include media($medium) {
+        width: 183px;
+        max-width: 183px;
+        height: 100vh;
+    }
+
+    ul {
+            margin: 0;
+
+            li {
+                list-style-type: none;
+                margin: 0;
+            }
+
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        @include media($medium) {
+            flex-direction: column;
+        }
+    }
+
+    li {
+        position: relative;
+        text-align: center;
+        padding: 15px 0 13px;
+        width: 16.6%;
+
+        @include media($medium) {
+            text-align: inherit;
+            padding: $sm-spacing;
+            width: inherit;
+            height: 55px;
+        }
+
+        &:hover {
+            cursor: hand;
+
+            svg.iconic {
+                fill: $gold;
+            }
+
+            a {
+                color: $gold;
+            }
+        }
+
+        &.active {
+            border-bottom: 4px solid $gold;
+
+            @include media($medium) {
+                @include border-left(4px solid $gold);
+                border-bottom: none;
+                @include padding-left(9px);
+            }
+
+            svg.iconic {
+                fill: $gold;
+            }
+
+            a {
+                color: $gold;
+            }
+        }
+
+        svg.iconic {
+            position: relative;
+            top: 6px;
+            width: $sm-spacing+2;
+            height: $sm-spacing+2;
+            fill: $bg-white;
+            @include transition(0.3s);
+        }
+
+        a {
+            display: block;
+            color: $bg-white;
+            font-size: em(11px);
+            @include transition(0.3s);
+            padding: $tiny-spacing/2 0;
+
+            @include media($medium) {
+                display: inline-block;
+                position: absolute;
+                top: 16px;
+                margin-left: 10px;
+                font-size: em(16px);
+            }
+        }
+
+        &.more-menu-trigger {
+
+            svg.iconic,
+            a {
+
+                @include media($medium) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .account-menu {
+        background: $dark-blue;
+        display: none;
+
+        @include media($medium) {
+            display: block;
+            background: $black;
+        }
+
+        li {
+
+            @include media($medium) {
+                height: 34px;
+            }
+        }
+
+        svg.iconic {
+            width: 13px;
+            height: 13px;
+        }
+
+        a {
+            font-size: em(13px);
+        }
+    }
+
+    &.active {
+
+        .account-menu {
+            position: absolute;
+            top: -65px;
+            width: 100%;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+        }
+    }
+
+    .made-by-logo {
+
+        @include media($medium) {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: $sm-spacing;
+        }
+
+        a {
+            position: relative;
+            margin: 0;
+            top: 0;
+        }
+
+        img {
+            width: 30px;
+
+            @include media($medium) {
+                position: absolute;
+                width: 20px;
+            }
+
+        }
+
+        span {
+            display: none;
+            color: $bg-white;
+            font-size: 14px;
+            @include padding-left(30px);
+            line-height: 1.4;
+
+            @include media($medium) {
+                display: block;
+            }
+        }
+    }
+}
+
+}}

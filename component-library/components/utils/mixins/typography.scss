@@ -5,7 +5,7 @@
 }
 
 @mixin typeAlpha {
-    font-weight: 800;
+    font-weight: $bold;
     font-size: 20px;
     font-size: 1.428571429rem;
     line-height: 1.3em;

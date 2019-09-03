@@ -4,7 +4,7 @@ import { storiesOf } from "@storybook/react";
 import ListItem from "../../molecules/listitem/listitem";
 import FormField from "../../molecules/formfields/formfield";
 import Fieldset from "../../molecules/formfields/fieldset";
-import Label from "../../atoms/label/label";
+import Label from "../../atoms/formelements/label/label";
 
 storiesOf("1 Atoms/Typography/Headings", module)
     .add("h1", () => <h1>This is heading 1</h1>)

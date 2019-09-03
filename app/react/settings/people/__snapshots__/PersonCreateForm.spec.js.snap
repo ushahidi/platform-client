@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A Person Form without roles displays loading instead 1`] = `
+<main
+  role="main"
+>
+  <div>
+    <h3>
+      Add people to Ushahidi
+    </h3>
+    <p>
+      Add members of your team, stakeholders, and other members of your community to Ushahidi.
+    </p>
+  </div>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="realname"
+    >
+      Name
+      <input
+        id="realname"
+        onChange={[Function]}
+        placeholder="What is this person's full name"
+        required={true}
+        type="text"
+        value=""
+      />
+    </label>
+    <label
+      htmlFor="email"
+    >
+      Email
+      <input
+        id="email"
+        onChange={[Function]}
+        placeholder="email"
+        required={true}
+        type="text"
+        value=""
+      />
+    </label>
+    <label
+      htmlFor="password"
+    >
+      Password
+      <input
+        id="password"
+        onChange={[Function]}
+        placeholder="password"
+        required={true}
+        type="password"
+        value=""
+      />
+    </label>
+    <p>
+      Loading...
+    </p>
+    <a
+      href="/settings/users"
+      onClick={[Function]}
+    >
+      <button
+        className="button-beta"
+      >
+        Cancel
+      </button>
+    </a>
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</main>
+`;
+
+exports[`a Person Form with roles displays roles correctly 1`] = `
+<main
+  role="main"
+>
+  <div>
+    <h3>
+      Add people to Ushahidi
+    </h3>
+    <p>
+      Add members of your team, stakeholders, and other members of your community to Ushahidi.
+    </p>
+  </div>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      htmlFor="realname"
+    >
+      Name
+      <input
+        id="realname"
+        onChange={[Function]}
+        placeholder="What is this person's full name"
+        required={true}
+        type="text"
+        value=""
+      />
+    </label>
+    <label
+      htmlFor="email"
+    >
+      Email
+      <input
+        id="email"
+        onChange={[Function]}
+        placeholder="email"
+        required={true}
+        type="text"
+        value=""
+      />
+    </label>
+    <label
+      htmlFor="password"
+    >
+      Password
+      <input
+        id="password"
+        onChange={[Function]}
+        placeholder="password"
+        required={true}
+        type="password"
+        value=""
+      />
+    </label>
+    <label
+      htmlFor="role"
+    >
+      Role
+      <select
+        id="role"
+        onChange={[Function]}
+        value=""
+      >
+        <option
+          default={true}
+          disabled={true}
+          value=""
+        >
+          Select A Value...
+        </option>
+        <option
+          selected=""
+          value="email"
+        />
+      </select>
+    </label>
+    <a
+      href="/settings/users"
+      onClick={[Function]}
+    >
+      <button
+        className="button-beta"
+      >
+        Cancel
+      </button>
+    </a>
+    <button
+      type="submit"
+    >
+      Submit
+    </button>
+  </form>
+</main>
+`;

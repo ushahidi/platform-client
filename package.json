@@ -57,7 +57,8 @@
   "devDependencies": {
     "@storybook/addon-a11y": "^3.4.8",
     "@storybook/addon-actions": "^3.4.7",
-    "@storybook/addon-info": "^3.4.7",
+    "@storybook/addon-info": "^3.4.8",
+    "@storybook/addon-options": "^3.4.8",
     "@storybook/addon-viewport": "^3.4.8",
     "@storybook/react": "^3.4.8",
     "@uirouter/visualizer": "^5.0.0",
@@ -132,7 +133,6 @@
     "prettier": "^1.12.1",
     "protractor": "^5.1.1",
     "raw-loader": "^0.5.1",
-    "react-storybook-addon-chapters": "^2.1.5",
     "react-test-renderer": "^16.3.2",
     "redux-mock-store": "^1.5.1",
     "resolve-url-loader": "^2.0.2",
@@ -184,9 +184,13 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-form": "^3.5.5",
+    "react-modal": "^3.4.5",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-router-navigation-prompt": "^1.6.3",
+    "react-validate-form": "^1.0.6",
     "react2angular": "^3.2.1",
     "redux": "^4.0.0",
     "redux-create-reducer": "^1.1.2",
@@ -195,7 +199,7 @@
     "sortablejs": "^1.7.0",
     "storybook": "^1.0.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "3.11.0-rc.4"
+    "ushahidi-platform-pattern-library": "3.11.0-rc.5-prefixed"
   },
   "engines": {
     "node": ">=4.0"

@@ -1,0 +1,127 @@
+.leaflet-container {
+    @include typeBase;
+    font-size: 14px !important;
+    font-size: 1rem;
+    font-family: $base-font-family !important;
+
+    a {
+        color: $dark-blue !important;
+    }
+
+    img {
+      max-width: none !important;
+    }
+
+    .postcard-field img.postcard-image {
+        max-width: 100% !important;
+    }
+
+    .dropdown-menu li a:hover {
+        color: $bg-white !important;
+    }
+
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+        @include no-shadow;
+        background: none;
+        padding: 0;
+    }
+
+    .leaflet-popup-content {
+        margin: 0;
+    }
+
+    a.leaflet-popup-close-button {
+        display: none;
+    }
+
+    .custom-map-marker {
+        // position: relative;
+
+        svg.iconic {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            stroke: rgba(0,0,0,.24);
+            stroke-width: 0.24;
+            -webkit-filter: drop-shadow(0 8px 6px rgba(0,0,0,0.64));
+            filter: drop-shadow(0 8px 6px rgba(0,0,0,0.64));
+        }
+
+        .iconic-bg {
+            display: inline-block;
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            z-index: -1;
+            width: 16px;
+            height: 16px;
+            background-color: $bg-white;
+            margin-left: -8px;
+
+            &:before {
+                content: '';
+                position: absolute;
+                z-index: $body;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0,0,0,0.56);
+//                @include vert-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4));
+            }
+        }
+
+/*
+        &:after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            z-index: -1;
+            width: 16px;
+            height: 16px;
+            background-color: $bg-white;
+            margin-left: -8px;
+        }
+*/
+        &.selected {
+
+/*
+            &:after {
+                width: 24px;
+                height: 24px;
+                margin-left: -12px;
+            }
+*/
+            .iconic-bg {
+                width: 21px;
+                height: 21px;
+                margin-left: -10px;
+            }
+        }
+    }
+
+    .leaflet-control-container {
+
+        .leaflet-right {
+
+            .leaflet-control {
+                margin: 0 $sm-spacing $sm-spacing;
+            }
+
+            .leaflet-control-attribution {
+                margin: 0;
+            }
+
+            @include media($small-down) {
+                right: auto;
+                left: 0;
+
+                .leaflet-control {
+                    float: left;
+                }
+            }
+        }
+    }
+}

@@ -164,10 +164,31 @@ module.exports = [
                 template: categoriesEdit
             })
             .state({
-                name: "settings.createUser",
+                name: "settings.users",
+                url: "/settings/users",
+                controller: usersController,
+                template: users
+            })
+            .state({
+                abstract: true,
+                name: "settings.react"
+            })
+            .state({
+                name: "settings.react.createUser",
                 url: "/settings/users/create",
-                controller: [() => {}],
-                template: "<person-container></person-container>"
+                controller: [
+                    "$location",
+                    "$window",
+                    ($location, $window) => {
+                        $window.history.pushState(
+                            null,
+                            "any",
+                            $location.absUrl()
+                        );
+                    }
+                ],
+                template:
+                    "<layout-class layout='g'></layout-class><person-container></person-container>"
             })
             .state({
                 name: "settings.usersList",

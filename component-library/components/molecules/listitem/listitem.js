@@ -2,7 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-import listitem from "./listitem.scss";
+import "./listitem.scss";
 
 const propTypes = {
     className: PropTypes.string,
@@ -11,7 +11,7 @@ const propTypes = {
 
 const ListItem = props => {
     const { className, children, ...customProps } = props;
-    const classProps = classnames(listitem["list-item"], listitem[className]);
+    const classProps = classnames("list-item", className);
     return (
         <li {...customProps} className={classProps}>
             {children}

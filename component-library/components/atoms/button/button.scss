@@ -3,7 +3,9 @@
 /*------------------------------------*\
 $BUTTONS
 \*------------------------------------*/
+
 :global(.layout-g) {
+
     button,
     .button,
     input[type="button"] {
@@ -11,10 +13,10 @@ $BUTTONS
         display: inline-block;
         outline: none;
         font-family: $base-font-family;
-        font-weight: 800;
-        font-size: em(14px);
+        font-weight: $bold;
+        font-size: em(16px);
         text-align: center;
-        text-transform: uppercase;
+        text-transform: capitalize;
         text-decoration: none;
         line-height: 1.35;
         letter-spacing: 1px;
@@ -59,15 +61,15 @@ $BUTTONS
         &.button-loading {
             position: relative;
             padding-top: 14px;
+            background-color: $disabled-gray;
+            border-color: $disabled-gray;
 
             .loading-bar {
-                top: 0;
-                @include left(0);
-                border-radius: 5px;
-
-                &:after {
-                    content: none;
-                }
+                position: absolute;
+                top: -3px;
+                @include left(-3px);
+                height: 8px;
+                border-radius: 2px 6px 6px 0;
             }
         }
 
@@ -81,11 +83,8 @@ $BUTTONS
             }
 
             &.button-loading {
-
-                .loading-bar {
-                    top: 2px;
-                    @include left(2px);
-                }
+                color: $disabled-gray;
+                border-color: $disabled-gray;
             }
 
         }
@@ -98,6 +97,11 @@ $BUTTONS
             &:focus {
                 color: darken( $accent-purple, 10% );
                 background-color: transparent;
+                border: 3px solid transparent;
+            }
+
+            &:visited {
+                color: $dark-gray;
             }
         }
 
@@ -118,8 +122,9 @@ $BUTTONS
 
         &.button-loading {
 
-            .loading-bar {
-                background-color: $black;
+            &:hover {
+                background-color: $disabled-gray;
+                border-color: $disabled-gray;
             }
         }
 
@@ -133,12 +138,7 @@ $BUTTONS
             }
 
             &.button-loading {
-
-                .loading-bar {
-                    top: 2px;
-                    @include left(2px);
-                    background-color: $gold;
-                }
+                border-color: $disabled-gray;
             }
         }
 
@@ -180,7 +180,7 @@ $BUTTONS
         }
     }
 
-    .button-group {
+    :global(.button-group) {
         @include direction
         margin-top: $sm-spacing;
         margin-bottom: $lg-spacing;

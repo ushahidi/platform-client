@@ -1,11 +1,10 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import ListItem from "../../molecules/listitem/listitem";
-import Form from "./form";
 import FormField from "../../molecules/formfields/formfield";
-import Label from "../../atoms/label/label";
-import Input from "../../atoms/input/input";
-import Dropdown from "../../atoms/dropdown/dropdown";
+import Label from "../../atoms/formelements/label/label";
+import Input from "../../atoms/formelements/input/input";
+import Dropdown from "../../atoms/formelements/dropdown/dropdown";
 import Button from "../../atoms/button/button";
 
 storiesOf("3 Organisms/Forms", module).add("with multiple fields", () => (
@@ -18,7 +17,7 @@ storiesOf("3 Organisms/Forms", module).add("with multiple fields", () => (
             </p>
         </ListItem>
         <ListItem>
-            <Form>
+            <form>
                 <FormField>
                     <Label className="form-field" htmlFor="name">
                         Name
@@ -97,7 +96,7 @@ storiesOf("3 Organisms/Forms", module).add("with multiple fields", () => (
                     Cancel
                 </Button>
                 <Button type="submit">Add person</Button>
-            </Form>
+            </form>
         </ListItem>
     </div>
 ));

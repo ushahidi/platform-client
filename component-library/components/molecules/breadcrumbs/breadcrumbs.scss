@@ -1,34 +1,38 @@
 @import '../../utils/style.scss';
 
-:global(.layout-g) {
-    .breadcrumbs {
-        @extend .list-reset;
-        padding: $lg-spacing;
+:global {
 
-        @include media($medium) {
-            padding: $lg-spacing 0;
-        }
+    .layout-g {
 
-        li {
-            display: inline-block;
-            @include direction;
+        .breadcrumbs {
+            @extend .list-reset;
+            padding: $lg-spacing;
 
-            &:after {
-                content: '\003e';
-                color: $dark-gray;
-                margin: 0 $tiny-spacing;
+            @include media($medium) {
+                padding: $lg-spacing 0;
             }
 
-            &:last-child {
+            li {
+                display: inline-block;
+                @include direction;
 
                 &:after {
-                    content: none;
+                    content: '\003e';
+                    color: $dark-gray;
+                    margin: 0 $tiny-spacing;
                 }
 
-            }
+                &:last-child {
 
-            a:visited {
-                color: $link-blue;
+                    &:after {
+                        content: none;
+                    }
+
+                }
+
+                a:visited {
+                    color: $link-blue;
+                }
             }
         }
     }

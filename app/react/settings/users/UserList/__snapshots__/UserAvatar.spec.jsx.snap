@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders the default gravatar-id if user-avatar is not available 1`] = `
+<img
+  alt="Test"
+  className="avatar"
+  src="https://www.gravatar.com/avatar/00000000000000000?d=retro"
+/>
+`;
+
+exports[`it renders the users avatar if it is available 1`] = `
+<img
+  alt="Test"
+  className="avatar"
+  src="https://www.gravatar.com/avatar/58dd1606bc6bd9d28f57b61cb705ff3a?d=retro"
+/>
+`;

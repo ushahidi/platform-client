@@ -14,5 +14,6 @@ test("the handleChange method updates the input value", () => {
     );
     expect(peopleListContainer.find("PeopleToolbarContainer").length).toBe(1);
     expect(peopleListContainer.find("SettingsSearch").length).toBe(1);
+
     expect(peopleListContainer.find("PeopleList").length).toBe(1);
 });
