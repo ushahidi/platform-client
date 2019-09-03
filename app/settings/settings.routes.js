@@ -187,7 +187,15 @@ module.exports = [
                         );
                     }
                 ],
-                template: "<layout-class layout='g'></layout-class><person-container></person-container>"
+                template:
+                    "<layout-class layout='g'></layout-class><person-container></person-container>"
+            })
+            .state({
+                name: "settings.usersList",
+                url: "/settings/users",
+                controller: [() => {}],
+                template:
+                    '<layout-class layout="g"></layout-class><people-list-container></people-list-container>'
             })
             .state({
                 name: "settings.users.edit",

@@ -2,6 +2,7 @@ import { react2angular } from "react2angular";
 import angular from "angular";
 import TestRouteContainer from "./TestRouteContainer";
 import PersonContainer from "../react/settings/people/PersonContainer";
+import PeopleListContainer from "../react/settings/people/PeopleListContainer";
 import UserListContainer from "../react/settings/users/UserList/UserListContainer";
 import UserAvatar from "../react/settings/users/UserList/UserAvatar";
 import UserName from "../react/settings/users/UserList/UserName";
@@ -52,6 +53,7 @@ angular
 
     .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
     .component("personContainer", react2angular(PersonContainer))
+    .component("peopleListContainer", react2angular(PeopleListContainer))
     .component("userListContainer", react2angular(UserListContainer))
     .component("userAvatar", react2angular(UserAvatar), ["avatar", "realname"])
     .component("userName", react2angular(UserName), ["user"])

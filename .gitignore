@@ -24,3 +24,4 @@ server/www/
 app/locales/
 package-lock.json
 app/stats.html
+storybook-static

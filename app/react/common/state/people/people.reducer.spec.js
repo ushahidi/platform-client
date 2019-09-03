@@ -3,7 +3,8 @@ import PeopleReducer from "./people.reducers";
 import {
     RECEIVE_PERSON,
     SAVE_NEW_PERSON,
-    HANDLE_REQUEST_FAILURE
+    HANDLE_REQUEST_FAILURE,
+    RECEIVE_PEOPLE
 } from "./people.actions";
 
 const error = {
@@ -35,7 +36,7 @@ const person = {
     ],
     gravatar: "c1fa5461d96de458f87f6f9e82903587"
 };
-
+const people = { results: [person, person] };
 const initialState = {
     people: [],
     error: {},
@@ -65,6 +66,25 @@ describe("People Reducer: Saving a person", () => {
         };
         const stateAfter = {
             people: [person],
+            error: {},
+            isSaving: false
+        };
+
+        const stateBefore = initialState;
+        deepFreeze(stateBefore);
+        deepFreeze(stateAfter);
+        deepFreeze(action);
+        expect(PeopleReducer(stateBefore, action)).toEqual(stateAfter);
+    });
+});
+describe("People Reducer: Fetching people", () => {
+    test("RECEIVE_PEOPLE resets the people list to have the result of getting all users in the state array ", () => {
+        const action = {
+            type: RECEIVE_PEOPLE,
+            people
+        };
+        const stateAfter = {
+            people: people.results,
             error: {},
             isSaving: false
         };

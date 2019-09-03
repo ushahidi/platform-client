@@ -1,5 +1,5 @@
 /* we don't need to use this navbar until we migrate it.
-* This is just a start. HTML is right now rendered in angular */
+ * This is just a start. HTML is right now rendered in angular */
 import * as React from "react";
 
 import Icon from "../../atoms/icon/icon";

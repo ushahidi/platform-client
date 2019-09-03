@@ -2,6 +2,7 @@ import { createReducer } from "redux-create-reducer";
 import {
     SAVE_NEW_PERSON,
     RECEIVE_PERSON,
+    RECEIVE_PEOPLE,
     HANDLE_REQUEST_FAILURE
 } from "./people.actions";
 
@@ -25,6 +26,10 @@ export default createReducer(initialState, {
         ...state,
         people: [...state.people, action.person],
         isSaving: false
+    }),
+    [RECEIVE_PEOPLE]: (state, action) => ({
+        ...state,
+        people: action.people.results
     })
 });
 
