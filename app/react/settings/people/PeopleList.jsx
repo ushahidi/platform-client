@@ -2,6 +2,12 @@
 
 import React from "react";
 
-const PeopleList = () => <p>I'm a list</p>;
+const PeopleList = () => (
+    <main role="main">
+        <div>
+            <p>Im a list</p>
+        </div>
+    </main>
+);
 
 export default PeopleList;

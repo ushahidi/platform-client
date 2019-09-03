@@ -176,9 +176,18 @@ module.exports = [
             .state({
                 name: "settings.react.createUser",
                 url: "/settings/users/create",
-                controller: [() => {}],
-                template:
-                    "<layout-class layout='g'></layout-class><person-container></person-container>"
+                controller: [
+                    "$location",
+                    "$window",
+                    ($location, $window) => {
+                        $window.history.pushState(
+                            null,
+                            "any",
+                            $location.absUrl()
+                        );
+                    }
+                ],
+                template: "<layout-class layout='g'></layout-class><person-container></person-container>"
             })
             .state({
                 name: "settings.users.edit",
