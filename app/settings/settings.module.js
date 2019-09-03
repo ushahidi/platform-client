@@ -52,10 +52,11 @@ angular
     )
 
     .component("testRouteContainer", react2angular(TestRouteContainer, ["id"]))
-    .component("personContainer", react2angular(PersonContainer))
     .component("peopleListContainer", react2angular(PeopleListContainer))
     .component("userListContainer", react2angular(UserListContainer))
     .component("userAvatar", react2angular(UserAvatar), ["avatar", "realname"])
     .component("userName", react2angular(UserName), ["user"])
     .component("userRole", react2angular(UserRole), ["role"])
+    .component("personContainer", react2angular(PersonContainer, ["id"]))
+
     .config(require("./settings.routes.js"));

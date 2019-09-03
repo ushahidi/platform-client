@@ -13,6 +13,10 @@ import {
     getRoles
     // getRoleError
 } from "react/common/state/roles/roles.reducers";
+import {
+    getLoadingState,
+    hasError
+} from "react/common/state/globalHandlers/handlers.reducers";
 import { getPeople } from "react/common/state/people/people.reducers";
 import ListItem from "../../../../component-library/components/molecules/listitem/listitem";
 import Button from "../../../../component-library/components/atoms/button/button";
@@ -73,8 +77,8 @@ function mapStateToProps(state) {
     return {
         people: getPeople(state),
         roles: getRoles(state),
-        isLoadingRoles: isLoadingRoles(state)
-        // error: getRoleError(state)
+        isLoading: getLoadingState(state),
+        hasError: hasError(state)
     };
 }
 

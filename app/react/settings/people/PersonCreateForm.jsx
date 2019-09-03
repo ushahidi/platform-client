@@ -9,7 +9,7 @@ import { Form, Text } from "react-form";
 const propTypes = {
     saveNewPerson: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired,
+    isLoading: PropTypes.object.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired
@@ -124,75 +124,61 @@ class PersonCreateForm extends React.Component {
             return <Redirect to="/settings/users" />;
         }
         return (
-            <main role="main">
-                <div>
-                    <h3>Add people to Ushahidi</h3>
-                    <p>
-                        Add members of your team, stakeholders, and other
-                        members of your community to Ushahidi.
-                    </p>
-                </div>
-                <Form>
-                    {formApi => (
-                        <form onSubmit={formApi.submitForm}>
-                            <NavigationPrompt history={this.props.history} when>
-                                {({ onConfirm, onCancel }) => (
-                                    <NavigationConfirmModal
-                                        isOpen
-                                        message="Are you sure you want to leave this page?"
-                                        onConfirm={onConfirm}
-                                        onCancel={onCancel}
-                                    />
-                                )}
-                            </NavigationPrompt>
-                            <label htmlFor="realname">
-                                Name
-                                <Text
-                                    field="realname"
-                                    type="text"
-                                    placeholder="What is this person's full name"
-                                    id="realname"
-                                    validate={this.validateName}
-                                    value={this.state.form.realname}
-                                    onChange={this.handleChange}
-                                    required
-                                />
-                            </label>
-                            <label htmlFor="email">
-                                Email
-                                <input
-                                    type="text"
-                                    placeholder="email"
-                                    id="email"
-                                    value={this.state.form.email}
-                                    onChange={this.handleChange}
-                                    required
-                                />
-                            </label>
-                            <label htmlFor="password">
-                                Password
-                                <input
-                                    type="password"
-                                    placeholder="password"
-                                    id="password"
-                                    value={this.state.form.password}
-                                    onChange={this.handleChange}
-                                    required
-                                />
-                            </label>
-                            {this.props.isLoadingRoles ? (
-                                <InlineLoading />
-                            ) : (
-                                this.renderRoles()
-                            )}
-                            <Link to="/settings/users">
-                                <button className="button-beta">Cancel</button>
-                            </Link>
-                            <button type="submit">Submit</button>
-                        </form>
-                    )}
-                </Form>
-            </main>
+            <BrowserRouter>
+                <main role="main">
+                    <div>
+                        <h3>Add people to Ushahidi</h3>
+                        <p>
+                            Add members of your team, stakeholders, and other
+                            members of your community to Ushahidi.
+                        </p>
+                    </div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label htmlFor="realname">
+                            Name
+                            <input
+                                type="text"
+                                placeholder="What is this person's full name"
+                                id="realname"
+                                value={this.state.form.realname}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </label>
+                        <label htmlFor="email">
+                            Email
+                            <input
+                                type="text"
+                                placeholder="email"
+                                id="email"
+                                value={this.state.form.email}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </label>
+                        <label htmlFor="password">
+                            Password
+                            <input
+                                type="password"
+                                placeholder="password"
+                                id="password"
+                                value={this.state.form.password}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </label>
+                        {this.props.isLoading.REQUEST_ROLES ? (
+                            <InlineLoading />
+                        ) : (
+                            this.renderRoles()
+                        )}
+                        <Link to="/settings/users">
+                            <button className="button-beta">Cancel</button>
+                        </Link>
+                        <button type="submit">Submit</button>
+                    </form>
+                </main>
+            </BrowserRouter>
         );
     }
 }

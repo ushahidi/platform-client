@@ -7,21 +7,10 @@ import {
 } from "./people.actions";
 
 const initialState = {
-    people: [],
-    error: {},
-    isSaving: false
+    people: {}
 };
 
 export default createReducer(initialState, {
-    [SAVE_NEW_PERSON]: state => ({
-        ...state,
-        isSaving: true
-    }),
-    [HANDLE_REQUEST_FAILURE]: (state, action) => ({
-        ...state,
-        error: action.error,
-        isSaving: false
-    }),
     [RECEIVE_PERSON]: (state, action) => ({
         ...state,
         people: [...state.people, action.person],
@@ -29,10 +18,16 @@ export default createReducer(initialState, {
     }),
     [RECEIVE_PEOPLE]: (state, action) => ({
         ...state,
-        people: action.people.results
+        people: { ...state.people, [action.person.id]: action.person }
     })
 });
 
 export function getPeople(state) {
-    return state.people.people;
+    return Object.keys(state.people.people).map(id => state.people.people[id]);
+}
+
+export function getPerson(state, props) {
+    // @TODO: once we have react router set up to connect to personContainer,
+    // then we need to access id from props.match.params.id
+    return state.people.people[props.id];
 }

@@ -4,11 +4,11 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import expect from "expect";
 import {
-    REQUEST_ROLES,
-    RECEIVE_ROLES,
-    HANDLE_REQUEST_FAILURE,
-    requestRoles
-} from "./roles.actions";
+    HANDLE_REQUEST,
+    HANDLE_SUCCESS,
+    HANDLE_FAILURE
+} from "react/common/state/globalHandlers/handlers.actions";
+import { REQUEST_ROLES, RECEIVE_ROLES, requestRoles } from "./roles.actions";
 
 const error = {
     error: {
@@ -17,18 +17,7 @@ const error = {
 };
 
 const rolesResponse = {
-    results: [
-        {
-            id: 1,
-            url: "http://192.168.33.110/api/v3/roles/1",
-            name: "admin",
-            display_name: "Admin",
-            description: "Administrator",
-            permissions: [],
-            protected: true,
-            allowed_privileges: ["read", "create", "update", "search"]
-        }
-    ]
+    results: [1, 2]
 };
 
 const middlewares = [thunk];
@@ -43,7 +32,7 @@ describe("Role actions", () => {
         moxios.uninstall(instance);
     });
 
-    it("dispatches REQUEST_ROLES and RECEIVE_ROLES when request is successful", () => {
+    it("(requestRoles) creates HANDLE_REQUEST, HANDLE_SUCCESS, and RECEIVE_ROLES when saving a requesting roles is successful", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
@@ -52,7 +41,14 @@ describe("Role actions", () => {
             });
         });
         const expectedActions = [
-            { type: REQUEST_ROLES },
+            {
+                type: HANDLE_REQUEST,
+                previousAction: { type: REQUEST_ROLES }
+            },
+            {
+                type: HANDLE_SUCCESS,
+                previousAction: { type: REQUEST_ROLES }
+            },
             {
                 type: RECEIVE_ROLES,
                 roles: rolesResponse.results
@@ -65,7 +61,7 @@ describe("Role actions", () => {
         });
     });
 
-    it("creates HANDLE_REQUEST_FAILURE when GETting a role fails", () => {
+    it("(requestRoles) creates HANDLE_REQUEST and HANDLE_FAILURE when requesting roles fails", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.reject({
@@ -74,9 +70,13 @@ describe("Role actions", () => {
             });
         });
         const expectedActions = [
-            { type: REQUEST_ROLES },
             {
-                type: HANDLE_REQUEST_FAILURE,
+                type: HANDLE_REQUEST,
+                previousAction: { type: REQUEST_ROLES }
+            },
+            {
+                type: HANDLE_FAILURE,
+                previousAction: { type: REQUEST_ROLES },
                 error
             }
         ];

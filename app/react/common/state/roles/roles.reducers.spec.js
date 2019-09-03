@@ -1,10 +1,6 @@
 import deepFreeze from "deep-freeze";
-import RolesReducer from "./roles.reducers";
-import {
-    REQUEST_ROLES,
-    RECEIVE_ROLES,
-    HANDLE_REQUEST_FAILURE
-} from "./roles.actions";
+import RolesReducer, { getRoles } from "./roles.reducers";
+import { RECEIVE_ROLES } from "./roles.actions";
 
 // test data
 const role = {
@@ -19,39 +15,17 @@ const role = {
 };
 
 const initialState = {
-    roles: [],
-    isLoading: true,
-    error: {}
+    roles: {}
 };
 
 describe("Roles State", () => {
-    test("REQUEST ROLES sets isLoading to true", () => {
-        const action = {
-            type: REQUEST_ROLES
-        };
-        const stateAfter = {
-            roles: [],
-            isLoading: true,
-            error: {}
-        };
-
-        const stateBefore = initialState;
-        // deepFreeze so we can't accidentally mutate our state
-        deepFreeze(stateBefore);
-        deepFreeze(stateAfter);
-        deepFreeze(action);
-        expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
-    });
-
     test("RECEIVE_ROLES adds roles to roles array", () => {
         const action = {
             type: RECEIVE_ROLES,
             roles: [role]
         };
         const stateAfter = {
-            roles: [role],
-            isLoading: false,
-            error: {}
+            roles: { 1: role }
         };
 
         const stateBefore = initialState;
@@ -67,37 +41,33 @@ describe("Roles State", () => {
             roles: [role]
         };
         const stateAfter = {
-            roles: [{ testRole: 1 }, role],
-            isLoading: false,
-            error: {}
+            roles: { 2: { testRole: 2 }, 1: role }
         };
 
         const stateBefore = {
-            roles: [{ testRole: 1 }],
-            isLoading: true,
-            error: {}
+            roles: { 2: { testRole: 2 } }
         };
         deepFreeze(stateBefore);
         deepFreeze(stateAfter);
         deepFreeze(action);
         expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
     });
+});
 
-    test("HANDLE_REQUEST_FAILURE adds roles to roles array with existing data already in store", () => {
-        const action = {
-            type: HANDLE_REQUEST_FAILURE,
-            error: { message: "EVERYTHING WENT WRONG!!!!" }
-        };
-        const stateAfter = {
-            roles: [],
-            isLoading: false,
-            error: { message: "EVERYTHING WENT WRONG!!!!" }
+describe("Roles Selectors", () => {
+    test("getRoles returns an array of roles", () => {
+        const fakeState = {
+            roles: {
+                roles: {
+                    1: { id: 1 },
+                    2: { id: 2 },
+                    3: { id: 3 }
+                }
+            }
         };
 
-        const stateBefore = initialState;
-        deepFreeze(stateBefore);
-        deepFreeze(stateAfter);
-        deepFreeze(action);
-        expect(RolesReducer(stateBefore, action)).toEqual(stateAfter);
+        const expected = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
+        expect(getRoles(fakeState)).toEqual(expected);
     });
 });

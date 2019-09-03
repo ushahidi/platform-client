@@ -1,4 +1,5 @@
 import { react2angular } from "react2angular";
+import FourZeroFour from "react/common/ui/404";
 import MyComponent from "./directives/ush-logo-react/ush-logo.jsx";
 import Util from "./services/util.js";
 import Session from "./auth/session.service.js";
@@ -216,7 +217,8 @@ angular
         }
     ])
 
-    .component("myComponent", react2angular(MyComponent, ['foo', 'baz']));
+    .component("myComponent", react2angular(MyComponent, ['foo', 'baz']))
+    .component("fourZeroFour", react2angular(FourZeroFour));
 
 // Load submodules
 require("./directives/adaptive-input.js");

@@ -4,13 +4,22 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import expect from "expect";
 import {
+    HANDLE_REQUEST,
+    HANDLE_SUCCESS,
+    HANDLE_FAILURE
+} from "react/common/state/globalHandlers/handlers.actions";
+import {
     SAVE_NEW_PERSON,
     RECEIVE_PERSON,
     HANDLE_REQUEST_FAILURE,
     RECEIVE_PEOPLE,
     FETCH_PEOPLE,
     saveNewPerson,
-    fetchPeople
+    fetchPeople,
+    updatePerson,
+    UPDATE_PERSON,
+    REQUEST_PERSON,
+    requestPerson
 } from "./people.actions";
 
 const error = {
@@ -20,35 +29,13 @@ const error = {
 };
 
 const personResponse = {
-    id: 5,
-    url: "https://carolyntest.api.ushahidi.io/api/v3/users/5",
-    email: "testdata@gmail.com",
-    realname: "Test Data",
-    logins: 0,
-    failed_attempts: 0,
-    last_login: null,
-    last_attempt: null,
-    created: "2018-05-16T16:36:24+00:00",
-    updated: null,
-    role: "user",
-    language: null,
-    contacts: [],
-    allowed_privileges: [
-        "read",
-        "create",
-        "update",
-        "delete",
-        "search",
-        "read_full",
-        "register"
-    ],
-    gravatar: "c1fa5461d96de458f87f6f9e82903587"
+    id: 5
 };
 const peopleResponse = [personResponse, personResponse];
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("People actions", () => {
+describe("People Actions", () => {
     beforeEach(() => {
         moxios.install(instance);
     });
@@ -77,6 +64,7 @@ describe("People actions", () => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
+
     it("creates HANDLE_REQUEST_FAILURE when GET people fails", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
@@ -98,7 +86,8 @@ describe("People actions", () => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
-    it("creates RECEIVE_PERSON and SAVE_NEW_PERSON when POST person has been done", () => {
+
+    it("(saveNewUser) creates HANDLE_REQUEST, HANDLE_SUCCESS, and RECEIVE_PERSON when saving a new person is successful", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.respondWith({
@@ -107,7 +96,14 @@ describe("People actions", () => {
             });
         });
         const expectedActions = [
-            { type: SAVE_NEW_PERSON },
+            {
+                type: HANDLE_REQUEST,
+                previousAction: { type: SAVE_NEW_PERSON }
+            },
+            {
+                type: HANDLE_SUCCESS,
+                previousAction: { type: SAVE_NEW_PERSON }
+            },
             {
                 type: RECEIVE_PERSON,
                 person: personResponse
@@ -120,7 +116,7 @@ describe("People actions", () => {
         });
     });
 
-    it("creates HANDLE_REQUEST_FAILURE when POST person fails", () => {
+    it("(saveNewPerson) creates HANDLE_REQUEST and HANDLE_FAILURE when saving a person fails", () => {
         moxios.wait(() => {
             const request = moxios.requests.mostRecent();
             request.reject({
@@ -129,14 +125,126 @@ describe("People actions", () => {
             });
         });
         const expectedActions = [
-            { type: SAVE_NEW_PERSON },
             {
-                type: HANDLE_REQUEST_FAILURE,
+                type: HANDLE_REQUEST,
+                previousAction: { type: SAVE_NEW_PERSON }
+            },
+            {
+                type: HANDLE_FAILURE,
+                previousAction: { type: SAVE_NEW_PERSON },
                 error
             }
         ];
         const store = mockStore({ people: [] });
         return store.dispatch(saveNewPerson()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    it("(updatePerson) creates HANDLE_REQUEST, HANDLE_SUCCESS, and RECEIVE_PERSON when updating a person successfully", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 200,
+                response: personResponse
+            });
+        });
+        const expectedActions = [
+            {
+                type: HANDLE_REQUEST,
+                previousAction: { type: UPDATE_PERSON }
+            },
+            {
+                type: HANDLE_SUCCESS,
+                previousAction: { type: UPDATE_PERSON }
+            },
+            {
+                type: RECEIVE_PERSON,
+                person: personResponse
+            }
+        ];
+        const store = mockStore({ people: [] });
+        return store.dispatch(updatePerson()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+    it("(updatePerson) creates HANDLE_REQUEST and HANDLE_FAILURE when updating a person fails", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.reject({
+                status: 401,
+                response: error
+            });
+        });
+        const expectedActions = [
+            {
+                type: HANDLE_REQUEST,
+                previousAction: { type: UPDATE_PERSON }
+            },
+            {
+                type: HANDLE_FAILURE,
+                previousAction: { type: UPDATE_PERSON },
+                error
+            }
+        ];
+        const store = mockStore({ people: [] });
+        return store.dispatch(updatePerson()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    it("(requestPerson) creates HANDLE_REQUEST, HANDLE_SUCCESS when getting a person record succeeds", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.respondWith({
+                status: 200,
+                response: personResponse
+            });
+        });
+        const expectedActions = [
+            {
+                type: HANDLE_REQUEST,
+                previousAction: { type: REQUEST_PERSON }
+            },
+            {
+                type: HANDLE_SUCCESS,
+                previousAction: { type: REQUEST_PERSON }
+            },
+            {
+                type: RECEIVE_PERSON,
+                person: personResponse
+            }
+        ];
+        const store = mockStore({ people: [] });
+        return store.dispatch(requestPerson()).then(() => {
+            // return of async actions
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+    it("(requestPerson) creates HANDLE_REQUEST and HANDLE_FAILURE when updating a person fails", () => {
+        moxios.wait(() => {
+            const request = moxios.requests.mostRecent();
+            request.reject({
+                status: 401,
+                response: error
+            });
+        });
+        const expectedActions = [
+            {
+                type: HANDLE_REQUEST,
+                previousAction: { type: REQUEST_PERSON }
+            },
+            {
+                type: HANDLE_FAILURE,
+                previousAction: { type: REQUEST_PERSON },
+                error
+            }
+        ];
+        const store = mockStore({ people: [] });
+        return store.dispatch(requestPerson()).then(() => {
             // return of async actions
             expect(store.getActions()).toEqual(expectedActions);
         });

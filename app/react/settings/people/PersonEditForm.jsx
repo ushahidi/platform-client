@@ -1,126 +1,104 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import InlineLoading from "react/common/ui/InlineLoading";
+import { Field, reduxForm } from "redux-form";
+import { withRouter } from "react-router-dom";
 
 const propTypes = {
-    saveNewPerson: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isLoadingRoles: PropTypes.bool.isRequired
-    // error: PropTypes.shape({
-    //     message: PropTypes.string
-    // }).isRequired
+    isLoading: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.bool,
+        REQUEST_PERSON: PropTypes.bool
+    }).isRequired,
+    hasError: PropTypes.shape({
+        REQUEST_ROLES: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        }),
+        REQUEST_PERSON: PropTypes.shape({
+            failed: PropTypes.bool,
+            errorLog: PropTypes.object
+        })
+    }).isRequired,
+    reset: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func
+    }).isRequired
 };
 
-class PersonEditForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            realname: "",
-            role: "Select a role"
-        };
+let PersonEditForm = props => {
+    const {
+        handleSubmit,
+        roles,
+        isLoading,
+        hasError,
+        // pristine,
+        // submitting,
+        reset
+    } = props;
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.renderRoles = this.renderRoles.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({ [event.target.id]: event.target.value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        const person = Object.assign({}, this.state);
-        this.props.saveNewPerson(person);
-        // after success, clear state
-        // after failure, state remains
-        // TBD after we figure out endpoints
-    }
-
-    renderRoles() {
-        return (
-            <label htmlFor="role">
-                Role
-                <select
-                    id="role"
-                    value={this.state.role}
-                    onChange={this.handleChange}
-                >
-                    <option id="default" value={this.state.role}>
-                        {this.state.role}
+    const renderRoles = () => (
+        <label htmlFor="role">
+            Role
+            <Field name="role" component="select">
+                <option value="">Select a role</option>
+                {roles.map(role => (
+                    <option key={role.id} value={role.name}>
+                        {role.display_name}
                     </option>
-                    {this.props.roles.map(role => (
-                        <option key={role.id} id={role.name}>
-                            {role.display_name}
-                        </option>
-                    ))}
-                </select>
-            </label>
-        );
-    }
+                ))}
+            </Field>
+        </label>
+    );
 
-    render() {
-        return (
-            <main role="main">
-                <div>
-                    <h3>Add people to Ushahidi</h3>
-                    <p>
-                        Add members of your team, stakeholders, and other
-                        members of your community to Ushahidi.
-                    </p>
-                </div>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="realname">
-                        Name
-                        <input
-                            type="text"
-                            placeholder="What is this person's full name"
-                            id="realname"
-                            value={this.state.realname}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
-                    <label htmlFor="email">
-                        Email
-                        <input
-                            type="text"
-                            placeholder="email"
-                            id="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
-                    <label htmlFor="password">
-                        Password
-                        <input
-                            type="password"
-                            placeholder="password"
-                            id="password"
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </label>
-                    {this.props.isLoadingRoles ? (
-                        <InlineLoading />
-                    ) : (
-                        this.renderRoles()
-                    )}
-                    <Link to="/settings/TODO/someplaceholderofsomekind">
-                        <button className="button-beta">Cancel</button>
-                    </Link>
-                    <button type="submit">Submit</button>
-                </form>
-            </main>
-        );
-    }
-}
+    const route404OnError = () => {
+        props.history.push("/404");
+        // Need to create a new react component for this
+        // Needs to accept the error message
+    };
+
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="realname">
+                    Name
+                    <Field
+                        component="input"
+                        type="text"
+                        placeholder="What is this person's full name"
+                        name="realname"
+                        required
+                    />
+                </label>
+                <label htmlFor="email">
+                    Email
+                    <Field
+                        component="input"
+                        type="text"
+                        placeholder="email"
+                        name="email"
+                        required
+                    />
+                </label>
+                {isLoading.REQUEST_ROLES ? <InlineLoading /> : renderRoles()}
+                {hasError.REQUEST_ROLES && hasError.REQUEST_ROLES.failed
+                    ? route404OnError()
+                    : null}
+                <button className="button-beta" onClick={() => reset()}>
+                    Cancel
+                </button>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    );
+};
 
 PersonEditForm.propTypes = propTypes;
 
-export default PersonEditForm;
+PersonEditForm = reduxForm({
+    form: "editPerson",
+    enableReinitialize: true
+})(PersonEditForm);
+
+export default withRouter(PersonEditForm);
