@@ -1,0 +1,9 @@
+@mixin radius($top-left: 2px, $top-right: 2px, $bottom-right: 2px, $bottom-left: 2px) {
+    -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
+    border-radius: $top-left $top-right $bottom-right $bottom-left;
+}
+
+@mixin equal-radius($radius: 2px) {
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}

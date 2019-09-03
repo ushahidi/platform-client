@@ -1,0 +1,150 @@
+/*------------------------------------*\
+    $GRID
+\*------------------------------------*/
+
+
+$grid-columns: 12;     // The number of columns in the grid
+$gutter: 1.6888em;     // The width of margin between columns
+$max-width: 1980px;    // The max width of the grid
+
+// Breakpoint Widths
+$mobile-min-width: (30em) !default; // 480px
+$mobile-up-min-width: (30.063em) !default; // 481px
+$small-min-width: (48em) !default; // 768px
+$medium-min-width: (64em) !default; // 1024px
+$large-min-width: (80em) !default; // 1280px
+$xlarge-min-width: (90em) !default; // 1440px
+$xxlarge-min-width: (120em) !default; // 1920px
+$tall-min-height: (650px) !default; // for vertical breakpoints
+$xtall-min-height: (850px) !default; // for vertical breakpoints -- taller
+
+// Defined Breakpoints
+// http://thoughtbot.github.io/neat-docs/latest/#new-breakpoint
+$mobile: new-breakpoint(min-width $mobile-min-width);
+$mobile-down: new-breakpoint(max-width $mobile-up-min-width);
+$mobile-up: new-breakpoint(min-width $mobile-up-min-width);
+$small-down: new-breakpoint(max-width 767px);
+$small: new-breakpoint(min-width $small-min-width);
+$medium-down: new-breakpoint(max-width 1023px);
+$medium: new-breakpoint(min-width $medium-min-width);
+$large: new-breakpoint(min-width $large-min-width);
+$xlarge: new-breakpoint(min-width $xlarge-min-width);
+$xxlarge: new-breakpoint(min-width $xxlarge-min-width);
+$tall: new-breakpoint(min-width $small-min-width min-height $tall-min-height);
+$xtall: new-breakpoint(min-height $xtall-min-height);
+
+
+/*------------------------------------*\
+    $RTL SUPPORT
+\*------------------------------------*/
+
+$start: left; // start = beginning reading position
+$end: right; // end = end reading position
+
+body.rtl-namespace {
+    $start: right;
+    $end: left;
+
+    // this is just for testing that the switcher works.
+    // TODO: delete
+    text-align: $start;
+
+    .pl-jump-nav {
+        text-align: left;
+    }
+    // end testing
+}
+
+
+
+
+
+/*------------------------------------*\
+    $COLORS
+\*------------------------------------*/
+
+//brand colours
+$dark-blue: #373E46;
+$gold: #FFC334;
+
+//misc
+$link-blue: #0000E0;
+$success-green: #007A4B;
+$error-red: #EB0202;
+$accent-purple: #2618B1;
+
+//backgrounds
+$bg-white: #FFFFFF;
+$bg-gray: #F1F1F4;
+
+//mid grays
+$dark-gray: #777777;
+$disabled-gray: #D0D0D0;
+
+//dark
+$black: #1E232A;
+
+// borders
+$border-color: $disabled-gray;
+$border-color-dark: darken( $border-color, 15% );
+$border-color-hover: darken( $border-color, 10% );
+$border-color-active: darken( $border-color, 25% );
+
+/*------------------------------------*\
+    $TYPE
+\*------------------------------------*/
+$base-font-family: 'Lato', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$base-font-color: $black;
+$sub-base-font-color: $black;
+$body-font-weight: normal;
+$body-font-style: normal;
+$bold: 900;
+
+$base-font-size: 14px;
+$base-line-height: 1.266666667;
+$small-font-size: em(14);
+
+
+/*------------------------------------*\
+    $Z-INDEX
+\*------------------------------------*/
+
+$modal: 10000;
+
+$modebar: 4000;
+$modecontext: 3000;
+$toolbar: 2000;
+$dropdown: 1500;
+$toolbox: 1000;
+
+$top: 500;
+$fixed-at-bottom: 400;
+$filter: 300;
+$map: 200;
+$body: 100;
+$bottom: 0;
+$below: -1;
+
+
+/*------------------------------------*\
+    $MISC
+\*------------------------------------*/
+
+//Transition
+$transition-duration: 0.3s;
+
+//Layout
+$global-radius: 5px;
+$tiny-spacing: 8px; // 8px
+$sm-spacing: $tiny-spacing + 5; // 13px
+$base-spacing: $tiny-spacing + $sm-spacing; // 21px
+$lg-spacing: $base-spacing + $sm-spacing; // 34px
+$huge-spacing: $lg-spacing + $base-spacing; // 55px
+
+//Border
+$base-border: 1px solid $border-color;
+$base-border-dark: 1px solid $border-color-dark;
+$base-border-hover: 1px solid $border-color-hover;
+$base-border-active: 1px solid $border-color-active;
+
+$form-input-border: 1px solid $dark-gray;

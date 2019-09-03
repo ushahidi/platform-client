@@ -1,8 +1,12 @@
-<div ui-view>
+<user-list-container ui-view>
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
-                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li>
+                    <a href="/" ng-controller="navigation as nav">{{
+                        nav.site.name
+                    }}</a>
+                </li>
                 <li><a href="/settings" translate>app.settings</a></li>
             </ol>
             <h1 class="mode-context-title" translate>app.users</h1>
@@ -10,7 +14,10 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/img/iconic-sprite.svg#chevron-bottom"
+                ></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -20,9 +27,12 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab">
-                <a ui-sref="settings.createUser" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
+                <a ui-sref="settings.react.createUser" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
                     <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                        <use
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xlink:href="/img/iconic-sprite.svg#plus"
+                        ></use>
                     </svg>
                     <span class="hidden" translate>user.add_user</span>
                 </a>
@@ -33,77 +43,158 @@
             <div class="button-group" ng-show="todo">
                 <button type="button">
                     <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                        <use
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xlink:href="/img/iconic-sprite.svg#external-link"
+                        ></use>
                     </svg>
                     <span class="button-label" translate>nav.export</span>
                 </button>
             </div>
         </div>
         <!-- end toolbar -->
+        <!--Below is the UserListContainer created in react, uncomment if you want to use!-->
 
+        <!--UserListContainer is supposed to replace the main-col div below (but not all functionality is yet migrated)-->
+        <user-list-container></user-list-container>
         <div class="main-col">
-
-            <div class="listing card" ng-class="{'toolbar-active': selectedUsers.length}">
+            <!-- <div
+                class="listing card"
+                ng-class="{'toolbar-active': selectedUsers.length}"
+            >
                 <div class="alert" ng-hide="users.length">
                     <p ng-hide="users.length"><em translate>empty.user</em></p>
-                </div>
+                </div> -->
 
-                <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'realname'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
+                <!-- <div
+                    id="user-{{ user.id }}"
+                    class="listing-item"
+                    ng-repeat="user in users | orderBy:'realname'"
+                    ng-class="{ 'warning': isToggled(user) }"
+                    ng-click="toggleUser(user)"
+                >
                     <div class="listing-item-select">
-                        <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
+                        <input
+                            type="Checkbox"
+                            value="{{ user.id }}"
+                            ng-checked="isToggled(user)"
+                        />
                     </div>
 
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+                            <img
+                                class="avatar"
+                                ng-src="https://www.gravatar.com/avatar/{{
+                                    user.gravatar ||
+                                        '00000000000000000000000000000000'
+                                }}?d=retro"
+                                alt="{{ user.realname }}"
+                            />
                         </div>
 
+<<<<<<< HEAD
+                        <user-name
+                            class="listing-item-title"
+                            user="user"
+                        ></user-name>
+                        <user-role
+                            class="listing-item-secondary"
+                            role="roles[user.role].display_name"
+                        ></user-role>
+
+                        <!-- <p
+                            class="listing-item-secondary"
+                            translate-values="{role: roles[user.role].display_name}"
+                            translate="user.role_display"
+                        >
+=======
                         <h2 class="listing-item-title"><a ui-sref="settings.users.edit({id: user.id})">{{user.realname}}</a></h2>
-                        <p class="listing-item-secondary" 
-                            translate-values="{role: roles[user.role].display_name}" 
+                        <p class="listing-item-secondary"
+                            translate-values="{role: roles[user.role].display_name}"
                             translate="user.role_display">
+>>>>>>> 239ff2648cd80e116b96418d81e1b990068c7b82
                             Role: role_name
-                        </p>
-                        <p class="listing-item-secondary" style="text-transform: capitalize" ng-repeat="contact in user.contacts"
+                        </p> -->
+                      <!--  <p
+                            class="listing-item-secondary"
+                            style="text-transform: capitalize"
+                            ng-repeat="contact in user.contacts"
                             translate-values="{
                                 type: contact.type,
                                 contact: contact.contact
-                            }" 
+                            }"
+<<<<<<< HEAD
+                            translate="user.contact"
+                        >
+=======
                             translate="user.contact">
+>>>>>>> 239ff2648cd80e116b96418d81e1b990068c7b82
                             Contact_Type: contact
                         </p>
-                    </div>
-                </div>
-                <listing-toolbar entities="users" selected-set="selectedUsers">
+                    </div> -->
+                <!-- </div> -->
+                <!-- <listing-toolbar entities="users" selected-set="selectedUsers">
                     <fieldset class="custom-fieldset init" dropdown>
-                        <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                        <legend
+                            class="dropdown-trigger init"
+                            data-toggle="dropdown-menu"
+                            dropdown-toggle
+                        >
                             <span class="legend-label" translate>
                                 user.change_role
                             </span>
                             <svg class="iconic chevron">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                                <use
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#chevron-bottom"
+                                ></use>
                             </svg>
                         </legend>
                         <div class="dropdown-menu init" dropdown-menu>
-                            <div class="form-field radio" ng-repeat="role in roles">
+                            <div
+                                class="form-field radio"
+                                ng-repeat="role in roles"
+                            >
                                 <label>
-                                    <input type="radio" name="role" ng-click="changeRole(role)">
-                                        {{role.display_name}}
+                                    <input
+                                        type="radio"
+                                        name="role"
+                                        ng-click="changeRole(role)"
+                                    />
+                                    {{ role.display_name }}
                                 </label>
                             </div>
                         </div>
                     </fieldset>
-                    <button type="button" class="button-destructive" ng-disabled="!selectedUsers.length" ng-click="deleteUsers()">
+                    <button
+                        type="button"
+                        class="button-destructive"
+                        ng-disabled="!selectedUsers.length"
+                        ng-click="deleteUsers()"
+                    >
                         <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                            <use
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xlink:href="/img/iconic-sprite.svg#trash"
+                            ></use>
                         </svg>
                         <span class="button-label hidden">nav.delete</span>
                     </button>
-                </listing-toolbar>
-             </div>
+                </listing-toolbar> -->
+            </div>
             <nav class="pagination" ng-show="showPagination">
-                <ul uib-pagination ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" total-items="pagination.totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
+                <ul
+                    uib-pagination
+                    ng-model="pagination.currentPage"
+                    items-per-page="pagination.itemsPerPage"
+                    total-items="pagination.totalItems"
+                    ng-change="pageChanged()"
+                    max-size="5"
+                    boundary-links="false"
+                    rotate="false"
+                ></ul>
             </nav>
         </div>
     </main>
-</div>
+</user-list-container>

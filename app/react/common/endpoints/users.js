@@ -2,26 +2,18 @@ import Util from "common/services/util";
 import request from "./axiosInstance";
 
 export default {
-    save(person) {
+    save(user) {
         return request({
             url: Util.apiUrl("/users"),
-            data: person,
+            data: user,
             method: "post"
         });
     },
-    create(person) {
-
+    create() {},
+    update() {},
+    delete() {},
+    getUsers() {
+        return request.get(Util.apiUrl("/users"));
     },
-    update(person) {
-
-    },
-    delete(person) {
-
-    },
-    get(person) {
-
-    },
-    search() {
-
-    }
+    search() {}
 };
