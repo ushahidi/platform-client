@@ -9,6 +9,8 @@ module.exports = [
         $scope.endpointStructureChecks = [];
         $scope.transifexCheck = true;
         $scope.oauthCheck = true;
+        $scope.dbConnection = true;
+        $scope.apiEnvs = true;
         $scope.allDisabled = Verifier.isCheckDisabled(CONST, 'ALL');
 
         function activate() {
