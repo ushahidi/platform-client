@@ -57,7 +57,7 @@ function PostViewDataController(
     $scope.itemsPerPageOptions = [10, 20, 50];
     $scope.itemsPerPage = $scope.itemsPerPageOptions[1];
     // until we have the correct total_count value from backend request:
-    $scope.totalItems = $scope.itemsPerPage;
+    $scope.totalItems = 0;
     $scope.posts = [];
     $scope.groupedPosts = {};
     $scope.deletePosts = deletePosts;
@@ -380,6 +380,7 @@ function PostViewDataController(
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
                 var deletedIds = _.pluck(deleted, 'id');
+                $scope.totalItems = $scope.totalItems - deletedIds.length;
                 angular.forEach($scope.groupedPosts, function (posts, group) {
                     $scope.groupedPosts[group] = _.reject(posts, function (post) {
                         return _.contains(deletedIds, post.id);
@@ -456,7 +457,7 @@ function PostViewDataController(
     function resetPosts() {
         $scope.posts = [];
         $scope.groupedPosts = {};
-        $scope.totalItems = $scope.itemsPerPage;
+        $scope.totalItems = 0;
         $scope.currentPage = 1;
         $scope.selectedPosts = [];
         recentPosts = [];
@@ -488,6 +489,16 @@ function PostViewDataController(
         });
     }
 
+    function getUnique(arr, comp) {
+        const unique = arr
+            .map(ele => ele[comp]) // store the keys of the unique objects
+            .map((ele, i, final) => final.indexOf(ele) === i && i) // eliminate the dead keys & store unique objects
+            .filter(ele => arr[ele])
+            .map(ele => arr[ele]);
+
+        return unique;
+    }
+
     function getNewPosts() {
         let existingFilters = PostFilters.getQueryParams($scope.filters);
         let filterDate = moment(existingFilters.date_before).utc();
@@ -517,9 +528,12 @@ function PostViewDataController(
                     created_after_by_id: $scope.posts[0].id
                 });
             }
+
             PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
                 Array.prototype.unshift.apply(recentPosts, postsResponse.results);
-                $scope.newPostsCount += postsResponse.count;
+                recentPosts = getUnique(recentPosts, 'id');
+                $scope.newPostsCount = postsResponse.count;
+
             });
         }
     }

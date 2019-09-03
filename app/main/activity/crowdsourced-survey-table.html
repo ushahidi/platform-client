@@ -1,5 +1,5 @@
 <div>
-    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="crowdsourcedSurveyStatsByForm.length === 0"></loading-dots>
+    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="!noSurveys && crowdsourcedSurveyStatsByForm.length === 0"></loading-dots>
     <fieldset ng-if="crowdsourcedSurveyStatsByForm.length >= 1">
         <table>
             <thead>
@@ -32,7 +32,7 @@
                     <td>{{unstructuredStats.twitter}}</td>
                 </tr>
                 <tr>
-                    <td translate="activity.">All Crowdsourced Surveys</td>
+                    <td translate="activity.all_crowdsourced">All Crowdsourced Surveys</td>
                     <td>{{totalAll}}</td>
                     <td>{{totalWeb}}</td>
                     <td>{{totalEmail}}</td>
