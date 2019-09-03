@@ -12,6 +12,7 @@
             <button class="button" ui-sref="settings.plan" translate="message.button.upgrade">
                 Upgrade now
             </button>
+            <button ng-click="close()" class="right" translate="demo_warnings.close">Close</button>
         </div>
 </div>
 
@@ -22,5 +23,6 @@
     <p ng-if="expired || days_remaining <= 0" translate-values="{site_name: site_name}" translate="demo_warnings.visitor.expired">
         Deployment X is using a free trial of Ushahidi. You will only see the first 25 posts.
     </p>
+    <button ng-click="close()" translate="demo_warnings.close">Close</button>
 </div>
     
