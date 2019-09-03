@@ -121,6 +121,18 @@
             "search_all_entities_for" : "Search all {{entity}} for "
         }
     },
+    "demo_warnings" : {
+        "close": "Close",
+        "visitor": {
+            "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
+            "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
+        },
+        "user" : {
+            "expired": "Your 30 day trial is over. Upgrade now to make the most of Ushahidi.",
+            "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
+            "limit_reached": "Nice work! You have more than 25 posts. Upgrade now to see the rest of your posts or reach out to our team about a full-service enterprise partnership for your project."
+        }
+    },
     "color_picker": {
         "hex_value" : "Hex Value",
         "red" : "Red",
@@ -160,7 +172,6 @@
         "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
         "targeted_activity": "Tageted Survey Activity",
         "crowdsourced_activity": "Crowdsourced Survey Activity"
-
     },
     "form": {
         "add_field" : "Add field",
@@ -496,7 +507,7 @@
         "option_3" : "within 50 km",
         "option_4" : "within 100 km",
         "option_5" : "within 500 km",
-        "clear_filters" : "Clear Filters",
+        "restore_defaults" : "Restore Defaults",
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
@@ -533,6 +544,7 @@
     "message" : {
         "button" : {
             "dismiss" : "Dismiss",
+            "upgrade" : "Upgrade now",
             "default" : "Ok",
             "cancel" : "Cancel"
         }
@@ -1159,6 +1171,7 @@
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
+        "site_private_desc" : "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
         "select_image" : "Select image",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",
@@ -1190,7 +1203,7 @@
         "see_imported_posts" : "See imported posts",
         "import_another_csv" : "Import another CSV file",
         "import_complete" : "Your import is complete",
-        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/settings/survey/{{form_id}}\">{{form_name}}</a> survey.",
+        "complete_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
         "import_another" : "Import another CSV file",
         "nearly_complete" : "Your import is nearly complete",
         "finish_info" : "The data from your CSV spreadsheet is still being processed. You're welcome to leave this page or wait until the process is complete. Either way, we'll notify you when your data is ready.",
@@ -1412,6 +1425,8 @@
             "csv_import_success_info" : "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported into your <a href=\"/views/list\">{{form_name}}</a> survey.",
             "duplicate_fields" : "Columns must be mapped to unique survey fields. The following columns have more than 1 mapping: {{duplicates}}",
             "required_fields" : "Required fields must be set to a value. The following fields have not been set: {{required}}",
+            "empty_mapping" : "The CSV file you uploaded is empty. Please check your CSV file and try again",
+            "empty_mapping_empty" : "The CSV file does not contain column names. Please check your CSV file and try again",
             "no_mappings" : "No fields have been assigned mappings - at least one field must be mapped to continue",
             "csv_import_cancel" : "CSV import cancelled",
             "csv_import_cancel_confirm": "Are you sure you want to cancel importing?"

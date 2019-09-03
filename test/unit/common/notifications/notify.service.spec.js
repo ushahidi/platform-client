@@ -17,6 +17,10 @@ describe('Notify', function () {
         getState: function () {
             return this.state;
         }
+    },
+    mockDemoSliderService = {
+        openTemplate: function () {},
+        close: function () {}
     };
 
     beforeEach(function () {
@@ -30,6 +34,9 @@ describe('Notify', function () {
         })
         .service('ModalService', function () {
             return mockModalService;
+        })
+        .service('DemoSliderService', function () {
+            return mockDemoSliderService;
         })
         // Inject some dummy translations
         .config(function ($translateProvider) {

@@ -17,6 +17,7 @@ require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
+require('ngtweet');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -37,7 +38,6 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
-    platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
     claimedAnonymousScopes = [
         'posts',
         'country_codes',
@@ -80,7 +80,8 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.main',
         'ushahidi.settings',
-        'ui.bootstrap.dropdown'
+        'ui.bootstrap.dropdown',
+        'ngtweet'
     ])
 
     .constant('CONST', {
@@ -95,7 +96,6 @@ angular.module('app',
         CLAIMED_USER_SCOPES      : ['*'],
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
-        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url,
         EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000
     })
     .config(['$compileProvider', function ($compileProvider) {
@@ -139,9 +139,6 @@ angular.module('app',
     .factory('moment', function () {
         return require('moment');
     })
-    .factory('io', function () {
-        return require('socket.io-client');
-    })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
@@ -157,16 +154,17 @@ angular.module('app',
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
-    .run(['$rootScope', 'LoadingProgress', '$transitions', function ($rootScope, LoadingProgress, $transitions) {
+    .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
         if (window.ushahidi.gaEnabled) {
             $transitions.onSuccess({}, function (transition) {
-                window.ga('send', 'pageview', transition.to().url);
+                window.ga('send', 'pageview',  $uiRouter.urlRouter.location);
             });
         }
     }])
-    .run(function () {
+    .run(['DemoDeploymentService', function (DemoDeploymentService) {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    });
+        DemoDeploymentService.demoCheck();
+    }]);
