@@ -122,6 +122,7 @@
         }
     },
     "demo_warnings" : {
+        "close": "Close",
         "visitor": {
             "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
             "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
@@ -506,7 +507,7 @@
         "option_3" : "within 50 km",
         "option_4" : "within 100 km",
         "option_5" : "within 500 km",
-        "clear_filters" : "Clear Filters",
+        "restore_defaults" : "Restore Defaults",
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
@@ -1170,6 +1171,7 @@
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
+        "site_private_desc" : "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
         "select_image" : "Select image",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",

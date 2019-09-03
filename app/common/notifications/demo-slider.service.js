@@ -16,6 +16,7 @@ function DemoSliderService($rootScope, $q, $templateRequest) {
     function openTemplate(template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type) {
         deferredOpen.promise.then(function () {
             $rootScope.$emit('demoslider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type);
+            $rootScope.toggleModalVisible(true, true);
         });
     }
 
@@ -27,7 +28,6 @@ function DemoSliderService($rootScope, $q, $templateRequest) {
     }
 
     function onOpen(callback, scope) {
-        $rootScope.toggleModalVisible(true, true);
         var handler = $rootScope.$on('demoslider:open', callback);
         if (scope) {
             scope.$on('$destroy', handler);

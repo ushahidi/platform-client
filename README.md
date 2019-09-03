@@ -15,99 +15,100 @@ ___
 
 You need to deploy the [Platform API](http://github.com/ushahidi/platform) first
 
-## Getting set up for development
+# Platform Client installation
 
-### Libraries/Packages/Dependencies
+### What is the platform client?
 
-First you'll need nodejs or io.js installed,
-npm takes care of the rest of our dependencies.
+The web client is the component that end users interact with when opening the Platform website with a web browser. The client interacts with the API in order to perform operations on the system \(i.e. submit posts, query posts\).
 
-* nodejs v6
+### Installation steps 
 
-### Install, build and run a local dev server
+**Pre-requisite: Install the platform API by following one of the API setup guides**
 
-1. Clone the repo
-    ```git clone https://github.com/ushahidi/platform-client.git```
-2. Navigate to project root
-    ```cd platform-client```
-3. Install Build Requirements
-    ```
-    npm install -g gulp
-    ```
-4. Install Packages
-    ```
-    npm install
-    ```
 
-    *This will install both NPM and Bower dependencies! No separate `bower install` command is required.*
-6. Set up build options. Create a `.env` file, you'll need to point `BACKEND_URL` at an instance of the [platform api](https://github.com/ushahidi/platform)
-    ```
-    NODE_SERVER=true
-    BACKEND_URL=http://ushahidi-backend
-    ```
+**Pre-requisite: Install Node V6.x \(you might want to use NVM for this\) before continuing.**
 
-7. Run gulp
+#### **Getting the platform-client code**
 
-    ```
-    gulp
-    ```
-8. You should now have a local development server running on http://localhost:8080
+Clone the repository \(this will create a directory named _platform-client\)_
 
-## Extra config and options
-
-### Download and Activate Live Reload Plugin
-
-http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
-
-### Gulp
-
-Our gulp build
-* watches for changes
-* compiles sass
-* compiles js
-* rebuilds/reloads any optional servers that are enabled
-* live reloads `index.html`
-
-#### Optional parameters ####
-
-* `--node-server` - start a self-hosted server, instead of using a native web server like Apache or nginx. This simple server will be running at: <http://localhost:8080>.
-* `--mock-backend` - build the app with an mock backend service, delivering the JSON files in the `mocked_backend/` when API calls are made. See details below.
-
-#### Set default options with .env
-
-Instead of having to type the flags every time, you can also use a `.env` file to set the default options for running the client.
-
+```bash
+git clone https://github.com/ushahidi/platform-client.git
 ```
-NODE_SERVER=true
-BACKEND_URL=http://ushahidi-backend
-UGLIFY_JS=true
-MOCK_BACKEND=false
-KARMA_CHROME=false
-PORT=8080
-APP_LANGUAGES=en,ar
+
+Go into the platform directory
+
+```bash
+cd platform-client
+```
+
+Switch to the _develop_ branch
+
+```bash
+git checkout develop
+```
+
+**If you haven't used git before or need help with git specific issues, make sure to check out their docs here** [https://git-scm.com/doc](https://git-scm.com/doc)
+
+#### Install the platform-client dependencies.
+
+```text
+npm install
+```
+
+The client needs to point to the hostname where the backend expects to receive HTTP requests. This has to be set before building the client.
+
+**In order to set up all that, create a file at the location /var/www/platform-client/.env . Use the following contents as an example:**
+
+```text
+BACKEND_URL=http://192.168.33.110/
+PORT=8000
+APP_LANGUAGES=en
 OAUTH_CLIENT_ID=ushahidiui
 OAUTH_CLIENT_SECRET=35e7f0bca957836d05ca0492211b0ac707671261
 ```
 
-* `NODE_SERVER` - always run the `node-server` task
-* `BACKEND_URL` - set the URL to your instance the [platform](https://github.com/ushahidi/platform)
-* `UGLIFY_JS` - uglify js during builds. Enabled by default
-* `MOCK_BACKEND` - build the app with an mock backend.
-* `KARMA_CHROME` - Use chrome to run karma tests
-* `PORT` - set the port to run `node-server`
-* `APP_LANGUAGES` - sets the available languages. Defaults to showing all languages
-* `OAUTH_CLIENT_ID` - sets the client id required by the API
-* `OAUTH_CLIENT_SECRET` - sets the client secret required by the API
 
-#### Optional: Mock Backend
+To make it easy to call \`gulp\` when building and developing in the app, add **node\_modules/.bin** to your PATH in ~/_.bashrc_. Example PATH \(relevant part in bold\):
 
-You can run `gulp build` with a `--mock-backend` option. This builds the app with an [http mock](https://docs.angularjs.org/api/ngMock/service/$httpBackend) service that provides a mock API that can be used for testing and client side development. When running the mock backend nothing can be persisted or deleted, but otherwise the client should be fully functional.
+export PATH=$HOME/bin:/usr/local/bin:**node\_modules/.bin**:$PATH
 
-To build with the mock backend service, run `gulp build --mock-backend`.
+```
+gulp
+```
 
-**This can be combined with the `--node-server` flag for a completely self-hosted Ushahidi Platform demo.**
+alternatively, if you haven't setup node\_modules in your PATH, run:
 
-#### Running unit specs
+### Running a local development server
+
+Run:
+
+```
+node_modules/gulp/bin/gulp.js
+```
+
+This will start the watcher for local development, and any changes you make to the code will be reflected in the application.
+
+### Building for production deployments
+
+Run:
+
+```
+gulp build
+```
+
+alternatively, if you haven't setup node\_modules in your PATH, run:
+
+```
+node_modules/gulp/bin/gulp.js build
+```
+
+This will start the process of generating the static site. Once the files are generated, you can host the **server/www** directory and load the site.
+
+In the **server** directory you will also find an example nginx and an example apache2 file to get you started on hosting the client.
+
+
+#### Running unit tests
 
 To run unit tests once, run:
 ```
@@ -129,5 +130,8 @@ Nginx users will have to manually configure rewriting in the site configuration 
 
 ### I'm a developer, should I contribute to Ushahidi 3.x?
 
-Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://www.ushahidi.com/support/get-involved)..
+Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://docs.ushahidi.com/platform-developer-documentation/). 
+
+[Code of Conduct](https://docs.ushahidi.com/platform-developer-documentation/code-of-conduct)
+
 
