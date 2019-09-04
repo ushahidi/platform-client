@@ -101,7 +101,7 @@ module.exports = {
         ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || 'dev'),
         VERIFIER: JSON.stringify(process.env.VERIFIER || false),
         GIT_COMMIT: JSON.stringify(GIT_COMMIT || false),
-        USH_DISABLE_CHECKS: JSON.stringify(process.env.USH_DISABLE_CHECKS) || ' '
+        USH_DISABLE_CHECKS: JSON.stringify(process.env.USH_DISABLE_CHECKS) || false
     }),
 
     // Injects bundles in your index.html instead of wiring all manually.
