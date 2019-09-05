@@ -273,14 +273,10 @@ const isCheckDisabled = function (env, name) {
 };
 
 const checkStructure = function (a, b, url) {
-    delete a.$promise;
-    delete a.$resolved;
-    delete b.$promise;
-    delete a.$resolved;
-
-    const aKeys = Object.keys(a).sort();
-    const bKeys = Object.keys(b).sort();
-
+    let aKeys = Object.keys(a).sort();
+    let bKeys = Object.keys(b).sort();
+    aKeys = aKeys.filter(key=> key !== '$promise' && key !== '$resolved');
+    bKeys = bKeys.filter(key=> key !== '$promise' && key !== '$resolved');
     if (JSON.stringify(aKeys) === JSON.stringify(bKeys)) {
         return {type: 'confirmation', messages: [`The structure for ${url} matches the expected, all good!`], url: url};
     } else {
