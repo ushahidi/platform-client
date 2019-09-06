@@ -13,6 +13,7 @@
   "scripts": {
     "build": "gulp dist",
     "watch": "gulp",
+    "watch:verify": "gulp dev:verifier",
     "start": "gulp serve:static",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
