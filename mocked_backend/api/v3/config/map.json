@@ -16,7 +16,5 @@
     "allowed_privileges": [
         "read",
         "search"
-    ],
-    "$promise": [],
-    "$resolved": true
+    ]
 }

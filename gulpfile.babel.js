@@ -30,6 +30,7 @@ let root = 'app';
 dotenv.config({silent: true});
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
+
 // helper method for resolving paths
 let resolveToApp = (glob = '') => {
   return path.join(root, glob); // app/{glob}
@@ -90,6 +91,16 @@ gulp.task('build', ['dist']);
  * Task `heroku:dev` - builds app for heroku
  */
 gulp.task('heroku:dev', ['dist']);
+
+gulp.task('watch:verifier', () => {
+  process.env.VERIFIER = true;
+  gulp.run('dev');
+});
+
+gulp.task('dev:verifier', () => {
+  process.env.VERIFIER = true;
+  gulp.run('dev');
+});
 
 gulp.task('dev', () => {
   const config = require('./webpack.dev.config');
@@ -253,6 +264,7 @@ gulp.task('release', (done) => {
 
 gulp.task('default', ['watch']);
 
+// gulp.task('watch:verify', ['watch:verify']);
 
 gulp.task('verify', () => {
   if (verifier.isCheckDisabled('ALL')) {
@@ -265,4 +277,6 @@ gulp.task('verify', () => {
   verifier.verifyEndpointStatus();
   verifier.verifyEndpointStructure();
   verifier.verifyOauth();
+  verifier.verifyDbConnection();
+  verifier.verifyAPIEnvs();
 });
