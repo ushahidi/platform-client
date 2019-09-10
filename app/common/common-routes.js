@@ -60,8 +60,8 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($sta
             }
         )
         .state({
-            name: 'verifier',
-            url: '/verifier',
+            name: 'helper',
+            url: '/helper',
             controller: require('./verifier/verifier.controller.js'),
             template: require('./verifier/verifier.html')
         })

@@ -92,12 +92,12 @@ gulp.task('build', ['dist']);
  */
 gulp.task('heroku:dev', ['dist']);
 
-gulp.task('watch:verifier', () => {
+gulp.task('watch:helper', () => {
   process.env.VERIFIER = true;
   gulp.run('dev');
 });
 
-gulp.task('dev:verifier', () => {
+gulp.task('dev:helper', () => {
   process.env.VERIFIER = true;
   gulp.run('dev');
 });
@@ -264,9 +264,9 @@ gulp.task('release', (done) => {
 
 gulp.task('default', ['watch']);
 
-// gulp.task('watch:verify', ['watch:verify']);
+// gulp.task('watch:helper', ['watch:helper']);
 
-gulp.task('verify', () => {
+gulp.task('helper', () => {
   if (verifier.isCheckDisabled('ALL')) {
     log.info(c.green('USH_DISABLE_CHECKS is ALL, skipping verification process.'));
     return;
