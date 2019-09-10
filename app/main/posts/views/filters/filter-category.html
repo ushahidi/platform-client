@@ -1,17 +1,16 @@
-<fieldset ng-show="categories.length" overflow-toggle has-overflow="categories.length > 1" ng-model-options="{ updateOn: 'default' }">
+<fieldset ng-show="categories.length" ng-model-options="{ updateOn: 'default' }">
     <label translate="nav.categories">Categories</label>
-
-    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
-        <label>
-            <input
-                type="checkbox"
-                checklist-value="category.id"
-                value="category.id"
-                checklist-model="selectedCategories"
-            >
-            <bdi>{{ ::category.tag }}</bdi>
-        </label>
-        <div
+    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-if="category.parent_id === null">
+      <label>
+          <input
+              type="checkbox"
+              checklist-value="category.id"
+              value="category.id"
+              checklist-model="selectedCategories"
+          >
+          <bdi>{{ ::category.tag }}</bdi>
+      </label>
+      <div
           class="form-field checkbox"
           ng-repeat="child in category.children"
         >
@@ -23,14 +22,8 @@
             value="child.id"
             ng-selected="selectedCategories.indexOf(category.id) >-1"
           >
-            <bdi>{{ ::child.tag }}</bdi>
+          <bdi>{{ ::child.tag }}</bdi>
         </label>
+      </div>
     </div>
-    </div>
-      <span class="form-field-toggle">
-        <svg class="iconic">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-        </svg>
-        <span translate="nav.more">More</span>
-    </span>
 </fieldset>
