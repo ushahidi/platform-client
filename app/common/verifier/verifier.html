@@ -165,6 +165,7 @@
                             <svg class="iconic">
                                 <use style="fill: #de0000" ng-if="dbConnection.errors" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="dbConnection.success" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
+                                <use style="fill: #5294ff" ng-if="dbConnection.type === 'info'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#info"></use>
                             </svg>
                         </div>
                         <strong class="list-item-secondary" ng-if="dbConnection">Checking that the database is connected</strong>
@@ -175,6 +176,9 @@
                     <div ng-if="dbConnection.errors" ng-repeat="result in dbConnection.errors">
                         <p>{{result.message}}</p>
                         <p>{{result.explainer}}</p>
+                    </div>
+                    <div ng-if="dbConnection.type === 'info'">
+                        <p>{{dbConnection.message}}</p>
                     </div>
                 </div>
             </div>
@@ -189,6 +193,7 @@
                             <svg class="iconic">
                                 <use style="fill: #de0000" ng-if="apiEnvs.errors" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="apiEnvs.success" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
+                                <use style="fill: #5294ff" ng-if="apiEnvs.type === 'info'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#info"></use>
                             </svg>
                         </div>
                         <strong class="list-item-secondary" ng-if="apiEnvs">Checking that there is an .env file in the backend</strong>
@@ -200,6 +205,25 @@
                         <div ng-if="apiEnvs.errors" ng-repeat="result in apiEnvs.errors">
                             <p>{{result.message}}</p>
                             <p>{{result.explainer}}</p>
+                        </div>
+                        <div ng-if="apiEnvs.type === 'info'">
+                            <p>{{apiEnvs.message}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="listing-item" ng-if="(apiEnvs || dbConnection) && (!apiEnvs || apiEnvs.success) && (!dbConnection || dbConnection.success)">
+                <h3>Checking if API Install Debug mode should be disabled...</h3>
+                <div class="listing-item">
+                    <div class="listing-item-primary">
+                        <div class="listing-item-image">
+                            <svg class="iconic">
+                                <use style="fill: #FFC334" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                        </div>
+                        <div>
+                            <p>For security reasons, we recommend NOT leaving some check routines enabled in the API.</p>
+                            <p>You may disable those checks now by running the "composer installdebug:disable" command in the API folder.</p>
                         </div>
                     </div>
                 </div>

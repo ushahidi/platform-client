@@ -163,23 +163,31 @@ const verifyAPIEnvs = function (env) {
     if (isCheckDisabled(env, 'API_ENVS')) {
         return new Promise((resolve, reject) => resolve('DISABLED'));
     }
-    return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/env`);
+    return checkVerifierAPI(`${env.BACKEND_URL}/api/v3/verifier/env`);
 };
 
 const verifyDbConnection = function (env) {
     if (isCheckDisabled(env, 'DB_CONNECTION')) {
         return new Promise((resolve, reject) => resolve('DISABLED'));
     }
-    return checkAPI(`${env.BACKEND_URL}/api/v3/verifier/db`);
+    return checkVerifierAPI(`${env.BACKEND_URL}/api/v3/verifier/db`);
 };
 
-const checkAPI = function (url) {
+const checkVerifierAPI = function (url) {
     return fetch(url)
     .then(json => {
         return json;
     })
     .then(response => {
-        return response.json();
+        if (response.status.toString() === '204') {
+            return {
+                type: 'info',
+                message: 'This check has been disabled in the Platform API. ' +
+                          'You may enable it by running "composer installdebug:enable" in the API folder.'
+            };
+        } else {
+            return response.json();
+        }
     })
     .catch(error => {
         console.log(error);

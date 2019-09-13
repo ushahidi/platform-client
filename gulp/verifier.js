@@ -118,6 +118,9 @@ module.exports.verifyOauth = function () {
 };
 
 module.exports.verifyAPIEnvs = function() {
+    const disableRecommend =
+        'For security reasons, we recommend NOT leaving this check routine enabled in the API. ' +
+        'You may disable the check by running the "composer installdebug:disable" command in the API folder.';
     const verifyAPIEnvs = verifier.verifyAPIEnvs(process.env);
     if (!verifyAPIEnvs) {
         log.info(c.bold(`Checking the environment variables in the API:`));
@@ -127,10 +130,14 @@ module.exports.verifyAPIEnvs = function() {
         verifyAPIEnvs
         .then(response => {
             log.info(c.bold(`Checking the environment variables in the API:`));
+            if (response.type === 'info') {
+                formatMessage(response.message, 'info');
+            }
             if (response.success) {
-            response.success.forEach(result=>{
-                formatMessage(result.message, 'confirmation');
-            });
+                response.success.forEach(result=>{
+                    formatMessage(result.message, 'confirmation');
+                });
+                formatMessage(disableRecommend, 'warning');
             } else if (response.errors) {
                 response.errors.forEach(result=>{
                     formatMessage(result.message, 'error');
@@ -141,6 +148,9 @@ module.exports.verifyAPIEnvs = function() {
 };
 
 module.exports.verifyDbConnection = function() {
+    const disableRecommend =
+        'For security reasons, we recommend NOT leaving this check routine enabled in the API. ' +
+        'You may disable the check by running the "composer installdebug:disable" command in the API folder.';
     const verifyDbConnection = verifier.verifyDbConnection(process.env);
     if (!verifyDbConnection) {
         log.info(c.bold('Checking the database connection:'));
@@ -150,10 +160,14 @@ module.exports.verifyDbConnection = function() {
         verifyDbConnection
         .then(response => {
             log.info(c.bold('Checking the database connection:'));
+            if (response.type === 'info') {
+                formatMessage(response.message, 'info');
+            }
             if (response.success) {
-            response.success.forEach(result=>{
-                formatMessage(result.message, 'confirmation');
-            });
+                response.success.forEach(result=>{
+                    formatMessage(result.message, 'confirmation');
+                });
+                formatMessage(disableRecommend, 'warning');
             } else if (response.errors) {
                 response.errors.forEach(result=>{
                     formatMessage(result.message, 'error');
@@ -177,6 +191,9 @@ const formatMessage = function(message, type) {
             break;
         case 'warning':
             log.warn(c.yellow(message));
+            break;
+        case 'info':
+            log.info(c.cyan(message));
             break;
         default:
             log.info(message);
