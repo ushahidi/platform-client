@@ -172,12 +172,6 @@ angular.module('app',
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
         DemoDeploymentService.demoCheck();
     }])
-    .run(['Verifier','Notify', function (Verifier, Notify) {
-        Verifier.checkDebugMode(BACKEND_URL)
-        .then(function (result) {
-            if (result) {
-                Notify.notifyPermanent(`You have debug-mode switched on, for security reasons, we recommend NOT leaving this check routine enabled in the API. 
-                    You may disable the check by running the "composer installdebug:disable" command in the API folder.`);
-            }
-        });
+    .run(['VerifierService', function (VerifierService) {
+        VerifierService.debugModeCheck();
     }]);
