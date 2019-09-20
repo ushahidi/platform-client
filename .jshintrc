@@ -43,6 +43,8 @@
         "-event",
         "makeTestApp",
         "BACKEND_URL",
+        "USH_DISABLE_CHECKS",
+        "VERIFIER",
         "RAVEN_URL",
         "ENVIRONMENT",
         "GIT_COMMIT"

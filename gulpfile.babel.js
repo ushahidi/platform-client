@@ -5,7 +5,6 @@ import webpack  from 'webpack';
 import path     from 'path';
 import runSeq   from 'run-sequence';
 import rename   from 'gulp-rename';
-import gutil    from 'gulp-util';
 import serve    from 'browser-sync';
 import del      from 'del';
 import dotenv   from 'dotenv';
@@ -18,13 +17,19 @@ import historyApiFallback   from 'connect-history-api-fallback';
 import karma     from 'karma';
 import jscs      from 'gulp-jscs';
 import fs        from 'fs';
+import log       from 'fancy-log';
+import c         from 'ansi-colors';
+import PluginError from 'plugin-error';
+import minimist  from 'minimist'; 
+import verifier from './gulp/verifier';
+const argv = minimist(process.argv.slice(2));
 
 let root = 'app';
 
 // Load .env file
 dotenv.config({silent: true});
 // Grab backend-url from gulp options
-process.env.BACKEND_URL = gutil.env['backend-url'] || process.env.BACKEND_URL;
+process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
 
 // helper method for resolving paths
 let resolveToApp = (glob = '') => {
@@ -67,10 +72,10 @@ gulp.task('dist:webpack', (done) => {
 
   webpack(config, (err, stats) => {
     if(err)  {
-      throw new gutil.PluginError('webpack', err);
+      throw new PluginError('webpack', err);
     }
 
-    gutil.log('[webpack]', stats.toString({
+    log('[webpack]', stats.toString({
       colors: colorsSupported,
       chunks: false,
       errorDetails: true
@@ -86,6 +91,16 @@ gulp.task('build', ['dist']);
  * Task `heroku:dev` - builds app for heroku
  */
 gulp.task('heroku:dev', ['dist']);
+
+gulp.task('watch:verifier', () => {
+  process.env.VERIFIER = true;
+  gulp.run('dev');
+});
+
+gulp.task('dev:verifier', () => {
+  process.env.VERIFIER = true;
+  gulp.run('dev');
+});
 
 gulp.task('dev', () => {
   const config = require('./webpack.dev.config');
@@ -122,7 +137,7 @@ gulp.task('watch', ['dev']);
 
 gulp.task('clean', (done) => {
   del([paths.dest]).then(function (paths) {
-    gutil.log('[clean]', paths);
+    log('[clean]', paths);
     done();
   });
 });
@@ -187,8 +202,8 @@ gulp.task('jscsfix:test', () => {
  * Task `release` - Build release
  */
 gulp.task('transifex-download', function (done) {
-    let destination = gutil.env.dev ? path.join(__dirname, root) : paths.dest;
-
+    // argv.dev checks if the --dev flag was sent when calling the task
+    let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
     // Make sure we have dest dir
     try {
         fs.mkdirSync(destination);
@@ -227,8 +242,8 @@ gulp.task('serve:static', function() {
  * `--version-suffix=<version>` - Specify version for output fil
  */
 gulp.task('tar', () => {
-    var version = gutil.env['version-suffix'] || require('./package.json').version;
-    var dest_dir = gutil.env['dest-dir'] || 'build';
+    var version = argv['version-suffix'] || require('./package.json').version;
+    var dest_dir = argv['dest-dir'] || 'build';
 
     return gulp.src(path.join(paths.dest, '**'))
         .pipe(rename(function (filePath) {
@@ -248,3 +263,20 @@ gulp.task('release', (done) => {
 });
 
 gulp.task('default', ['watch']);
+
+// gulp.task('watch:verify', ['watch:verify']);
+
+gulp.task('verify', () => {
+  if (verifier.isCheckDisabled('ALL')) {
+    log.info(c.green('USH_DISABLE_CHECKS is ALL, skipping verification process.'));
+    return;
+  }
+  verifier.verifyEnv();
+  verifier.verifyTransifex();
+  verifier.verifyNetwork();
+  verifier.verifyEndpointStatus();
+  verifier.verifyEndpointStructure();
+  verifier.verifyOauth();
+  verifier.verifyDbConnection();
+  verifier.verifyAPIEnvs();
+});
