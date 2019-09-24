@@ -93,7 +93,7 @@
     "transifex": "^1.4.4",
     "url-loader": "^0.5.7",
     "web-app-manifest-loader": "0.1.1",
-    "webpack": "^2.4.1",
+    "webpack": "^4.41.0",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.6.0"
   },
