@@ -1,6 +1,7 @@
 
 {
     "id": "features",
+    "url": "http://localhost:8081/api/v2/config/features",
     "views": {
         "map": true,
         "list": true,
@@ -27,7 +28,25 @@
     "roles": {
         "enabled": true
     },
+    "webhooks": {
+        "enabled": true
+    },
     "data-import": {
+        "enabled": true
+    },
+    "targeted-surveys": {
+        "enabled": true
+    },
+    "csv-speedup": {
+        "enabled": true
+    },
+    "user-settings": {
+        "enabled": true
+    },
+    "anonymise-reporters": {
+        "enabled": true
+    },
+    "hxl": {
         "enabled": true
     },
     "allowed_privileges": [

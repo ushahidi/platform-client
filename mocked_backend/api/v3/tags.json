@@ -101,5 +101,6 @@
     "orderby": "created",
     "curr": "http://localhost:8081/api/v2/tags?orderby=created&order=desc&offset=0&limit=100",
     "next": "http://localhost:8081/api/v2/tags?orderby=created&order=desc&offset=100&limit=100",
-    "prev": "http://localhost:8081/api/v2/tags?orderby=created&order=desc&offset=0&limit=100"
+    "prev": "http://localhost:8081/api/v2/tags?orderby=created&order=desc&offset=0&limit=100",
+    "total_count": 2
 }
