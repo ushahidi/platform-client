@@ -184,9 +184,12 @@ function (
                     let obj = formAttribute.selectedTag ? {form_attribute_id: formAttribute.id, hxl_tag_id: formAttribute.selectedTag.id} : {form_attribute_id: formAttribute.id};
                     if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
                         _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
-                            let objWithAttr = angular.copy(obj);
-                            objWithAttr.hxl_attribute_id = parseInt(getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute).id);
-                            hxlData.push(objWithAttr);
+                            let hxlAttr = getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute);
+                            if (hxlAttr) {
+                                let objWithAttr = angular.copy(obj);
+                                objWithAttr.hxl_attribute_id = parseInt(hxlAttr.id);
+                                hxlData.push(objWithAttr);
+                            }
                         });
                     } else {
                         hxlData.push(obj);
