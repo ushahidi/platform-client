@@ -59,10 +59,6 @@ function (
             return true;
         }
 
-        if (field_type === 'location' && attribute_type === 'point') {
-            return true;
-        }
-
         var allowed_text_types = ['text', 'varchar', 'title', 'description', 'markdown'];
         if (field_type === 'text' && _.contains(allowed_text_types, attribute_type)) {
             return true;

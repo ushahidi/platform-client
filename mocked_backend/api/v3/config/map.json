@@ -1,7 +1,9 @@
 {
     "id": "map",
+    "url":"http://localhost:8081/api/v2/config/map",
     "clustering": false,
     "cluster_radius": 50,
+    "location_precision":2,
     "default_view": {
         "lat": -1.3048035,
         "lon": 36.8473969,

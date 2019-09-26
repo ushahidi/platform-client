@@ -12,6 +12,12 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($sta
                 template: require('./auth/404.html')
             }
         )
+        .state({
+            name: 'verifier',
+            url: '/verifier',
+            controller: require('./verifier/verifier.controller.js'),
+            template: require('./verifier/verifier.html')
+        })
         ;
 
     // Don't define auth routes at all when embedding the site

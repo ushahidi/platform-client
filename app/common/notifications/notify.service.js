@@ -2,8 +2,8 @@ module.exports = Notify;
 
 var scope;
 var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
-function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
+Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService', 'DemoSliderService'];
+function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, DemoSliderService) {
     return {
         notify: notify,
         notifyAction,
@@ -20,12 +20,23 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         confirmTos: confirmTos,
         adminUserSetupModal: adminUserSetupModal,
         infoModal: infoModal,
-        confirmLeave: confirmLeave
+        confirmLeave: confirmLeave,
+        demo: demo,
+        notifyPermanent: notifyPermanent
     };
 
     function notify(message, translateValues) {
         function showSlider(message) {
             SliderService.openTemplate('<p>' + message + '</p>');
+        }
+
+        $translate(message, translateValues).then(showSlider, showSlider);
+    }
+
+
+    function notifyPermanent(message, translateValues) {
+        function showSlider(message) {
+            SliderService.openTemplate('<p>' + message + '</p>', null, null, null, null);
         }
 
         $translate(message, translateValues).then(showSlider, showSlider);
@@ -66,6 +77,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         // translates the text and shows the slider
         $translate(message, translateValues).then(showSlider, showSlider);
     }
+
     function error(errorText, translateValues) {
         function showSlider(errorText) {
             SliderService.openTemplate('<p>' + errorText + '</p>', 'warning', 'error', null, false);
@@ -133,7 +145,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
         return deferred.promise;
     }
 
-    function confirmModal(confirmText, translateValues, description, descriptionValues, button) {
+    function confirmModal(confirmText, translateValues, description, descriptionValues, button, cancel) {
         var deferred = $q.defer();
 
         var scope = getScope();
@@ -155,7 +167,13 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 descriptionTemplate = `<p translate=${description} translate-values="${descriptionValues}"></p>`;
             }
             let buttonText = button ? button : 'message.button.default';
-            let template = '<div class="form-field">' + descriptionTemplate + '<p><i translate>notify.default.proceed_warning</i></p>' + '<button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' + `<button class="button-beta button-flat" ng-click="$parent.confirm()" translate>${buttonText}</button>` + '</div>';
+            let cancelButtonText = cancel ? cancel : 'message.button.cancel';
+            let template = `<div class="form-field">
+                                ${descriptionTemplate}
+                                <p><i translate>notify.default.proceed_warning</i></p>
+                                <button class="button" ng-click="$parent.cancel()" translate>${cancelButtonText}</button>
+                                <button class="button-alpha button-flat" ng-click="$parent.confirm()" translate>${buttonText}</button>
+                            </div>`;
 
             ModalService.openTemplate(
                 template, confirmText, false, scope, false, false);
@@ -179,6 +197,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
 
     function adminUserSetupModal() {
         ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
+    }
+
+    function demo() {
+        var scope = getScope();
+        DemoSliderService.openTemplate('<demo-deployment></demo-deployment>', 'star', false, scope, false);
     }
 
     function confirmTos() {

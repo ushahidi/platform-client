@@ -8,7 +8,7 @@ module.exports = [
     'FormAttributeEndpoint',
     'DataImportEndpoint',
     'Notify',
-    'ImportNotify',
+    'DataImport',
     'Features',
     'CollectionEndpoint',
     'moment',
@@ -23,7 +23,7 @@ function (
     FormAttributeEndpoint,
     DataImportEndpoint,
     Notify,
-    ImportNotify,
+    DataImport,
     Features,
     CollectionEndpoint,
     moment,
@@ -131,8 +131,11 @@ function (
                     Notify.apiErrors(errorResponse);
                 });
             }
-
             function loadStepTwo(results) {
+                if (!$scope.csv.columns || ($scope.csv.columns.filter(c => c === '').length === $scope.csv.columns.length)) {
+                    Notify.error('notify.data_import.empty_mapping_empty');
+                    return false;
+                }
                 // Retrieve tasks and attributes
                 $q.all([
                     FormStageEndpoint.getFresh({form_id: $scope.selectedForm.id}).$promise,
@@ -250,10 +253,13 @@ function (
                 }
 
                 var duplicateVars = checkForDuplicates();
-
-                // third, warn the user which keys have been duplicated
-                if (duplicateVars.length > 0) {
+                var allDuplicatesAreEmpty = duplicateVars.filter((o)=> o === '').length === duplicateVars.length;
+                // if duplicate var only holds '' , warn that column names cannot be empty
+                if (duplicateVars.length > 0 && !allDuplicatesAreEmpty) {
                     Notify.error('notify.data_import.duplicate_fields', {duplicates: duplicateVars.join(', ')});
+                    return false;
+                } else if (duplicateVars.length > 0) { // if duplicate var only holds '' , warn that column names cannot be empty
+                    Notify.error('notify.data_import.empty_mapping_empty');
                     return false;
                 }
 
@@ -267,53 +273,15 @@ function (
                 return csvIsValid;
             }
 
-            function createPostCollection(post_ids) {
-                var deferred = $q.defer();
-
-                var now = moment().format('h:mm a MMM Do YYYY');
-
-                var collection = {};
-                collection.name = 'Imported ' + now;
-                collection.view = 'list';
-                collection.visible_to = ['admin'];
-                var calls = [];
-                CollectionEndpoint.save(collection).$promise.then(function (collection) {
-                    _.each(post_ids, function (id) {
-                        calls.push(
-                            CollectionEndpoint.addPost({'collectionId': collection.id, 'id': id})
-                        );
-                    });
-                    $q.all(calls).then(function () {
-                        deferred.resolve(collection);
-                    });
-                });
-                return deferred.promise;
-            }
-
             function updateAndImport(csv) {
                 DataImportEndpoint.update(csv).$promise
                     .then(function () {
-                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise
-                            .then(function (response) {
-                                var processed = response.processed,
-                                    errors = response.errors,
-                                    post_ids = response.created_ids;
-
-                                createPostCollection(post_ids).then(function (collection) {
-                                    ImportNotify.importComplete(
-                                    {
-                                        processed: processed,
-                                        errors: errors,
-                                        collectionId: collection.id,
-                                        form_name: $scope.selectedForm.name,
-                                        filename: csv.filename
-                                    });
-
-                                    $rootScope.$emit('event:import:complete', {form: $scope.form, filename: csv.filename, collectionId: collection.id});
-                                });
-                            }, function (errorResponse) {
-                                Notify.apiErrors(errorResponse);
-                            });
+                        DataImportEndpoint.import({id: csv.id, action: 'import'}).$promise.then(function () {
+                            DataImport.startImport(csv);
+                        }).catch(errorResponse => {
+                            Notify.apiErrors(errorResponse);
+                            $location.url('/settings/data-import');
+                        });
                     }, function (errorResponse) {
                         Notify.apiErrors(errorResponse);
                     });

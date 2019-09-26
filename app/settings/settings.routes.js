@@ -54,10 +54,36 @@ function (
         )
         .state(
             {
+                name: 'settings.userSettings',
+                url: '/settings/user-settings',
+                controller: require('./user-settings/user-settings.controller.js'),
+                template: require('./user-settings/user-settings.html')
+            }
+        )
+        .state(
+            {
                 name: 'settings.dataExport',
                 url: '/settings/data-export',
                 controller: require('./data-export/data-export.controller.js'),
                 template: require('./data-export/data-export.html')
+            }
+        )
+        .state(
+            {
+                name: 'settings.hdx',
+                url: '/settings/hdx',
+                controller: require('./data-export/hdx-export.controller.js'),
+                template: require('./data-export/hdx-export.html')
+            }
+        )
+        .state(
+            {
+                name: 'settings.hdxDetails',
+                url: '/settings/hdx-details',
+                component: 'hdxDetails',
+                params: {
+                    exportJob: null
+                }
             }
         )
         .state(

@@ -2,11 +2,17 @@
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
         <!-- End post stage default fields -->
+        <div class="form-field">
+          <twitter-widget ng-if="post.data_source_message_id" twitter-widget-id="post.data_source_message_id" twitter-widget-options="{'align': 'left'}">
+          </twitter-widget>
+        </div>
+
           <div
             ng-if="!form"
             class="form-field init required"
             ng-class="{'error': editForm.form.$invalid && editForm.form.$dirty, 'success': !editForm.form.$invalid && editForm.form.$dirty}"
           >
+
           <p translate="post.unstructured.add_survey.info" translate-values="{source:post.source}"></p>
           <label translate>post.unstructured.add_survey.title</label>
               <select
@@ -23,7 +29,7 @@
             </svg>
             <p translate="{{'post.valid.content.' + error}}"></p>
           </div>
-          </div>
+        </div>
 
         <!-- Start Post custom fields -->
 
@@ -59,7 +65,7 @@
           ng-if="form"
         >
         </post-tabs>
-        <post-messages post="post" ng-if="post.contact.id"></post-messages>
+        <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
 

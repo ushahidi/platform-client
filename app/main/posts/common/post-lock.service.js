@@ -5,7 +5,6 @@ PostLockService.$inject = [
     '_',
     'PostLockEndpoint',
     '$q',
-    'socket',
     'Notify'
 ];
 function PostLockService(
@@ -13,7 +12,6 @@ function PostLockService(
     _,
     PostLockEndpoint,
     $q,
-    socket,
     Notify
 ) {
 
@@ -23,25 +21,12 @@ function PostLockService(
         unlock: unlock,
         unlockByPost: unlockByPost,
         getLock: getLock,
-        createSocketListener: createSocketListener,
         isPostLockedForCurrentUser: isPostLockedForCurrentUser,
         unlockSilent: unlockSilent
     };
 
     function activate() {
 
-    }
-
-    function createSocketListener() {
-        // If logged in subscribe to user lock message channel
-        if ($rootScope.currentUser !== null) {
-            if (socket.init()) {
-                var channel = $rootScope.currentUser.userId + '-lock';
-                socket.on(channel, function (data) {
-                    Notify.error('post.locking.lock_broken_by_other');
-                });
-            }
-        }
     }
 
     function isPostLockedForCurrentUser(post) {

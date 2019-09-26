@@ -18,7 +18,7 @@
         <base href="/">
     </head>
     <!-- TODO: set layouts per view directive -->
-    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
+    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible, 'demo-visible' : demoBarVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
         <div id="bootstrap-loading">
             <!-- loading the document -->
             <div class="loading">
@@ -32,7 +32,7 @@
             <div class="wrapper">
                 <main class="page-content">
                     <div class="alert error">
-                        <p>Sorry, something went wrong. Try reloading the page.</p>
+                        <p id="bootstrap-error-message">Sorry, something went wrong. Try reloading the page.</p>
                     </div>
                 </main>
             </div>
@@ -46,6 +46,7 @@
             <first-time-config></first-time-config>
             -->
             <ush-slider></ush-slider>
+            <ush-demo-slider></ush-demo-slider>
             <ush-modal-container></ush-modal-container>
             <ush-mainsheet-container></ush-mainsheet-container>
 

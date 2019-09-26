@@ -8,8 +8,11 @@ function (
     _
 ) {
 
-    var CollectionEndpoint = $resource(Util.apiUrl('/collections/:collectionId'), {
-        collectionId: '@collectionId'
+    // Force ordering by date created
+    var CollectionEndpoint = $resource(Util.apiUrl('/collections/:collectionId?orderby=:orderby'), {
+        collectionId: '@collectionId',
+        orderby: 'created',
+        order: 'DESC'
     }, {
         query: {
             method: 'GET',
