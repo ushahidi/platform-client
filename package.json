@@ -88,7 +88,7 @@
     "run-sequence": "^1.1.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
-    "supports-color": "^3.1.2",
+    "supports-color": "^7.1.0",
     "svg-url-loader": "^2.0.2",
     "transifex": "^1.4.4",
     "url-loader": "^0.5.7",
