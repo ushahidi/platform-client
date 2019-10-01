@@ -1,4 +1,5 @@
 module.exports = AuthenticationEvents;
+import isEmbed from '../services/isEmbed';
 
 AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport', 'DemoDeploymentService'];
 function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport, DemoDeploymentService) {
@@ -91,30 +92,32 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function doLogin(redirect, noReload) {
-        TermsOfService.getTosEntry()
-            .then(function () {
-                loadSessionData();
-                $rootScope.loggedin = true;
-                DemoDeploymentService.demoCheck();
+        if (!isEmbed()) {
+            TermsOfService.getTosEntry()
+                .then(function () {
+                    loadSessionData();
+                    $rootScope.loggedin = true;
+                    DemoDeploymentService.demoCheck();
 
-                /**
-                 * adminUserSetup is called AFRTER the user has agreed to terms of service.
-                 * adminUserSetup is used to verify which user is logging in/logged in and opening a modal box
-                 * when there is an admin login with the 'admin' email instead of a proper email.
-                 * This is part of an effort to force admins to have proper emails and not use the default email/password combination that the
-                 * system had during the setup process.
-                 * references https://github.com/ushahidi/platform/issues/1714
-                 */
-                adminUserSetup();
-                loadExportJob();
-                loadImportJob();
-                PostFilters.resetDefaults();
-                if (redirect) {
-                    $location.url(redirect);
-                }
-                noReload || $state.reload(); // in favor of $route.reload();
+                    /**
+                     * adminUserSetup is called AFRTER the user has agreed to terms of service.
+                     * adminUserSetup is used to verify which user is logging in/logged in and opening a modal box
+                     * when there is an admin login with the 'admin' email instead of a proper email.
+                     * This is part of an effort to force admins to have proper emails and not use the default email/password combination that the
+                     * system had during the setup process.
+                     * references https://github.com/ushahidi/platform/issues/1714
+                     */
+                    adminUserSetup();
+                    loadExportJob();
+                    loadImportJob();
+                    PostFilters.resetDefaults();
+                    if (redirect) {
+                        $location.url(redirect);
+                    }
+                    noReload || $state.reload(); // in favor of $route.reload();
 
-            });
+                });
+        }
     }
 
     function doLogout() {

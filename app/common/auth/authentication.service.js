@@ -1,3 +1,5 @@
+import isEmbed from '../services/isEmbed';
+
 module.exports = [
     '$rootScope',
     '$http',
@@ -141,8 +143,9 @@ function (
         },
 
         openLogin: function () {
-
-            ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
+            if (!isEmbed()) {
+                ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
+            }
         }
     };
 
