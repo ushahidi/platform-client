@@ -17,4 +17,4 @@ function EmbedOnlyController($scope, $element, $attrs) {
     }
 }
 
-export default EmbedOnlyDirective;
+module.exports = EmbedOnlyDirective;
