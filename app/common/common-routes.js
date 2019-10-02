@@ -1,6 +1,5 @@
-import isEmbed from './services/isEmbed';
 
-module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($stateProvider, $urlMatcherFactoryProvider) {
+module.exports = ['$stateProvider', '$urlMatcherFactoryProvider','Embed', function ($stateProvider, $urlMatcherFactoryProvider, Embed) {
 
     $urlMatcherFactoryProvider.strictMode(false);
 
@@ -21,7 +20,7 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($sta
         ;
 
     // Don't define auth routes at all when embedding the site
-    if (!isEmbed()) {
+    if (Embed.isEmbed()) {
         $stateProvider
             .state(
                 {

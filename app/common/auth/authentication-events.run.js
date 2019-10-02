@@ -1,8 +1,7 @@
 module.exports = AuthenticationEvents;
-import isEmbed from '../services/isEmbed';
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport', 'DemoDeploymentService'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport, DemoDeploymentService) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport', 'DemoDeploymentService', 'Embed'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport, DemoDeploymentService, Embed) {
 
     let loginPath = null;
     $rootScope.currentUser = null;
@@ -92,7 +91,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function doLogin(redirect, noReload) {
-        if (!isEmbed()) {
+        if (!Embed.isEmbed()) {
             TermsOfService.getTosEntry()
                 .then(function () {
                     loadSessionData();

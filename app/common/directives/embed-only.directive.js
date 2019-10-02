@@ -1,5 +1,3 @@
-import isEmbed from '../services/isEmbed';
-
 EmbedOnlyDirective.$inject = [];
 function EmbedOnlyDirective() {
     return {
@@ -8,11 +6,11 @@ function EmbedOnlyDirective() {
     };
 }
 
-EmbedOnlyController.$inject = ['$scope', '$element', '$attrs'];
-function EmbedOnlyController($scope, $element, $attrs) {
-    if (isEmbed() && ($attrs.embedOnly === 'false')) {
+EmbedOnlyController.$inject = ['$scope', '$element', '$attrs','Embed'];
+function EmbedOnlyController($scope, $element, $attrs, Embed) {
+    if (Embed.isEmbed() && ($attrs.embedOnly === 'false')) {
         $element.addClass('hidden');
-    } else if (!isEmbed() && ($attrs.embedOnly === 'true')) {
+    } else if (!Embed.isEmbed() && ($attrs.embedOnly === 'true')) {
         $element.addClass('hidden');
     }
 }
