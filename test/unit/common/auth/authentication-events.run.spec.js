@@ -6,6 +6,7 @@ describe('global event handlers', function () {
         mockedAuthenticationService,
         mockedDemoDeploymentService,
         mockTOS,
+        mockedEmbedService,
         $rootScope,
         $location,
         mockState = {
@@ -56,7 +57,9 @@ describe('global event handlers', function () {
         {
             demoCheck: function () {}
         };
-
+        mockedEmbedService = {
+            isEmbed: function () {}
+        };
         spyOn(mockedAuthenticationService, 'openLogin');
 
         mockTOS = {
@@ -84,6 +87,9 @@ describe('global event handlers', function () {
         })
         .service('DemoDeploymentService', function () {
             return mockedDemoDeploymentService;
+        })
+        .service('Embed', function () {
+            return mockedEmbedService;
         })
         .run(require('app/common/auth/authentication-events.run.js'))
         .service('$state', function () {
