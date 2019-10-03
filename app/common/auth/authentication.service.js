@@ -144,7 +144,7 @@ function (
         },
 
         openLogin: function () {
-            if (!Embed.isEmbed()) {
+            if (!Embed.isEmbed) {
                 ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
             }
         }

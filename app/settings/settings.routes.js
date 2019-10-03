@@ -1,17 +1,16 @@
 module.exports = [
     '$stateProvider',
     '$urlMatcherFactoryProvider',
-    'Embed',
 function (
     $stateProvider,
-    $urlMatcherFactoryProvider,
-    Embed
+    $urlMatcherFactoryProvider
 ) {
     $urlMatcherFactoryProvider.strictMode(false);
     /* todo: these routes should only exist when the user is admin! */
-    // console.log(IsEmbed)
     // Don't define settings routes at all when embedding the site
-    if (!Embed.isEmbed()) {
+    const isEmbed = (window.self !== window.top) ? true : false;
+
+    if (!isEmbed) {
         $stateProvider
         .state(
             {

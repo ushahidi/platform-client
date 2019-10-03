@@ -58,7 +58,7 @@ describe('global event handlers', function () {
             demoCheck: function () {}
         };
         mockedEmbedService = {
-            isEmbed: function () {}
+            isEmbed: false
         };
         spyOn(mockedAuthenticationService, 'openLogin');
 

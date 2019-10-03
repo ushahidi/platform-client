@@ -1,8 +1,6 @@
-
-module.exports = ['$stateProvider', '$urlMatcherFactoryProvider','Embed', function ($stateProvider, $urlMatcherFactoryProvider, Embed) {
-
+module.exports = ['$stateProvider', '$urlMatcherFactoryProvider', function ($stateProvider, $urlMatcherFactoryProvider) {
+    const isEmbed = (window.self !== window.top) ? true : false;
     $urlMatcherFactoryProvider.strictMode(false);
-
     $stateProvider.state(
             {
                 name: '404',
@@ -20,7 +18,7 @@ module.exports = ['$stateProvider', '$urlMatcherFactoryProvider','Embed', functi
         ;
 
     // Don't define auth routes at all when embedding the site
-    if (Embed.isEmbed()) {
+    if (!isEmbed) {
         $stateProvider
             .state(
                 {

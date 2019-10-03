@@ -8,9 +8,9 @@ function EmbedOnlyDirective() {
 
 EmbedOnlyController.$inject = ['$scope', '$element', '$attrs','Embed'];
 function EmbedOnlyController($scope, $element, $attrs, Embed) {
-    if (Embed.isEmbed() && ($attrs.embedOnly === 'false')) {
+    if (Embed.isEmbed && ($attrs.embedOnly === 'false')) {
         $element.addClass('hidden');
-    } else if (!Embed.isEmbed() && ($attrs.embedOnly === 'true')) {
+    } else if (!Embed.isEmbed && ($attrs.embedOnly === 'true')) {
         $element.addClass('hidden');
     }
 }

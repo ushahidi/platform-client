@@ -14,9 +14,7 @@ describe('embed only directive', function () {
         testApp.directive('embedOnly', require('app/common/directives/embed-only.directive'))
         .service('Embed', function () {
             return {
-                'isEmbed': function () {
-                    return false;
-                }
+                'isEmbed': false
             };
         });
 

@@ -91,7 +91,7 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     }
 
     function doLogin(redirect, noReload) {
-        if (!Embed.isEmbed()) {
+        if (!Embed.isEmbed) {
             TermsOfService.getTosEntry()
                 .then(function () {
                     loadSessionData();
