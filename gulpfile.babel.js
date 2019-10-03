@@ -113,11 +113,33 @@ gulp.task('dev', () => {
 
   var compiler = webpack(config);
 
+  let denyXFrame = (req, res, next) => {
+    res.setHeader('X-Frame-Options', 'DENY');
+    next();
+  };
+  let allowXFrame = (req, res, next) => {
+    res.removeHeader('X-Frame-Options');
+    next();
+  };
+
   serve({
     port: process.env.PORT || 3000,
     open: false,
     server: {baseDir: root},
     middleware: [
+      denyXFrame,
+      {
+          route: '/posts',
+          handle: allowXFrame
+      },
+      {
+          route: '/views',
+          handle: allowXFrame
+      },
+      {
+          route: '/',
+          handle: allowXFrame
+      },
       historyApiFallback(),
       webpackDevMiddleware(compiler, {
         stats: {

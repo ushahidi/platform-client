@@ -80,6 +80,8 @@ angular.module('ushahidi.common', [
 .service('DataExport', require('./services/data-export.service.js'))
 .service('HxlExport', require('./services/hxl-export.service.js'))
 .service('DataImport', require('./services/data-import.service.js'))
+.service('Embed', require('./services/embed.service.js'))
+
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 
@@ -129,8 +131,7 @@ angular.module('ushahidi.common', [
 }])
 .factory('Verifier', function () {
     return require('./verifier/verifier.js');
-})
-;
+});
 
 // Load submodules
 require('./directives/adaptive-input.js');

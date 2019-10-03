@@ -5,13 +5,15 @@ module.exports = [
     'Util',
     '$location',
     'ModalService',
+    'Embed',
 function (
     $rootScope,
     $http,
     $q,
     Util,
     $location,
-    ModalService
+    ModalService,
+    Embed
 ) {
 
     return {
@@ -41,7 +43,9 @@ function (
         },
 
         openRegister: function () {
-            ModalService.openTemplate('<register></register>', 'nav.register', false, false, true, false);
+            if (!Embed.isEmbed) {
+                ModalService.openTemplate('<register></register>', 'nav.register', false, false, true, false);
+            }
         }
     };
 

@@ -8,7 +8,8 @@ describe('Authentication', function () {
         loginPromiseSuccessCallback,
         mockedSessionData,
         mockedOauthTokenResponse,
-        mockedUserDataResponse;
+        mockedUserDataResponse,
+        mockedEmbedService;
 
     beforeEach(function () {
         var testApp = makeTestApp();
@@ -16,6 +17,9 @@ describe('Authentication', function () {
         testApp.requires.push('ngResource', 'angular-cache');
 
         mockedSessionData = {};
+        mockedEmbedService = {
+            isEmbed: function () {}
+        };
         testApp.service('Session', function () {
             return {
                 clearSessionData: function () {
@@ -37,8 +41,12 @@ describe('Authentication', function () {
 
             };
         })
-        .service('Authentication', require('app/common/auth/authentication.service.js'));
-
+        .service('Authentication', require('app/common/auth/authentication.service.js'))
+        .service('Embed',
+            function () {
+                return mockedEmbedService;
+            }
+        );
 
 
         angular.mock.module('testApp');

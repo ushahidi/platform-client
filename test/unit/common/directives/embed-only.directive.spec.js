@@ -11,7 +11,12 @@ describe('embed only directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('embedOnly', require('app/common/directives/embed-only.directive'));
+        testApp.directive('embedOnly', require('app/common/directives/embed-only.directive'))
+        .service('Embed', function () {
+            return {
+                'isEmbed': false
+            };
+        });
 
         angular.mock.module('testApp');
     });
@@ -27,10 +32,16 @@ describe('embed only directive', function () {
         spyOn($rootScope, 'setLayout').and.callThrough();
     }));
 
-    it('should set the layout', function () {
-        element = '<div embed-only></div>';
+    it('should set hide the element if embed-only is true', function () {
+        element = '<div embed-only=true></div>';
         element = $compile(element)($scope);
+        expect(element.hasClass('hidden')).toBe(true);
         $scope.$digest();
-
+    });
+    it('should set display the element if embed-only is false', function () {
+        element = '<div embed-only=false></div>';
+        element = $compile(element)($scope);
+        expect(element.hasClass('hidden')).toBe(false);
+        $scope.$digest();
     });
 });

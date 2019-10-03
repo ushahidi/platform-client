@@ -1,3 +1,4 @@
+
 module.exports = [
     '$rootScope',
     '$http',
@@ -10,6 +11,7 @@ module.exports = [
     'PostLockEndpoint',
     '_',
     'ModalService',
+    'Embed',
 function (
     $rootScope,
     $http,
@@ -21,7 +23,8 @@ function (
     UserEndpoint,
     PostLockEndpoint,
     _,
-    ModalService
+    ModalService,
+    Embed
 ) {
 
     // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
@@ -141,8 +144,9 @@ function (
         },
 
         openLogin: function () {
-
-            ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
+            if (!Embed.isEmbed) {
+                ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
+            }
         }
     };
 
