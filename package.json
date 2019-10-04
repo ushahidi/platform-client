@@ -91,7 +91,7 @@
     "supports-color": "^3.1.2",
     "svg-url-loader": "^2.0.2",
     "transifex": "^1.4.4",
-    "url-loader": "^0.5.7",
+    "url-loader": "^2.2.0",
     "web-app-manifest-loader": "0.1.1",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.6.1",
