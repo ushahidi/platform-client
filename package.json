@@ -54,7 +54,7 @@
     "gulp-gzip": "^1.4.0",
     "gulp-jscs": "^4.0.0",
     "gulp-rename": "^1.2.2",
-    "gulp-tar": "^1.9.0",
+    "gulp-tar": "^3.0.1",
     "gulp-util": "^3.0.7",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.22.0",
