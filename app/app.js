@@ -171,4 +171,7 @@ angular.module('app',
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
         DemoDeploymentService.demoCheck();
+    }])
+    .run(['VerifierService', function (VerifierService) {
+        VerifierService.debugModeCheck();
     }]);
