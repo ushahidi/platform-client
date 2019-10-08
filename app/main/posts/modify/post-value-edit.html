@@ -234,7 +234,7 @@
             <p><bdi>{{attribute.instructions}}</bdi></p>
 
             <!-- attributes which use the form-field structure -->
-            <div ng-switch="attribute.input">
+            <div ng-switch="attribute.input" ng-if="attribute.options.length > 0">
                 <!-- type: radio -->
                 <div ng-switch-when="radio">
                     <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
