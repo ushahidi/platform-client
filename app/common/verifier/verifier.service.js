@@ -2,14 +2,16 @@ module.exports = [
     'Verifier',
     'Notify',
     '$rootScope',
+    'Util',
 function (
     Verifier,
     Notify,
-    $rootScope
+    $rootScope,
+    Util
 ) {
     return {
         debugModeCheck: function () {
-                Verifier.checkDebugMode(BACKEND_URL)
+                Verifier.checkDebugMode(Util.apiUrl('/'))
                     .then(function (result) {
                         if (result) {
                             Notify.notifyPermanent(`You have debug-mode switched on. If you are an admin of this deployment, 
