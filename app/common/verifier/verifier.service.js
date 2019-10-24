@@ -11,7 +11,7 @@ function (
 ) {
     return {
         debugModeCheck: function () {
-                Verifier.checkDebugMode(Util.apiUrl('/'))
+                Verifier.checkDebugMode(Util.apiUrl('/verifier/db'))
                     .then(function (result) {
                         if (result) {
                             Notify.notifyPermanent(`You have debug-mode switched on. If you are an admin of this deployment, 
