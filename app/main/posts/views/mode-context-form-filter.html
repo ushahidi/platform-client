@@ -63,13 +63,10 @@
 </div>
 <div class="tool">
     <h6 class="tool-heading" translate="app.language">Language</h6>
-    <span class="tool-trigger init" ng-class="{'active': showLanguage}" ng-click="languageToggle()">
-        <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-        </svg>
-        <span class="label hidden">Show/hide</span>
+    <span class="tool-trigger init" ng-class="{'active': showLanguage}">
     </span>
+    <language-switch></language-switch>
     <div class="toggle-content" ng-class="{'active': showLanguage}">
-        <language-switch></language-switch>
+
     </div>
 </div>
