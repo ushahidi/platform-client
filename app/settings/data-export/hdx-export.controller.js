@@ -203,7 +203,8 @@ function (
     }
 
     function exportData(sendToHDX) {
-        if (formatIds().length === 0) {
+        const formattedIds = formatIds();
+        if (formattedIds.length === 0) {
             // scrolling to top and display the error-message
             $scope.fieldError = true;
             $anchorScroll();
@@ -224,7 +225,7 @@ function (
                 'send_to_hdx': sendToHDX,
                 'include_hxl': true,
                 'send_to_browser': !sendToHDX,
-                'hxl_heading_row': formatIds()
+                'hxl_heading_row': formattedIds
             };
 
             if (sendToHDX) {
