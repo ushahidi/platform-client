@@ -149,7 +149,7 @@ angular.module('app',
             { map: {}, site: {}, features: {} };
     }])
     .factory('Sortable', function () {
-        return require('sortablejs');
+        return require('sortablejs/Sortable');
     })
     // inject the router instance into a `run` block by name
     //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
