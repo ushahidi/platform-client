@@ -128,7 +128,7 @@
     "nvd3": "^1.8.4",
     "raven-js": "^3.26.3",
     "socket.io-client": "2.0.3",
-    "sortablejs": "^1.7.0",
+    "sortablejs": "1.10.0",
     "underscore": "^1.7.0",
     "ushahidi-platform-pattern-library": "^3.12.3"
   },

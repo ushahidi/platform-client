@@ -231,7 +231,7 @@ const checkTokenStructure = function (env, options) {
 };
 
 const checkDebugMode = function (url) {
-    return fetch(`${url}/api/v3/verifier/db`)
+    return fetch(url)
     .then(response=> {
         if (response.status === 200) {
             return true;
