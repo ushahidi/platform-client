@@ -25,8 +25,8 @@
             <div class="toolbar">
                 <div class="button-group">
                     <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                    <button type="submit" ng-click="updateConfig()" class="button-alpha"  ng-if="!saving_config" ng-disabled="form.$invalid || isUnchanged(site) || saving_config">{{save}}</button>
-                    <button type="submit" class="button-alpha"  ng-if="saving_config" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>{{saving}}
+                    <button type="submit" ng-click="updateConfig()" class="button-alpha"  ng-if="!saving_config" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate="app.save">Save</button>
+                    <button type="submit" class="button-alpha"  ng-if="saving_config" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate="app.saving">Saving
                       <div class="loading">
                         <div class="line"></div>
                         <div class="line"></div>
