@@ -217,7 +217,7 @@
             </div>
         </div>
         <!-- Container for fieldset structured elements -->
-        <fieldset ng-if="isFieldSetStructure(attribute)">
+        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0">
             <!-- Attribute Label -->
             <label ng-class="{
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
@@ -234,7 +234,7 @@
             <p><bdi>{{attribute.instructions}}</bdi></p>
 
             <!-- attributes which use the form-field structure -->
-            <div ng-switch="attribute.input" ng-if="attribute.options.length > 0">
+            <div ng-switch="attribute.input">
                 <!-- type: radio -->
                 <div ng-switch-when="radio">
                     <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
