@@ -25,7 +25,7 @@
       </div>
 
       <div class="form-field" data-fieldgroup-target="field-description-new" ng-show="descriptionToggle">
-          <input type="text" placeholder="{{ 'form.add_field_instructions_placeholder' | translate}}" ng-model="editAttribute.instructions">
+          <div id="editSection"></div>
       </div>
   </div>
    <div ng-if="canDisplay()">
@@ -119,4 +119,5 @@
       <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
       <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
    </div>
+
 </div>
