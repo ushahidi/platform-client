@@ -28,7 +28,7 @@ function (
                 $scope.editor = new Editor({
                     el: document.querySelector('#editSection'),
                     previewStyle: 'vertical',
-                    height: '300px',
+                    height: '250px',
                     initialEditType: 'wysiwyg',
                     toolbarItems: [
                         'heading',
