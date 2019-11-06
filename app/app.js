@@ -151,6 +151,9 @@ angular.module('app',
     .factory('Sortable', function () {
         return require('sortablejs/Sortable');
     })
+    .factory('Editor', function () {
+        return require('tui-editor');
+    })
     // inject the router instance into a `run` block by name
     //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
     //     // * uncomment this to enable the visualizer *
