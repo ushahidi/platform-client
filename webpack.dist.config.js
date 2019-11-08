@@ -2,10 +2,14 @@ var webpack = require('webpack');
 var path    = require('path');
 var config  = require('./webpack.config');
 
+var publicPath = process.env.ASSETS_DOMAIN || '/';
+// ensure publicPath ends in '/'
+publicPath = publicPath + (publicPath.slice(-1) !== '/' ? '/' : '');
+
 config.output = {
   filename: '[name].[chunkhash].js',
   chunkFilename: '[name].[chunkhash].js',
-  publicPath: '',
+  publicPath: publicPath,
   path: path.resolve(__dirname, 'server/www') // Overwritten by gulp
 };
 
