@@ -12,7 +12,6 @@
 }
 
 /** Fixes conflicts with pattern-library css **/
-
 // Fixes buttons in toolbar
 .tui-editor-defaultUI-toolbar {
     margin-left: 6px !important;
@@ -48,8 +47,9 @@
         button {
             padding: 0px 14px 0px 15px !important;
             box-shadow: none;
-            &.te-ok-button:hover {
-                background-color: #4b96e6;
+            &.te-ok-button,&.te-ok-button:hover {
+                background-color: #ffb402;
+                color: #000;
             }
             &.te-close-button:hover {
                 background-color: #777;
