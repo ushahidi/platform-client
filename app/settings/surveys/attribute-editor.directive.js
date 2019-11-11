@@ -36,7 +36,8 @@ function (
                         'link',
                         'ol',
                         'ul'
-                    ]
+                    ],
+                    usageStatistics: false
                 });
 
                 $scope.editor.setValue($scope.editAttribute.instructions);
