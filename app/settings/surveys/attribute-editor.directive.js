@@ -8,7 +8,7 @@ function (
     ModalService,
     _,
     Editor
-) {
+    ) {
     return {
         restrict: 'E',
         template: require('./attribute-editor.html'),
@@ -20,15 +20,14 @@ function (
              */
             $scope.label = angular.copy($scope.editAttribute.label);
             $scope.editAttribute.config = (!$scope.editAttribute.config || (_.isArray($scope.editAttribute.config) && $scope.editAttribute.config.length === 0)) ? {} : $scope.editAttribute.config;
-            $scope.defaultValueToggle = false;
-            $scope.descriptionToggle = $scope.editAttribute.instructions ? true : false;
             $scope.labelError = false;
 
             const initiateEditor = function () {
+                const editorHeight = 180;
                 $scope.editor = new Editor({
                     el: document.querySelector('#editSection'),
                     previewStyle: 'vertical',
-                    height: '250px',
+                    height: `${editorHeight}px`,
                     initialEditType: 'wysiwyg',
                     toolbarItems: [
                         'heading',
@@ -39,7 +38,12 @@ function (
                         'ul'
                     ]
                 });
+
                 $scope.editor.setValue($scope.editAttribute.instructions);
+                /** This is a hack to override the tui-editor's own inline-style
+                 * that makes the scroll get stuck inside the editor-area */
+                let editor = document.querySelector('#editSection');
+                editor.style.height = `${editorHeight + 60}px`;
             };
 
             initiateEditor();

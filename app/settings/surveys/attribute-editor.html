@@ -18,16 +18,11 @@
     </form>
    </div>
    <div class="form-field switch">
-      <label translate="survey.show_field_description">Show field description</label>
-      <div class="toggle-switch">
-          <input class="tgl init" id="show-field-description-new" type="checkbox" data-fieldgroup-toggle="field-description-new" ng-click="descriptionToggle=!descriptionToggle">
-          <label class="tgl-btn" for="show-field-description-new"></label>
-      </div>
-
-      <div class="form-field" data-fieldgroup-target="field-description-new" ng-show="descriptionToggle">
-          <div id="editSection"></div>
-      </div>
-  </div>
+    <label translate="survey.show_field_description">Add field description (optional):</label>
+    <div class="form-field">
+        <div id="editSection"></div>
+    </div>
+</div>
    <div ng-if="canDisplay()">
        <div class="form-field" ng-if="hasOptions(editAttribute)">
           <label translate>form.field_options</label>
@@ -98,13 +93,8 @@
           </div>
        </div>
        <div class="form-field switch" ng-if="canDisplay()">
-            <label translate="app.default_value">Default value</label>
-            <div class="toggle-switch">
-                <input class="tgl init" id="include-default-value-new" type="checkbox" data-fieldgroup-toggle="field-default-value-new" ng-click="defaultValueToggle=!defaultValueToggle">
-                <label class="tgl-btn" for="include-default-value-new"></label>
-            </div>
-
-            <div class="form-field" data-fieldgroup-target="field-default-value-new" ng-show="defaultValueToggle">
+            <label translate="app.default_value">Default value (optional):</label>
+            <div class="form-field">
               <div ng-switch="editAttribute.input">
                   <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
                   <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
