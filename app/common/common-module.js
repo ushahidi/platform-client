@@ -80,6 +80,7 @@ angular.module('ushahidi.common', [
 .service('DataExport', require('./services/data-export.service.js'))
 .service('HxlExport', require('./services/hxl-export.service.js'))
 .service('DataImport', require('./services/data-import.service.js'))
+.service('VerifierService', require('./verifier/verifier.service.js'))
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 
