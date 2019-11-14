@@ -217,7 +217,7 @@
             </div>
         </div>
         <!-- Container for fieldset structured elements -->
-        <fieldset ng-if="isFieldSetStructure(attribute)">
+        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0">
             <!-- Attribute Label -->
             <label ng-class="{
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,

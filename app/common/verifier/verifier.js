@@ -230,6 +230,17 @@ const checkTokenStructure = function (env, options) {
         });
 };
 
+const checkDebugMode = function (url) {
+    return fetch(url)
+    .then(response=> {
+        if (response.status === 200) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+};
+
 const testToken = function (env, options) {
     return fetch(`${env.BACKEND_URL}/oauth/token`, options)
         .then(function (response) {
@@ -293,4 +304,4 @@ const checkStructure = function (a, b, url) {
 };
 
 module.exports = {
-    verifyNetwork, verifyEndpointStatus, verifyEndpointStructure, verifyEnv, verifyOauth, verifyTransifex, verifyDbConnection, verifyAPIEnvs, isCheckDisabled};
+    verifyNetwork, verifyEndpointStatus, verifyEndpointStructure, verifyEnv, verifyOauth, verifyTransifex, verifyDbConnection, verifyAPIEnvs, isCheckDisabled, checkDebugMode};
