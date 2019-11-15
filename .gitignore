@@ -15,6 +15,7 @@ server/www/locales/
 *.swo
 buildargs.env
 deployment.env
+docker.env
 vault.txt
 *.swo
 *.swp
