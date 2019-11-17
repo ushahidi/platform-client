@@ -116,7 +116,7 @@
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
     "d3": "^3.5.17",
-    "leaflet": "~1.0.1",
+    "leaflet": "~1.6.0",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",
     "libphonenumber-js": "^1.0.24",
