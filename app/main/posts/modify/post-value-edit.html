@@ -14,8 +14,7 @@
              <label>
                 <bdi>{{attribute.label}}</bdi>
             </label>
-            <p>
-                <bdi>{{attribute.instructions}}</bdi>
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
             </p>
             <input id="title"
                 name="title" type="text" ng-model="post.title" ng-required="true" ng-minlength=2 ng-maxlength=150 adaptive-input>
@@ -45,8 +44,7 @@
             <label>
                 <bdi>{{attribute.label}}</bdi>
             </label>
-            <p>
-                <bdi>{{attribute.instructions}}</bdi>
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
             </p>
             <textarea id="content" name="content" data-min-rows="1" rows="1"
                 ng-model="post.content" ng-required="true" adaptive-input msd-elastic>
@@ -81,7 +79,7 @@
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <!-- Attribute Instructions -->
-            <p>{{attribute.instructions}}</p>
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions"></p>
             <!-- attributes which use the form-field structure -->
             <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
                 <div ng-switch="attribute.input">
@@ -231,7 +229,7 @@
                 
             </label>
             <!-- Attribute Instructions -->
-            <p><bdi>{{attribute.instructions}}</bdi></p>
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions"></p>
 
             <!-- attributes which use the form-field structure -->
             <div ng-switch="attribute.input">
