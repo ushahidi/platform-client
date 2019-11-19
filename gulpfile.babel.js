@@ -1,9 +1,8 @@
 'use strict';
 
-import gulp     from 'gulp';
+import {task, src, dest, series} from 'gulp';
 import webpack  from 'webpack';
 import path     from 'path';
-import runSeq   from 'run-sequence';
 import rename   from 'gulp-rename';
 import serve    from 'browser-sync';
 import del      from 'del';
@@ -20,7 +19,7 @@ import fs        from 'fs';
 import log       from 'fancy-log';
 import c         from 'ansi-colors';
 import PluginError from 'plugin-error';
-import minimist  from 'minimist'; 
+import minimist  from 'minimist';
 import verifier from './gulp/verifier';
 const argv = minimist(process.argv.slice(2));
 
@@ -28,15 +27,16 @@ let root = 'app';
 
 // Load .env file
 dotenv.config({silent: true});
+
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
 
-// helper method for resolving paths
+// Helper method for resolving paths
 let resolveToApp = (glob = '') => {
   return path.join(root, glob); // app/{glob}
 };
 
-// map of all paths
+// Map of all paths
 let paths = {
   js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
   html: [
@@ -53,25 +53,27 @@ let paths = {
   dest: path.join(__dirname, 'server/www')
 };
 
-// use webpack.config.js to build modules
-gulp.task('dist', (done) => {
-    runSeq('clean', ['dist:webpack', 'dist:config', 'transifex-download'], done);
-});
+// Cleaning up directories
+function clean(done) {
+  del([paths.dest]).then(function (paths) {
+    log('[clean]', paths);
+    done();
+  });
+}
 
 // Copy config.js into dist
-gulp.task('dist:config', () => {
-    return gulp.src(paths.config)
-        .pipe(gulp.dest(paths.dest));
-});
+function distConfig () {
+  return src(paths.config)
+    .pipe(dest(paths.dest));
+}
 
 // Build webpack for production
-gulp.task('dist:webpack', (done) => {
+function distWebpack (done) {
   const config = require('./webpack.dist.config');
   config.entry.app = paths.entry;
   config.output.path = paths.dest;
-
   webpack(config, (err, stats) => {
-    if(err)  {
+    if (err)  {
       throw new PluginError('webpack', err);
     }
 
@@ -80,34 +82,74 @@ gulp.task('dist:webpack', (done) => {
       chunks: false,
       errorDetails: true
     }));
-
     done();
   });
-});
+}
 
-gulp.task('build', ['dist']);
+// Build tarball for release
+function buildTar () {
+  var version = argv['version-suffix'] || require('./package.json').version;
+  var dest_dir = argv['dest-dir'] || 'build';
+
+  return src(path.join(paths.dest, '**'))
+      .pipe(rename(function (filePath) {
+          // Prefix path
+          filePath.dirname = path.join('ushahidi-platform-client-bundle-' + version, filePath.dirname);
+      }))
+      .pipe(tar('ushahidi-platform-client-bundle-' + version + '.tar'))
+      .pipe(gzip())
+      .pipe(dest(dest_dir));
+}
+
+// Downloading translations from transifex
+function transifexDownload (done) {
+    // argv.dev checks if the --dev flag was sent when calling the task
+    let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
+    // Make sure we have dest dir
+    try {
+        fs.mkdirSync(destination);
+    }
+    catch (err) {
+        if (err.code !== 'EEXIST') {
+            throw err;
+        }
+    }
+    require('./gulp/transifex-download')(destination + '/locales/', done);
+    done();
+}
 
 /**
- * Task `heroku:dev` - builds app for heroku
+ * Build-options
  */
-gulp.task('heroku:dev', ['dist']);
 
-gulp.task('watch:verifier', () => {
-  process.env.VERIFIER = true;
-  gulp.run('dev');
-});
+ // use webpack.config.js to build modules
+ task('dist', series(clean, distWebpack, distConfig, transifexDownload));
+ task('build', series('dist'));
 
-gulp.task('dev:verifier', () => {
-  process.env.VERIFIER = true;
-  gulp.run('dev');
-});
+ //  Builds app for heroku
+ task('heruku:dev', series('dist'));
 
-gulp.task('dev', () => {
-  const config = require('./webpack.dev.config');
-  config.entry.app = [
+ /**
+ * Task `tar` - Build tarball for release
+ * Options
+ * `--version-suffix=<version>` - Specify version for output file
+ */
+ task('tar', buildTar);
+
+// Task `release` - Build release
+ task('release', series('dist', 'tar'));
+
+/**
+* Serve-options
+*/
+
+// Starting the dev-server
+function devServer () {
+    const config = require('./webpack.dev.config');
+    config.entry.app = [
     // this modules required to make HRM working
     // it responsible for all this webpack magic
-    'webpack-hot-middleware/client?reload=true',
+    'webpack-hot-middleware/client?reload=true'
     // application entry point
   ].concat(paths.entry);
 
@@ -130,44 +172,44 @@ gulp.task('dev', () => {
       webpackHotMiddleware(compiler)
     ]
   });
-});
+}
+task('default', devServer);
+task('serve', devServer);
+task('watch', devServer);
 
-gulp.task('serve', ['dev']);
-gulp.task('watch', ['dev']);
-
-gulp.task('clean', (done) => {
-  del([paths.dest]).then(function (paths) {
-    log('[clean]', paths);
-    done();
+//Serving the dist build (for heroku)
+function serveStatic () {
+  serve.init({
+      server: {
+          baseDir: paths.dest
+      },
+      port: process.env.PORT || 3000,
+      ui: false,
+      codeSync: false,
+      open: false,
+      middleware: [
+        historyApiFallback()
+      ]
   });
-});
-
+}
+task('serve:static', serveStatic);
 
 /**
- * Run test once and exit
+ * Tasks for tests
  */
-gulp.task('test', (done) => {
+
+ //Run test once and exit
+function testServer(done) {
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         singleRun: true
     }, done);
     server.start();
-});
+}
+task('test', testServer);
 
-/**
- * Send coverage stats to coveralls.io
- */
-gulp.task('send-stats-to-coveralls', () => {
-    var coveralls = require('gulp-coveralls');
-    gulp.src('test/coverage/**/lcov.info')
-    .pipe(coveralls());
-
-});
-
-/**
- * Watch for file changes and re-run tests on each change
- */
-gulp.task('tdd', (done) => {
+// Watch for file changes and re-run tests on each change
+ function startTdd(done) {
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         reporters: ['progress', 'notify'],
@@ -175,98 +217,59 @@ gulp.task('tdd', (done) => {
         singleRun: false
     }, done);
     server.start();
-});
+}
+task('tdd', startTdd);
+
+// Send coverage stats to coveralls.io
+ function sendToCoveralls(done) {
+    var coveralls = require('gulp-coveralls');
+      src('test/coverage/**/lcov.info')
+    .pipe(coveralls());
+    done();
+}
+task('send-stats-to-coveralls',sendToCoveralls);
 
 /**
- * Run JSCS tests
- */
-gulp.task('jscs', () => {
-    return gulp.src(['app/**/*.js', 'test/**/*.js', 'gulpfile.js'])
+* Tasks for JSCS
+*/
+// Run JSCS checks once
+function runJscs() {
+    return src(['app/**/*.js', 'test/**/*.js', 'gulpfile.babel.js'])
         .pipe(jscs())
         .pipe(jscs.reporter())
         .pipe(jscs.reporter('fail'));
-});
-gulp.task('jscsfix', ['jscsfix:app', 'jscsfix:test'], () => {});
-gulp.task('jscsfix:app', () => {
-    return gulp.src(['app/**/*.js'])
+}
+task('jscs', runJscs);
+
+// Fix problems in app-directory
+function jscsFixApp () {
+    return src(['app/**/*.js'])
         .pipe(jscs({ fix : true }))
-        .pipe(gulp.dest('app/'));
-});
-gulp.task('jscsfix:test', () => {
-    return gulp.src(['test/**/*.js'])
+        .pipe(dest('app/'));
+}
+task('jscsfix:app', jscsFixApp);
+
+// Fix problems in test-directory
+function jscsFixTests () {
+      return src(['test/**/*.js'])
         .pipe(jscs({ fix : true }))
-        .pipe(gulp.dest('test/'));
-});
+        .pipe(dest('test/'));
+}
+task('jscsfix:test', jscsFixTests);
+
+// Fix problems in both app- and test-directories
+task('jscsfix', series('jscsfix:app', 'jscsfix:test'));
 
 /**
- * Task `release` - Build release
- */
-gulp.task('transifex-download', function (done) {
-    // argv.dev checks if the --dev flag was sent when calling the task
-    let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
-    // Make sure we have dest dir
-    try {
-        fs.mkdirSync(destination);
-    }
-    catch (err) {
-        if (err.code !== 'EEXIST') {
-            throw err;
-        }
-    }
-
-    require('./gulp/transifex-download')(destination + '/locales/', done);
-});
-
-/**
- * Task `serve:static` - Serve dist build (for heroku)
+ * Tasks for installation-helper
  */
 
-gulp.task('serve:static', function() {
-    serve.init({
-        server: {
-            baseDir: paths.dest
-        },
-        port: process.env.PORT || 3000,
-        ui: false,
-        codeSync: false,
-        open: false,
-        middleware: [
-          historyApiFallback()
-        ]
-    });
-});
+// Setting the environment variable to enable verifier
+function startVerifier (done) {
+  process.env.VERIFIER = true;
+}
 
-/**
- * Task `tar` - Build tarball for release
- * Options
- * `--version-suffix=<version>` - Specify version for output fil
- */
-gulp.task('tar', () => {
-    var version = argv['version-suffix'] || require('./package.json').version;
-    var dest_dir = argv['dest-dir'] || 'build';
-
-    return gulp.src(path.join(paths.dest, '**'))
-        .pipe(rename(function (filePath) {
-            // Prefix path
-            filePath.dirname = path.join('ushahidi-platform-client-bundle-' + version, filePath.dirname);
-        }))
-        .pipe(tar('ushahidi-platform-client-bundle-' + version + '.tar'))
-        .pipe(gzip())
-        .pipe(gulp.dest(dest_dir));
-});
-
-/**
- * Task `release` - Build release
- */
-gulp.task('release', (done) => {
-    return runSeq('dist', 'tar', done);
-});
-
-gulp.task('default', ['watch']);
-
-// gulp.task('watch:verify', ['watch:verify']);
-
-gulp.task('verify', () => {
+function verify (done) {
   if (verifier.isCheckDisabled('ALL')) {
     log.info(c.green('USH_DISABLE_CHECKS is ALL, skipping verification process.'));
     return;
@@ -279,4 +282,10 @@ gulp.task('verify', () => {
   verifier.verifyOauth();
   verifier.verifyDbConnection();
   verifier.verifyAPIEnvs();
-});
+  done();
+}
+// Run helper in console
+task('verify', verify);
+
+// Run helper in browser
+task('watch:verifier', series(startVerifier, devServer));
