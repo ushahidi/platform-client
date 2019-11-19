@@ -265,8 +265,9 @@ task('jscsfix', series('jscsfix:app', 'jscsfix:test'));
  */
 
 // Setting the environment variable to enable verifier
-function startVerifier() {
+function startVerifier(done) {
     process.env.VERIFIER = true;
+    done();
 }
 
 function verify(done) {
