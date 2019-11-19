@@ -33,76 +33,76 @@ process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
 
 // Helper method for resolving paths
 let resolveToApp = (glob = '') => {
-  return path.join(root, glob); // app/{glob}
+    return path.join(root, glob); // app/{glob}
 };
 
 // Map of all paths
 let paths = {
-  js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
-  html: [
-    resolveToApp('**/*.html'),
-    resolveToApp('index.html')
-  ],
-  entry: [
-    'babel-polyfill',
-    path.join(__dirname, root, 'bootstrap.js')
-  ],
-  output: root,
-  // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
-  config: resolveToApp('config.js'),
-  dest: path.join(__dirname, 'server/www')
+    js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
+    html: [
+      resolveToApp('**/*.html'),
+      resolveToApp('index.html')
+    ],
+    entry: [
+      'babel-polyfill',
+      path.join(__dirname, root, 'bootstrap.js')
+    ],
+    output: root,
+    // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
+    config: resolveToApp('config.js'),
+    dest: path.join(__dirname, 'server/www')
 };
 
 // Cleaning up directories
 function clean(done) {
-  del([paths.dest]).then(function (paths) {
-    log('[clean]', paths);
-    done();
-  });
+    del([paths.dest]).then(function (paths) {
+        log('[clean]', paths);
+        done();
+    });
 }
 
 // Copy config.js into dist
-function distConfig () {
-  return src(paths.config)
-    .pipe(dest(paths.dest));
+function distConfig() {
+    return src(paths.config)
+      .pipe(dest(paths.dest));
 }
 
 // Build webpack for production
-function distWebpack (done) {
-  const config = require('./webpack.dist.config');
-  config.entry.app = paths.entry;
-  config.output.path = paths.dest;
-  webpack(config, (err, stats) => {
-    if (err)  {
-      throw new PluginError('webpack', err);
-    }
+function distWebpack(done) {
+    const config = require('./webpack.dist.config');
+    config.entry.app = paths.entry;
+    config.output.path = paths.dest;
+    webpack(config, (err, stats) => {
+        if (err)  {
+            throw new PluginError('webpack', err);
+        }
 
-    log('[webpack]', stats.toString({
-      colors: colorsSupported,
-      chunks: false,
-      errorDetails: true
-    }));
-    done();
-  });
+        log('[webpack]', stats.toString({
+            colors: colorsSupported,
+            chunks: false,
+            errorDetails: true
+        }));
+        done();
+    });
 }
 
 // Build tarball for release
-function buildTar () {
-  var version = argv['version-suffix'] || require('./package.json').version;
-  var dest_dir = argv['dest-dir'] || 'build';
+function buildTar() {
+    var version = argv['version-suffix'] || require('./package.json').version;
+    var dest_dir = argv['dest-dir'] || 'build';
 
-  return src(path.join(paths.dest, '**'))
-      .pipe(rename(function (filePath) {
-          // Prefix path
-          filePath.dirname = path.join('ushahidi-platform-client-bundle-' + version, filePath.dirname);
-      }))
-      .pipe(tar('ushahidi-platform-client-bundle-' + version + '.tar'))
-      .pipe(gzip())
-      .pipe(dest(dest_dir));
+    return src(path.join(paths.dest, '**'))
+        .pipe(rename(function (filePath) {
+            // Prefix path
+            filePath.dirname = path.join('ushahidi-platform-client-bundle-' + version, filePath.dirname);
+        }))
+        .pipe(tar('ushahidi-platform-client-bundle-' + version + '.tar'))
+        .pipe(gzip())
+        .pipe(dest(dest_dir));
 }
 
 // Downloading translations from transifex
-function transifexDownload (done) {
+function transifexDownload(done) {
     // argv.dev checks if the --dev flag was sent when calling the task
     let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
     // Make sure we have dest dir
@@ -119,78 +119,78 @@ function transifexDownload (done) {
 }
 
 /**
- * Build-options
- */
+* Build-options
+*/
 
- // use webpack.config.js to build modules
- task('dist', series(clean, distWebpack, distConfig, transifexDownload));
- task('build', series('dist'));
+// use webpack.config.js to build modules
+task('dist', series(clean, distWebpack, distConfig, transifexDownload));
+task('build', series('dist'));
 
- //  Builds app for heroku
- task('heruku:dev', series('dist'));
+//  Builds app for heroku
+task('heruku:dev', series('dist'));
 
- /**
- * Task `tar` - Build tarball for release
- * Options
- * `--version-suffix=<version>` - Specify version for output file
- */
- task('tar', buildTar);
+/**
+* Task `tar` - Build tarball for release
+* Options
+* `--version-suffix=<version>` - Specify version for output file
+*/
+task('tar', buildTar);
 
 // Task `release` - Build release
- task('release', series('dist', 'tar'));
+task('release', series('dist', 'tar'));
 
 /**
 * Serve-options
 */
 
 // Starting the dev-server
-function devServer () {
+function devServer() {
     const config = require('./webpack.dev.config');
     config.entry.app = [
-    // this modules required to make HRM working
-    // it responsible for all this webpack magic
-    'webpack-hot-middleware/client?reload=true'
-    // application entry point
-  ].concat(paths.entry);
+      // this modules required to make HRM working
+      // it responsible for all this webpack magic
+      'webpack-hot-middleware/client?reload=true'
+      // application entry point
+    ].concat(paths.entry);
 
-  var compiler = webpack(config);
+    var compiler = webpack(config);
 
-  serve({
-    port: process.env.PORT || 3000,
-    open: false,
-    server: {baseDir: root},
-    middleware: [
-      historyApiFallback(),
-      webpackDevMiddleware(compiler, {
-        stats: {
-          colors: colorsSupported,
-          chunks: false,
-          modules: false
-        },
-        publicPath: config.output.publicPath
-      }),
-      webpackHotMiddleware(compiler)
-    ]
-  });
+    serve({
+        port: process.env.PORT || 3000,
+        open: false,
+        server: {baseDir: root},
+        middleware: [
+            historyApiFallback(),
+            webpackDevMiddleware(compiler, {
+                stats: {
+                    colors: colorsSupported,
+                    chunks: false,
+                    modules: false
+                },
+                publicPath: config.output.publicPath
+            }),
+            webpackHotMiddleware(compiler)
+        ]
+    });
 }
 task('default', devServer);
 task('serve', devServer);
 task('watch', devServer);
 
 //Serving the dist build (for heroku)
-function serveStatic () {
-  serve.init({
-      server: {
-          baseDir: paths.dest
-      },
-      port: process.env.PORT || 3000,
-      ui: false,
-      codeSync: false,
-      open: false,
-      middleware: [
-        historyApiFallback()
-      ]
-  });
+function serveStatic() {
+    serve.init({
+        server: {
+            baseDir: paths.dest
+        },
+        port: process.env.PORT || 3000,
+        ui: false,
+        codeSync: false,
+        open: false,
+        middleware: [
+          historyApiFallback()
+        ]
+    });
 }
 task('serve:static', serveStatic);
 
@@ -198,7 +198,7 @@ task('serve:static', serveStatic);
  * Tasks for tests
  */
 
- //Run test once and exit
+//Run test once and exit
 function testServer(done) {
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
@@ -209,7 +209,7 @@ function testServer(done) {
 task('test', testServer);
 
 // Watch for file changes and re-run tests on each change
- function startTdd(done) {
+function startTdd(done) {
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         reporters: ['progress', 'notify'],
@@ -221,13 +221,13 @@ task('test', testServer);
 task('tdd', startTdd);
 
 // Send coverage stats to coveralls.io
- function sendToCoveralls(done) {
+function sendToCoveralls(done) {
     var coveralls = require('gulp-coveralls');
-      src('test/coverage/**/lcov.info')
-    .pipe(coveralls());
+    src('test/coverage/**/lcov.info')
+      .pipe(coveralls());
     done();
 }
-task('send-stats-to-coveralls',sendToCoveralls);
+task('send-stats-to-coveralls', sendToCoveralls);
 
 /**
 * Tasks for JSCS
@@ -242,7 +242,7 @@ function runJscs() {
 task('jscs', runJscs);
 
 // Fix problems in app-directory
-function jscsFixApp () {
+function jscsFixApp() {
     return src(['app/**/*.js'])
         .pipe(jscs({ fix : true }))
         .pipe(dest('app/'));
@@ -250,10 +250,10 @@ function jscsFixApp () {
 task('jscsfix:app', jscsFixApp);
 
 // Fix problems in test-directory
-function jscsFixTests () {
-      return src(['test/**/*.js'])
-        .pipe(jscs({ fix : true }))
-        .pipe(dest('test/'));
+function jscsFixTests() {
+    return src(['test/**/*.js'])
+      .pipe(jscs({ fix : true }))
+      .pipe(dest('test/'));
 }
 task('jscsfix:test', jscsFixTests);
 
@@ -265,25 +265,26 @@ task('jscsfix', series('jscsfix:app', 'jscsfix:test'));
  */
 
 // Setting the environment variable to enable verifier
-function startVerifier (done) {
-  process.env.VERIFIER = true;
+function startVerifier() {
+    process.env.VERIFIER = true;
 }
 
-function verify (done) {
-  if (verifier.isCheckDisabled('ALL')) {
-    log.info(c.green('USH_DISABLE_CHECKS is ALL, skipping verification process.'));
-    return;
-  }
-  verifier.verifyEnv();
-  verifier.verifyTransifex();
-  verifier.verifyNetwork();
-  verifier.verifyEndpointStatus();
-  verifier.verifyEndpointStructure();
-  verifier.verifyOauth();
-  verifier.verifyDbConnection();
-  verifier.verifyAPIEnvs();
-  done();
+function verify(done) {
+    if (verifier.isCheckDisabled('ALL')) {
+        log.info(c.green('USH_DISABLE_CHECKS is ALL, skipping verification process.'));
+        done();
+    }
+    verifier.verifyEnv();
+    verifier.verifyTransifex();
+    verifier.verifyNetwork();
+    verifier.verifyEndpointStatus();
+    verifier.verifyEndpointStructure();
+    verifier.verifyOauth();
+    verifier.verifyDbConnection();
+    verifier.verifyAPIEnvs();
+    done();
 }
+
 // Run helper in console
 task('verify', verify);
 
