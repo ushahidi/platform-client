@@ -43,8 +43,8 @@
     "browser-sync": "^2.26.7",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.28.0",
-    "del": "v4.1.1",
-    "dotenv": "^4.0.0",
+    "del": "^5.1.0",
+    "dotenv": "^8.2.0",
     "eslint": "^3.4.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "fancy-log": "^1.3.3",
@@ -54,7 +54,7 @@
     "gulp-gzip": "^1.4.2",
     "gulp-jscs": "^4.0.0",
     "gulp-rename": "^1.4.0",
-    "gulp-tar": "^2.1.0",
+    "gulp-tar": "^3.1.0",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.22.0",
     "imports-loader": "^0.7.1",
@@ -132,7 +132,7 @@
     "ushahidi-platform-pattern-library": "^3.12.3"
   },
   "engines": {
-    "node": ">=4.0"
+    "node": ">=10.0"
   },
   "greenkeeper": {
     "ignore": [
