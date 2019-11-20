@@ -40,13 +40,11 @@ module.exports = function (config) {
             'test/unit/spec.bundle.js': ['webpack', 'sourcemap'],
             'mocked_backend/**/*.json': ['json_fixtures']
         },
-
         webpack: require('../webpack.test.config'),
-
-        webpackServer: {
-            noInfo: true // prevent console spamming when running in Karma!
+        webpackMiddleware: {
+            // turning off verbose output
+            stats: 'errors-only'
         },
-
         coverageReporter: {
             reporters: [
                 {

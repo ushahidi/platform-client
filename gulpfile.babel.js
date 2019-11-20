@@ -203,7 +203,9 @@ function testServer(done) {
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         singleRun: true
-    }, done);
+    }, function () {
+        done();
+    });
     server.start();
 }
 task('test', testServer);
@@ -215,7 +217,9 @@ function startTdd(done) {
         reporters: ['progress', 'notify'],
         autoWatch: true,
         singleRun: false
-    }, done);
+    }, function () {
+        done();
+    });
     server.start();
 }
 task('tdd', startTdd);
