@@ -220,15 +220,6 @@ function startTdd(done) {
 }
 task('tdd', startTdd);
 
-// Send coverage stats to coveralls.io
-function sendToCoveralls(done) {
-    var coveralls = require('gulp-coveralls');
-    src('test/coverage/**/lcov.info')
-      .pipe(coveralls());
-    done();
-}
-task('send-stats-to-coveralls', sendToCoveralls);
-
 /**
 * Tasks for JSCS
 */
