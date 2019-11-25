@@ -83,7 +83,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "pre-commit": "^1.1.2",
     "protractor": "^5.1.1",
-    "raw-loader": "^0.5.1",
+    "raw-loader": "^4.0.0",
     "resolve-url-loader": "^2.0.2",
     "run-sequence": "^1.1.0",
     "sass-loader": "^6.0.3",
