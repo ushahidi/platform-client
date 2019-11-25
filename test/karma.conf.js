@@ -57,7 +57,12 @@ module.exports = function (config) {
                 }
             ]
         },
-
+        client: {
+            // Stops Jasmine from randomly executing tests, our tests are not written that way right now
+            jasmine: {
+                random: false
+            }
+        },
         logLevel: config.LOG_INFO
 
     });
