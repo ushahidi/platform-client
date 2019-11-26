@@ -200,6 +200,7 @@ task('serve:static', serveStatic);
 
 //Run test once and exit
 function testServer(done) {
+    process.env.NODE_ENV = 'test';
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         singleRun: true
@@ -212,6 +213,7 @@ task('test', testServer);
 
 // Watch for file changes and re-run tests on each change
 function startTdd(done) {
+    process.env.NODE_ENV = 'test';
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         reporters: ['progress', 'notify'],
