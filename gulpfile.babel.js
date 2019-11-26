@@ -126,9 +126,6 @@ function transifexDownload(done) {
 task('dist', series(clean, distWebpack, distConfig, transifexDownload));
 task('build', series('dist'));
 
-//  Builds app for heroku
-task('heruku:dev', series('dist'));
-
 /**
 * Task `tar` - Build tarball for release
 * Options
@@ -174,8 +171,6 @@ function devServer() {
     });
 }
 task('default', devServer);
-task('serve', devServer);
-task('watch', devServer);
 
 //Serving the dist build (for heroku)
 function serveStatic() {
