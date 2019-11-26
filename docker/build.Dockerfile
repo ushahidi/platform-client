@@ -1,4 +1,4 @@
-FROM ushahidi/node-ci:node-6.10.3
+FROM ushahidi/node-ci:node-10
 
 RUN mkdir -p /var/app
 WORKDIR /var/app
