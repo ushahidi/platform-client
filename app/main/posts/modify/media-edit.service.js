@@ -28,7 +28,7 @@ function (
                     if (!media.id && media.deleted) {
                         post.values[key][0] = null;
                     // Check if a new file was uploaded
-                    }else if (media.file) {
+                    } else if (media.file) {
                         calls.push(MediaEditService.uploadFile(media).then(function (media) {
                             post.values[key][0] = media ? media.id : null;
                         }));

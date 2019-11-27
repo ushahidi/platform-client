@@ -79,8 +79,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     function getBaseLayers() {
         return layers.baselayers;
     }
-
-    /* jshint ignore:start */
+    /* eslint-disable */
     function getBaseLayersForControl() {
         return _.chain(layers.baselayers)
         .values()
@@ -90,7 +89,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         })
         .value();
     }
-    /* jshint ignore:end */
+    /* eslint-enable */
 
     function getLayer(layerKey) {
         var layer = layers.baselayers[layerKey];
