@@ -141,10 +141,6 @@ function PostEditorController(
             attributes.map(function (attr) {
                 // Create associated media entity
                 if (attr.input === 'upload') {
-                    var media = {};
-                    if ($scope.post.values[attr.key]) {
-                        media = $scope.post.values[attr.key][0];
-                    }
                     $scope.medias[attr.key] = {};
                 }
                 if (attr.input === 'tags') {
