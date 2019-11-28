@@ -840,7 +840,8 @@
             "upload" : "Upload",
             "add_photo": "Add photo",
             "delete_photo": "Delete photo",
-            "replace_image": "Replace image"
+            "replace_image": "Replace image",
+            "error_in_upload": "Your image is too large or has the wrong format, please check and try again!"
         },
         "video" : {
             "enter_a" : "Enter a",
