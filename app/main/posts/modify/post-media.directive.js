@@ -25,7 +25,7 @@ function (
         template: require('./media.html'),
         link: function ($scope, element, attr, ngModel) {
             // Initialize media object
-            $scope.media = { id: null, file: null, caption: '', dataURI: null, changed: false };
+            $scope.media = { id: null, file: null, caption: '', dataURI: null, changed: false};
             $scope.mediaId = null;
             $scope.showAdd = showAdd;
             $scope.showReplace = showReplace;
@@ -91,14 +91,9 @@ function (
 
             function deleteMedia(mediaId) {
                 // Mark for deletion
-                Notify.confirmDelete('notify.post.delete_image_confirm').then(function () {
-                    MediaEditService.deleteMedia(mediaId).then(function () {
-                        $scope.media = {};
-                        $scope.media.changed = true;
-                        $scope.media.deleted = true;
-                        $scope.mediaId = null;
-                    });
-                });
+                $scope.media = {};
+                $scope.media.changed = true;
+                $scope.media.deleted = true;
             }
         }
     };
