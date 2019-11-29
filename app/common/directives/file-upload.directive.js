@@ -38,7 +38,7 @@ function FileUpload() {
                     if ($scope.validation === 'image') {
                         var mimeReg = /[\/.](gif|jpg|jpeg|png)$/i;
                         var mimeCheck = mimeReg.test(container.type);
-                        var sizeCheck = container.size < 1000000;
+                        var sizeCheck = container.size < 1048576;
                         return mimeCheck && sizeCheck;
                     }
                     return true;

@@ -841,7 +841,7 @@
             "add_photo": "Add photo",
             "delete_photo": "Delete photo",
             "replace_image": "Replace image",
-            "error_in_upload": "Your image is too large or has the wrong format, please check and try again!"
+            "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
         },
         "video" : {
             "enter_a" : "Enter a",
