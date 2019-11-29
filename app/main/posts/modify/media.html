@@ -1,7 +1,7 @@
 
 <form>
     <div class="form-field file">
-      <file-upload id="{{name}}" container="media" model="mediaId">
+      <file-upload id="{{name}}" validation="'image'" validation=true container="media" model="mediaId">
       </file-upload>
 
       <label for="{{name}}" class="button button-gamma" ng-show="showAdd()">
@@ -23,7 +23,7 @@
              <span class="hidden" translate="post.media.delete_photo"></span>
           </button>
 
-          <file-upload id="{{name}}" container="media" model="mediaId"></file-upload>
+          <file-upload id="{{name}}" validation="'image'" container="media" model="mediaId"></file-upload>
             <label for="{{name}}" class="button button-gamma">
               <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#image"></use>
