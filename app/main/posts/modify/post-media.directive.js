@@ -50,7 +50,6 @@ function (
             function renderViewValue() {
                 if (ngModel.$viewValue) {
                     $scope.mediaId = parseInt(ngModel.$viewValue);
-
                     // Load the media from the API
                     if ($scope.media.id !== $scope.mediaId) {
                         MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
@@ -65,6 +64,7 @@ function (
             function handleMediaChange(changed) {
                 if (changed) {
                     // Make sure the model is set dirty if media changes
+                    ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
             }
@@ -72,6 +72,7 @@ function (
             function handleMediaIdChange(id) {
                 if (id === 'changed') {
                     // Make sure the model is set dirty if media changes
+                    ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
             }
@@ -85,7 +86,7 @@ function (
             }
 
             function showDelete() {
-                return $scope.media.id;
+                return $scope.media.id || ($scope.media.changed && !$scope.media.deleted);
             }
 
             function deleteMedia(mediaId) {
