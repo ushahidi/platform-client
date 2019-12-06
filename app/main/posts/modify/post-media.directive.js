@@ -82,7 +82,7 @@ function (
             }
 
             function handleMediaDeleted(deleted) {
-                // Make sure we update the view-value both if an image is deleted and deleted and then replaced
+                // // Make sure we update the view-value both if an image is deleted and deleted and then replaced
                 if (deleted) {
                     ngModel.$setViewValue(null);
                 } else {
@@ -104,7 +104,7 @@ function (
 
             function deleteMedia(mediaId) {
                 // Mark for deletion
-                $scope.media = {};
+                $scope.media = {id: mediaId};
                 $scope.media.changed = true;
                 $scope.media.deleted = true;
             }
