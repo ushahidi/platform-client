@@ -104,9 +104,7 @@ function (
 
             function deleteMedia(mediaId) {
                 // Mark for deletion
-                $scope.media = {id: mediaId};
-                $scope.media.changed = true;
-                $scope.media.deleted = true;
+                $scope.media = {id: mediaId, changed: true, deleted: true};
             }
         }
     };
