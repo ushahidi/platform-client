@@ -19,14 +19,17 @@ function (
         saveMedia: function (medias, post) {
             var deferred = $q.defer();
             var calls = [];
+
             // Loop over medias and check for changes
             _.each(medias, function (media, key) {
                 // Check if media needs to be updated
                 if (media.changed) {
-                    // Check if new media or if the media file has changed
-                    // otherwise just update the caption
-                    if (!media.id && media.deleted) {
+                    // Checking if media is marked for deletion
+                    if (media.deleted) {
+                        MediaEditService.deleteMedia(media.id);
                         post.values[key][0] = null;
+                        // Check if new media or if the media file has changed
+                        // otherwise just update the caption
                     // Check if a new file was uploaded
                     } else if (media.file) {
                         calls.push(MediaEditService.uploadFile(media).then(function (media) {
