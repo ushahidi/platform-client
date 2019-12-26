@@ -25,7 +25,7 @@ function (
         template: require('./media.html'),
         link: function ($scope, element, attr, ngModel) {
             // Initialize media object
-            $scope.media = { id: null, file: null, caption: '', dataURI: null, changed: false };
+            $scope.media = { id: null, file: null, caption: '', dataURI: null, changed: false, deleted: false };
             $scope.mediaId = null;
             $scope.showAdd = showAdd;
             $scope.showReplace = showReplace;
@@ -42,6 +42,9 @@ function (
 
                 // Watch for media changes
                 $scope.$watch('mediaId', handleMediaIdChange);
+
+                // Watch for deleted images
+                $scope.$watch('media.deleted', handleMediaDeleted);
 
                 // Set up rendering any model changes
                 ngModel.$render = renderViewValue;
@@ -67,6 +70,7 @@ function (
                     ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
+
             }
 
             function handleMediaIdChange(id) {
@@ -77,12 +81,21 @@ function (
                 }
             }
 
+            function handleMediaDeleted(deleted) {
+                // // Make sure we update the view-value both if an image is deleted and deleted and then replaced
+                if (deleted) {
+                    ngModel.$setViewValue(null);
+                } else {
+                    ngModel.$setViewValue($scope.mediaId);
+                }
+            }
+
             function showAdd() {
                 return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
             }
 
             function showReplace() {
-                return $scope.media.dataURI || $scope.media.id;
+                return $scope.media.dataURI || ($scope.media.id && !$scope.media.deleted);
             }
 
             function showDelete() {
@@ -91,14 +104,7 @@ function (
 
             function deleteMedia(mediaId) {
                 // Mark for deletion
-                Notify.confirmDelete('notify.post.delete_image_confirm').then(function () {
-                    MediaEditService.deleteMedia(mediaId).then(function () {
-                        $scope.media = {};
-                        $scope.media.changed = true;
-                        $scope.media.deleted = true;
-                        $scope.mediaId = null;
-                    });
-                });
+                $scope.media = {id: mediaId, changed: true, deleted: true};
             }
         }
     };
