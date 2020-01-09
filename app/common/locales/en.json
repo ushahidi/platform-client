@@ -93,7 +93,7 @@
         "name" : "Name",
         "key" : "Key",
         "survey_web_address" : "Your survey's web address",
-        "default_value" : "Default value",
+        "default_value" : "Default value (optional):",
         "fields" : "Fields",
         "select_one": "Select One",
         "sort_and_filter": "Sort & filter",
@@ -284,7 +284,7 @@
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
         "task_visible_when_published" : "This task will be visible when post is published.",
-        "show_field_description" : "Show field description",
+        "show_field_description" : "Add field description (optional):",
         "add_task" : "Add task",
         "add_field" : "Add field",
         "edit_field" : "Edit field",
@@ -840,7 +840,8 @@
             "upload" : "Upload",
             "add_photo": "Add photo",
             "delete_photo": "Delete photo",
-            "replace_image": "Replace image"
+            "replace_image": "Replace image",
+            "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
         },
         "video" : {
             "enter_a" : "Enter a",

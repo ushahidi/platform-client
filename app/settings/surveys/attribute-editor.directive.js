@@ -2,11 +2,13 @@ module.exports = [
     '$rootScope',
     'ModalService',
     '_',
+    'Editor',
 function (
     $rootScope,
     ModalService,
-    _
-) {
+    _,
+    Editor
+    ) {
     return {
         restrict: 'E',
         template: require('./attribute-editor.html'),
@@ -18,11 +20,37 @@ function (
              */
             $scope.label = angular.copy($scope.editAttribute.label);
             $scope.editAttribute.config = (!$scope.editAttribute.config || (_.isArray($scope.editAttribute.config) && $scope.editAttribute.config.length === 0)) ? {} : $scope.editAttribute.config;
-            $scope.defaultValueToggle = false;
-            $scope.descriptionToggle = false;
             $scope.labelError = false;
 
+            const initiateEditor = function () {
+                const editorHeight = 180;
+                $scope.editor = new Editor({
+                    el: document.querySelector('#editSection'),
+                    previewStyle: 'vertical',
+                    height: `${editorHeight}px`,
+                    initialEditType: 'wysiwyg',
+                    toolbarItems: [
+                        'heading',
+                        'bold',
+                        'italic',
+                        'link',
+                        'ol',
+                        'ul'
+                    ],
+                    usageStatistics: false
+                });
+
+                $scope.editor.setValue($scope.editAttribute.instructions);
+                /** This is a hack to override the tui-editor's own inline-style
+                 * that makes the scroll get stuck inside the editor-area */
+                let editor = document.querySelector('#editSection');
+                editor.style.height = `${editorHeight + 60}px`;
+            };
+
+            initiateEditor();
+
             $scope.save = function (editAttribute, activeTask) {
+                editAttribute.instructions = $scope.editor.getValue();
                 if (!$scope.attributeLabel.$invalid) {
                     $scope.editAttribute.label = $scope.label;
                     $scope.addNewAttribute(editAttribute, activeTask);

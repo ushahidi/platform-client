@@ -1,7 +1,8 @@
 let dotenv       = require('dotenv'),
     fs           = require('fs'),
     Transifex    = require('transifex'),
-    gutil		 = require('gulp-util');
+    log          = require('fancy-log'),
+    c            = require('ansi-colors');
 
 let project_slug = 'ushahidi-v3',
     mode = 'default',
@@ -125,7 +126,8 @@ module.exports = (locales_dir, done) => {
 
     // Check if we have username/password
     if (!config.username || !config.password) {
-        gutil.log(['transifex'], gutil.colors.yellow('Missing transifex username and password'));
+        log.info(c.yellow('transifex'));
+        log.info(c.yellow('Missing transifex username and/or password'));
         done();
         return;
     }
