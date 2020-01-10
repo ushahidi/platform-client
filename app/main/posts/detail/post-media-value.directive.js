@@ -13,6 +13,7 @@ module.exports = ['MediaEndpoint', '_', function (MediaEndpoint, _) {
 
     function MediaValueLink($scope) {
         function loadMedia() {
+            $scope.mediaLoaded = true;
             if ($scope.mediaId && $scope.mediaId.length > 0) {
                 $scope.mediaLoaded = false;
                 MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
