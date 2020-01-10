@@ -28,7 +28,7 @@ function (
                     });
                     const mediaExists = mediaAttribute &&
                                         !_.isUndefined($scope.post.values[mediaAttribute.key]) &&
-                                        !_.isNull($scope.post.values[mediaAttribute.key]);
+                                        !_.isNumber($scope.post.values[mediaAttribute.key]);
                     // Get the media url and caption
                     if (mediaExists) {
                         MediaEndpoint.get({id: $scope.post.values[mediaAttribute.key]}).$promise

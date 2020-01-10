@@ -5,13 +5,15 @@ module.exports = [
     'Util',
     'Notify',
     '$q',
+    '_',
 function (
     $http,
     MediaEndpoint,
     MediaEditService,
     Util,
     Notify,
-    $q
+    $q,
+    _
 ) {
     return {
         restrict: 'E',
@@ -54,7 +56,7 @@ function (
                 if (ngModel.$viewValue) {
                     $scope.mediaId = parseInt(ngModel.$viewValue);
                     // Load the media from the API
-                    if ($scope.media.id !== $scope.mediaId && !_.isNull($scope.mediaId)) {
+                    if ($scope.media.id !== $scope.mediaId && _.isNumber($scope.mediaId)) {
                         MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                             $scope.media = media;
                             // Set initial media state
