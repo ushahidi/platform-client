@@ -54,7 +54,7 @@ function (
                 if (ngModel.$viewValue) {
                     $scope.mediaId = parseInt(ngModel.$viewValue);
                     // Load the media from the API
-                    if ($scope.media.id !== $scope.mediaId) {
+                    if ($scope.media.id !== $scope.mediaId && !_.isNull($scope.mediaId)) {
                         MediaEndpoint.get({id: $scope.mediaId}).$promise.then(function (media) {
                             $scope.media = media;
                             // Set initial media state
