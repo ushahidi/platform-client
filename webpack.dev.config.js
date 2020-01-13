@@ -8,6 +8,11 @@ config.output = {
   publicPath: '/',
   path: path.resolve(__dirname, 'app')
 };
+config.mode = 'development';
+config.devServer = {
+  hot: true
+}
+
 
 config.plugins = config.plugins.concat([
 
