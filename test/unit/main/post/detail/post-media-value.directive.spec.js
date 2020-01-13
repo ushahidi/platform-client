@@ -26,7 +26,7 @@ describe('post media value directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
-        element = '<post-media-value media-id="5"></post-media-value>';
+        element = '<post-media-value media-id="[5]"></post-media-value>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
