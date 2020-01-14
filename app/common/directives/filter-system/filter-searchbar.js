@@ -33,6 +33,12 @@ function ($timeout) {
             $scope.hideSearchResults = function () {
                 $scope.searchResultsVisible = false;
             };
+
+            $scope.onClear = function () {
+                $scope.hideSearchResults();
+                $scope.form.q.$setViewValue('');
+                $scope.model.q = null;
+            };
         };
 
     return {
@@ -41,8 +47,7 @@ function ($timeout) {
         template: require('./filter-searchbar.html'),
         scope: {
             model: '=',
-            placeholderEntity: '=',
-            onClear: '&'
+            placeholderEntity: '='
         },
         link: link,
         require: '?^form'
