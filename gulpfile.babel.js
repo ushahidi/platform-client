@@ -195,22 +195,28 @@ task('serve:static', serveStatic);
 
 //Run test once and exit
 function testServer(done) {
+    process.env.NODE_ENV = 'test';
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         singleRun: true
-    }, done);
+    }, function () {
+        done();
+    });
     server.start();
 }
 task('test', testServer);
 
 // Watch for file changes and re-run tests on each change
 function startTdd(done) {
+    process.env.NODE_ENV = 'test';
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         reporters: ['progress', 'notify'],
         autoWatch: true,
         singleRun: false
-    }, done);
+    }, function () {
+        done();
+    });
     server.start();
 }
 task('tdd', startTdd);
