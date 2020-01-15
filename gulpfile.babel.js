@@ -1,6 +1,6 @@
 'use strict';
 
-import {task, src, dest, series} from 'gulp';
+import {task, src, dest, series, parallel} from 'gulp';
 import webpack  from 'webpack';
 import path     from 'path';
 import rename   from 'gulp-rename';
@@ -14,7 +14,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
 import karma     from 'karma';
-import jscs      from 'gulp-jscs';
+import eslint    from 'gulp-eslint';
+import gulpIf    from 'gulp-if';
 import fs        from 'fs';
 import log       from 'fancy-log';
 import c         from 'ansi-colors';
@@ -195,56 +196,78 @@ task('serve:static', serveStatic);
 
 //Run test once and exit
 function testServer(done) {
+    process.env.NODE_ENV = 'test';
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         singleRun: true
-    }, done);
+    }, function () {
+        done();
+    });
     server.start();
 }
 task('test', testServer);
 
 // Watch for file changes and re-run tests on each change
 function startTdd(done) {
+    process.env.NODE_ENV = 'test';
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         reporters: ['progress', 'notify'],
         autoWatch: true,
         singleRun: false
-    }, done);
+    }, function () {
+        done();
+    });
     server.start();
 }
 task('tdd', startTdd);
 
-/**
-* Tasks for JSCS
-*/
-// Run JSCS checks once
-function runJscs() {
+// Use eslint to check code
+function runEslint() {
     return src(['app/**/*.js', 'test/**/*.js', 'gulpfile.babel.js'])
-        .pipe(jscs())
-        .pipe(jscs.reporter())
-        .pipe(jscs.reporter('fail'));
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 }
-task('jscs', runJscs);
+task('eslint', runEslint);
 
-// Fix problems in app-directory
-function jscsFixApp() {
+//Use eslint to fix code
+function isFixed(file) {
+    if (file.eslint) {
+        return file.eslint.fixed;
+    } else {
+        return false;
+    }
+}
+// Fix in app-directory
+function eslintFixApp() {
     return src(['app/**/*.js'])
-        .pipe(jscs({ fix : true }))
-        .pipe(dest('app/'));
+    .pipe(eslint({
+        fix: true
+    }))
+    .pipe(eslint.format())
+    // if running fix - replace existing file with fixed one
+    .pipe(gulpIf(isFixed, dest('./app')))
+    .pipe(eslint.failAfterError());
 }
-task('jscsfix:app', jscsFixApp);
+task('eslintfix:app', eslintFixApp);
 
-// Fix problems in test-directory
-function jscsFixTests() {
+// Fix in test-directory
+function eslintFixTests() {
     return src(['test/**/*.js'])
-      .pipe(jscs({ fix : true }))
-      .pipe(dest('test/'));
+    .pipe(eslint({
+        fix: true
+    }))
+    .pipe(eslint.format())
+    // if running fix - replace existing file with fixed one
+    .pipe(gulpIf(isFixed, dest('./test')))
+    .pipe(eslint.failAfterError());
 }
-task('jscsfix:test', jscsFixTests);
+task('eslintfix:test', eslintFixTests);
 
 // Fix problems in both app- and test-directories
-task('jscsfix', series('jscsfix:app', 'jscsfix:test'));
+task('eslintfix', parallel(eslintFixApp, eslintFixTests))
+
 
 /**
  * Tasks for installation-helper
