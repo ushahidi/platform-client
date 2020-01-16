@@ -299,4 +299,4 @@ function verify(done) {
 task('verify', verify);
 
 // Run helper in browser
-task('watch:verifier', series(startVerifier, devServer));
+task('dev:verifier', series(startVerifier, devServer));
