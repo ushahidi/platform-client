@@ -10,8 +10,8 @@
     <dd translate>app.report_a_bug.description</dd>
     <dt class="list-item"><a href="https://www.ushahidi.com/features" target="_blank" translate>app.features.title</a></dt>
     <dd translate>app.features.description</dd>
-    <dt class="list-item" ng-show="loggedin"><a id="intercom_custom_launcher" href="mailto:{{intercomAppId}}@intercom-mail.com" target="_blank" translate>app.intercom.intercom</a></dt>
-    <dd translate ng-show="loggedin">app.intercom.description</dd>
+    <dt class="list-item" ng-show="loggedin && intercomAppId"><a id="intercom_custom_launcher" href="mailto:{{intercomAppId}}@intercom-mail.com" target="_blank" translate>app.intercom.intercom</a></dt>
+    <dd translate ng-show="loggedin && intercomAppId">app.intercom.description</dd>
   </dl>
 </div>
 

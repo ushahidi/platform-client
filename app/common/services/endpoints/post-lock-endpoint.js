@@ -12,9 +12,8 @@ function (
     $http
 ) {
 
-    var PostLockEndpoint = $resource(Util.apiUrl('/posts/:post_id/lock/:id'), {
-        post_id: '@post_id',
-        id: '@id'
+    var PostLockEndpoint = $resource(Util.apiUrl('/posts/:post_id/lock/'), {
+        post_id: '@post_id'
     }, {
         getLock: {
             method: 'PUT'

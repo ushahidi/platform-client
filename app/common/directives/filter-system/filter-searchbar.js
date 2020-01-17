@@ -13,24 +13,41 @@ function ($timeout) {
             $scope.searchResultsVisible = false;
             $scope.form = formControl;
 
+            $scope.applyFilters = function () {
+                $scope.searchResultsVisible = false;
+            };
+
             $scope.showSearchResults = function () {
                 $scope.searchResultsVisible = true;
             };
 
+            $scope.detectSubmit = function (event) {
+                event.stopPropagation();
+                if (event && event.keyCode === 13) {
+                    $scope.hideSearchResults();
+                } else {
+                    $scope.showSearchResults();
+                }
+            };
+
             $scope.hideSearchResults = function () {
-                $timeout(function () {
-                    $scope.searchResultsVisible = false;
-                }, 100);
+                $scope.searchResultsVisible = false;
+            };
+
+            $scope.onClear = function () {
+                $scope.hideSearchResults();
+                $scope.form.q.$setViewValue('');
+                $scope.model.q = null;
             };
         };
+
     return {
         restrict: 'E',
         replace: true,
         template: require('./filter-searchbar.html'),
         scope: {
             model: '=',
-            placeholderEntity: '=',
-            onClear: '&'
+            placeholderEntity: '='
         },
         link: link,
         require: '?^form'
