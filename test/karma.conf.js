@@ -40,13 +40,11 @@ module.exports = function (config) {
             'test/unit/spec.bundle.js': ['webpack', 'sourcemap'],
             'mocked_backend/**/*.json': ['json_fixtures']
         },
-
         webpack: require('../webpack.test.config'),
-
-        webpackServer: {
-            noInfo: true // prevent console spamming when running in Karma!
+        webpackMiddleware: {
+            // turning off verbose output
+            stats: 'errors-only'
         },
-
         coverageReporter: {
             reporters: [
                 {
@@ -59,7 +57,12 @@ module.exports = function (config) {
                 }
             ]
         },
-
+        client: {
+            // Stops Jasmine from randomly executing tests, our tests are not written that way right now
+            jasmine: {
+                random: false
+            }
+        },
         logLevel: config.LOG_INFO
 
     });
