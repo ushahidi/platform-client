@@ -19,6 +19,7 @@ module.exports = {
     module: {
     rules: [
       {
+        type:'javascript/auto',
         test: /\.js$/,
         exclude: [/app\/lib/, /node_modules/],
         use: [
@@ -29,7 +30,7 @@ module.exports = {
               presets: [
                 ['es2015', { modules: false }],
                 'stage-0'
-              ],
+              ]
             }
           }
         ]
@@ -71,6 +72,18 @@ module.exports = {
       {
         test: /\.ttf|\.eot/,
         use: 'file-loader'
+      },
+      {
+        type: 'javascript/auto',
+        test: /manifest\.json$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'manifest.json'
+            }
+          }
+        ]
       }
     ]
   },
