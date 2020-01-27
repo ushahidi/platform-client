@@ -132,7 +132,6 @@ function PostDataEditorController(
              **/
             if ($scope.post.lock) {
                 PostLockEndpoint.unlock({
-                    id: $scope.post.lock.id,
                     post_id: $scope.post.id
                 }).$promise.then(resolve, reject);
             } else {
