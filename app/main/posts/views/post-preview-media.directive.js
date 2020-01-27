@@ -26,8 +26,11 @@ function (
                     var mediaAttribute = _.find(attributes, function (attribute) {
                         return attribute.type === 'media';
                     });
+                    const mediaExists = mediaAttribute &&
+                                        !_.isUndefined($scope.post.values[mediaAttribute.key]) &&
+                                        !_.isNumber($scope.post.values[mediaAttribute.key]);
                     // Get the media url and caption
-                    if (mediaAttribute && !_.isUndefined($scope.post.values[mediaAttribute.key])) {
+                    if (mediaExists) {
                         MediaEndpoint.get({id: $scope.post.values[mediaAttribute.key]}).$promise
                             .then(function (media) {
                                 $scope.media = media;

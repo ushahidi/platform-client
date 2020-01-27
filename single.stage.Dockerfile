@@ -1,4 +1,4 @@
-FROM ushahidi/node-ci:node-6
+FROM ushahidi/node-ci:node-10-gulp-4
 
 ARG HTTP_PORT=8080
 
