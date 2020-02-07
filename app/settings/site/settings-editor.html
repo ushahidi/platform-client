@@ -82,7 +82,15 @@
                     <div class="form-field">
                         <label translate>settings.site_email</label>
                         <p class="small" translate>settings.site_email_note</p>
-                        <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" ng-model="site.email">
+                        <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" name="email" ng-model="site.email">
+                        <div ng-repeat="(error, value) in form.email.$error"
+                            ng-show="form.email.$dirty"
+                            class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <p translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></p>
+                        </div>
                     </div>
                     <div class="form-field">
                     <label translate>settings.site_language</label>
