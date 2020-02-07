@@ -79,7 +79,7 @@
                          </file-upload>
                     </div>
 
-                    <div class="form-field">
+                    <div class="form-field" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
                         <label translate>settings.site_email</label>
                         <p class="small" translate>settings.site_email_note</p>
                         <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" name="email" ng-model="site.email">
