@@ -88,6 +88,7 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.selectForm = selectForm;
     $scope.isSaving = LoadingProgress.getSavingState;
+    $scope.cancel = cancel;
 
     var ignoreCancelEvent = false;
     // Need state management
@@ -325,6 +326,10 @@ function PostDataEditorController(
 
     function resolveMedia() {
         return MediaEditService.saveMedia($scope.medias, $scope.post);
+    }
+
+    function cancel() {
+        $state.go('posts.data');
     }
 
     function savePost() {
