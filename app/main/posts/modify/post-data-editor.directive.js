@@ -89,6 +89,10 @@ function PostDataEditorController(
     $scope.selectForm = selectForm;
     $scope.isSaving = LoadingProgress.getSavingState;
 
+    $scope.cancel = function () {
+        $location.path('/views/data');
+    };
+
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
