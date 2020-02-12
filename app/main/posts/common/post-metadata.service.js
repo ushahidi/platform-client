@@ -3,13 +3,15 @@ module.exports = PostMetadataService;
 PostMetadataService.$inject = [
     'Util',
     'UserEndpoint',
-    'ContactEndpoint'
+    'ContactEndpoint',
+    '$rootScope'
 ];
 
 function PostMetadataService(
     Util,
     UserEndpoint,
-    ContactEndpoint
+    ContactEndpoint,
+    $rootScope
 ) {
     var PostMetadataService = {
         // Format source (fixme!)
@@ -24,7 +26,7 @@ function PostMetadataService(
             }
         },
         loadUser: function (post) {
-            if (post.user && post.user.id) {
+            if (post.user && post.user.id && $rootScope.hasPermission('Manage Users')) {
                 return UserEndpoint.get({id: post.user.id});
             } else {
                 return post.user;

@@ -80,6 +80,7 @@ angular.module('ushahidi.common', [
 .service('DataExport', require('./services/data-export.service.js'))
 .service('HxlExport', require('./services/hxl-export.service.js'))
 .service('DataImport', require('./services/data-import.service.js'))
+.service('VerifierService', require('./verifier/verifier.service.js'))
 // Global directives
 .directive('publishSelector', require('./directives/publish-selector.js'))
 
@@ -105,7 +106,6 @@ angular.module('ushahidi.common', [
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 .directive('loadingDots', require('./directives/loading-dots.directive.js'))
-
 // Event actions
 .constant('EVENT', {
     ACTIONS : {
@@ -128,6 +128,9 @@ angular.module('ushahidi.common', [
 .run(['$templateCache', function ($templateCache) {
     $templateCache.put('common/directives/mode-bar/ushahidi-logo.html', require('./directives/mode-bar/ushahidi-logo.html'));
 }])
+.factory('Verifier', function () {
+    return require('./verifier/verifier.js');
+})
 ;
 
 // Load submodules

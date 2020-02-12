@@ -4,10 +4,12 @@ require('angular-lazy-bootstrap/src/bootstrap.js');
 // Load site config THEN bootstrap the app
 angular.lazy()
     .resolve(['$q', '$http', function ($q, $http) {
-        return $http.get(window.ushahidi.apiUrl + '/config')
-        .then(function (response) {
-            window.ushahidi.bootstrapConfig = response.data.results;
-        });
+        if (!window.ushahidi.verifier) {
+            return $http.get(window.ushahidi.apiUrl + '/config')
+            .then(function (response) {
+                window.ushahidi.bootstrapConfig = response.data.results;
+            });
+        }
     }])
     .loading(function () {
         // Show loading

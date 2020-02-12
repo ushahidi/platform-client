@@ -72,6 +72,7 @@ function PostDetailDataController(
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.mapDataLoaded = false;
     $scope.form_attributes = [];
+    $scope.postValues = [];
     $scope.selectedPost = {post: $scope.post};
 
     activate();
@@ -100,6 +101,7 @@ function PostDetailDataController(
                 $scope.form_description = results[0].description;
                 $scope.form_color = results[0].color;
                 $scope.tags = results[3];
+                $scope.postValues = [];
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: results[0].name}).then(function (title) {
@@ -111,10 +113,17 @@ function PostDetailDataController(
                     .sortBy('priority')
                     .value();
 
-                angular.forEach(attributes, function (attr) {
-                    this[attr.key] = attr;
+                attributes.forEach(attr => {
+                    $scope.form_attributes[attr.key] = attr;
 
-                }, $scope.form_attributes);
+                    if ($scope.post.values && attr.type !== 'title' &&
+                        attr.type !== 'description' &&
+                        typeof $scope.post.values[attr.key] !== undefined
+                    ) {
+                        $scope.postValues.push({'key': attr.key, 'value': $scope.post.values[attr.key]});
+                    }
+                });
+
                 // Make the first task visible
                 if (!_.isEmpty(tasks) && tasks.length > 1) {
                     $scope.visibleTask = tasks[1].id;
@@ -142,12 +151,15 @@ function PostDetailDataController(
                 $scope.tasks = tasks;
                 // Figure out which tasks have values
                 $scope.tasks_with_attributes = [];
+
                 _.each($scope.post.values, function (value, key) {
 
                     if ($scope.form_attributes[key]) {
                         $scope.tasks_with_attributes.push($scope.form_attributes[key].form_stage_id);
                     }
+
                 });
+
                 $scope.tasks_with_attributes = _.uniq($scope.tasks_with_attributes);
             });
         } else {
@@ -180,8 +192,9 @@ function PostDetailDataController(
     };
 
     $scope.isPostValue = function (key) {
-        return $scope.form_attributes[key] && $scope.post_task &&
+        let ret =  $scope.form_attributes[key] && $scope.post_task &&
             $scope.form_attributes[key].form_stage_id === $scope.post_task.id;
+        return ret;
     };
 
     $scope.showType = function (type) {

@@ -1,0 +1,109 @@
+{
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "globals": {
+      "jQuery": true,
+      "$": true,
+      "_": true,
+      "angular": true,
+      "console": false,
+      "document": true
+    },
+    "rules": {
+      "curly": [
+        2,
+        "all"
+      ],
+      "eqeqeq": 2,
+      "no-unused-expressions": 0,
+      "wrap-iife": 2,
+      "no-caller": 2,
+      "no-undef": 0,
+      "no-unused-vars": 0,
+      "new-cap": 0,
+      "no-cond-assign": 0,
+      "no-eq-null": 0,
+      "quotes": [
+        2,
+        "single",
+        {"allowTemplateLiterals": true}
+      ],
+      "keyword-spacing": [
+        2,
+        {}
+      ],
+      "space-before-blocks": [
+        2,
+        "always"
+      ],
+      "space-before-function-paren": [
+        0,
+        "always"
+      ],
+      "no-empty": [
+        2,
+        {
+          "allowEmptyCatch": true
+        }
+      ],
+      "array-bracket-spacing": [
+        2,
+        "never",
+        {}
+      ],
+      "space-in-parens": [
+        2,
+        "never"
+      ],
+      "comma-style": [
+        2,
+        "last"
+      ],
+      "space-unary-ops": [
+        0,
+        {
+          "words": false,
+          "nonwords": false
+        }
+      ],
+      "space-infix-ops": 2,
+      "no-with": 2,
+      "indent": [
+        0,
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "no-mixed-spaces-and-tabs": 2,
+      "no-trailing-spaces": 2,
+      "comma-dangle": [
+        2,
+        "never"
+      ],
+      "brace-style": [
+        0,
+        "1tbs",
+        {
+          "allowSingleLine": true
+        }
+      ],
+      "eol-last": 2,
+      "dot-notation": 2,
+      "no-multi-str": 2,
+      "key-spacing": [
+        0,
+        {
+          "afterColon": true
+        }
+      ]
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 6
+    }
+  }
+  

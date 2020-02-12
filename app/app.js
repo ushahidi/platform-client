@@ -36,6 +36,8 @@ window.ushahidi = window.ushahidi || {};
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
+    ushDisableChecks = (window.ushahidi.ushDisableChecks || USH_DISABLE_CHECKS),
+    verifier = window.ushahidi.verifier = (window.ushahidi.verifier || VERIFIER),
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
     claimedAnonymousScopes = [
@@ -89,12 +91,14 @@ angular.module('app',
         API_URL                  : apiUrl,
         INTERCOM_APP_ID          : intercomAppId,
         APP_STORE_ID             : appStoreId,
+        VERIFIER                 : verifier,
         DEFAULT_LOCALE           : 'en_US',
         OAUTH_CLIENT_ID          : 'ushahidiui',
         OAUTH_CLIENT_SECRET      : '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
         CLAIMED_USER_SCOPES      : ['*'],
         MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
+        USH_DISABLE_CHECKS       : ushDisableChecks,
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
         EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000
     })
@@ -145,7 +149,10 @@ angular.module('app',
             { map: {}, site: {}, features: {} };
     }])
     .factory('Sortable', function () {
-        return require('sortablejs');
+        return require('sortablejs/Sortable');
+    })
+    .factory('Editor', function () {
+        return require('tui-editor');
     })
     // inject the router instance into a `run` block by name
     //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
@@ -154,12 +161,12 @@ angular.module('app',
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
-    .run(['$rootScope', 'LoadingProgress', '$transitions', function ($rootScope, LoadingProgress, $transitions) {
+    .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
         if (window.ushahidi.gaEnabled) {
             $transitions.onSuccess({}, function (transition) {
-                window.ga('send', 'pageview', transition.to().url);
+                window.ga('send', 'pageview',  $uiRouter.urlRouter.location);
             });
         }
     }])
@@ -167,4 +174,7 @@ angular.module('app',
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
         DemoDeploymentService.demoCheck();
+    }])
+    .run(['VerifierService', function (VerifierService) {
+        VerifierService.debugModeCheck();
     }]);

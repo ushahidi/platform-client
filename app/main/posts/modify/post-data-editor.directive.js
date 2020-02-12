@@ -132,7 +132,6 @@ function PostDataEditorController(
              **/
             if ($scope.post.lock) {
                 PostLockEndpoint.unlock({
-                    id: $scope.post.lock.id,
                     post_id: $scope.post.id
                 }).$promise.then(resolve, reject);
             } else {
@@ -242,10 +241,6 @@ function PostDataEditorController(
             attributes.map(function (attr) {
                 // Create associated media entity
                 if (attr.input === 'upload') {
-                    var media = {};
-                    if ($scope.post.values[attr.key]) {
-                        media = $scope.post.values[attr.key][0];
-                    }
                     $scope.medias[attr.key] = {};
                 }
                 if (attr.input === 'tags') {

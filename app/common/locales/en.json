@@ -93,7 +93,7 @@
         "name" : "Name",
         "key" : "Key",
         "survey_web_address" : "Your survey's web address",
-        "default_value" : "Default value",
+        "default_value" : "Default value (optional):",
         "fields" : "Fields",
         "select_one": "Select One",
         "sort_and_filter": "Sort & filter",
@@ -122,6 +122,7 @@
         }
     },
     "demo_warnings" : {
+        "close": "Close",
         "visitor": {
             "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
             "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
@@ -283,7 +284,7 @@
         "markdown_desc" : "Allows the use of markdown syntax to style the field content.",
         "tasks" : "Tasks",
         "task_visible_when_published" : "This task will be visible when post is published.",
-        "show_field_description" : "Show field description",
+        "show_field_description" : "Add field description (optional):",
         "add_task" : "Add task",
         "add_field" : "Add field",
         "edit_field" : "Edit field",
@@ -506,7 +507,7 @@
         "option_3" : "within 50 km",
         "option_4" : "within 100 km",
         "option_5" : "within 500 km",
-        "clear_filters" : "Clear Filters",
+        "restore_defaults" : "Restore Defaults",
         "apply_filters" : "Apply",
         "save_to_set" : "Save to Set",
         "search" : "Search",
@@ -839,7 +840,8 @@
             "upload" : "Upload",
             "add_photo": "Add photo",
             "delete_photo": "Delete photo",
-            "replace_image": "Replace image"
+            "replace_image": "Replace image",
+            "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
         },
         "video" : {
             "enter_a" : "Enter a",
@@ -1117,7 +1119,7 @@
                 }
             },
             "twitter": {
-                "intro_step_1": "Step 1: Create a new Twitter application",
+                "intro_step_1": "Step 1: Create a new Twitter application: <br />Twitter applications may take a few hours or days to be approved by Twitter.<br />Please be aware of this if you need this data quickly.",
                 "intro_step_1_desc": "Create a <a href=\"https://apps.twitter.com/app/new\">new twitter application</a>",
                 "intro_step_2": "Step 2: Generate a consumer key and secret",
                 "intro_step_2_desc": "Once you've created the application click on \"Keys and Access Tokens\".<br /> Then click \"Generate Consumer Key and Secret\".<br /> Copy keys, tokens and secrets into the fields below.",
@@ -1170,6 +1172,7 @@
         "site_timezone" : "Site timezone",
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
+        "site_private_desc" : "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
         "select_image" : "Select image",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",

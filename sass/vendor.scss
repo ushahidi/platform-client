@@ -12,6 +12,11 @@
 @import "~leaflet.markercluster/dist/MarkerCluster.Default";
 @import "~leaflet.locatecontrol/src/L.Control.Locate";
 @import "~nvd3/build/nv.d3";
+@import '~tui-editor/dist/tui-editor.css'; // editor's ui
+@import '~tui-editor/dist/tui-editor-contents.css'; // editor's content
+@import '~codemirror/lib/codemirror.css'; // codemirror
+@import '~highlight.js/styles/github.css'; // code block highlight
+
 
 // Custom overrides
 @import "overrides/leaflet";
@@ -20,3 +25,4 @@
 @import "overrides/charts";
 @import "overrides/doorbell";
 @import "overrides/intercom";
+@import "overrides/tui-markdown";

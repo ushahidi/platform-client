@@ -3,7 +3,8 @@ describe('Post Metadata Service', function () {
     var PostMetadataService,
         UserEndpoint,
         post,
-        ContactEndpoint;
+        ContactEndpoint,
+        $rootScope;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -19,11 +20,11 @@ describe('Post Metadata Service', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_PostMetadataService_, _ContactEndpoint_, _UserEndpoint_) {
+    beforeEach(angular.mock.inject(function (_PostMetadataService_, _ContactEndpoint_, _UserEndpoint_, _$rootScope_) {
         PostMetadataService = _PostMetadataService_;
         ContactEndpoint = _ContactEndpoint_;
         UserEndpoint = _UserEndpoint_;
-
+        $rootScope = _$rootScope_;
         post = fixture.load('posts/120.json');
     }));
 
@@ -40,7 +41,8 @@ describe('Post Metadata Service', function () {
             var result = PostMetadataService.formatSource();
             expect(result).toEqual('Web');
         });
-        it('should load a user', function () {
+        it('should load a user if Manage Users permission', function () {
+            $rootScope.hasPermission = ()=>true;
             post = {
                 user: {
                     id: 1
@@ -50,6 +52,18 @@ describe('Post Metadata Service', function () {
             spyOn(UserEndpoint, 'get').and.callThrough();
             PostMetadataService.loadUser(post);
             expect(UserEndpoint.get).toHaveBeenCalled();
+        });
+        it('should not attempt to load a user if not Manage Users permission', function () {
+            $rootScope.hasPermission = ()=>false;
+            post = {
+                user: {
+                    id: 1
+                }
+            };
+
+            spyOn(UserEndpoint, 'get').and.callThrough();
+            PostMetadataService.loadUser(post);
+            expect(UserEndpoint.get).not.toHaveBeenCalled();
         });
         it('should load a contact', function () {
             post = {
