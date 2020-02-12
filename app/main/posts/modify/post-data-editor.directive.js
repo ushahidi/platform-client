@@ -83,15 +83,12 @@ function PostDataEditorController(
     $scope.tagKeys = [];
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
+    $scope.cancel = cancel;
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.selectForm = selectForm;
     $scope.isSaving = LoadingProgress.getSavingState;
-
-    $scope.cancel = function () {
-        $location.path('/views/data');
-    };
 
     var ignoreCancelEvent = false;
     // Need state management
@@ -409,5 +406,9 @@ function PostDataEditorController(
 
             });
         });
+    }
+        
+    function cancel() {
+        $state.go('posts.data.detail',{postId: $scope.post.id});
     }
 }
