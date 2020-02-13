@@ -17,12 +17,12 @@ matrix:
   allow_failures:
   - node_js: stable
   include:
-  # Run everything with v5 (match production)
-  - node_js: 5
+  # Run everything with v8 (match production)
+  - node_js: 8
     env: TEST_SUITE=lint
-  - node_js: 5
+  - node_js: 8
     env: TEST_SUITE=unit
-  - node_js: 6
+  - node_js: 8
     env: TEST_SUITE=unit
   - node_js: stable
     env: TEST_SUITE=unit
