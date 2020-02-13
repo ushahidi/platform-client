@@ -314,7 +314,7 @@
         "who_can_add": "Who can add to this survey",
         "survey_field": "Survey field",
         "choose_survey_field": "Choose what should be assigned to each survey field",
-        "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from your tweets that you'd like to use to populate each of those fields.",
+        "choose_survey_field_desc":  "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
         "who_can_contribute_to_task" : "Who can contribute to fields in this task",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
