@@ -36,7 +36,7 @@ function ($timeout) {
 
             $scope.onClear = function () {
                 $scope.hideSearchResults();
-                $scope.form.q.$setViewValue('');
+                $scope.form.q.$setViewValue(null);
                 $scope.model.q = null;
             };
         };
