@@ -61,7 +61,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             // L.control.layers(getBaseLayersForControl(), {}).addTo(map);
             var resetButton  = L.easyButton({
                 id: 'reset-button',
-                position: 'topright',
+                position: 'bottomleft',
                 type: 'replace',
                 leafletClasses: true,
                 states:[{
