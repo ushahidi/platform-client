@@ -39,13 +39,15 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         pointToLayer: pointToLayer,
         getConfig: getConfig,
         getLayer: getLayer,
-        pointIcon: pointIcon
+        pointIcon: pointIcon,
+        setDefaultView: setDefaultView,
+        defaultConfig: defaultConfig
     };
 
     function createMap(element) {
         return getLeafletConfig().then(function (config) {
             var map = L.map(element, config);
-
+            
             map.attributionControl.setPrefix(false);
             map.zoomControl.setPosition('bottomleft');
             map.setMaxBounds([[-90,-360],[90,360]]);
@@ -58,9 +60,38 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
             // Add a layer control
             // L.control.layers(getBaseLayersForControl(), {}).addTo(map);
+            
+            //  easyButton is the leaflet plugin to reset the map-view
+            // var resetButton  = L.easyButton( '<span id="reset"> <i class = "fa fa-home"> </i> </span>', function(){
+            //     var defaultview = defaultValues();
+            //     map.setView([defaultview.lat, defaultview.lon], defaultview.zoom);
+            // });
+            var resetButton  = L.easyButton({
+                id: "reset-button",
+                position: "topright",
+                type: 'replace',  
+                leafletClasses: true,
+                states:[{                 
+                    // specify different icons and responses for your button
+                    stateName: 'reset-button',
+                    onClick: function(){
+                        var defaultview = defaultValues();
+                        map.setView([defaultview.lat, defaultview.lon], defaultview.zoom);
+                    },
+                    title: 'Reset to default view',
+                    icon: '<i class = "fa fa-home"></i>',
+                  }]
+            });
+
+            resetButton.addTo(map);
 
             return map;
         });
+    }
+
+    function setDefaultView() {
+        var defaultview = defaultConfig();
+        map.setview(defaultview.center, defaultview.zoom);
     }
 
     function getLeafletConfig() {
@@ -112,26 +143,27 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
     function defaultConfig() {
         return {
-            scrollWheelZoom: false,
+            scrollWheelZoom: true,
             center: [-1.2833, 36.8167], // Default to centered on Nairobi
-            zoom: 8,
+            zoom: 3,
             layers: [L.tileLayer(layers.baselayers.streets.url, layers.baselayers.streets.layerOptions)]
         };
     }
 
+    
     function pointToLayer(feature, latlng) {
         return L.marker(latlng, {
             icon: pointIcon(feature.properties['marker-color'])
         });
     }
-
+    
     // Icon configuration
     function pointIcon(color, size, className) {
         // Test string to make sure that it does not contain injection
         color = (color && /^[a-zA-Z0-9#]+$/.test(color)) ? color : '#959595';
         size = size || [32, 32];
         var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-
+        
         return L.divIcon({
             className: 'custom-map-marker ' + className,
             html: '<svg class="iconic" style="fill:' + color + ';"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#map-marker"></use></svg><span class="iconic-bg" style="background-color:' + color + ';""></span>',
@@ -140,4 +172,14 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             popupAnchor: [0, 0 - size[1]]
         });
     }
+
+    // default view is centered on nairobi
+    function defaultValues(config) {
+        return {
+            lat: -1.2833,
+            lon: 36.8167,
+            zoom: 2
+        }
+    }
+
 }

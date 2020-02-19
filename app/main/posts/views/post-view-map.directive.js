@@ -73,7 +73,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 }
             });
 
-        }
+        }   
 
         function clearData() {
             if (geoJsonLayers.length > 0) {
