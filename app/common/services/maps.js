@@ -40,7 +40,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         getConfig: getConfig,
         getLayer: getLayer,
         pointIcon: pointIcon,
-        setDefaultView: setDefaultView,
         defaultConfig: defaultConfig
     };
 
@@ -68,7 +67,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                     // specify different icons and responses for your button
                     stateName: 'reset-button',
                     onClick: function() {
-                        var defaultview = defaultValues();
+                        var defaultview = defaultValues(config);
                         map.setView([defaultview.lat, defaultview.lon], defaultview.zoom);
                     },
                     title: 'Reset to default view',
@@ -80,11 +79,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
             return map;
         });
-    }
-
-    function setDefaultView() {
-        var defaultview = defaultConfig();
-        map.setview(defaultview.center, defaultview.zoom);
     }
 
     function getLeafletConfig() {
@@ -167,9 +161,9 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     // default view is centered on nairobi
     function defaultValues(config) {
         return {
-            lat: -1.2833,
-            lon: 36.8167,
-            zoom: 2
+            lat: config.center[0],
+            lon: config.center[1],
+            zoom: config.zoom
         }
     }
 
