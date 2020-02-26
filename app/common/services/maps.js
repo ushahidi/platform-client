@@ -58,6 +58,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
             // Add a layer control
             // L.control.layers(getBaseLayersForControl(), {}).addTo(map);
+            var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
             var resetButton  = L.easyButton({
                 id: 'reset-button',
                 position: 'bottomleft',
@@ -71,7 +72,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                         map.setView([defaultview.lat, defaultview.lon], defaultview.zoom);
                     },
                     title: 'Reset to default view',
-                    icon: '<i class = "fa fa-home"></i>'
+                    icon: '<svg class="iconic" style="fill:black;"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#home"></use></svg>'
                 }]
             });
 
