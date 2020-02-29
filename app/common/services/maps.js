@@ -143,6 +143,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             icon: pointIcon(feature.properties['marker-color'])
         });
     }
+    
     // Icon configuration
     function pointIcon(color, size, className) {
         // Test string to make sure that it does not contain injection

@@ -22,30 +22,62 @@
         <div class="main-col">
 
             <div class="listing card init" ng-show="hasManageSettingsPermission()">
+                <div class="listing-item" ng-show="hasPermission('Manage Settings')">
+                    <!-- This is flex container for general settings -->
+                    <div class="flex-container">
+                        <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#person"></use>
+                            </svg>
+                        </div>
+                        <div class="listing-item-primary" style="flex-grow: 8;padding-left:3%;">
+                            <h2 class="listing-item-title"><a ui-sref="settings.general" translate>settings.settings_list.general</a></h2>
+                            <p class="listing-item-secondary" translate>settings.settings_list.general_desc</p>
+                        </div>
+                    </div>
+                </div>
+
                <div class="listing-item" ng-show="hasPermission('Manage Settings')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.general" translate>settings.settings_list.general</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.general_desc</p>
-                   </div>
+                   <!-- This is flex container for Survey settings -->
+                    <div class="flex-container">
+                        <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#spreadsheet"></use>
+                            </svg>
+                        </div>
+                        <div class="listing-item-primary" style="flex-grow: 8.5;padding-left:3%;">
+                            <h2 class="listing-item-title"><a ui-sref="settings.surveys" translate>settings.settings_list.surveys</a></h2>
+                            <p class="listing-item-secondary" translate>settings.settings_list.surveys_desc</p>
+                        </div>
+                    </div>
                </div>
 
                <div class="listing-item" ng-show="hasPermission('Manage Settings')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.surveys" translate>settings.settings_list.surveys</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.surveys_desc</p>
-                   </div>
-               </div>
-
-               <div class="listing-item" ng-show="hasPermission('Manage Settings')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.datasources" translate>settings.settings_list.data_sources</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.data_sources_desc</p>
-                   </div>
-               </div>
+                   <!-- This is flex container for data sources settings -->
+                   <div class="flex-container">
+                       <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#file"></use>
+                            </svg>
+                        </div>
+                        <div class="listing-item-primary" style="flex-grow: 5;padding-left:3%;">
+                            <h2 class="listing-item-title"><a ui-sref="settings.datasources" translate>settings.settings_list.data_sources</a></h2>
+                            <p class="listing-item-secondary" translate>settings.settings_list.data_sources_desc</p>
+                        </div>
+                   </div> 
+                </div>
                <div class="listing-item" ng-show="hasPermission('Bulk Data Import and Export') || hasPermission('Bulk Data Import')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.dataImport" translate>settings.settings_list.import</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.import_desc</p>
+                   <!-- This is flex container for Import settings -->
+                   <div class="flex-container">
+                       <div class="listing-item-icon" style="flex-grow: 1;">
+                           <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                               <use xlink:href="/img/iconic-sprite.svg#cloud-download"></use>
+                           </svg>
+                        </div>
+                       <div class="listing-item-primary" style="flex-grow: 8.5;padding-left:3%;">
+                           <h2 class="listing-item-title"><a ui-sref="settings.dataImport" translate>settings.settings_list.import</a></h2>
+                           <p class="listing-item-secondary" translate>settings.settings_list.import_desc</p>
+                       </div>
                    </div>
                </div>
                <div class="listing-item" ng-show="userSettingsEnabled && hxlEnabled">
@@ -57,42 +89,83 @@
                </div>
 
                <div class="listing-item" ng-show="hasPermission('Bulk Data Import and Export')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title">
-                           <a ui-sref="settings.dataExport" translate>{{dataExportTitle}}</a></h2>
-                           <p class="listing-item-secondary" translate>{{dataExportDescription}}</p>
+                   <!-- This is flex container for Export settings -->
+                   <div class="flex-container">
+                        <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#cloud-upload"></use>
+                            </svg>
+                        </div>
+                       <div class="listing-item-primary" style="flex-grow: 7.5;padding-left:3%;">
+                           <h2 class="listing-item-title">
+                               <a ui-sref="settings.dataExport" translate>{{dataExportTitle}}</a></h2>
+                               <p class="listing-item-secondary" translate>{{dataExportDescription}}</p>
+                       </div>
                    </div>
                </div>
 
                <div class="listing-item" ng-show="hasPermission('Manage Users')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.users" translate>settings.settings_list.users</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.users_desc</p>
+                   <!-- This is flex container for user settings -->
+                   <div class="flex-container">
+                       <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#people"></use>
+                            </svg>
+                       </div>
+                      <div class="listing-item-primary" style="flex-grow: 7.5;padding-left:3%;">
+                          <h2 class="listing-item-title"><a ui-sref="settings.users" translate>settings.settings_list.users</a></h2>
+                          <p class="listing-item-secondary" translate>settings.settings_list.users_desc</p>
+                      </div>
                    </div>
                </div>
 
                <div class="listing-item" ng-show="isAdmin()">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.roles" translate>settings.settings_list.roles</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.roles_desc</p>
+                   <!-- this is the flex container for Roles settings -->
+                   <div class="flex-container">
+                       <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#badge"></use>
+                            </svg>
+                       </div>
+                      <div class="listing-item-primary" style="flex-grow: 6.3;padding-left:3%;">
+                          <h2 class="listing-item-title"><a ui-sref="settings.roles" translate>settings.settings_list.roles</a></h2>
+                          <p class="listing-item-secondary" translate>settings.settings_list.roles_desc</p>
+                      </div>
                    </div>
                </div>
 
                <div class="listing-item" ng-show="hasPermission('Manage Settings')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.categories" translate>settings.settings_list.categories</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.categories_desc</p>
+                   <!-- This is flex container for categories settings -->
+                   <div class="flex-container">
+                       <div class="listing-item-icon" style="flex-grow: 1;">
+                            <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top:-12px" >
+                                <use xlink:href="/img/iconic-sprite.svg#list"></use>
+                            </svg>
+                       </div>
+                      <div class="listing-item-primary" style="flex-grow: 6;padding-left:3%;">
+                          <h2 class="listing-item-title"><a ui-sref="settings.categories" translate>settings.settings_list.categories</a></h2>
+                          <p class="listing-item-secondary" translate>settings.settings_list.categories_desc</p>
+                      </div>
                    </div>
                </div>
 
                <div class="listing-item" ng-show="hasPermission('Manage Settings')">
-                   <div class="listing-item-primary">
-                       <h2 class="listing-item-title"><a ui-sref="settings.webhooks" translate>settings.settings_list.webhooks</a></h2>
-                       <p class="listing-item-secondary" translate>settings.settings_list.webhooks_desc</p>
+                   <!-- This is flex container for Web hooks settings -->
+                   <div class="flex-container">
+                       <div class="listing-item-icon" style="flex-grow: 1;">
+                           <svg class="iconic" id="general-logo" style="margin: auto; display: block; margin-top: -3px" >
+                               <use xlink:href="/img/iconic-sprite.svg#loop-circular"></use>
+                           </svg>
+                       </div>
+                      <div class="listing-item-primary" style="flex-grow: 4;padding-left:3%;">
+                          <h2 class="listing-item-title"><a ui-sref="settings.webhooks" translate>settings.settings_list.webhooks</a></h2>
+                          <p class="listing-item-secondary" translate>settings.settings_list.webhooks_desc</p>
+                      </div>
                    </div>
                </div>
 
                <div class="listing-item" ng-show="planIsAvailable">
+                   <!-- This is flex container for manage settings -->
                    <div class="listing-item-primary">
                        <h2 class="listing-item-title"><a ui-sref="settings.plan" translate>settings.settings_list.plans</a></h2>
                        <p class="listing-item-secondary"  translate-values="{ current_plan: tierNames[tier] }" translate>settings.settings_list.plan_desc</p>
