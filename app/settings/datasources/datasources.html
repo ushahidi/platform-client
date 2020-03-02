@@ -74,7 +74,7 @@
                                     <label class="tgl-btn" for="{{provider.id}}_form_enable"></label>
                                </div>
                                <div data-fieldgroup-target="import_to_survey-survey" class="init active">
-                                 <p data-fieldgroup-target="hide-author-message" class="init" ng-class="{'active' : formEnabled[provider.id]}" translate-values="{ datasource_type: provider.name }" translate="survey.choose_survey_field_desc" >
+                                 <p data-fieldgroup-target="hide-author-message" class="init" ng-class="{'active' : formEnabled[provider.id]}" translate-values="{ datasource_type: provider.name }" translate="survey.choose_survey_field_desc" >    
                                    <em>
                                      All incoming data from {{provider.name}} will be used to create responses to the survey you choose.
                                    </em>
@@ -117,7 +117,7 @@
 
                                  <fieldset data-fieldgroup-target="import_to_survey-fields" class="init active" ng-show="selectedForm[provider.id] && formEnabled">
                                      <legend translate="survey.choose_survey_field">Choose what should be assigned to each survey field</legend>
-                                     <p translate="survey.choose_survey_field_desc" translate-values="{ datasource_type: provider.name }">Each of the survey's fields are listed below. Choose the data from {{provider.name}} that you'd like to use to populate each of those fields.</p>
+                                     <p translate="survey.choose_survey_field_desc" translate-values="{ datasource_type: provider.name }">Each of the survey's fields are listed below. Choose the data from {{provider.name}} that you'd like to use to populate each of those fields.</p>   
                                      <table>
                                          <thead>
                                              <tr>
