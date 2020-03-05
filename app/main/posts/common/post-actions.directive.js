@@ -40,7 +40,8 @@ function PostActionsDirective(
         function activate() {
             $scope.statuses = PostActionsService.getStatuses();
         }
-
+        
+        // Called when a single data item is deleted.
         function deletePost() {
             PostActionsService.delete($scope.post).then(function () {
                 $rootScope.$broadcast('event:edit:post:status:data:mode:saveSuccess', {post: $scope.post, deleted: true});
@@ -52,7 +53,7 @@ function PostActionsDirective(
                     // only map needs to reload
                     $state.reload();
                 }
-
+                
             });
         }
 
