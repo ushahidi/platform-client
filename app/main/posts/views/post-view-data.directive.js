@@ -331,7 +331,6 @@ function PostViewDataController(
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             clearPosts ? resetPosts() : null;
-            
             // If we're loading posts for the first time and we have a selected post (post detail view)
             // check to see that the selected post isn't in the list
             // and then deselect it and select the first item
