@@ -40,8 +40,8 @@
 
             <form name="form">
                 <div class="form-sheet">
-                    <div class="form-field" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
-                        <label>{{'user.full_name' | translate}} <span style="color:red">*</span></label>
+                    <div class="form-field init required" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                        <label translate>user.full_name</label>
                         <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
                         <div ng-repeat="(error, value) in form.full_name.$error"
                             ng-show="form.full_name.$dirty"
@@ -53,8 +53,8 @@
                         </div>
                     </div>
 
-                    <div class="form-field" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
-                        <label>{{'user.email' | translate}} <span style="color:red">*</span></label>
+                    <div class="form-field init required" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+                        <label translate>user.email</label>
                         <input type="email" placeholder="{{'user_create.email' | translate}}" ng-maxlength="150" ng-model="user.email" name="email" required>
                         <div ng-repeat="(error, value) in form.email.$error"
                             ng-show="form.email.$dirty"
@@ -66,8 +66,8 @@
                         </div>
                     </div>
 
-                    <div class="form-field" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
-                        <label>{{'user.password' | translate}} <span style="color:red">*</span></label>
+                    <div class="form-field init required" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
+                        <label translate>user.password</label>
 
                         <a class="button button-flat" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
 
