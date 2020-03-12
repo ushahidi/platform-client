@@ -49,7 +49,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             map.attributionControl.setPrefix(false);
             map.zoomControl.setPosition('bottomleft');
             map.setMaxBounds([[-90,-360],[90,360]]);
-            map.scrollWheelZoom.enable();
             map.on('popupopen', function (e) {
                 var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
                 px.y -= e.popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location

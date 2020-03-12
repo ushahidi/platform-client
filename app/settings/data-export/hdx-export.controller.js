@@ -184,12 +184,9 @@ function (
                     let obj = formAttribute.selectedTag ? {form_attribute_id: formAttribute.id, hxl_tag_id: formAttribute.selectedTag.id} : {form_attribute_id: formAttribute.id};
                     if (formAttribute.selectedHxlAttributes && !_.isEmpty(formAttribute.selectedHxlAttributes)) {
                         _.each(formAttribute.selectedHxlAttributes, (hxlAttribute) => {
-                            let hxlAttr = getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute);
-                            if (hxlAttr) {
-                                let objWithAttr = angular.copy(obj);
-                                objWithAttr.hxl_attribute_id = parseInt(hxlAttr.id);
-                                hxlData.push(objWithAttr);
-                            }
+                            let objWithAttr = angular.copy(obj);
+                            objWithAttr.hxl_attribute_id = parseInt(getHxlAttributeByTagIdAndName(formAttribute, hxlAttribute.attribute).id);
+                            hxlData.push(objWithAttr);
                         });
                     } else {
                         hxlData.push(obj);
@@ -206,8 +203,7 @@ function (
     }
 
     function exportData(sendToHDX) {
-        const formattedIds = formatIds();
-        if (formattedIds.length === 0) {
+        if (formatIds().length === 0) {
             // scrolling to top and display the error-message
             $scope.fieldError = true;
             $anchorScroll();
@@ -228,7 +224,7 @@ function (
                 'send_to_hdx': sendToHDX,
                 'include_hxl': true,
                 'send_to_browser': !sendToHDX,
-                'hxl_heading_row': formattedIds
+                'hxl_heading_row': formatIds()
             };
 
             if (sendToHDX) {
