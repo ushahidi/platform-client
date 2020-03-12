@@ -314,7 +314,7 @@
         "who_can_add": "Who can add to this survey",
         "survey_field": "Survey field",
         "choose_survey_field": "Choose what should be assigned to each survey field",
-        "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from your tweets that you'd like to use to populate each of those fields.",
+        "choose_survey_field_desc":  "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
         "who_can_contribute_to_task" : "Who can contribute to fields in this task",
         "delete" : {
             "desc" : "<strong>If you delete this survey</strong>, all of its posts will also be deleted. Proceed with caution.",
@@ -1119,7 +1119,7 @@
                 }
             },
             "twitter": {
-                "intro_step_1": "Step 1: Create a new Twitter application",
+                "intro_step_1": "Step 1: Create a new Twitter application: <br />Twitter applications may take a few hours or days to be approved by Twitter.<br />Please be aware of this if you need this data quickly.",
                 "intro_step_1_desc": "Create a <a href=\"https://apps.twitter.com/app/new\">new twitter application</a>",
                 "intro_step_2": "Step 2: Generate a consumer key and secret",
                 "intro_step_2_desc": "Once you've created the application click on \"Keys and Access Tokens\".<br /> Then click \"Generate Consumer Key and Secret\".<br /> Copy keys, tokens and secrets into the fields below.",
