@@ -65,3 +65,13 @@ input.leaflet-control-layers-selector {
 .leaflet-map-pane svg.iconic {
     position: initial;
 }
+
+//  Override styles for reset button
+#reset-button {
+    background-color: white;
+    height: 30px;
+    width: 27px;
+    padding: 8px 8px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
