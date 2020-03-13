@@ -32,7 +32,7 @@ describe('post preview media directive', function () {
                 id: 1
             },
             values: {
-                media_test: 7
+                media_test: [7]
             }
         };
 
