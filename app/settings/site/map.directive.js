@@ -32,6 +32,7 @@ function (
             $scope.updateMapPreviewLayer = updateMapPreviewLayer;
             $scope.current_precision =  9;
             $scope.locationPrecisionEnabled = false;
+            $scope.handleClick = handleClick;
 
             activate();
 
