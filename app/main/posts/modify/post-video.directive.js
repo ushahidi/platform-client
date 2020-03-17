@@ -1,3 +1,4 @@
+import $ from 'jquery';
 module.exports = PostVideo;
 
 PostVideo.$inject = [];
@@ -64,16 +65,39 @@ function PostVideoController(
             // It is important that it does not allow subdomains other than player or www in order to ensure that a malicious user
             // can not exploit this field to insert malicious content in an iframe
             var match = url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
+            var testUrl = undefined;
             $scope.videoUrl = undefined;
             if (match) {
                 if (match[3].indexOf('youtu') > -1) {
                     // Here we make a statement of trust of the URL based on having pulled out just the id
                     $scope.videoUrl = 'https://www.youtube.com/embed/' + match[6];
-                    $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
+                    testUrl = 'https://www.youtube.com/oembed?url=' + $scope.videoUrl + '&format=json';
+                    $.ajax({
+                        url: testUrl,
+                        type: 'GET',
+                        success: function(data) {
+                            $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
+                        },
+                        error: function() {
+                            $scope.videoUrl = undefined;
+                            urlError(url);
+                        }
+                    });
                 } else if (match[3].indexOf('vimeo') > -1) {
                     // Here we make a statement of trust of the URL based on having pulled out just the id
                     $scope.videoUrl = 'https://player.vimeo.com/video/' + match[6];
-                    $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
+                    testUrl = 'https://vimeo.com/api/oembed.json?url=' + $scope.videoUrl;
+                    $.ajax({
+                        url: testUrl,
+                        type: 'GET',
+                        success: function(data) {
+                            $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
+                        },
+                        error: function() {
+                            $scope.videoUrl = undefined;
+                            urlError(url);
+                        }
+                    });
                 } else {
                     urlError(url);
                 }
