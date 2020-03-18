@@ -64,6 +64,7 @@ function PostVideoController(
             // NOTE: It is very important to pay special attention to the santization needs of this regex if it is changed.
             // It is important that it does not allow subdomains other than player or www in order to ensure that a malicious user
             // can not exploit this field to insert malicious content in an iframe
+            console.log($scope.api_key);
             var match = url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
             var testUrl = undefined;
             $scope.videoUrl = undefined;
@@ -71,7 +72,7 @@ function PostVideoController(
                 if (match[3].indexOf('youtu') > -1) {
                     // Here we make a statement of trust of the URL based on having pulled out just the id
                     $scope.videoUrl = 'https://www.youtube.com/embed/' + match[6];
-                    testUrl = 'https://www.youtube.com/oembed?url=' + $scope.videoUrl + '&format=json';
+                    testUrl = 'https://www.googleapis.com/youtube/v3/videos?id=' + match[6] + '&key=' + $scope.api_key + '&part=snippet';
                     $.ajax({
                         url: testUrl,
                         type: 'GET',
