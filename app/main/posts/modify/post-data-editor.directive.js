@@ -407,7 +407,7 @@ function PostDataEditorController(
             });
         });
     }
-        
+
     function cancel() {
         $state.go('posts.data.detail',{postId: $scope.post.id});
     }
