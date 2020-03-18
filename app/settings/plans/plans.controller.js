@@ -36,6 +36,7 @@ function (
         }
     };
     $rootScope.setLayout('layout-c');
+    window.scrollTo(0, 0);
     $scope.switchTab = switchTab;
     $scope.activeTab = 'demo';
     $translate('nav.plan_settings').then(function (title) {
