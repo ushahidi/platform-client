@@ -64,8 +64,7 @@ module.exports = {
       {
         test: /\.svg/,
         use: {
-          loader: 'svg-url-loader?limit=1',
-          options: {esModule: false }
+          loader: 'svg-url-loader?limit=1'
         }
       },
       {
