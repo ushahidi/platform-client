@@ -2,12 +2,19 @@ var webpack = require('webpack');
 var path    = require('path');
 var config  = require('./webpack.config');
 
+config.mode = 'development';
+
 config.output = {
   filename: '[name].js',
   chunkFilename: '[name].js',
   publicPath: '/',
   path: path.resolve(__dirname, 'app')
 };
+
+config.devServer = {
+  hot: true
+}
+
 
 config.plugins = config.plugins.concat([
 
