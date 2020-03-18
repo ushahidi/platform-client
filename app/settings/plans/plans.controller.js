@@ -38,7 +38,7 @@ function (
     $rootScope.setLayout('layout-c');
     window.scrollTo(0, 0);
     $scope.switchTab = switchTab;
-    $scope.activeTab = 'demo';
+    $scope.activeTab = 'basic';
     $translate('nav.plan_settings').then(function (title) {
         $scope.title = title;
         $rootScope.$emit('setPageTitle', title);
