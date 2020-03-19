@@ -63,7 +63,9 @@ module.exports = {
       },
       {
         test: /\.svg/,
-        use: 'svg-url-loader?limit=1'
+        use: {
+          loader: 'svg-url-loader?limit=1'
+        }
       },
       {
         test: /\.woff/,
