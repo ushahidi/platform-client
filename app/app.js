@@ -138,6 +138,7 @@ angular.module('app',
         // Load leaflet plugins here too
         require('imports-loader?L=leaflet!leaflet.markercluster');
         require('imports-loader?L=leaflet!leaflet.locatecontrol/src/L.Control.Locate');
+        require('imports-loader?L=leaflet!leaflet-easybutton');
         return L;
     })
     .factory('moment', function () {
