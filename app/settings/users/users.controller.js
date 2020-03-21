@@ -92,6 +92,7 @@ function (
 
             $q.all(calls).then(function () {
                 Notify.notify('notify.user.bulk_destroy_success');
+                $scope.selectedUsers.length = 0;
                 $scope.getUsersForPagination();
             }, handleResponseErrors)
             .finally($scope.filterRole);
