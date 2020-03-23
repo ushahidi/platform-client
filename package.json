@@ -112,7 +112,7 @@
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
     "d3": "^3.5.17",
-    "leaflet.locatecontrol": "^0.70.0",
+    "leaflet.locatecontrol": "^0.71.0",
     "leaflet": "^1.6.0",
     "leaflet-easybutton": "^2.4.0",
     "leaflet.markercluster": "1.0.5",
