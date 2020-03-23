@@ -1,6 +1,6 @@
 {
   "name": "ushahidi-platform-client",
-  "version": "3.10.0",
+  "version": "4.4.1",
   "description": "Ushahidi Platform Official Web Client",
   "main": "gulpfile.js",
   "repository": {
@@ -64,7 +64,7 @@
     "karma-coverage": "^2.0.1",
     "karma-firefox-launcher": "^1.2.0",
     "karma-fixture": "^0.2.6",
-    "karma-jasmine": "^2.0.1",
+    "karma-jasmine": "^3.1.1",
     "karma-json-fixtures-preprocessor": "0.0.6",
     "karma-notify-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
@@ -112,8 +112,9 @@
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
     "d3": "^3.5.17",
-    "leaflet": "~1.0.1",
-    "leaflet.locatecontrol": "^0.62.0",
+    "leaflet.locatecontrol": "^0.70.0",
+    "leaflet": "^1.6.0",
+    "leaflet-easybutton": "^2.4.0",
     "leaflet.markercluster": "1.0.5",
     "libphonenumber-js": "^1.0.24",
     "moment": "2.19.3",
@@ -127,7 +128,7 @@
     "sortablejs": "1.10.0",
     "tui-editor": "^1.4.7",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "^4.2.0"
+    "ushahidi-platform-pattern-library": "^4.4.1"
   },
   "engines": {
     "node": ">=10.0"

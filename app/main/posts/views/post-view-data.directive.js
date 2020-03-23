@@ -181,7 +181,7 @@ function PostViewDataController(
         );
 
         $scope.$on('event:edit:leave:form:complete', function () {
-            // Bercause there is no state management
+            // Because there is no state management
             // We copy the next Post to be the current Post
             // if the previous Post exited correctly
             // Ideally Post Card would become a service more akin
@@ -255,9 +255,11 @@ function PostViewDataController(
     function removePostFromList(postObj) {
         $scope.posts.forEach((post, index) => {
             // args.post is the post being updated/saved and sent from the broadcast
+            // since a single post is being deleted here, reduce count of totalitems by 1.
             if (post.id === postObj.id) {
                 let nextInLine = $scope.posts[index + 1];
                 $scope.posts.splice(index, 1);
+                $scope.totalItems = $scope.totalItems - 1;
                 if ($scope.posts.length) {
                     groupPosts($scope.posts);
                     if ($scope.selectedPost.post) {
@@ -329,7 +331,6 @@ function PostViewDataController(
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
             clearPosts ? resetPosts() : null;
-
             // If we're loading posts for the first time and we have a selected post (post detail view)
             // check to see that the selected post isn't in the list
             // and then deselect it and select the first item
@@ -360,6 +361,7 @@ function PostViewDataController(
         });
     }
 
+    // this function is called when multiple data items are deleted
     function deletePosts() {
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
