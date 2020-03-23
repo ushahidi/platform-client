@@ -27,7 +27,9 @@ function (
         'surveyor': 'Surveyor',
         'responder': 'Responder',
         'free-pre-jun-2016': 'Mapper (Legacy)',
-        'zerorated': 'Social Impact'
+        'zerorated': 'Social Impact',
+        'demo_1' : 'Ushahidi Demo',
+        'level_1': 'Ushahidi Basic'
     };
     $scope.dataExportTitle = 'settings.settings_list.export';
     $scope.dataExportDescription = 'settings.settings_list.export_desc';

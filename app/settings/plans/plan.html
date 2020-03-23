@@ -18,19 +18,19 @@
     </div>
 
     <main role="main">
-
+        <div class="main-col">
+            <div class="form-sheet">
+                <div class="form-field">
+                    <h3 class="new">We are revamping our pricing plans.</h3>
+                    <p>In the meantime, you can take advantage of a limited time discount of 90% off Ushahidi Basic for new subscriptions</p>
+                    <em>*COVID19 Update: For the next 90 days, we will be waiving the fee for our basic plan, and offering it at $0.</em>
+                </div>
+            </div>
         <div class="wrapper">
             <div class="tiers" role="article">
                 <nav class="tabs-menu init" data-tabs="pricing-tabs">
                     <ul>
-                        <li id="demo-li" class="active">
-                            <a href="#" ng-click="switchTab('demo')">
-                                Ushahidi Demo
-                                <span class="tabs-label">Self Service</span>
-                            </a>
-
-                        </li>
-                        <li id="basic-li" >
+                        <li id="basic-li" class="active" >
                             <a href="#" ng-click="switchTab('basic')">
                                 Ushahidi Basic
                                 <span class="tabs-label">Self Service</span>
@@ -39,151 +39,50 @@
                         </li>
                         <li id="enterprise-single-li" >
                             <a href="#" ng-click="switchTab('enterprise-single')">
-                                Single Deployment
+                                Enterprise
                                 <span class="tabs-label alt">Enterprise</span>
                             </a>
 
-                        </li>
-                        <li id="enterprise-multiple-li" >
-                            <a href="#" ng-click="switchTab('enterprise-multiple')">
-                                Multiple Deployment
-                                <span class="tabs-label alt">Enterprise</span>
-                            </a>
                         </li>
                     </ul>
                 </nav>
 
-                <div class="tier pricing-tabs active tabs-target" id="demo">
-                    <span class="tier-label">Self Service</span>
-
-                    <div class="tier-summary">
-                        <h2 class="tier-name">Ushahidi Demo</h2>
-                        <p class="small">limited use - 1 month</p>
-                        <p>Test out the Ushahidi crowdsourcing and situation awareness platform.</p>
-                        <strong class="tier-price">Free</strong>
-                        <a class="button button-alpha" disabled ng-show="tier == 'demo_1'">&check; Subscribed</a>
-                        <a href="//{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=demo_1" class="button button-alpha" ng-hide="tier == 'demo_1'">Sign up</a>
-                    </div>
-
-                    <div class="show-on-mobile">
-                        <div class="tier-features">
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Free Software, Hosting, and Maintenance</h3>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Embeddable web form, email, SMSsync, data collection online/offline iOS and Android App. Map and Timeline data visualization <br> Roles/Permissions. Email, SMS, Twitter. Private Deployments. Analytics Visualization Page. Import/Export Data.</h3>
-                                <a href="#5355">Find out more about data collection</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">1 Deployment</h3>
-                                <a href="#5348">What’s a deployment?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                                <a href="#5349">What’s an admin?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">25 posts maximum</h3>
-                                <a href="#5352">What’s a post?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                                <a href="#5728">Learn more about our app</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Crowdsourced surveys</h3>
-                                <a href="#5350">What’s a crowdsourced survey?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">No targeted surveys</h3>
-                                <a href="#5351">What’s a targeted survey?</a>
-                            </div>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">One-time Support Services not available for demo</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">On-going support services not available for demo</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Custom feature development  not available for demo</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tier pricing-tabs tabs-target" id="basic">
+                <div class="tier pricing-tabs tabs-target active" id="basic">
                     <span class="tier-label">Self Service</span>
                     <div class="tier-summary">
-                        <h2 class="tier-name">Ushahidi Basic</h2>
-                        <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
-                        <p>Collect, monitor, analyze, and respond to real time incidents and engage with stakeholders.</p>
-                        <strong class="tier-price">$499 <em>/mo</em></strong>
+                        <div class="tier-description">
+                            <h2 class="tier-name">Ushahidi Basic</h2>
+                            <p>Collect, monitor, analyze, and respond to real time incidents and engage with stakeholders.</p>
+                        </div>
+                        <div class="tier-highlight">
+                            <strong class="tier-price new">$0<em>/mo</em></strong>
+                            <span>for the next 90 days, then $49.9/mo.</span>
+                        </div>
                         <a class="button button-alpha" ng-show="tier == 'level_1'" disabled ng-show="tier == 'level_1'">&check; Subscribed</a>
                         <a href="//{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=level_1" class="button button-alpha" ng-hide="tier == 'level_1'">Sign up</a>
                     </div>
-
-                    <div class="show-on-mobile">
-                        <div class="tier-features">
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">$499/month for Software, Hosting, and Maintenance</h3>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Embeddable web form, email, SMSsync, data collection online/offline iOS and Android App. Map and Timeline data visualization <br> Roles/Permissions. Email, SMS, Twitter. Private Deployments. Analytics Visualization Page. Import/Export Data.</h3>
-                                <a href="#5355">Find out more about data collection</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">1 Deployment</h3>
-                                <a href="#5348">What’s a deployment?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                                <a href="#5349">What’s an admin?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Unlimited posts</h3>
-                                <a href="#5352">What’s a post?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                                <a href="#5728">Learn more about our app</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Crowdsourced surveys</h3>
-                                <a href="#5350">What’s a crowdsourced survey?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">No targeted surveys</h3>
-                                <a href="#5351">What’s a targeted survey?</a>
-                            </div>
+                    <div class="tier-features">
+                        <div class="tier-feature">
+                            <h3 class="tier-heading">1 Deployment</h3>
                         </div>
 
                         <div class="tier-feature">
-                            <h3 class="tier-heading">One-time Support Services not available for basic</h3>
+                            <h3 class="tier-heading">25 admins and/or custom roles</h3>
                         </div>
 
                         <div class="tier-feature">
-                            <h3 class="tier-heading">On-going support services not available for basic</h3>
+                            <h3 class="tier-heading">Unlimited posts</h3>
+                        </div>
+                        <div class="tier-feature">
+                            <h3 class="tier-heading">Web, Email, SMS, & Twitter data collection </h3>
                         </div>
 
                         <div class="tier-feature">
-                            <h3 class="tier-heading">Custom feature development  not available for basic</h3>
+                            <h3 class="tier-heading">Map, timeline, bar chart, & line chart data visualization</h3>
+                        </div>
+
+                        <div class="tier-feature">
+                            <h3 class="tier-heading">Import & Export data</h3>
                         </div>
                     </div>
                 </div>
@@ -191,739 +90,23 @@
                 <div class="tier pricing-tabs tabs-target" id="enterprise-single">
                     <span class="tier-label alt">Enterprise</span>
                     <div class="tier-summary">
-                        <h2 class="tier-name">Ushahidi Enterprise: Single Deployment</h2>
-                        <p>Ushahidi platform capabilities, technical expertise, ongoing support, and customizations.</p>
-                        <p class="hide-on-mobile" style="visibility: hidden;"> this is a line break hack. this is a line break hack. this is a line break hack. this is a line break hack.</p>
-                        <p class="form-heading">Contact us about Enterprise Services for your organization</p>
-
+                        <div class="tier-description">
+                            <h2 class="tier-name">Ushahidi Enterprise</h2>
+                            <p>Ushahidi platform capabilities, technical expertise, ongoing support, and customizations.</p>
+                        </div>
+                    <div class="tier-highlight">
+                        <p>Enterprise plans starts at $5,000.</p>
                     </div>
-
-                    <form id="form7" name="form7" class="wufoo topLabel" accept-charset="UTF-8" autocomplete="off" enctype="multipart/form-data" method="post" novalidate="" action="https://ushah.wufoo.com/forms/pb6wq340260j75/#public">
-
-                        <div class="form-field">
-                            <label class="desc" id="title1" for="Field1">Your name <span id="req_1" class="req">*</span></label>
-                            <input placeholder="Your name" id="Field1" name="Field1" type="text" class="field text medium" value="" maxlength="255" tabindex="1" onkeyup="" required="">
-                        </div>
-
-                        <div class="form-field">
-                            <label class="desc nodisplay" id="title2" for="Field2">Your email <span id="req_2" class="req">*</span></label>
-                            <input placeholder="you@organization.com" id="Field2" name="Field2" type="email" spellcheck="false" class="field text medium" value="" maxlength="255" tabindex="2" required="">
-                        </div>
-
-                        <div class="form-field">
-                            <label class="desc nodisplay" id="title3" for="Field5">Phone number <span id="req_5" class="req">*</span></label>
-                            <input id="Field5" class="field text medium" name="Field5" tabindex="3" onkeyup="handleInput(this);" onchange="handleInput(this);" required="" type="tel" maxlength="255" value="" style="display: block; width: 100%;">
-                        </div>
-
-                        <div class="form-field">
-                            <label class="desc nodisplay" id="title3" for="Field3">Your organization</label>
-                            <input placeholder="Your organization" id="Field3" name="Field3" type="text" class="field text medium" value="" maxlength="255" tabindex="3" onkeyup="">
-                        </div>
-
-                        <div class="form-field">
-                            <button id="saveForm" name="saveForm" class="button btTxt submit" type="submit" onclick="ga('send','event','links','contact', 'plan-solutions',1);">Continue</button>
-                        </div>
-
-                        <div class="nodisplay">
-                            <label for="comment">Do Not Fill This Out</label>
-                            <textarea name="comment" id="comment" rows="1" cols="1"></textarea>
-                            <input type="hidden" id="idstamp" name="idstamp" value="zkhl5vdgevIPMx9QV0j5WIpon8aq8lW5GuXOYyAWb/k=">
-                        </div>
-                    </form>
-
                     <div class="tier-features">
                         <div class="tier-feature">
-                            <strong class="tier-price">Base Pricing</strong>
-                            <p class="small">(1 Deployment)</p>
-                            <h3 class="tier-heading">
-                                Set-up
-                                <br>
-                                $15,000+
-                                <br><br>
-                                1 Remote Training
-                                <br>
-                                $1,500+
-                                <br><br>
-                                Software, Hosting &amp; Maintenance
-                                <br>
-                                $999+/month
-                                <br><br>
-                                Ongoing Technical Support
-                                <br>
-                                $1500+/month
-                                <br><br>
-                                <p class="small">*pricing modified based upon circumstances and customizations</p>
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="show-on-mobile">
-                        <div class="tier-features">
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">$999+/month for Software, Hosting, and Maintenance</h3>
-                                <p class="small">*subject to increase with customizations</p>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">All of Ushahidi Basic + 25 admins. SMS targeted surveys. Automated sorting capabilities.</h3>
-                                <a href="#5355">Find out more about data collection</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">1 Deployment</h3>
-                                <a href="#5348">What’s a deployment?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                                <a href="#5349">What’s an admin?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Unlimited posts</h3>
-                                <a href="#5352">What’s a post?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                                <a href="#5728">Learn more about our app</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Crowdsourced surveys</h3>
-                                <a href="#5350">What’s a crowdsourced survey?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Access to targeted surveys and the ability to gather and upload contacts and send multi-question SMS surveys. Contact for pricing based on country location and survey sizes</h3>
-                                <a href="#5351">What’s a targeted survey?</a>
-                            </div>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">One-time Support Services</h3>
-                            <a href="#5729">Find out more about one-time services</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">On-going support services</h3>
-                            <a href="#5730">Find out more about on-going services</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Custom feature development</h3>
-                            <p class="small">*contact for scoping and pricing</p>
-                            <a href="#5731">Find out more about custom feature development</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Collaborative Discovery Session</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">
-                                Platform set-up
-                                <br>
-                                $15,000+
-                            </h3>
-                            <p class="small">*required for base Enterprise Partnership</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Survey configuration - Contact for pricing</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">
-                                Training of project administrators
-                                <br>
-                                $1500+
-                            </h3>
-                            <p class="small">*required for base Enterprise Partnership</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Training of trainers, Training of monitors or field staff, Stakeholder Engagement Toolkit, White Labeling, Translation</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">
-                                Ongoing technical support account manager
-                                <br>
-                                $1500+/month
-                            </h3>
-                            <p class="small">*required for base Enterprise Partnership</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Long-term embedded Ushahidi platform administrator(s)</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Long-term embedded Ushahidi platform community engagement officer(s)</h3>
-                            <p class="small">*contact for pricing</p>
+                            <h3 class="tier-heading">Projects include all Basic features and much more, contact us to find out about the full a catalogue of technical services on offer.</h3>
                         </div>
                     </div>
                 </div>
+                <a href="https://ushahidi.com/enterprise-partnerships" class="button button-alpha">Contact us</a>
 
-                <div class="tier pricing-tabs tabs-target" id="enterprise-multiple">
-                    <span class="tier-label alt">Enterprise</span>
-                    <div class="tier-summary">
-                        <h2 class="tier-name">Ushahidi Enterprise: Multiple Deployments</h2>
-                        <p>Ushahidi platform capabilities, technical expertise, ongoing support, and customizations.</p>
-                        <p>Integrate Ushahidi across your organization or project activities by using multiple Ushahidi platform deployments.</p>
-                        <p class="form-heading">Contact us about Enterprise Services for your organization</p>
-
-                    </div>
-
-                    <form id="form7" name="form7" class="wufoo topLabel" accept-charset="UTF-8" autocomplete="off" enctype="multipart/form-data" method="post" novalidate="" action="https://ushah.wufoo.com/forms/pb6wq340260j75/#public">
-
-                        <div class="form-field">
-                            <label class="desc" id="title1" for="Field1">Your name <span id="req_1" class="req">*</span></label>
-                            <input placeholder="Your name" id="Field1" name="Field1" type="text" class="field text medium" value="" maxlength="255" tabindex="1" onkeyup="" required="">
-                        </div>
-
-                        <div class="form-field">
-                            <label class="desc nodisplay" id="title2" for="Field2">Your email <span id="req_2" class="req">*</span></label>
-                            <input placeholder="you@organization.com" id="Field2" name="Field2" type="email" spellcheck="false" class="field text medium" value="" maxlength="255" tabindex="2" required="">
-                        </div>
-
-                        <div class="form-field">
-                            <label class="desc nodisplay" id="title3" for="Field5">Phone number <span id="req_5" class="req">*</span></label>
-                            <input id="Field5" class="field text medium" name="Field5" tabindex="3" onkeyup="handleInput(this);" onchange="handleInput(this);" required="" type="tel" maxlength="255" value="" style="display: block; width: 100%;">
-                        </div>
-
-                        <div class="form-field">
-                            <label class="desc nodisplay" id="title3" for="Field3">Your organization</label>
-                            <input placeholder="Your organization" id="Field3" name="Field3" type="text" class="field text medium" value="" maxlength="255" tabindex="3" onkeyup="">
-                        </div>
-
-                        <div class="form-field">
-                            <button id="saveForm" name="saveForm" class="button btTxt submit" type="submit" onclick="ga('send','event','links','contact', 'plan-solutions',1);">Continue</button>
-                        </div>
-
-                        <div class="nodisplay">
-                            <label for="comment">Do Not Fill This Out</label>
-                            <textarea name="comment" id="comment" rows="1" cols="1"></textarea>
-                            <input type="hidden" id="idstamp" name="idstamp" value="zkhl5vdgevIPMx9QV0j5WIpon8aq8lW5GuXOYyAWb/k=">
-                        </div>
-                    </form>
-
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <strong class="tier-price">Base Pricing</strong>
-                            <p class="small">(5 Deployments)</p>
-                            <p class="small">*contact us for pricing for 10, 25, or custom deployment packages</p>
-                            <h3 class="tier-heading">
-                                Set-up
-                                <br>
-                                $50,000+
-                                <br><br>
-                                5 Remote Trainings
-                                <br>
-                                $6,000+
-                                <br><br>
-                                Software, Hosting &amp; Maintenance
-                                <br>
-                                $2000+/month
-                                <br><br>
-                                Ongoing Technical Support
-                                <br>
-                                $3,000+/month
-                                <br><br>
-                                <p class="small">*pricing modified based upon circumstances and customizations</p>
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="show-on-mobile">
-                        <div class="tier-features">
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">$2000+/month for Software, Hosting, and Maintenance</h3>
-                                <p class="small">*subject to increase with customizations</p>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">All of Ushahidi Basic + Unlimited admins. SMS targeted surveys. Automated sorting capabilities.</h3>
-                                <a href="#5355">Find out more about data collection</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">5 Deployments</h3>
-                                <p class="small">*contact us for pricing for 10, 25, or custom deployment packages</p>
-                                <a href="#5348">What’s a deployment?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Unlimited admins</h3>
-                                <a href="#5349">What’s an admin?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Unlimited posts</h3>
-                                <a href="#5352">What’s a post?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                                <a href="#5728">Learn more about our app</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Crowdsourced surveys</h3>
-                                <a href="#5350">What’s a crowdsourced survey?</a>
-                            </div>
-
-                            <div class="tier-feature">
-                                <h3 class="tier-heading">Access to targeted surveys and the ability to gather and upload contacts and send multi-question SMS surveys. Contact for pricing based on country location and survey sizes</h3>
-                                <a href="#5351">What’s a targeted survey?</a>
-                            </div>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">One-time Support Services</h3>
-                            <a href="#5729">Find out more about one-time services</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">On-going support services</h3>
-                            <a href="#5730">Find out more about on-going services</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Custom feature development</h3>
-                            <p class="small">*contact for scoping and pricing</p>
-                            <a href="#5731">Find out more about custom feature development</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Collaborative Discovery Session</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">
-                                Platform set-up
-                                <br>
-                                $50,000+
-                            </h3>
-                            <p class="small">*required for base Enterprise Partnership</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Survey configuration - Contact for pricing</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">
-                                Training of project administrators
-                                <br>
-                                $7500+
-                            </h3>
-                            <p class="small">*required for base Enterprise Partnership</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Training of trainers, Training of monitors or field staff, Stakeholder Engagement Toolkit, White Labeling, Translation</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">
-                                Ongoing technical support account manager
-                                <br>
-                                $3000+/month
-                            </h3>
-                            <p class="small">*required for base Enterprise Partnership</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Long-term embedded Ushahidi platform administrator(s)</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Long-term embedded Ushahidi platform community engagement officer(s)</h3>
-                            <p class="small">*contact for pricing</p>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <div class="tiers hide-on-mobile" role="article">
-
-                <div class="tier-label">Platform Technology</div>
-
-                <div class="tier">
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Free Software, Hosting, and Maintenance</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Embeddable web form, email, SMSsync, data collection online/offline iOS and Android App. Map and Timeline data visualization <br> Roles/Permissions. Email, SMS, Twitter. Private Deployments. Analytics Visualization Page. Import/Export Data.</h3>
-                            <a href="#5355">Find out more about data collection</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">1 Deployment</h3>
-                            <a href="#5348">What’s a deployment?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                            <a href="#5349">What’s an admin?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">25 posts maximum</h3>
-                            <a href="#5352">What’s a post?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                            <a href="#5728">Learn more about our app</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Crowdsourced surveys</h3>
-                            <a href="#5350">What’s a crowdsourced survey?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">No targeted surveys</h3>
-                            <a href="#5351">What’s a targeted survey?</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">$499/month for Software, Hosting, and Maintenance</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Embeddable web form, email, SMSsync, data collection online/offline iOS and Android App. Map and Timeline data visualization <br> Roles/Permissions. Email, SMS, Twitter. Private Deployments. Analytics Visualization Page. Import/Export Data.</h3>
-                            <a href="#5355">Find out more about data collection</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">1 Deployment</h3>
-                            <a href="#5348">What’s a deployment?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                            <a href="#5349">What’s an admin?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Unlimited posts</h3>
-                            <a href="#5352">What’s a post?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                            <a href="#5728">Learn more about our app</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Crowdsourced surveys</h3>
-                            <a href="#5350">What’s a crowdsourced survey?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">No targeted surveys</h3>
-                            <a href="#5351">What’s a targeted survey?</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">$999+/month for Software, Hosting, and Maintenance</h3>
-                            <p class="small">*subject to increase with customizations</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">All of Ushahidi Basic + 25 admins. SMS targeted surveys. Automated sorting capabilities.</h3>
-                            <a href="#5355">Find out more about data collection</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">1 Deployment</h3>
-                            <a href="#5348">What’s a deployment?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                            <a href="#5349">What’s an admin?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Unlimited posts</h3>
-                            <a href="#5352">What’s a post?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                            <a href="#5728">Learn more about our app</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Crowdsourced surveys</h3>
-                            <a href="#5350">What’s a crowdsourced survey?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Access to targeted surveys and the ability to gather and upload contacts and send multi-question SMS surveys. Contact for pricing based on country location and survey sizes</h3>
-                            <a href="#5351">What’s a targeted survey?</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">$2000+/month for Software, Hosting, and Maintenance</h3>
-                            <p class="small">*subject to increase with customizations</p>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">All of Ushahidi Basic + Unlimited admins. SMS targeted surveys. Automated sorting capabilities.</h3>
-                            <a href="#5355">Find out more about data collection</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">5 Deployments</h3>
-                            <p class="small">*contact us for pricing for 10, 25, or custom deployment packages</p>
-                            <a href="#5348">What’s a deployment?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Unlimited admins</h3>
-                            <a href="#5349">What’s an admin?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Unlimited posts</h3>
-                            <a href="#5352">What’s a post?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Deployments appear in Ushahidi iOS/Android App</h3>
-                            <a href="#5728">Learn more about our app</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Crowdsourced surveys</h3>
-                            <a href="#5350">What’s a crowdsourced survey?</a>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Access to targeted surveys and the ability to gather and upload contacts and send multi-question SMS surveys. Contact for pricing based on country location and survey sizes</h3>
-                            <a href="#5351">What’s a targeted survey?</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tier-label">Cataloug of Services</div>
-
-                <div class="tier-label blank">One-time Support Services</div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">One-time Support Services not available for demo</h3>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">One-time Support Services not available for basic</h3>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">One-time Support Services</h3>
-                        <a href="#5729">Find out more about one-time services</a>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Collaborative Discovery Session</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">
-                            Platform set-up
-                            <br>
-                            $15,000+
-                        </h3>
-                        <p class="small">*required for base Enterprise Partnership</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Survey configuration - Contact for pricing</h3>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">
-                            Training of project administrators
-                            <br>
-                            $1500+
-                        </h3>
-                        <p class="small">*required for base Enterprise Partnership</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Training of trainers, Training of monitors or field staff, Stakeholder Engagement Toolkit, White Labeling, Translation</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">One-time Support Services</h3>
-                        <a href="#5729">Find out more about one-time services</a>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Collaborative Discovery Session</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">
-                            Platform set-up
-                            <br>
-                            $50,000+
-                        </h3>
-                        <p class="small">*required for base Enterprise Partnership</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Survey configuration - Contact for pricing</h3>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">
-                            Training of project administrators
-                            <br>
-                            $7500+
-                        </h3>
-                        <p class="small">*required for base Enterprise Partnership</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Training of trainers, Training of monitors or field staff, Stakeholder Engagement Toolkit, White Labeling, Translation</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-                </div>
-
-                <div class="tier-label blank">Ongoing support services</div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Ongoing support services not available for demo</h3>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Ongoing support services not available for demo</h3>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Ongoing support services</h3>
-                        <a href="#5730">Find out more about ongoing services</a>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">
-                            Ongoing technical support account manager
-                            <br>
-                            $1500+/month
-                        </h3>
-                        <p class="small">*required for base Enterprise Partnership</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Long-term embedded Ushahidi platform administrator(s)</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Long-term embedded Ushahidi platform community engagement officer(s)</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Ongoing support services</h3>
-                        <a href="#5730">Find out more about ongoing services</a>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">
-                            Ongoing technical support account manager
-                            <br>
-                            $3000+/month
-                        </h3>
-                        <p class="small">*required for base Enterprise Partnership</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Long-term embedded Ushahidi platform administrator(s)</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Long-term embedded Ushahidi platform community engagement officer(s)</h3>
-                        <p class="small">*contact for pricing</p>
-                    </div>
-                </div>
-
-                <div class="tier-label blank">Custom feature development</div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Custom feature development  not available for demo</h3>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Custom feature development  not available for basic</h3>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Custom feature development</h3>
-                        <p class="small">*contact for scoping and pricing</p>
-                        <a href="#5731">Find out more about custom feature development</a>
-                    </div>
-                </div>
-
-                <div class="tier">
-                    <div class="tier-feature">
-                        <h3 class="tier-heading">Custom feature development</h3>
-                        <p class="small">*contact for scoping and pricing</p>
-                        <a href="#5731">Find out more about custom feature development</a>
-                    </div>
-                </div>
-            </div>
         </div>
-
         <section>
             <div class="wrapper">
                 <div class="case-studies-group">
@@ -932,21 +115,21 @@
                         <p><em>Apply for a free Basic plan</em></p>
                         <p>Small non profits and grassroots organizations that are aligned with Ushahidi's mission and can demonstrate a yearly operating budget of less than $250k USD per year are invited to apply for a free Basic plan.</p>
                         <p>You can still try out Ushahidi platform by signing up for the free Ushahidi Demo version.</p>
-                        <a href="pricing/apply-for-free" class="button" onclick="ga('send','event','links','select','social impact',1);">Continue</a>
+                        <a href="https://ushahidi.com/pricing/apply-for-free" class="button" onclick="ga('send','event','links','select','social impact',1);" target="_blank">Continue</a>
                     </div>
 
                     <div class="case-studies-item">
                         <h2 class="section-heading">Ushahidi code</h2>
                         <p><em>Self-host &amp; customize Ushahidi on your own</em></p>
                         <p>Ushahidi is an open source product, meaning that all the code that runs it is available for all admins to download and modify. If you'd like to download Ushahidi, customize it, and host it on your own servers, it is available on GitHub.</p>
-                        <a href="https://ushah.wufoo.com/forms/make-ushahidi-even-better/" class="button" onclick="ga('send','event','links','download', 'ushahidi',1);">Continue</a>
+                        <a href="https://github.com/ushahidi/platform" class="button" onclick="ga('send','event','links','download', 'ushahidi',1);" target="_blank">Continue</a>
                     </div>
 
                     <div class="case-studies-item">
                         <h2 class="section-heading">International Development, Humanitarian, University or Research Organization</h2>
                         <p><em>On Enterprise a catalogue of technical services is on offer</em></p>
                         <p>We can assist with the technical set-up, survey design, a variety of targeted trainings, metrics and analysis, programmatic management, ongoing technical support, and custom feature development. We want you to be able to focus on your project goals and impact and let us stress about the technology.</p>
-                        <a href="enterprise-partnerships" class="button">Continue</a>
+                        <a href="https://www.ushahidi.com/enterprise-partnerships" class="button" target="_blank">Continue</a>
                     </div>
 
                     <div class="case-studies-item">
@@ -954,12 +137,13 @@
                         <p><em>We have loads of ideas for how to improve the Ushahidi platform - so let’s talk!</em></p>
                         <p>From incorporating machine learning, automation, and new data sources, to making the platform more secure in high-risk situations and reaching last-mile users - we’re constantly working to improve our core services and functionality.</p>
                         <p>We’re also always seeking core funding for sustainability from organizations who believe in our mission and impact.</p>
-                        <a href="impact-report" class="button">Continue</a>
+                        <a href="https://www.ushahidi.com/impact-report" class="button" target="_blank">Continue</a>
                     </div>
+                    <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
+                    <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
                 </div>
             </div>
         </section>
-
         <section class="section-faq">
             <h1 class="section-title">Frequently asked questions</h1>
             <div class="wrapper">
@@ -967,8 +151,8 @@
                     <div id="5727" class="faq">
                         <h3>How is Ushahidi funded?</h3>
                         <p class="small lt-color"></p><p>Ushahidi is a nonprofit, open source, software as a service (SaaS) organization, but we operate as a social enterprise. We are both grant funded and revenue generating.
-                        </p><p>We build and sell a replicable, scalable, and sustainable software platform called Ushahidi. (And a new emergency management check-in product called TenFour) to both grassroots organizations and international development and humanitarian agencies, but also make the code base to the Ushahidi platform available open source.
-                        </p><p></p>
+                    </p><p>We build and sell a replicable, scalable, and sustainable software platform called Ushahidi. (And a new emergency management check-in product called TenFour) to both grassroots organizations and international development and humanitarian agencies, but also make the code base to the Ushahidi platform available open source.
+                    </p><p></p>
                     </div>
                     <div id="5348" class="faq">
                         <h3>What is a deployment?</h3>
@@ -1037,5 +221,6 @@
                 </div>
             </div>
         </section>
-    </main>
+    </div>
+</main>
 </div>
