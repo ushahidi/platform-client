@@ -83,6 +83,7 @@ function PostDataEditorController(
     $scope.tagKeys = [];
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
+    $scope.cancel = cancel;
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
@@ -132,7 +133,6 @@ function PostDataEditorController(
              **/
             if ($scope.post.lock) {
                 PostLockEndpoint.unlock({
-                    id: $scope.post.lock.id,
                     post_id: $scope.post.id
                 }).$promise.then(resolve, reject);
             } else {
@@ -242,10 +242,6 @@ function PostDataEditorController(
             attributes.map(function (attr) {
                 // Create associated media entity
                 if (attr.input === 'upload') {
-                    var media = {};
-                    if ($scope.post.values[attr.key]) {
-                        media = $scope.post.values[attr.key][0];
-                    }
                     $scope.medias[attr.key] = {};
                 }
                 if (attr.input === 'tags') {
@@ -410,5 +406,9 @@ function PostDataEditorController(
 
             });
         });
+    }
+
+    function cancel() {
+        $state.go('posts.data.detail',{postId: $scope.post.id});
     }
 }

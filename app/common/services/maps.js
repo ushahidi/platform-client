@@ -39,16 +39,17 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         pointToLayer: pointToLayer,
         getConfig: getConfig,
         getLayer: getLayer,
-        pointIcon: pointIcon
+        pointIcon: pointIcon,
+        defaultConfig: defaultConfig
     };
 
     function createMap(element) {
         return getLeafletConfig().then(function (config) {
             var map = L.map(element, config);
-
             map.attributionControl.setPrefix(false);
             map.zoomControl.setPosition('bottomleft');
             map.setMaxBounds([[-90,-360],[90,360]]);
+            map.scrollWheelZoom.enable();
             map.on('popupopen', function (e) {
                 var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
                 px.y -= e.popup._container.clientHeight / 2; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
@@ -57,6 +58,25 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
             // Add a layer control
             // L.control.layers(getBaseLayersForControl(), {}).addTo(map);
+            var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
+            var resetButton  = L.easyButton({
+                id: 'reset-button',
+                position: 'bottomleft',
+                type: 'replace',
+                leafletClasses: true,
+                states:[{
+                    // specify different icons and responses for your button
+                    stateName: 'reset-button',
+                    onClick: function() {
+                        var defaultview = defaultValues(config);
+                        map.setView([defaultview.lat, defaultview.lon], defaultview.zoom);
+                    },
+                    title: 'Reset to default view',
+                    icon: '<svg class="iconic" style="fill:black;"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#home"></use></svg>'
+                }]
+            });
+
+            resetButton.addTo(map);
 
             return map;
         });
@@ -79,8 +99,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
     function getBaseLayers() {
         return layers.baselayers;
     }
-
-    /* jshint ignore:start */
+    /* eslint-disable */
     function getBaseLayersForControl() {
         return _.chain(layers.baselayers)
         .values()
@@ -90,7 +109,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         })
         .value();
     }
-    /* jshint ignore:end */
+    /* eslint-enable */
 
     function getLayer(layerKey) {
         var layer = layers.baselayers[layerKey];
@@ -112,9 +131,9 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
     function defaultConfig() {
         return {
-            scrollWheelZoom: false,
+            scrollWheelZoom: true,
             center: [-1.2833, 36.8167], // Default to centered on Nairobi
-            zoom: 8,
+            zoom: 3,
             layers: [L.tileLayer(layers.baselayers.streets.url, layers.baselayers.streets.layerOptions)]
         };
     }
@@ -124,7 +143,6 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             icon: pointIcon(feature.properties['marker-color'])
         });
     }
-
     // Icon configuration
     function pointIcon(color, size, className) {
         // Test string to make sure that it does not contain injection
@@ -140,4 +158,14 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             popupAnchor: [0, 0 - size[1]]
         });
     }
+
+    // default view is centered on nairobi
+    function defaultValues(config) {
+        return {
+            lat: config.center[0],
+            lon: config.center[1],
+            zoom: config.zoom
+        }
+    }
+
 }

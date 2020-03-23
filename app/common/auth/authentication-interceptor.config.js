@@ -85,6 +85,8 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         var deferred = $q.defer();
 
         config.ignorable = shouldIgnoreAuthError(config);
+        // Revisit and possibly move out to own inceptor
+        config.headers['Accept-Language'] = Session.getSessionDataEntry('language') ? Session.getSessionDataEntry('language') : 'en-US';
 
         if (config.url.indexOf(CONST.API_URL) === -1) {
             deferred.resolve(config);
