@@ -20,7 +20,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "eslint": "gulp eslint",
     "eslintfix": "gulp eslintfix",
-    "verify": "gulp verify"
+    "verify": "gulp verify",
+    "test-e2e": "cucumber-js --require test/ui/index.js --format node_modules/cucumber-pretty --require test/ui/stepDefinitions"
   },
   "pre-commit": [
     "eslint"
@@ -112,6 +113,8 @@
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
     "cross-fetch": "^3.0.4",
+    "cucumber": "^6.0.5",
+    "cucumber-pretty": "^6.0.0",
     "d3": "^3.5.17",
     "leaflet.locatecontrol": "^0.71.1",
     "leaflet": "^1.6.0",
@@ -123,6 +126,8 @@
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "ngtweet": "^1.0.0",
+    "nightwatch": "^1.3.4",
+    "nightwatch-api": "^3.0.1",
     "nvd3": "^1.8.4",
     "raven-js": "^3.26.3",
     "socket.io-client": "2.0.3",
