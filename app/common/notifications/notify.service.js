@@ -221,7 +221,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
     function deleteWithInput (type, checkName) {
         var scope = getScope();
         var deferred = $q.defer();
-        scope.noequal = false;
+        scope.isEqual = true;
 
         const modalText = {
             survey: {
@@ -237,14 +237,11 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
         $translate(texts.modalBody, {check_name: checkName}).then(show, show);
 
         function show(body) {
-
             scope.confirm = function (name) {
-                if (name === checkName) {
-                    scope.noequal = false;
+                scope.isEqual = name === checkName;
+                if (scope.isEqual) {
                     deferred.resolve();
                     ModalService.close();
-                } else {
-                    scope.noequal = true;
                 }
             };
 
@@ -256,7 +253,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
             ModalService.openTemplate(
                 `<div class="form-field">
                     <p>${body}</p>
-                    <p class="alert error" ng-show="noequal" translate>${texts.errorLabel}</p>
+                    <p class="alert error" ng-show="!isEqual" translate>${texts.errorLabel}</p>
                     <input class="form-field" type="text" name="survey" ng-model="name">
                     <button class="button-destructive button-flat" ng-click="$parent.confirm(name)" translate>${texts.button}</button>
                     <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>
