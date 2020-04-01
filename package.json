@@ -111,7 +111,7 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
-    "d3": "^3.5.17",
+    "d3": "^5.15.1",
     "leaflet.locatecontrol": "^0.70.0",
     "leaflet": "^1.6.0",
     "leaflet-easybutton": "^2.4.0",
