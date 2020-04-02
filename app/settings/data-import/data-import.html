@@ -150,7 +150,9 @@
                                 <div class="form-field select" data-fieldgroup-target="status-model-columns" ng-show="isStatusOption('defined_column')">
                                     <div class="custom-select">
                                       <select ng-model="selectedStatus">
-                                         <option ng-repeat="column in csv.columns track by $index" value="{{$index}}" label="{{column}}" >
+                                          <option ng-repeat="column in csv.columns track by $index" value="{{$index}}">
+                                              {{column}}
+                                          </option>
                                       </select>
                                     </div>
                                     <p><em translate="data_import.status_explanation">Ushahidi recognizes one of three post statuses: Published, Under review, and Archived. So be sure that each entry in the column you select has one of those three values.</em></p>
@@ -183,7 +185,9 @@
                                                 <option selected="selected" value="" translate="data_import.leave_empty">
                                                     Leave empty
                                                 </option>
-                                                 <option ng-repeat="column in csv.columns track by $index" value="{{$index}}" label="{{column}}" >
+                                                <option ng-repeat="column in csv.columns track by $index" value="{{$index}}">
+                                                      {{column}}
+                                                </option>
                                               </select>
                                           </div>
                                       </td>
