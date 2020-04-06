@@ -70,7 +70,7 @@ function (
             };
 
             $scope.canMakePrivate = function () {
-                return $scope.editAttribute.type !== 'tags';
+                return $scope.editAttribute.type !== 'tags' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
             };
 
             $scope.canDisableCaption = function () {
