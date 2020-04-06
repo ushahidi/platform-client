@@ -30,6 +30,7 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
+    $scope.isValid = true;
     $scope.passwordShown = true;
     $scope.user = { role: 'user' }; // @todo don't hardcode default role
     $scope.save = $translate.instant('app.save');
@@ -37,37 +38,42 @@ function (
     $scope.saving_user = false;
     $scope.saveUser = function (user) {
         $scope.saving_user = true;
-
-        UserEndpoint.saveCache(user).$promise.then(function (response) {
-            if (response.id) {
-                Notify.notify('notify.user.save_success', {name: user.realname});
-                $scope.saving_user = false;
-                $scope.userSavedUser = true;
-                $scope.user.id = response.id;
-                // in favor of $route.reload();
-                $state.go('settings.users', null, { reload: true });
+        if ($scope.form.$valid) {
+            $scope.isValid = true;
+            UserEndpoint.saveCache(user).$promise.then(function (response) {
+                if (response.id) {
+                    Notify.notify('notify.user.save_success', {name: user.realname});
+                    $scope.saving_user = false;
+                    $scope.userSavedUser = true;
+                    $scope.user.id = response.id;
+                    // in favor of $route.reload();
+                    $state.go('settings.users', null, { reload: true });
             }
-        }, function (errorResponse) { // error
-            var validationErrors = [],
-                limitError = false;
-            // @todo refactor limit handling
-            _.each(errorResponse.data.errors, function (value, key) {
-                // Ultimately this should check individual status codes
-                // for the moment just check for the message we expect
-                if (value.title === 'limit::admin') {
-                    limitError = 'limit.admin_limit_reached';
+            }, function (errorResponse) { // error
+                var validationErrors = [],
+                    limitError = false;
+                // @todo refactor limit handling
+                _.each(errorResponse.data.errors, function (value, key) {
+                    // Ultimately this should check individual status codes
+                    // for the moment just check for the message we expect
+                    if (value.title === 'limit::admin') {
+                        limitError = 'limit.admin_limit_reached';
+                    } else {
+                        validationErrors.push(value);
+                    }
+                });
+
+                if (limitError) {
+                    Notify.limit(limitError);
                 } else {
-                    validationErrors.push(value);
+                    Notify.errors(_.pluck(validationErrors, 'message'));
                 }
+                $scope.saving_user = false;
             });
-
-            if (limitError) {
-                Notify.limit(limitError);
-            } else {
-                Notify.errors(_.pluck(validationErrors, 'message'));
-            }
+        } else {
+            $scope.isValid = false;
             $scope.saving_user = false;
-        });
+        }
     };
 
     $scope.cancel = function () {
