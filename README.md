@@ -8,6 +8,9 @@ Ushahidi Platform Web Client
 [![Dependency Status](https://david-dm.org/ushahidi/platform-client/dev-status.svg?style=flat)](https://david-dm.org/ushahidi/platform-client#info=devDependencies)
 
 ___
+## Report and find Ushahidi Platform V3 issues
+
+All our issues live in https://github.com/ushahidi/platform/issues . 
 
 ## Try it out on Heroku
 
