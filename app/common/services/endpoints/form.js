@@ -51,8 +51,8 @@ function (
         return FormEndpoint.query();
     };
 
-    FormEndpoint.saveCache = function (item) {
-        var persist = item.id ? FormEndpoint.update : FormEndpoint.save;
+    FormEndpoint.saveCache = function (item, createNew) {
+        var persist = item.id && !createNew ? FormEndpoint.update : FormEndpoint.save;
         cache.removeAll();
         var result = persist(item);
         return result;
