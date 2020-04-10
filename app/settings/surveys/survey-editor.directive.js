@@ -328,7 +328,17 @@ function SurveyEditorController(
 
     function handleResponseErrors(errorResponse) {
         $scope.saving_survey = false;
+<<<<<<< HEAD
         Notify.apiErrors(errorResponse);
+=======
+
+        FormEndpoint.delete({
+            id: $scope.survey.id
+        }).$promise.then(function () {
+            Notify.apiErrors(errorResponse);
+        });
+
+>>>>>>> f3fb659a... removed createNew
     }
 
     // START -- Reorder tasks
