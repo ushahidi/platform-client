@@ -844,10 +844,7 @@
             "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
         },
         "video" : {
-            "enter_a" : "Enter a",
-            "or" : " or ",
-            "vimeo" : " Vimeo",
-            "video_url" : " video URL"
+            "enter_a_url": "Enter a video URL from Youtube or Vimeo."
         },
         "unstructured" : {
             "add_survey" : {

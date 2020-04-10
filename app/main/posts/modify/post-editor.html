@@ -35,6 +35,7 @@
               </button>
           </div>
           <div class="button-group" ng-show="!post.id">
+              <post-share button="true" ng-show="!post.id"></post-share>
               <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
               <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
                 <div class="loading">

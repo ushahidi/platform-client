@@ -58,14 +58,19 @@ module.exports = {
       {
         test: /\.png/,
         use: {
-          loader: 'url-loader?limit=10000'
+          loader: 'url-loader?limit=10000',
+          options: {
+            esModule:false
+          }
         }
       },
       {
         test: /\.svg/,
         use: {
           loader: 'svg-url-loader?limit=1',
-          options: {esModule: false }
+          options: {
+            esModule: false
+          }
         }
       },
       {
