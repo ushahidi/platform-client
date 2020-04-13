@@ -21,7 +21,7 @@ function FormSelectDirective(FormEndpoint) {
         scope.selectedForms = [];
         scope.toggleAll = toggleAll;
         activate();
-        function toggleAll() {             
+        function toggleAll() {
             if (!scope.checkAll) {
                 scope.checkAll = true;
                 Array.prototype.splice.apply(scope.selectedForms, [0, scope.selectedForms.length].concat(scope.forms.map(f => f.id).concat('none')));
