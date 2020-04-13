@@ -44,7 +44,7 @@ describe('user profile directive', function () {
     });
 
     describe('saveUser', function () {
-        describe('with a successfull backend call', function () {
+        describe('with a successful backend call', function () {
             beforeEach(function () {
                 spyOn(UserEndpoint, 'update').and.callThrough();
             });
