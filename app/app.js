@@ -97,7 +97,7 @@ angular.module('app',
         OAUTH_CLIENT_SECRET      : '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
         CLAIMED_USER_SCOPES      : ['*'],
-        MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
+        MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey, // Default OSS mapbox api key
         USH_DISABLE_CHECKS       : ushDisableChecks,
         TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
         EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000

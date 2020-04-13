@@ -6,15 +6,18 @@ function Maps(ConfigEndpoint, L, _, CONST) {
         baselayers : {
             satellite: {
                 name: 'Satellite',
+                provider: 'mapbox',
                 url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
+                    provider: 'mapbox',
                     mapid: 'mapbox.satellite',
                     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
                 }
             },
             streets: {
                 name: 'Streets',
+                provider: 'mapbox',
                 url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
                 layerOptions: {
                     apikey: CONST.MAPBOX_API_KEY,
@@ -24,6 +27,7 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             },
             hOSM: {
                 name: 'Humanitarian',
+                provider: 'openstreetmap',
                 url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
                 layerOptions: {
                     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="http://hot.openstreetmap.org/">Humanitarian OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
@@ -84,8 +88,10 @@ function Maps(ConfigEndpoint, L, _, CONST) {
 
     function getLeafletConfig() {
         return getConfig().then(function (config) {
-            var defaultLayer = layers.baselayers[config.default_view.baselayer];
-
+            const layer = getSelectedBaseLayer(config.default_view.baselayer);
+            console.log(layer);
+            var defaultLayer = layers.baselayers[layer];
+            console.log(defaultLayer);
             return angular.extend(defaultConfig(),
             {
                 layers: [L.tileLayer(defaultLayer.url, defaultLayer.layerOptions)],
@@ -95,8 +101,16 @@ function Maps(ConfigEndpoint, L, _, CONST) {
             });
         });
     }
-
+    function getSelectedBaseLayer(layer) {
+        if (!CONST.MAPBOX_API_KEY && layers.baselayers[layer].provider === 'mapbox') {
+            return 'hOSM';
+        }
+        return layer;
+    }
     function getBaseLayers() {
+        if (!CONST.MAPBOX_API_KEY) {
+            return _.filter(layers.baselayers, (l => l.provider !== 'mapbox'));
+        }
         return layers.baselayers;
     }
     /* eslint-disable */
