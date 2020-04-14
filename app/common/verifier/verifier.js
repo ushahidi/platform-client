@@ -1,5 +1,5 @@
 import isUrl from 'is-url';
-import fetch from 'node-fetch';
+import fetch from 'cross-fetch';
 import * as forms from '../../../mocked_backend/api/v3/forms.json';
 import * as tags from '../../../mocked_backend/api/v3/tags.json';
 import * as features from '../../../mocked_backend/api/v3/config/features.json';
