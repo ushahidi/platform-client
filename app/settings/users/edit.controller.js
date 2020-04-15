@@ -38,7 +38,7 @@ function (
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.saving_user = false;
-    $scope.isValid = true;
+    $scope.isValid = false;
 
     UserEndpoint.getFresh({id: $transition$.params().id}).$promise.then(function (user) {
         $scope.$emit('setPageTitle', $scope.title + ' - ' + user.realname);
