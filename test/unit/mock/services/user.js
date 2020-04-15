@@ -47,7 +47,8 @@ module.exports = [function () {
                         successCallback({
                             realname: 'Changed name',
                             id: 1,
-                            someField: 'addedByServer'
+                            someField: 'addedByServer',
+                            email: 'changed@ushahidi.com'
                         });
                     } else {
                         failCallback({
