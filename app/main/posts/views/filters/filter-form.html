@@ -3,17 +3,17 @@
    
     <div class="form-field checkbox" ng-show="forms.length > 5">
         <label>
-            <input  type="checkbox" name="selectedForms" ng-model="all"><em><span translate="category.select_all"></span></em>
+            <input  type="checkbox" name="selectedForms" ng-checked="checkAll" ng-click="toggleAll()"><em><span translate="category.select_all"></span></em>
         </label>
     </div>
     <div class="form-field checkbox" ng-repeat="(index, form) in forms">
         <label>
-            <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms" ng-checked="all"> <bdi>{{ ::form.name }}</bdi>
+            <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms"> <bdi>{{ ::form.name }}</bdi>
         </label>
     </div>
     <div class="form-field checkbox">
         <label>
-            <input checklist-value="'none'" checklist-model="selectedForms" type="checkbox" name="selectedForms" ng-checked="all" > <span translate="nav.unknown">Unknown</span>
+            <input checklist-value="'none'" checklist-model="selectedForms" type="checkbox" name="selectedForms"> <span translate="nav.unknown">Unknown</span>
         </label>
     </div>
 </fieldset>
