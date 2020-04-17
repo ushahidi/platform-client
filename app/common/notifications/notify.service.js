@@ -22,7 +22,8 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
         infoModal: infoModal,
         confirmLeave: confirmLeave,
         demo: demo,
-        notifyPermanent: notifyPermanent
+        notifyPermanent: notifyPermanent,
+        deleteWithInput: deleteWithInput
     };
 
     function notify(message, translateValues) {
@@ -217,7 +218,49 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
 
         return deferred.promise;
     }
+    function deleteWithInput (type, checkName) {
+        var scope = getScope();
+        var deferred = $q.defer();
+        scope.isEqual = true;
 
+        const modalText = {
+            survey: {
+                title: 'notify.form.delete_form_confirm',
+                modalBody: 'notify.form.delete_form_confirm_desc',
+                errorLabel: 'notify.form.delete_form_error',
+                button: 'notify.form.delete_form_button'
+            }
+        };
+
+        var texts = modalText[type];
+
+        $translate(texts.modalBody, {check_name: checkName}).then(show, show);
+
+        function show(body) {
+            scope.confirm = function (name) {
+                scope.isEqual = name === checkName;
+                if (scope.isEqual) {
+                    deferred.resolve();
+                    ModalService.close();
+                }
+            };
+
+            scope.cancel = function () {
+                deferred.reject();
+                ModalService.close();
+            };
+
+            ModalService.openTemplate(
+                `<div class="form-field">
+                    <p>${body}</p>
+                    <p class="alert error" ng-show="!isEqual" translate>${texts.errorLabel}</p>
+                    <input class="form-field" type="text" name="survey" ng-model="name">
+                    <button class="button-destructive button-flat" ng-click="$parent.confirm(name)" translate>${texts.button}</button>
+                    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>
+                </div>`, texts.title, false, scope, false, false);
+            }
+            return deferred.promise;
+    }
 
     function confirmDelete(confirmText, confirmWarningText, translateValues) {
         var deferred = $q.defer();
@@ -227,7 +270,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
             translateValues = confirmWarningText;
             confirmWarningText = false;
         }
-
         $translate(confirmText, translateValues).then(show, show);
 
         function show(confirmText) {
