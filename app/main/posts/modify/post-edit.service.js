@@ -21,6 +21,28 @@ function (
             });
             return post;
         },
+        validateVideoUrl: function (url) {
+            // NOTE: It is very important to pay special attention to the santization needs of this regex if it is changed.
+            // It is important that it does not allow subdomains other than player or www in order to ensure that a malicious user
+            // can not exploit this field to insert malicious content in an iframe
+            var match = url
+                .toString()
+                .match(
+                    /(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/
+                );
+            if (match) {
+                if (
+                    match[3].indexOf('youtu') > -1 ||
+                    match[3].indexOf('vimeo') > -1
+                ) {
+                    return match;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        },
         validatePost: function (post, form, tasks) {
             // First get tasks to be validated
             // The post task is always validated

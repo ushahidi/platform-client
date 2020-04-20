@@ -128,5 +128,24 @@ describe('Post Edit Service', function () {
             expect(result.length).toEqual(cleanPost.length);
         });
 
+        it('should return valid array of strings containing parts of url when url validation passes conditions', function () {
+            var result = PostEditService.validateVideoUrl('https://www.youtube.com/video/1234');
+
+            delete result.index;
+            delete result.input;
+            expect(result).toEqual(['https://www.youtube.com/video/1234', 'https:', 'www.', 'youtube.com', 'be.com', 'video/', '1234', undefined]);
+
+        });
+
+        it('should return null when url validation does not pass conditions', function () {
+            // Test invalid url
+            var result = PostEditService.validateVideoUrl('test_invalid_url');
+            expect(result).toBeNull();
+
+            // Test unsupported site
+            var result = PostEditService.validateVideoUrl('https://www.test.com/video/1234');
+            expect(result).toBeNull();
+        });
+
     });
 });

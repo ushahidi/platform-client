@@ -17,6 +17,7 @@ PostVideoController.$inject = [
     '$scope',
     '$sce',
     'Util',
+    'PostEditService',
     'Notify'
 ];
 
@@ -24,6 +25,7 @@ function PostVideoController(
     $scope,
     $sce,
     Util,
+    PostEditService,
     Notify
 ) {
     $scope.constructIframe = constructIframe;
@@ -63,8 +65,8 @@ function PostVideoController(
             // NOTE: It is very important to pay special attention to the santization needs of this regex if it is changed.
             // It is important that it does not allow subdomains other than player or www in order to ensure that a malicious user
             // can not exploit this field to insert malicious content in an iframe
-            var match = url.match(/(http:|https:|)\/\/(player.|www.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com))\/(video\/|embed\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/);
             $scope.videoUrl = undefined;
+            var match = PostEditService.validateVideoUrl(url);
             if (match) {
                 if (match[3].indexOf('youtu') > -1) {
                     // Here we make a statement of trust of the URL based on having pulled out just the id
@@ -74,17 +76,12 @@ function PostVideoController(
                     // Here we make a statement of trust of the URL based on having pulled out just the id
                     $scope.videoUrl = 'https://player.vimeo.com/video/' + match[6];
                     $scope.video = $sce.trustAsResourceUrl($scope.videoUrl);
-                } else {
-                    urlError(url);
                 }
             } else {
-                urlError(url);
+                Notify.error('notify.video.incorrect_url', { url: url });
+                $scope.$invalid = true;
             }
         }
-    }
-
-    function urlError(url) {
-        Notify.error('notify.video.incorrect_url', {url: url});
     }
 
     // Originates from PL

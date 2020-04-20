@@ -16,6 +16,9 @@ describe('post video directive', function () {
         .value('Util', {
             simpluUUID: function () {
                 return 'abc123';
+            },
+            bindAllFunctionsToSelf: function () {
+                return {};
             }
         })
         ;
@@ -36,7 +39,7 @@ describe('post video directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('should fail to contrust iframe', function () {
+        it('should fail to construct iframe', function () {
             spyOn(Notify, 'error');
             isolateScope.constructIframe('test_url');
             expect(Notify.error).toHaveBeenCalled();
