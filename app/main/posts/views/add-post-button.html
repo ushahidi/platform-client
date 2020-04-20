@@ -1,5 +1,5 @@
 <div class="fab" ng-class="{'upgrade-button': upgradeButton}" data-message="add-post">
-    <button type="button" class="button-alpha button-fab" ng-click="handleClick()" ng-disabled="disabled" ng-class="{'disabled': $parent.$parent.bulkActionsSelected}">
+    <button type="button" class="button-alpha button-fab" ng-click="handleClick()" ng-disabled="disabled" ng-class="{'ng-hide': $parent.$parent.bulkActionsSelected || editMode()}">
         <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#plus"></use>
             <foreignObject>

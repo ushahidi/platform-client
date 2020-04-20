@@ -203,6 +203,21 @@ describe('Notify', function () {
         });
     });
 
+    describe('deleteWithInput', function () {
+        beforeEach(function () {
+            spyOn(mockModalService, 'openTemplate').and.callThrough();
+            spyOn(mockSliderService, 'openTemplate').and.callThrough();
+        });
+
+        it('Calls ModalService.openTemplate with error message', function () {
+            mockModalService.state = false;
+            Notify.deleteWithInput('survey', 'this is the name of the survey');
+            $rootScope.$digest();
+            expect(mockModalService.openTemplate).toHaveBeenCalled();
+        });
+    });
+
+
     describe('limit', function () {
         beforeEach(function () {
             spyOn(mockSliderService, 'openTemplate').and.callThrough();

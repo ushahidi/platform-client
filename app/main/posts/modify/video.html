@@ -2,13 +2,7 @@
 <form>
   <div class="form-field video_embed">
     <label>{{label}}</label>
-    <p>
-      <span translate="post.video.enter_a">Enter a</span>
-
-      <img src="/img/youtube.png" class="wordmark-replace">
-      <span translate="post.video.or"> or </span>
-      <img src="/img/vimeo.png" class="wordmark-replace">
-      <span translate="post.video.video_url"> video URL</span>
+    <p translate="post.video.enter_a_url">Enter a video URL from Youtube or Vimeo.
     </p>
     <input type="text" ng-model="videoUrl" ng-blur="constructIframe(videoUrl)" placeholder="https://youtu.be/123456">
 

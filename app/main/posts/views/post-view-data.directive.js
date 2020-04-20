@@ -326,7 +326,7 @@ function PostViewDataController(
             limit: $scope.itemsPerPage
         });
         if (useOffset === true) {
-            postQuery.offset = ($scope.currentPage - 1) * $scope.itemsPerPage;
+            postQuery.offset = $scope.posts.length;
         }
         PostEndpoint.query(postQuery).$promise.then(function (postsResponse) {
             //Clear posts
