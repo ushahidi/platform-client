@@ -153,7 +153,7 @@ angular.module('app',
         return require('sortablejs/Sortable');
     })
     .factory('Editor', function () {
-        return require('tui-editor');
+        return require('@toast-ui/editor');
     })
     // inject the router instance into a `run` block by name
     //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {

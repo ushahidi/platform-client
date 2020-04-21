@@ -53,3 +53,8 @@ test:
     - TEST_SUITE=unit
   cached: true
   default_cache_branch: develop
+
+dockercfggen:
+  image: codeship/dockercfg-generator
+  add_docker: true
+  encrypted_env_file: docker.env.encrypted
