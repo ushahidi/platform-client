@@ -25,8 +25,12 @@
 // Fixes position and appearance of link-popup
 .tui-popup-wrapper {
     width: 250px;
-    left: 20%;
+    margin-left: -150px;
     padding: 0px 10px 10px 10px !important;
+
+    &.te-heading-add {
+        margin-left: 10px;
+    }
 
     .tui-popup-header {
         padding: 10px 0px;

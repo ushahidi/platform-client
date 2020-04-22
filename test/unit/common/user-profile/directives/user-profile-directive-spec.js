@@ -47,11 +47,15 @@ describe('user profile directive', function () {
         describe('with a successful backend call', function () {
             beforeEach(function () {
                 spyOn(UserEndpoint, 'update').and.callThrough();
+                spyOn(Session, 'setSessionDataEntries').and.callThrough();
+                spyOn(Notify, 'apiErrors')
+                spyOn(Notify, 'notify').and.callThrough();
             });
 
             describe('after changed values of user', function () {
                 beforeEach(function () {
                     isolateScope.user.realname = 'Changed name';
+                    isolateScope.user.email = 'changed@ushahidi.com';
                 });
 
                 describe('after calling saveUser', function () {
@@ -60,8 +64,21 @@ describe('user profile directive', function () {
                     });
 
                     it('should call "update" on the UserEndpoint with id=me and the changed user profile values', function () {
-                        expect(UserEndpoint.update).toHaveBeenCalled();
+                        expect(UserEndpoint.update).toHaveBeenCalledWith(
+                            {id: 'me'},
+                            jasmine.objectContaining({
+                                'email': 'changed@ushahidi.com',
+                                'realname': 'Changed name'
+                                }
+                            )
+                        );
                         expect(isolateScope.user.realname).toBe('Changed name');
+                        expect(isolateScope.user.email).toBe('changed@ushahidi.com');
+                        expect(Notify.notify).toHaveBeenCalledWith('user_profile.update_success');
+                        expect(Notify.apiErrors).toHaveBeenCalledTimes(0)
+                        expect(Session.setSessionDataEntries).toHaveBeenCalledWith(
+                            {'email': 'changed@ushahidi.com', 'realname': 'Changed name'}
+                        );
                     });
 
                     it('should set user to the new data', function () {
@@ -69,10 +86,32 @@ describe('user profile directive', function () {
                     });
                 });
             });
+
+            describe('after changed the password of the user', function () {
+                beforeEach(function () {
+                    isolateScope.user.password = 'changed';
+                });
+
+                describe('after calling saveUser', function () {
+                    beforeEach(function () {
+                        isolateScope.saveUser(isolateScope.user);
+                    });
+
+                    it('should call "update" on the UserEndpoint with the changed password', function () {
+                        expect(UserEndpoint.update).toHaveBeenCalledWith(
+                            {id: 'me'},
+                            jasmine.objectContaining({
+                                    'password': 'changed'
+                                }
+                            )
+                        );
+                        expect(Notify.apiErrors).toHaveBeenCalledTimes(0)
+                    });
+                });
+            });
         });
 
         describe('with an error on the backend call', function () {
-
             var errorResponse = {
                     status: 400,
                     data: {
