@@ -130,7 +130,6 @@ function SurveyEditorController(
                 color: null,
                 require_approval: true,
                 everyone_can_create: true,
-                valid:true,
                 tasks: [
                     {
                         label: 'Post',
@@ -162,16 +161,6 @@ function SurveyEditorController(
                                 config: {},
                                 form_stage_id: getInterimId()
                             },
-                            {
-                                cardinality: 0,
-                                type: 'number',
-                                input: 'text',
-                                label: 'Field with error',
-                                priority: 2,
-                                options: [],
-                                config: {},
-                                form_stage_id: getInterimId()
-                     }
                         ],
                         is_public: true
                     }
@@ -339,9 +328,11 @@ function SurveyEditorController(
 
     function handleResponseErrors(errorResponse) {
         $scope.saving_survey = false;
-        $scope.survey.valid = false;
-        Notify.apiErrors(errorResponse);
-        console.log($scope.survey);
+        FormEndpoint.delete({
+            id: $scope.survey.id
+        }).$promise.then(function () {
+            Notify.apiErrors(errorResponse);
+        });
         delete $scope.survey.id;
     }
 
