@@ -328,9 +328,6 @@ function SurveyEditorController(
 
     function handleResponseErrors(errorResponse) {
         $scope.saving_survey = false;
-<<<<<<< HEAD
-        Notify.apiErrors(errorResponse);
-=======
 
         FormEndpoint.delete({
             id: $scope.survey.id
@@ -338,7 +335,6 @@ function SurveyEditorController(
             Notify.apiErrors(errorResponse);
         });
 
->>>>>>> f3fb659a... removed createNew
     }
 
     // START -- Reorder tasks
@@ -586,7 +582,7 @@ function SurveyEditorController(
         $scope.saving_survey = true;
         // Save the survey
         FormEndpoint
-        .saveCache($scope.survey)
+        .saveCache($scope.survey, $scope.createNew)
         .$promise
         .then(function (survey) {
             // If the survey is new, cache the new id
@@ -602,6 +598,7 @@ function SurveyEditorController(
         })
         .then(function () {
             // Display success message
+            $scope.createNew = false;
             SurveyNotify.success(
                 'notify.form.edit_form_success',
                 { name: $scope.survey.name },
