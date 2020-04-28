@@ -14,17 +14,19 @@
 
     <!-- Filters menu -->
     <div class="dropdown-menu init" data-toggle-target="search-filters" dropdown-menu>
-        <fieldset>
-            <label translate>app.users</label>
-            <div class="form-field checkbox">
-                <label><input type="checkbox">Ascending</label>
-            </div>
-            <div class="form-field checkbox">
-                <label><input type="checkbox">Descending</label>
-            </div>
-        </fieldset>
-
         <div class="dropdown-menu-body">
+            <fieldset>
+                <label translate>app.users</label>
+                <div ng-model="sortalph">
+                    <div class="form-field checkbox">
+                        <label><input type="checkbox" value="realname">Ascending</label>
+                    </div>
+                    <div class="form-field checkbox">
+                        <label><input type="checkbox" value="-realname">Descending</label>
+                    </div>
+                </div>
+            </fieldset>
+            
             <filter-role model="filters.role"></filter-role>
         </div>
 
