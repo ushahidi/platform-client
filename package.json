@@ -94,7 +94,7 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
-    "@toast-ui/editor": "2.0.1",
+    "@toast-ui/editor": "2.1.0",
     "@uirouter/angularjs": "^1.0.10",
     "URIjs": "^1.14.1",
     "angular": "^1.5.6",
