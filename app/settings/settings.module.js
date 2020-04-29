@@ -5,6 +5,7 @@ angular.module('ushahidi.settings', [])
 .directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
 
 .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
+.directive('surveyTranslationEditor', require('./surveys/survey-translation-editor.directive.js'))
 .directive('surveyTaskCreate', require('./surveys/task-create.directive.js'))
 .directive('surveyAttributeCreate', require('./surveys/attribute-create.directive.js'))
 .directive('surveyAttributeEditor', require('./surveys/attribute-editor.directive.js'))
