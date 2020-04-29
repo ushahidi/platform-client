@@ -180,6 +180,7 @@
         "add_field_instructions_placeholder": "Explain this field...",
         "add_post_type": "Add Survey",
         "add_step": "Add Task",
+        "add_language": "Add language",
         "added_form_stage_attribute": "Saved field",
         "field_allowed_relation_post_type": "Allowed surveys",
         "choose_order_message": "Choose and order the fields that you would like to include in this survey",
@@ -221,6 +222,7 @@
         "save_post_type": "Save Survey",
         "save_post_step": "Save Task",
         "saved_form": "Survey saved.",
+        "select_language": "Select languages",
         "step_delete": "Delete",
         "step_name": "Task Name",
         "step_rename": "Rename",
@@ -1648,6 +1650,12 @@
         "agree": "I agree to Ushahidi's Terms of Service.",
         "accept_and_continue": "Accept and Continue"
     },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default"
+
+    },
     "languages": {
         "ach": "Acoli",
         "ady": "Adyghe",
@@ -1774,6 +1782,7 @@
         "en-CH": "English (Switzerland)",
         "en-GB": "English (United Kingdom)",
         "en-US": "English (United States)",
+        "en-EN": "English",
         "myv": "Erzya",
         "eo": "Esperanto",
         "et": "Estonian",

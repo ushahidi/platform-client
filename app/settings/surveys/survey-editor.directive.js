@@ -98,6 +98,9 @@ function SurveyEditorController(
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
     $scope.location_precision = 1000;
+    $scope.languages = ['en-EN', 'es-ES', 'sw', 'fa-IR'];
+    $scope.activeLanguage = 'en-EN';
+    $scope.defaultLanguage = 'en-EN';
 
     activate();
 
@@ -685,4 +688,10 @@ function SurveyEditorController(
     $scope.addOption = function (attribute) {
         attribute.options.push('');
     };
+    $scope.openLanguages = function() {
+        ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, true, true, true);
+    }
+    $scope.switchToLanguage = function(language) {
+        $scope.activeLanguage = language;
+    }
 }

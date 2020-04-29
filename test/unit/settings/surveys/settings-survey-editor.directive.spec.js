@@ -7,7 +7,8 @@ describe('setting survey editor directive', function () {
         Notify,
         element,
         mockFormEndpoint,
-        mockFeatures;
+        mockFeatures,
+        ModalService;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -34,12 +35,12 @@ describe('setting survey editor directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q, _ModalService_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
-
         Notify = _Notify_;
+        ModalService = _ModalService_;
         $location = _$location_;
 
         spyOn($location, 'path');
@@ -102,5 +103,20 @@ describe('setting survey editor directive', function () {
         expect(Notify.limit).not.toHaveBeenCalled();
         expect($location.path).not.toHaveBeenCalled();
     });
+    it('it should switch activeLanguage', function() {
+        compile();
+        let isolateScope = element.isolateScope();
+        expect(isolateScope.activeLanguage).toEqual('en-EN');
+        isolateScope.switchToLanguage('es-ES');
+        expect(isolateScope.activeLanguage).toEqual('es-ES');
 
+    })
+    it('should open language-modal', function () {
+        compile();
+        let isolateScope = element.isolateScope();
+        spyOn(ModalService, 'openTemplate');
+        isolateScope.openLanguages();
+        expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
+
+    })
 });
