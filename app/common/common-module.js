@@ -106,6 +106,8 @@ angular.module('ushahidi.common', [
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 .directive('loadingDots', require('./directives/loading-dots.directive.js'))
+.directive('addLanguage', require('./directives/add-language.directive.js'))
+
 // Event actions
 .constant('EVENT', {
     ACTIONS : {

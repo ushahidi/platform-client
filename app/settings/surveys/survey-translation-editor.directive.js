@@ -14,6 +14,11 @@ function SurveyTranslationEditor() {
     };
 }
 
-SurveyTranslationEditorController.$inject = ['$scope'];
-function SurveyTranslationEditorController($scope) {
+SurveyTranslationEditorController.$inject = ['$scope', 'ModalService'];
+function SurveyTranslationEditorController($scope, ModalService) {
+    $scope.openAttribute = openAttribute;
+
+    function openAttribute(attribute) {
+        ModalService.openTemplate('<attribute-translation-editor></attribute-translation-editor>', 'translations.translate_field', false, true, true, true);
+    }
 }

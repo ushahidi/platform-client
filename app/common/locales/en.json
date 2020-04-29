@@ -1653,8 +1653,8 @@
     "translations": {
         "languages": "Languages",
         "language": "Language",
-        "default": "default"
-
+        "default": "default",
+        "translate_field": "Translate field"
     },
     "languages": {
         "ach": "Acoli",
