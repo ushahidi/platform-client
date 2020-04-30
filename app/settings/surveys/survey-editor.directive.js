@@ -30,7 +30,10 @@ SurveyEditorController.$inject = [
     'Notify',
     'SurveyNotify',
     'ModalService',
-    'Features'
+    'Features',
+    'UshahidiSdk',
+    'Session',
+    'Util'
 ];
 function SurveyEditorController(
     $scope,
@@ -49,7 +52,10 @@ function SurveyEditorController(
     Notify,
     SurveyNotify,
     ModalService,
-    Features
+    Features,
+    UshahidiSdk,
+    Session,
+    Util
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -98,26 +104,29 @@ function SurveyEditorController(
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
     $scope.location_precision = 1000;
-    $scope.languages = ['en-EN', 'es', 'sw', 'fa-IR'];
-    $scope.activeLanguage = 'en-EN';
-    $scope.defaultLanguage = 'en-EN';
 
+    //TODO: Get from config!
+    $scope.languages = ['en', 'es', 'sw', 'fa-IR'];
+    $scope.activeLanguage = 'en';
+    $scope.defaultLanguage = 'en';
     activate();
 
     function activate() {
+        const token = Session.getSessionDataEntry('accessToken');
+        $scope.ushahidi = new UshahidiSdk.Forms(Util.apiUrl(''), token)
         $scope.tab_history = {};
 
         // Set initial menu tab
         $scope.switchTab('post', 'survey-build');
-
+        // TODO: Connect to SDK
         $scope.loadRoleData();
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
-
+        // TODO: Connect to SDK
         ConfigEndpoint.get({id: 'map'}, function (map) {
             $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
         });
-
+        // TODO: Connect to SDK
         Features.loadFeatures()
         .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -129,40 +138,46 @@ function SurveyEditorController(
         } else {
             // When creating new survey
             // pre-fill object with default tasks and attributes
-            $scope.survey = {
+            // TODO: Get default language from Config
+            $scope.survey =    {
+                enabled_languages: {
+                        default: $scope.defaultLanguage,
+                        available : [$scope.defaultLanguage]
+                },
                 color: null,
                 require_approval: true,
                 everyone_can_create: true,
+                translations:{},
                 tasks: [
                     {
-                        label: 'Post',
                         priority: 0,
                         required: false,
                         type: 'post',
                         show_when_published: true,
                         task_is_internal_only: false,
+                        translations: getTranslationObject({label:'Post'}),
                         attributes: [
                             {
                                 cardinality: 0,
                                 input: 'text',
-                                label: 'Title',
+
                                 priority: 1,
                                 required: true,
                                 type: 'title',
-                                options: [],
                                 config: {},
-                                form_stage_id: getInterimId()
+                                form_stage_id: getInterimId(),
+                                translations:getTranslationObject({label:'Title'})
                             },
                             {
                                 cardinality: 0,
                                 input: 'text',
-                                label: 'Description',
                                 priority: 2,
                                 required: true,
                                 type: 'description',
                                 options: [],
                                 config: {},
-                                form_stage_id: getInterimId()
+                                form_stage_id: getInterimId(),
+                                translations:getTranslationObject({label:'VOILA!'})
                             }
                         ],
                         is_public: true
@@ -193,9 +208,12 @@ function SurveyEditorController(
     function onlyOptional(editAttribute) {
         return editAttribute.type !== 'title' && editAttribute.type !== 'description';
     }
-
+    function getTranslationObject(object) {
+        let obj = {};
+        obj[$scope.defaultLanguage] = object;
+        return obj;
+    }
     function switchTab(section, tab) {
-
         // First unset last active tab
         var old_tab = $scope.tab_history[section];
         if (old_tab) {
@@ -225,11 +243,12 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        FormEndpoint.queryFresh().$promise.then(function (forms) {
-            $scope.availableForms = forms;
+        $scope.ushahidi.getForms().then(function (forms) {
+            $scope.availableForms = forms.results;
         });
     }
     function loadAvailableCategories() {
+        //TODO: Connect to SDK
         // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.availableCategories = tags;
@@ -249,50 +268,20 @@ function SurveyEditorController(
                 })
                 .filter()
                 .value();
-
         });
     }
 
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        $q.all([
-            FormEndpoint.getFresh({ id: $scope.surveyId }).$promise,
-            FormStageEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.surveyId }).$promise,
-            FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise
-        ]).then(function (results) {
-            var survey = results[0];
-            survey.tasks = _.sortBy(results[1], 'priority');
-            var attributes = _.chain(results[2])
-                .sortBy('priority')
-                .value();
-            _.each(attributes, function (attr) {
-                    if (attr.type === 'tags') {
-                        attr.options = _.map(attr.options, function (option) {
-                            return parseInt(option);
-                        });
-                    }
-                });
-            _.each(survey.tasks, function (task) {
-                // Set initial menu tab
-                $scope.switchTab(task.id, 'section-build');
-                task.attributes = _.filter(attributes, function (attribute) {
-                    return attribute.form_stage_id === task.id;
-                });
-            });
-            //survey.grouped_attributes = _.sortBy(survey.attributes, 'form_stage_id');
-            $scope.survey = survey;
-
-            var roles_allowed = results[3];
-
-            $scope.roles_allowed = _.pluck(roles_allowed, 'role_id');
-            // Remove source survey information
+        $scope.ushahidi.getForms(9).then(res => {
+            $scope.survey = res;
+            //Getting roles for the survey
+            //TODO: Connect to SDK
+            getRoles($scope.survey.id);
+            // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {
-
-                $scope.survey.name = undefined;
-                $scope.survey.description = undefined;
-
+                $scope.survey.translations[$scope.defaultLanguage] = {};
                 delete $scope.survey.id;
                 delete $scope.survey.created;
                 delete $scope.survey.updated;
@@ -317,8 +306,15 @@ function SurveyEditorController(
         });
     }
 
+    function getRoles() {
+        FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise.then(res=>{
+            $scope.roles_allowed = _.pluck(res, 'role_id');
+        })
+
+    }
     function loadRoleData() {
         $q.all([
+            //TODO: Connect to SDK
             RoleEndpoint.query().$promise
         ]).then(function (results) {
             $scope.roles = results[0];
@@ -576,8 +572,13 @@ function SurveyEditorController(
 
     function saveSurvey() {
         // Set saving to true to disable user actions
+        let thisthis = {"color":null,"require_approval":true,"everyone_can_create":true,"tasks":[{"label":"Post","priority":0,"required":false,"type":"post","show_when_published":true,"task_is_internal_only":false,"attributes":[{"cardinality":0,"input":"text","label":"Title","priority":1,"required":true,"type":"title","options":[],"config":{},"form_stage_id":"interim_id_0"},{"cardinality":0,"input":"text","label":"Description","priority":2,"required":true,"type":"description","options":[],"config":{},"form_stage_id":"interim_id_1"}],"is_public":true,"id":"interim_id_2"}],"name":"Hej","description":"Hej"};
         $scope.saving_survey = true;
         // Save the survey
+        //TODO: Use the sdk:
+        // $scope.forms.saveForm(survey).then(res=>{
+            // console.log(res)
+        // });
         FormEndpoint
         .saveCache($scope.survey)
         .$promise
