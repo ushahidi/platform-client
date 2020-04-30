@@ -17,14 +17,12 @@
         <div class="dropdown-menu-body">
             <fieldset>
                 <label translate>app.users</label>
-                <div ng-model="sortalph">
                     <div class="form-field checkbox">
-                        <label><input type="checkbox" value="realname">Ascending</label>
+                        <label><input type="radio" name="order" ng-model="filters.order" value="asc">Ascending</label>
                     </div>
                     <div class="form-field checkbox">
-                        <label><input type="checkbox" value="-realname">Descending</label>
+                        <label><input type="radio" name="order" ng-model="filters.order" value="desc">Descending</label>
                     </div>
-                </div>
             </fieldset>
             
             <filter-role model="filters.role"></filter-role>
