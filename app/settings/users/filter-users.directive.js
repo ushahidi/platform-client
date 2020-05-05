@@ -24,7 +24,6 @@ function (
             _
         ) {
             $scope.filtersMenuOpen = false;
-            $scope.sortalph="realname";
             $scope.cancel = function () {
                 // Reset filters
                 $scope.usersFiltersForm.$rollbackViewValue();
