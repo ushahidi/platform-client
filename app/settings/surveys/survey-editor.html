@@ -59,48 +59,50 @@
         <div class="form-field survey">
           <!--  TODO: add placeholder text-->
             <label translate>survey.survey_name</label>
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations[defaultLanguage].name">
+            <!-- Use once api handles translations <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations[defaultLanguage].name"> -->
+            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
         </div>
 
           <div class="form-field survey">
             <label translate>app.description</label>
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations[defaultLanguage].description"></textarea>
+            <!-- Use once api handles translations <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations[defaultLanguage].description"></textarea> -->
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description"></textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
-            <ul>
-                <li id="survey-build-post-li">
-                  <a ng-click="switchTab('post', 'survey-build')" translate="survey.build">
-                    Build
-                  </a>
-                </li>
-                <li id="survey-configure-post-li">
-                  <a ng-click="switchTab('post', 'survey-configure')" translate="survey.configure">
-                    Configure
-                  </a>
-                </li>
-                <li id="survey-share-post-li">
-                  <a ng-click="switchTab('post', 'survey-share')" ng-show="survey.id" translate="survey.share">
-                    Share
-                  </a>
-                </li>
-            </ul>
-        </nav>
+          <ul>
+              <li id="survey-build-post-li" class="active">
+                <a ng-click="switchTab('post', 'survey-build')" translate="survey.build">
+                  Build
+                </a>
+              </li>
+              <li id="survey-configure-post-li">
+                <a ng-click="switchTab('post', 'survey-configure')" translate="survey.configure">
+                  Configure
+                </a>
+              </li>
+              <li id="survey-share-post-li">
+                <a ng-click="switchTab('post', 'survey-share')" ng-show="survey.id" translate="survey.share">
+                  Share
+                </a>
+              </li>
+          </ul>
+      </nav>
 
-        <div id="survey-build-post" class="survey-details tabs-target" >
-          <div class="listing init" style="margin-left: 4px;">
+      <div id="survey-build-post" class="survey-details tabs-target active" >
+        <div class="listing init" style="margin-left: 4px;">
             <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
 
-            <div class="listing-item" ng-repeat="attribute in survey.tasks[0].attributes track by $index">
+            <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
               <div class="listing-item-select">
                   <div class="buttons-updown">
-                     <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
+                     <button type="button" class="button-beta" ng-disabled="isFirstField(survey.tasks[0], field)" ng-click="moveFieldUp(survey.tasks[0], field)">
                          <svg class="iconic">
                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                          </svg>
                          <span class="label hidden">Move up</span>
                      </button>
-                     <button type="button" class="button-beta" ng-disabled="isLastAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeDown(survey.tasks[0], attribute)">
+                     <button type="button" class="button-beta" ng-disabled="isLastField(survey.tasks[0], field)" ng-click="moveFieldDown(survey.tasks[0], field)">
                          <svg class="iconic">
                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                          </svg>
@@ -108,8 +110,8 @@
                      </button>
                  </div>
               </div>
-              <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
-                  <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, survey.tasks[0])">
+              <div class="listing-item-secondary" ng-show="onlyOptional(field)">
+                  <button class="button-beta button-flat" ng-click="deleteField(field, survey.tasks[0])">
                       <svg class="iconic">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                       </svg>
@@ -117,7 +119,7 @@
                   </button>
               </div>
 
-              <div class="listing-item-primary" ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
+              <div class="listing-item-primary" ng-click="openFieldEditModal(survey.tasks[0], field)">
                   <div class="listing-item-image">
                   <!-- TODO: Set icon based on type -->
                       <svg class="iconic">
@@ -125,8 +127,10 @@
                       </svg>
                   </div>
                   <h2 class="listing-item-title">
-                      {{attribute.translations[defaultLanguage].label}}
-                    <span class="listing-item-image tooltip" ng-show="attribute.response_private">
+                    <!-- Use once api handles translations
+                      {{field.translations[defaultLanguage].label}} -->
+                      {{field.label}}
+                    <span class="listing-item-image tooltip" ng-show="field.response_private">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                         </svg>
@@ -138,7 +142,7 @@
             <div class="listing-item">
                 <div class="listing-item-primary">
                     <h2 class="listing-item-title">
-                        <a ng-click="openAttributeModal(survey.tasks[0])" class="button button-beta" data-modal="add-field">
+                        <a ng-click="openFieldModal(survey.tasks[0])" class="button button-beta" data-modal="add-field">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                             </svg>
@@ -246,13 +250,20 @@
       <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-if="defaultLanguage === activeLanguage">
         <div class="form-field title section-title">
             <label class="hidden" translate="survey.task_name">Section name</label>
-            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations[defaultLanguage].label">
+            <!-- Use once api handles translations <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations[defaultLanguage].label"> -->
+            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label"> 
             <label class="hidden" translate="survey.task_description">Section description</label>
-            <textarea
+            <!-- Use once api handles translations  <textarea
               name="description"
               placeholder="{{ 'survey.describe_this_task' | translate }}"
               rows="1"
               ng-model="task.translations[defaultLanguage].description"
+              ></textarea> -->
+            <textarea
+              name="description"
+              placeholder="{{ 'survey.describe_this_task' | translate }}"
+              rows="1"
+              ng-model="task.description"
               ></textarea>
 
             <!-- <p class="alert">
@@ -307,16 +318,16 @@
 
         <div ng-attr-id="{{ 'section-build-' + task.id }}" class="section-1-details tabs-target active">
             <div class="listing init">
-              <div class="listing-item" ng-repeat="attribute in task.attributes track by $index">
+              <div class="listing-item" ng-repeat="field in task.fields track by $index">
                   <div class="listing-item-select">
                       <div class="buttons-updown">
-                         <button type="button" class="button-beta" ng-disabled="isFirstAttribute(task, attribute)" ng-click="moveAttributeUp(task, attribute)">
+                         <button type="button" class="button-beta" ng-disabled="isFirstField(task, field)" ng-click="moveFieldUp(task, field)">
                              <svg class="iconic">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                              </svg>
                              <span class="label hidden">Move up</span>
                          </button>
-                         <button type="button" class="button-beta" ng-disabled="isLastAttribute(task, attribute)" ng-click="moveAttributeDown(task, attribute)">
+                         <button type="button" class="button-beta" ng-disabled="isLastField(task, field)" ng-click="moveFieldDown(task, field)">
                              <svg class="iconic">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                              </svg>
@@ -325,8 +336,8 @@
                      </div>
                   </div>
 
-                  <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
-                      <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, task)">
+                  <div class="listing-item-secondary" ng-show="onlyOptional(field)">
+                      <button class="button-beta button-flat" ng-click="deleteField(field, task)">
                           <svg class="iconic">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                           </svg>
@@ -334,7 +345,7 @@
                       </button>
                   </div>
 
-                  <div class="listing-item-primary" ng-click="openAttributeEditModal(task, attribute)">
+                  <div class="listing-item-primary" ng-click="openFieldEditModal(task, field)">
                       <div class="listing-item-image">
                           <svg class="iconic">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
@@ -342,7 +353,7 @@
                       </div>
                       <h2 class="listing-item-title">
                           {{attribute.translations[defaultLanguage].label}}
-                        <span class="listing-item-image tooltip" ng-show="attribute.response_private">
+                        <span class="listing-item-image tooltip" ng-show="field.response_private">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                             </svg>
@@ -354,7 +365,7 @@
               <div class="listing-item">
                   <div class="listing-item-primary">
                       <h2 class="listing-item-title">
-                          <a ng-click="openAttributeModal(task)" class="button button-beta" data-modal="add-field">
+                          <a ng-click="openFieldModal(task)" class="button button-beta" data-modal="add-field">
                               <svg class="iconic">
                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                               </svg>

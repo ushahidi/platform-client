@@ -18,8 +18,8 @@ function (
              * - What should happen is that we get an empty object literal, or NULL, directly from the backend.
              * - What really happens is that we get an array, add a key on it, and then it cannot be stringified correctly, which prevents the information from getting to the backend.
              */
-            $scope.label = angular.copy($scope.editAttribute.label);
-            $scope.editAttribute.config = (!$scope.editAttribute.config || (_.isArray($scope.editAttribute.config) && $scope.editAttribute.config.length === 0)) ? {} : $scope.editAttribute.config;
+            $scope.label = angular.copy($scope.editField.label);
+            $scope.editField.config = (!$scope.editField.config || (_.isArray($scope.editField.config) && $scope.editField.config.length === 0)) ? {} : $scope.editField.config;
             $scope.labelError = false;
 
             const initiateEditor = function () {
@@ -40,7 +40,7 @@ function (
                     usageStatistics: false
                 });
 
-                $scope.editor.setMarkdown($scope.editAttribute.instructions);
+                $scope.editor.setMarkdown($scope.editField.instructions);
                 /** This is a hack to override the tui-editor's own inline-style
                  * that makes the scroll get stuck inside the editor-area */
                 let editor = document.querySelector('#editSection');
@@ -49,11 +49,11 @@ function (
 
             initiateEditor();
 
-            $scope.save = function (editAttribute, activeTask) {
-                editAttribute.instructions = $scope.editor.getMarkdown();
-                if (!$scope.attributeLabel.$invalid) {
-                    $scope.editAttribute.label = $scope.label;
-                    $scope.addNewAttribute(editAttribute, activeTask);
+            $scope.save = function (editField, activeTask) {
+                editField.instructions = $scope.editor.getMarkdown();
+                if (!$scope.fieldLabel.$invalid) {
+                    $scope.editField.label = $scope.label;
+                    $scope.addNewField(editField, activeTask);
                 }
             };
 
@@ -62,19 +62,19 @@ function (
             };
 
             $scope.onlyOptional = function () {
-                return $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
+                return $scope.editField.type !== 'title' && $scope.editField.type !== 'description';
             };
 
             $scope.canDisplay = function () {
-                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags';
+                return $scope.editField.input !== 'upload' && $scope.editField.type !== 'title' && $scope.editField.type !== 'description' && $scope.editField.input !== 'tags';
             };
 
             $scope.canMakePrivate = function () {
-                return $scope.editAttribute.type !== 'tags' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
+                return $scope.editField.type !== 'tags' && $scope.editField.type !== 'title' && $scope.editField.type !== 'description';
             };
 
             $scope.canDisableCaption = function () {
-                return $scope.editAttribute.type === 'media' && $scope.editAttribute.input === 'upload';
+                return $scope.editField.type === 'media' && $scope.editField.input === 'upload';
             };
         }
     };

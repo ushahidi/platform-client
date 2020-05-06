@@ -6,7 +6,7 @@ angular.module('ushahidi.settings', [])
 
 .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
 .directive('surveyTranslationEditor', require('./surveys/survey-translation-editor.directive.js'))
-.directive('attributeTranslationEditor', require('./surveys/attribute-translation-editor.directive.js'))
+.directive('fieldTranslationEditor', require('./surveys/field-translation-editor.directive.js'))
 .directive('surveyTaskCreate', require('./surveys/task-create.directive.js'))
 .directive('surveyAttributeCreate', require('./surveys/attribute-create.directive.js'))
 .directive('surveyAttributeEditor', require('./surveys/attribute-editor.directive.js'))

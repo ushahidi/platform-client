@@ -72,22 +72,22 @@ function SurveyEditorController(
     $scope.openTaskModal = openTaskModal;
     $scope.addNewTask = addNewTask;
 
-    $scope.openAttributeModal = openAttributeModal;
-    $scope.openAttributeEditModal = openAttributeEditModal;
-    $scope.addNewAttribute = addNewAttribute;
+    $scope.openFieldModal = openFieldModal;
+    $scope.openFieldEditModal = openFieldEditModal;
+    $scope.addNewField = addNewField;
 
-    $scope.moveAttributeUp = moveAttributeUp;
-    $scope.moveAttributeDown = moveAttributeDown;
-    $scope.isFirstAttribute = isFirstAttribute;
-    $scope.isLastAttribute = isLastAttribute;
+    $scope.moveFieldUp = moveFieldUp;
+    $scope.moveFieldDown = moveFieldDown;
+    $scope.isFirstField = isFirstField;
+    $scope.isLastField = isLastField;
 
-    $scope.deleteAttribute = deleteAttribute;
+    $scope.deleteField = deleteField;
     $scope.saving_survey = false;
     $scope.saveSurvey = saveSurvey;
     $scope.cancel = cancel;
 
     $scope.toggleTaskRequired = toggleTaskRequired;
-    $scope.toggleAttributeRequired = toggleAttributeRequired;
+    $scope.toggleFieldRequired = toggleFieldRequired;
     $scope.toggleTaskPublic = toggleTaskPublic;
 
     $scope.changeTaskLabel = changeTaskLabel;
@@ -156,7 +156,7 @@ function SurveyEditorController(
                         show_when_published: true,
                         task_is_internal_only: false,
                         translations: getTranslationObject({label:'Post'}),
-                        attributes: [
+                        fields: [
                             {
                                 cardinality: 0,
                                 input: 'text',
@@ -192,6 +192,8 @@ function SurveyEditorController(
         loadAvailableCategories();
 
         if (!$scope.surveyId) {
+
+            //TODO Use sdk
             $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
@@ -205,8 +207,8 @@ function SurveyEditorController(
     }
 
 
-    function onlyOptional(editAttribute) {
-        return editAttribute.type !== 'title' && editAttribute.type !== 'description';
+    function onlyOptional(editField) {
+        return editField.type !== 'title' && editField.type !== 'description';
     }
     function getTranslationObject(object) {
         let obj = {};
@@ -289,17 +291,17 @@ function SurveyEditorController(
                 delete $scope.survey.can_create;
                 delete $scope.survey.tags;
 
-                // Reset Task and Attribute IDs
+                // Reset Task and Field IDs
                 _.each($scope.survey.tasks, function (task) {
                     task.form_id = undefined;
                     task.id = $scope.getInterimId();
                     delete task.url;
 
-                    _.each(task.attributes, function (attribute) {
-                        attribute.form_stage_id = task.id;
-                        delete attribute.id;
-                        delete attribute.url;
-                        delete attribute.key;
+                    _.each(task.fieldss, function (field) {
+                        field.form_stage_id = task.id;
+                        delete field.id;
+                        delete field.url;
+                        delete field.key;
                     });
                 });
             }
@@ -348,18 +350,18 @@ function SurveyEditorController(
     }
 
     // START -- Reorder tasks
-    function isFirstAttribute(task, attribute) {
-        var attributes = task.attributes,
-            // Find our current attribute
-            index = _.indexOf(attributes, attribute);
+    function isFirstField(task, field) {
+        var fields = task.fields,
+            // Find our current field
+            index = _.indexOf(fields, field);
         return index === 0;
     }
 
-    function isLastAttribute(task, attribute) {
-        var attributes = task.attributes,
-            // Find our current attribute
-            index = _.indexOf(attributes, attribute);
-        return index === attributes.length - 1;
+    function isLastField(task, field) {
+        var fields = task.fields,
+            // Find our current field
+            index = _.indexOf(fields, field);
+        return index === fields.length - 1;
     }
 
     function canReorderTask(task) {
@@ -375,31 +377,31 @@ function SurveyEditorController(
         changeTaskPriority(task, 1);
     }
 
-    function moveAttributeUp(task, attribute) {
-        changeAttributePriority(task, attribute, -1);
+    function moveFieldUp(task, field) {
+        changeFieldPriority(task, field, -1);
     }
 
-    function moveAttributeDown(task, attribute) {
-        changeAttributePriority(task, attribute, 1);
+    function moveFieldDown(task, field) {
+        changeFieldPriority(task, field, 1);
     }
 
-    function changeAttributePriority(task, attribute, increment) {
-        var attributes = task.attributes,
+    function changeFieldPriority(task, field, increment) {
+        var fields = task.fields,
             // Find our current stage
-            index = _.indexOf(attributes, attribute),
+            index = _.indexOf(fields, field),
             // Grab prev/next stage
-            next = attributes[index + increment];
+            next = fields[index + increment];
 
         // Check we're not at the end of the list
         if (_.isUndefined(next)) {
             return;
         }
         // Swap priorities
-        next.priority = attribute.priority;
-        attribute.priority = attribute.priority + increment;
+        next.priority = field.priority;
+        field.priority = field.priority + increment;
 
-        // Resort attribute list
-        task.attributes = _.sortBy(attributes, 'priority');
+        // Resort field list
+        task.fields = _.sortBy(fields, 'priority');
     }
 
     function changeTaskPriority(task, increment) {
@@ -425,10 +427,10 @@ function SurveyEditorController(
         // Task labels must be unique
 
         // If the task is not yet saved we need to make sure to update
-        // it's attributes form_stage_id as this is their linkage
+        // it's fields form_stage_id as this is their linkage
         if (!task.id) {
-            _.each(task.attributes, function (attribute) {
-                attribute.form_stage_id = task.label;
+            _.each(task.fields, function (field) {
+                field.form_stage_id = task.label;
             });
         }
 
@@ -444,8 +446,8 @@ function SurveyEditorController(
         return $scope.survey.tasks.length ? _.last($scope.survey.tasks).priority + 1 : 0;
     }
 
-    function getNewAttributePriority(task) {
-        return task.attributes.length ? _.last(task.attributes).priority + 1 : 0;
+    function getNewFieldPriority(task) {
+        return task.fields.length ? _.last(task.fields).priority + 1 : 0;
     }
 
     function addNewTask(task) {
@@ -457,48 +459,48 @@ function SurveyEditorController(
         $scope.switchTab(task.id, 'section-build');
     }
 
-    function openAttributeModal(task) {
-        // Set active task so we know who this attribute will belong to
+    function openFieldModal(task) {
+        // Set active task so we know who this field will belong to
         $scope.activeTask = task;
         ModalService.openTemplate('<survey-attribute-create></survey-attribute-create>', 'survey.add_field', '', $scope, true, true);
     }
 
-    function openAttributeEditModal(task, attribute) {
-        // If creating a new attribute we need to close
+    function openFieldEditModal(task, field) {
+        // If creating a new field we need to close
         // the type picker first
         $scope.activeTask = task;
-        if (!attribute.form_stage_id) {
+        if (!field.form_stage_id) {
             ModalService.close();
         }
-        $scope.editAttribute = attribute;
-        var title = attribute.id ? 'survey.edit_field' : 'survey.add_field';
-        ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
+        $scope.editField = field;
+        var title = field.id ? 'survey.edit_field' : 'survey.add_field';
+        ModalService.openTemplate('<survey-attribute-editor></survey-field-editor>', title, '', $scope, true, true);
     }
 
-    function addNewAttribute(attribute, task) {
+    function addNewField(field, task) {
         ModalService.close();
         // Set active task as form_stage_id
         // If this task is new and has not been saved
         // it won't have an id so in this instance we use its label
         // Labels are not guaranteed to be unique
         // TODO refactor this
-        if (!attribute.form_stage_id) {
-            // Set attribute priority
-            attribute.priority = getNewAttributePriority(task);
-            attribute.form_stage_id = task.id ? task.id : task.label;
-            task.attributes.push(attribute);
+        if (!field.form_stage_id) {
+            // Set field priority
+            field.priority = getNewFieldPriority(task);
+            field.form_stage_id = task.id ? task.id : task.label;
+            task.fields.push(field);
         }
     }
 
-    function deleteAttribute(attribute, task) {
+    function deleteField(field, task) {
         Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
-            // If we have not yet saved this attribute
+            // If we have not yet saved this field
             // we can drop it immediately
-            if (!attribute.id) {
-                task.attributes = _.filter(task.attributes, function (item) {
-                    return item.label !== attribute.label;
+            if (!field.id) {
+                task.fields = _.filter(task.fields, function (item) {
+                    return item.label !== field.label;
                 });
-                // Attribute delete is currently only available in modal
+                // Field delete is currently only available in modal
                 // so close the modal
                 ModalService.close();
                 return;
@@ -506,20 +508,20 @@ function SurveyEditorController(
 
             FormAttributeEndpoint.delete({
                 formId: $scope.survey.id,
-                id: attribute.id
-            }).$promise.then(function (attribute) {
-                // Remove attribute from scope, binding should take care of the rest
-                var index = _.findIndex(task.attributes, function (item) {
-                    return item.id === attribute.id;
+                id: field.id
+            }).$promise.then(function (field) {
+                // Remove field from scope, binding should take care of the rest
+                var index = _.findIndex(task.fields, function (item) {
+                    return item.id === field.id;
                 });
 
-                task.attributes.splice(index, 1);
+                task.fields.splice(index, 1);
 
                 FormStageEndpoint.invalidateCache();
 
-                Notify.notify('notify.form.destroy_attribute_success', {name: attribute.label});
+                Notify.notify('notify.form.destroy_attribute_success', {name: field.label});
 
-                // Attribute is only available in modal so
+                // Field is only available in modal so
                 // close the modal
                 ModalService.close();
             });
@@ -531,11 +533,11 @@ function SurveyEditorController(
         dup.label = undefined;
         dup.description = undefined;
         dup.id = getInterimId();
-        _.each(dup.attributes, function (attribute) {
-            delete attribute.id;
-            delete attribute.url;
-            delete attribute.key;
-            attribute.form_stage_id = dup.id;
+        _.each(dup.fields, function (field) {
+            delete field.id;
+            delete field.url;
+            delete field.key;
+            field.form_stage_id = dup.id;
         });
         $scope.survey.tasks.push(dup);
         $scope.switchTab(dup.id, 'section-build');
@@ -572,7 +574,6 @@ function SurveyEditorController(
 
     function saveSurvey() {
         // Set saving to true to disable user actions
-        let thisthis = {"color":null,"require_approval":true,"everyone_can_create":true,"tasks":[{"label":"Post","priority":0,"required":false,"type":"post","show_when_published":true,"task_is_internal_only":false,"attributes":[{"cardinality":0,"input":"text","label":"Title","priority":1,"required":true,"type":"title","options":[],"config":{},"form_stage_id":"interim_id_0"},{"cardinality":0,"input":"text","label":"Description","priority":2,"required":true,"type":"description","options":[],"config":{},"form_stage_id":"interim_id_1"}],"is_public":true,"id":"interim_id_2"}],"name":"Hej","description":"Hej"};
         $scope.saving_survey = true;
         // Save the survey
         //TODO: Use the sdk:
@@ -592,7 +593,7 @@ function SurveyEditorController(
         })
         .then(function () {
             // Save attributes and return promises
-            return saveAttributes();
+            return saveFields();
         })
         .then(function () {
             // Display success message
@@ -608,7 +609,6 @@ function SurveyEditorController(
         // Catch and handle errors
         .catch(handleResponseErrors);
     }
-
     function saveTasks() {
         var promises = [];
         // Remove interim ids from tasks
@@ -633,7 +633,7 @@ function SurveyEditorController(
         });
     }
 
-    function saveAttributes() {
+    function saveFields() {
         var promises = [];
         _.each($scope.survey.tasks, function (task) {
             _.each(task.attributes, function (attribute) {
@@ -675,7 +675,7 @@ function SurveyEditorController(
         task.is_public = !task.is_public;
     }
 
-    function toggleAttributeRequired(attribute) {
+    function toggleFieldRequired(attribute) {
         attribute.required = !attribute.required;
     }
 
