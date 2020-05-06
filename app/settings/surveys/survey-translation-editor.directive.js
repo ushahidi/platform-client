@@ -17,6 +17,7 @@ function SurveyTranslationEditor() {
 SurveyTranslationEditorController.$inject = ['$scope', 'ModalService'];
 function SurveyTranslationEditorController($scope, ModalService) {
     $scope.openField = openField;
+
     function openField(field) {
         $scope.translateField = field;
         ModalService.openTemplate('<field-translation-editor></field-translation-editor>', 'translations.translate_field', '', $scope, true, true);

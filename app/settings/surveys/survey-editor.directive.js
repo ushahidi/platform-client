@@ -96,6 +96,7 @@ function SurveyEditorController(
     $scope.removeInterimIds = removeInterimIds;
 
     $scope.switchTab = switchTab;
+    $scope.tab_history = {};
 
     $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
@@ -104,7 +105,6 @@ function SurveyEditorController(
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
     $scope.location_precision = 1000;
-
     //TODO: Get from config!
     $scope.languages = ['en', 'es', 'sw', 'fa-IR'];
     $scope.activeLanguage = 'en';
@@ -113,7 +113,7 @@ function SurveyEditorController(
 
     function activate() {
         const token = Session.getSessionDataEntry('accessToken');
-        $scope.ushahidi = new UshahidiSdk.Forms(Util.apiUrl(''), token)
+        $scope.ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
         $scope.tab_history = {};
 
         // Set initial menu tab
@@ -245,7 +245,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        $scope.ushahidi.getForms().then(function (forms) {
+        $scope.ushahidi.getSurveys().then(function (forms) {
             $scope.availableForms = forms.results;
         });
     }
@@ -276,10 +276,10 @@ function SurveyEditorController(
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        $scope.ushahidi.getForms(9).then(res => {
-            $scope.survey = res;
+        $scope.ushahidi.getSurveys(parseInt($scope.surveyId)).then(res => {
             //Getting roles for the survey
-            //TODO: Connect to SDK
+            // TODO: Double-check the structure
+            $scope.survey = res;
             getRoles($scope.survey.id);
             // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {
@@ -474,7 +474,7 @@ function SurveyEditorController(
         }
         $scope.editField = field;
         var title = field.id ? 'survey.edit_field' : 'survey.add_field';
-        ModalService.openTemplate('<survey-attribute-editor></survey-field-editor>', title, '', $scope, true, true);
+        ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
     function addNewField(field, task) {
@@ -577,27 +577,11 @@ function SurveyEditorController(
         $scope.saving_survey = true;
         // Save the survey
         //TODO: Use the sdk:
-        // $scope.forms.saveForm(survey).then(res=>{
-            // console.log(res)
-        // });
-        FormEndpoint
-        .saveCache($scope.survey)
-        .$promise
-        .then(function (survey) {
-            // If the survey is new, cache the new id
-            if ($scope.survey.id !== survey.id) {
-                $scope.survey.id = survey.id;
-            }
-            // Save tasks and roles and return promises
-            return $q.all([saveTasks(), saveRoles()]);
-        })
-        .then(function () {
-            // Save attributes and return promises
-            return saveFields();
-        })
-        .then(function () {
-            // Display success message
-            SurveyNotify.success(
+        $scope.removeInterimIds();
+        $scope.forms.saveForm(survey).then(res=>{
+             // Display success message
+             //Save roles!!
+             SurveyNotify.success(
                 'notify.form.edit_form_success',
                 { name: $scope.survey.name },
                 { formId: $scope.survey.id }
@@ -608,52 +592,6 @@ function SurveyEditorController(
         })
         // Catch and handle errors
         .catch(handleResponseErrors);
-    }
-    function saveTasks() {
-        var promises = [];
-        // Remove interim ids from tasks
-        $scope.removeInterimIds();
-        _.each($scope.survey.tasks, function (task) {
-            // Assign survey id to each task
-            task.form_id = $scope.survey.id;
-            // Add each task to promise array
-            promises.push(
-                FormStageEndpoint
-                .saveCache(_.extend(task, { formId: $scope.survey.id }))
-                .$promise
-            );
-        });
-        return $q.all(promises).then(function (tasks) {
-            // Ensure tasks are ordered by priority
-            tasks = _.sortBy(tasks, 'priority');
-            // Associate tasks to preserve attributes
-            _.each(tasks, function (task, index) {
-                _.extend($scope.survey.tasks[index], task);
-            });
-        });
-    }
-
-    function saveFields() {
-        var promises = [];
-        _.each($scope.survey.tasks, function (task) {
-            _.each(task.attributes, function (attribute) {
-                // Remove faulty category ids from each attribute
-                if (attribute.type === 'tags') {
-                    attribute.options = _.filter(attribute.options, function (option) {
-                        return !isNaN(option);
-                    });
-                }
-                // Assign stage id to each attribute
-                attribute.form_stage_id = task.id;
-                // Add each attribute to promise array
-                promises.push(
-                    FormAttributeEndpoint
-                    .saveCache(_.extend(attribute, { formId: $scope.survey.id }))
-                    .$promise
-                );
-            });
-        });
-        return $q.all(promises);
     }
 
     function saveRoles() {
@@ -690,7 +628,7 @@ function SurveyEditorController(
         attribute.options.push('');
     };
     $scope.openLanguages = function() {
-        ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, true, true, true);
+        ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
     }
     $scope.switchToLanguage = function(language) {
         $scope.activeLanguage = language;

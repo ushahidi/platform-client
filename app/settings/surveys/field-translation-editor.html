@@ -1,0 +1,72 @@
+<div class="modal-body">
+    <div class="form-field">
+        <form name="fieldLabel">
+            <label translate>Translate field name</label>
+            <div class="form-field framed">
+                <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+                <p>{{translateField.translations[defaultLanguage].label}}</p>
+               
+            </div>
+            <p>Add your translation below:</p>
+            <input type="text" ng-model="translateField.translations[activeLanguage].label" ng-required="true" placeholder="Add your translation">
+        </form>
+     </div>
+
+     <div class="form-field" ng-show="translateField.instructions">
+        <div class="form-field framed">
+           <label>Translate field description:</label>
+            <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <p>{{translateField.translations[defaultLanguage].instructions}}</p> 
+        </div>
+        <p>Add your translation below:</p>
+        <div class="form-field">
+            <div id="editFieldInstructions"></div>
+        </div>
+    </div>
+
+    <div class="form-field" ng-if="translateField.options.length > 1">
+        <label translate>form.field_options</label>
+        <div class="form-field framed">
+            <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <ol>
+                <li ng-repeat="(key, option) in translateField.translations[defaultLanguage].options track by $index" id={{key}}>{{translateField.translations[defaultLanguage].options[key]}}</li>
+            </ol>
+        </div>
+
+        <div>
+            <p>Add your translation below:</p>
+               <ol>
+                    <li ng-repeat="(key, option) in translateField.options track by $index" key={{key}}>
+                        <input class="input-inline" type="text" placeholder="{{ 'form.field_option_placeholder'| translate }}" ng-model="translateField.translations[activeLanguage].options[key]">
+                    </li>
+                </ol> 
+        </div>
+    </div>
+        
+    <div class="form-field switch" ng-if="translateField.default">
+        <label translate="app.default_value">Default value (optional):</label>
+        <div class="form-field framed">
+            <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <p>{{translateField.translations[defaultLanguage].default}}</p>
+        </div>
+        <div class="form-field">
+            <div ng-switch="editField.input">
+                <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editField.translations[activeLanguage].default">
+                <input ng-switch-when="date" type="text" date-time="editField.default" ng-model="editField.translations[activeLanguage].default">
+                <input ng-switch-when="int" type="number" step="1" ng-model="editField.translations[activeLanguage].default">
+                <input ng-switch-when="decimal" type="number" ng-model="editField.translations[activeLanguage].default">
+                <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editField.translations[activeLanguage].default">
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-field" ng-if="editField.input ==='tags'">
+        <label translate>The categories themselves needs to be translated in the Settings->Categories section.</label>
+        <a href="/settings/categories" target="_blank">Open Categories-settings in a new tab</a>
+    </div>
+
+    <div class="form-field">
+        <button ng-show="!editField.id" type="button" class="button-alpha modal-trigger" ng-click="save(translateField, activeTask)" translate="app.add_and_close">Add &amp; close</button>
+        <button ng-show="editField.id" type="button" class="button-alpha modal-trigger" ng-click="save(translateField, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+    </div>
+</div>

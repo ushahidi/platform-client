@@ -41,7 +41,7 @@
       <div class="button-group button-tab-section" >
         <button ng-repeat="language in languages" type="button" class="button button-tab" ng-class="{'active': activeLanguage === language}" ng-click="switchToLanguage(language)">
           {{('languages.' + language) | translate}}
-            <span ng-if="language === defaultLanguage"> ({{'translations.default' | translate}})</span>
+            <span ng-show="language === defaultLanguage"> ({{'translations.default' | translate}})</span>
             <svg class="iconic">
                 <use xlink:href="/img/iconic-sprite.svg#x"></use>
             </svg>
@@ -53,44 +53,44 @@
           {{"form.add_language" | translate}}
         </button>
       </div>
-      <section class="form-sheet" ng-if="defaultLanguage === activeLanguage">
+      <section class="form-sheet" ng-show="defaultLanguage === activeLanguage">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
         <div class="form-field survey">
           <!--  TODO: add placeholder text-->
             <label translate>survey.survey_name</label>
-            <!-- Use once api handles translations <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations[defaultLanguage].name"> -->
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
+            <!-- Use once api handles translations  -->
+            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations[defaultLanguage].name">
         </div>
 
           <div class="form-field survey">
             <label translate>app.description</label>
-            <!-- Use once api handles translations <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations[defaultLanguage].description"></textarea> -->
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description"></textarea>
+            <!-- Use once api handles translations  -->
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations[defaultLanguage].description"></textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
-          <ul>
-              <li id="survey-build-post-li" class="active">
-                <a ng-click="switchTab('post', 'survey-build')" translate="survey.build">
-                  Build
-                </a>
-              </li>
-              <li id="survey-configure-post-li">
-                <a ng-click="switchTab('post', 'survey-configure')" translate="survey.configure">
-                  Configure
-                </a>
-              </li>
-              <li id="survey-share-post-li">
-                <a ng-click="switchTab('post', 'survey-share')" ng-show="survey.id" translate="survey.share">
-                  Share
-                </a>
-              </li>
-          </ul>
-      </nav>
+            <ul>
+                <li id="survey-build-post-li">
+                  <a ng-click="switchTab('post', 'survey-build')" translate="survey.build">
+                    Build
+                  </a>
+                </li>
+                <li id="survey-configure-post-li">
+                  <a ng-click="switchTab('post', 'survey-configure')" translate="survey.configure">
+                    Configure
+                  </a>
+                </li>
+                <li id="survey-share-post-li">
+                  <a ng-click="switchTab('post', 'survey-share')" ng-show="survey.id" translate="survey.share">
+                    Share
+                  </a>
+                </li>
+            </ul>
+        </nav>
 
-      <div id="survey-build-post" class="survey-details tabs-target active" >
-        <div class="listing init" style="margin-left: 4px;">
+        <div id="survey-build-post" class="survey-details tabs-target" >
+          <div class="listing init" style="margin-left: 4px;">
             <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
 
             <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
@@ -127,9 +127,8 @@
                       </svg>
                   </div>
                   <h2 class="listing-item-title">
-                    <!-- Use once api handles translations
-                      {{field.translations[defaultLanguage].label}} -->
-                      {{field.label}}
+                    <!-- Use once api handles translations -->
+                      {{field.translations[defaultLanguage].label}}
                     <span class="listing-item-image tooltip" ng-show="field.response_private">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
@@ -247,23 +246,17 @@
         </div>
       </section>
       <!-- Task sections -->
-      <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-if="defaultLanguage === activeLanguage">
+      <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-show="defaultLanguage === activeLanguage">
         <div class="form-field title section-title">
             <label class="hidden" translate="survey.task_name">Section name</label>
-            <!-- Use once api handles translations <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations[defaultLanguage].label"> -->
-            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label"> 
+            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations[defaultLanguage].label">
             <label class="hidden" translate="survey.task_description">Section description</label>
-            <!-- Use once api handles translations  <textarea
-              name="description"
-              placeholder="{{ 'survey.describe_this_task' | translate }}"
-              rows="1"
-              ng-model="task.translations[defaultLanguage].description"
-              ></textarea> -->
+
             <textarea
               name="description"
               placeholder="{{ 'survey.describe_this_task' | translate }}"
               rows="1"
-              ng-model="task.description"
+              ng-model="task.translations[defaultLanguage].description"
               ></textarea>
 
             <!-- <p class="alert">
@@ -352,7 +345,7 @@
                           </svg>
                       </div>
                       <h2 class="listing-item-title">
-                          {{attribute.translations[defaultLanguage].label}}
+                          {{field.translations[defaultLanguage].label}}
                         <span class="listing-item-image tooltip" ng-show="field.response_private">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
@@ -439,7 +432,7 @@
         </div>
       </section>
       <!-- Add nw section/task -->
-      <div class="listing-item" ng-if="defaultLanguage === activeLanguage">
+      <div class="listing-item" ng-show="defaultLanguage === activeLanguage">
         
           <div class="listing-item-primary">
               <button ng-click="openTaskModal()" class="button-gamma init" data-toggle="field-type">
@@ -450,7 +443,7 @@
               </button>
           </div>
       </div>
-      <survey-translation-editor ng-if="activeLanguage !== defaultLanguage" active-language="activeLanguage" default-language="defaultLanguage" survey="survey"></survey-translation-editor>
+      <survey-translation-editor ng-show="activeLanguage !== defaultLanguage" active-language="activeLanguage" default-language="defaultLanguage" survey="survey"></survey-translation-editor>
 
     </div>
   </main>
