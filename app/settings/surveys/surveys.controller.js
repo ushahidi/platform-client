@@ -1,25 +1,28 @@
+/* eslint-disable quotes */
 module.exports = [
     '$scope',
     '$rootScope',
     '$translate',
     '$location',
-    '$q',
     'FormEndpoint',
-    'FormStageEndpoint',
     'Notify',
     '_',
     'Features',
+    'UshahidiSdk',
+    'Util',
+    'Session',
 function (
     $scope,
     $rootScope,
     $translate,
     $location,
-    $q,
     FormEndpoint,
-    FormStageEndpoint,
     Notify,
     _,
-    Features
+    Features,
+    UshahidiSdk,
+    Util,
+    Session
 ) {
 
     // Change layout class
@@ -28,6 +31,9 @@ function (
     if ($rootScope.hasManageSettingsPermission() === false) {
         return $location.path('/');
     }
+
+    const token = Session.getSessionDataEntry('accessToken');
+    $scope.ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
@@ -43,11 +49,11 @@ function (
 
     // Get all the forms for display
     $scope.refreshForms = function () {
-        FormEndpoint.queryFresh().$promise.then(function (response) {
-            $scope.forms = response;
+        $scope.ushahidi.getSurveys().then(function (forms) {
+            $scope.forms = forms;
         });
     };
-
+    // use SDK?
     $scope.deleteSurvey = function (survey) {
         Notify.deleteWithInput('survey', survey.name).then(function () {
             // If we haven't saved the survey
@@ -70,5 +76,15 @@ function (
         Notify.apiErrors(errorResponse);
     };
 
+    $scope.getLanguages = function (enabled_languages) {
+        let languages = [...enabled_languages.available];
+        languages.push(enabled_languages.default);
+        let languageString = languages.length > 1 ? $translate.instant('translations.languages') : $translate.instant('translations.language');
+        _.each(languages,(language, index) => {
+            let divider = index !== 0 ? ',' : ':';
+            languageString = `${languageString + divider} ${$translate.instant(`languages.${language}`)}`;
+        });
+        return languageString;
+    }
     $scope.refreshForms();
 }];
