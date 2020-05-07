@@ -61,6 +61,9 @@ angular.module('ushahidi.common', [
 .service('HxlLicenseEndpoint', require('./services/endpoints/hxl-license-endpoint.js'))
 .service('HxlMetadataEndpoint', require('./services/endpoints/hxl-metadata-endpoint.js'))
 .service('HxlOrganisationsEndpoint', require('./services/endpoints/hxl-organisations-endpoint.js'))
+
+//UshahidiSDK-wrappers
+.service('SurveysSdk', require('./services/endpoints/sdk/SurveysSdk.js'))
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))

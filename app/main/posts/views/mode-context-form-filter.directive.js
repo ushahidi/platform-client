@@ -9,9 +9,8 @@ function ModeContextFormFilterDirective() {
         template: require('./mode-context-form-filter.html')
     };
 }
-ModeContextFormFilter.$inject = ['$scope', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$location', 'UshahidiSdk',
-'Session', 'Util', 'TranslationService'];
-function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $location, UshahidiSdk, Session, Util, TranslationService) {
+ModeContextFormFilter.$inject = ['$scope', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$location', 'SurveysSdk','TranslationService'];
+function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $location, SurveysSdk, TranslationService) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.hide = hide;
@@ -45,11 +44,8 @@ function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurv
 
     function activate() {
         // Load forms
-        // $scope.forms = FormEndpoint.query();
-        const token = Session.getSessionDataEntry('accessToken');
-        const ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
-        ushahidi.getSurveys().then(surveys=>{
-            $scope.forms = surveys;
+        SurveysSdk.getSurveys().then(forms => {
+            $scope.forms = forms;
         });
         getUserLanguage();
         var postCountRequest = getPostStats($scope.filters);

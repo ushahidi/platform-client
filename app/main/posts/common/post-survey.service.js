@@ -5,8 +5,7 @@ PostSurveyService.$inject = [
     '$rootScope',
     '$q',
     '_',
-    'UshahidiSdk',
-    'Session'
+    'SurveysSdk'
 ];
 
 function PostSurveyService(
@@ -14,15 +13,12 @@ function PostSurveyService(
     $rootScope,
     $q,
     _,
-    UshahidiSdk,
-    Session
+    SurveysSdk
 ) {
     var PostSurveyService = {
         allowedSurveys : allowedSurveys,
         canCreatePostInSurvey : canCreatePostInSurvey
     };
-    const token = Session.getSessionDataEntry('accessToken');
-    const ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
 
     function canCreatePostInSurvey(form) {
         // If the form isn't loaded yet, we definitely can't add to it
@@ -56,8 +52,7 @@ function PostSurveyService(
     function allowedSurveys() {
         var allowed_forms = $q.defer();
 
-        ushahidi.getSurveys()
-        .then(function (forms) {
+        SurveysSdk.getSurveys().then(forms => {
             if ($rootScope.hasPermission('Manage Posts')) {
                 allowed_forms.resolve(forms);
             } else {

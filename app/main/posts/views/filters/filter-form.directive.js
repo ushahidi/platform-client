@@ -1,7 +1,7 @@
 module.exports = FormSelectDirective;
 
-FormSelectDirective.$inject = ['$rootScope', 'UshahidiSdk', 'Session', 'Util', 'TranslationService'];
-function FormSelectDirective($rootScope, UshahidiSdk, Session, Util, TranslationService) {
+FormSelectDirective.$inject = ['$rootScope','TranslationService', 'SurveysSdk'];
+function FormSelectDirective($rootScope, TranslationService, SurveysSdk) {
     return {
         restrict: 'E',
         replace: true,
@@ -34,9 +34,7 @@ function FormSelectDirective($rootScope, UshahidiSdk, Session, Util, Translation
         }
         function activate() {
             // Load forms
-            const token = Session.getSessionDataEntry('accessToken');
-            const ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
-            ushahidi.getSurveys().then(surveys=>{
+            SurveysSdk.getSurveys().then(surveys => {
                 scope.forms = surveys;
             });
 
