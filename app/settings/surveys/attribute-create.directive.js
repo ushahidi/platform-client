@@ -22,8 +22,6 @@ function (
                 priority: 0,
                 translations:{}
             };
-            // adding placeholder for defaultLanguage
-            $scope.newField.translations[$scope.defaultLanguage] = {};
 
             $scope.createNewField = function (type) {
                 // Set initial label name based on type

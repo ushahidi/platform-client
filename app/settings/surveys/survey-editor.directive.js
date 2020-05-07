@@ -105,7 +105,6 @@ function SurveyEditorController(
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
     $scope.location_precision = 1000;
-    $scope.selectLanguage = selectLanguage;
     $scope.showLangError = false;
 
     activate();
@@ -137,12 +136,8 @@ function SurveyEditorController(
         } else {
             // When creating new survey
             // pre-fill object with default tasks and attributes
-            // TODO: Get default language from Config
             $scope.survey =    {
-                enabled_languages: {
-                        default: $scope.defaultLanguage,
-                        available : [$scope.defaultLanguage]
-                },
+                enabled_languages:{default:null, available:[]},
                 color: null,
                 require_approval: true,
                 everyone_can_create: true,
@@ -152,30 +147,33 @@ function SurveyEditorController(
                         priority: 0,
                         required: false,
                         type: 'post',
+                        label: 'Post',
                         show_when_published: true,
                         task_is_internal_only: false,
-                        translations: getTranslationObject({label:'Post'}),
+                        translations: {},
                         fields: [
                             {
                                 cardinality: 0,
                                 input: 'text',
                                 priority: 1,
                                 required: true,
+                                label: 'Title',
                                 type: 'title',
                                 config: {},
                                 form_stage_id: getInterimId(),
-                                translations:getTranslationObject({label:'Title'})
+                                translations:{}
                             },
                             {
                                 cardinality: 0,
                                 input: 'text',
                                 priority: 2,
                                 required: true,
+                                label: 'Description',
                                 type: 'description',
                                 options: [],
                                 config: {},
                                 form_stage_id: getInterimId(),
-                                translations:getTranslationObject({label:'Description'})
+                                translations:{}
                             }
                         ],
                         is_public: true
@@ -248,7 +246,6 @@ function SurveyEditorController(
         });
     }
     function loadAvailableCategories() {
-        //TODO: Connect to SDK
         // Get available categories.
         TagEndpoint.queryFresh().$promise.then(function (tags) {
             $scope.availableCategories = tags;
@@ -271,18 +268,6 @@ function SurveyEditorController(
         });
     }
 
-
-    function selectLanguage (language) {
-        if ($scope.survey.enabled_languages.available.indexOf(language) > -1) {
-            $scope.showLangError = true;
-        } else {
-            $scope.showLangError = false;
-            $scope.defaultLanguage = language;
-            $scope.activeLanguage = $scope.defaultLanguage;
-            $scope.survey.enabled_languages.default = language;
-        }
-    }
-
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
@@ -291,6 +276,7 @@ function SurveyEditorController(
             // TODO: Double-check the structure
             $scope.survey = res;
             $scope.defaultLanguage = $scope.survey.enabled_languages.default;
+            //active language is the same as default when starting out.
             $scope.activeLanguage = $scope.defaultLanguage;
             getRoles($scope.survey.id);
             // removing data if duplicated survey
@@ -324,11 +310,10 @@ function SurveyEditorController(
         FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise.then(res=>{
             $scope.roles_allowed = _.pluck(res, 'role_id');
         })
-
     }
+
     function loadRoleData() {
         $q.all([
-            //TODO: Connect to SDK
             RoleEndpoint.query().$promise
         ]).then(function (results) {
             $scope.roles = results[0];
@@ -445,7 +430,6 @@ function SurveyEditorController(
                 field.form_stage_id = task.label;
             });
         }
-
     }
     // END - reorder tasks
 
@@ -503,7 +487,7 @@ function SurveyEditorController(
             task.fields.push(field);
         }
     }
-
+    //is this done automatically in the new form-endpoint?
     function deleteField(field, task) {
         Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
             // If we have not yet saved this field
@@ -554,9 +538,8 @@ function SurveyEditorController(
         $scope.survey.tasks.push(dup);
         $scope.switchTab(dup.id, 'section-build');
     }
-
+    //is this done automatically in the new form-endpoint?
     function deleteTask(task) {
-
         Notify.confirmDelete('notify.form.delete_stage_confirm', 'notify.form.delete_stage_confirm_desc').then(function () {
             // If we haven't saved the task yet then we can just drop it
             if (!task.id || _.isString(task.id)) {
@@ -583,7 +566,6 @@ function SurveyEditorController(
     // END - modify task
 
     //Start - modify Survey
-
     function saveSurvey() {
         // Set saving to true to disable user actions
         $scope.saving_survey = true;
@@ -592,7 +574,7 @@ function SurveyEditorController(
         $scope.removeInterimIds();
         $scope.forms.saveForm(survey).then(res=>{
              // Display success message
-             //Save roles!!
+             saveRoles();
              SurveyNotify.success(
                 'notify.form.edit_form_success',
                 { name: $scope.survey.name },
@@ -639,6 +621,8 @@ function SurveyEditorController(
     $scope.addOption = function (attribute) {
         attribute.options.push('');
     };
+
+    // Translations
     $scope.openLanguages = function() {
         ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
     }
@@ -651,5 +635,16 @@ function SurveyEditorController(
     };
     $scope.switchToLanguage = function(language) {
         $scope.activeLanguage = language;
+    };
+
+    $scope.selectLanguage = function  (language) {
+        if ($scope.survey.enabled_languages.available.indexOf(language) > -1) {
+            $scope.showLangError = true;
+        } else {
+            $scope.showLangError = false;
+            $scope.defaultLanguage = language;
+            $scope.activeLanguage = $scope.defaultLanguage;
+            $scope.survey.enabled_languages.default = language;
+        }
     }
 }

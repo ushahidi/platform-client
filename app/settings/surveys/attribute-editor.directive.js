@@ -52,11 +52,10 @@ function (
             $scope.save = function (editField, activeTask) {
                 if (!editField.translations) {
                     editField.translations = {};
-                    editField.translations[$scope.defaultLanguage] = {};
                 }
-                editField.translations[$scope.defaultLanguage].instructions = $scope.editor.getMarkdown();
+                editField.instructions = $scope.editor.getMarkdown();
                 if (!$scope.fieldLabel.$invalid) {
-                    editField.translations[$scope.defaultLanguage].label = $scope.label
+                    editField.label = $scope.label;
                     $scope.addNewField(editField, activeTask);
                 }
             };

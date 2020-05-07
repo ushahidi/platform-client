@@ -20,7 +20,7 @@
         <div class="form-field framed">
 
           <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-          <p>{{survey.translations[activeLanguage].description}}</p>  
+          <p>{{survey.description}}</p>  
         </div>
         <p>Add your translation below:</p>
         <!-- TODO: add ng-model for translation -->
@@ -33,7 +33,7 @@
           <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
             <div class="listing-item-primary" ng-click="openField(field)">
                 <h2 class="listing-item-title">
-                  {{field.translations[activeLanguage].label || field.translations[defaultLanguage].label}}
+                  {{field.translations[activeLanguage].label || field.label}}
                   <!-- TODO: Use this when backend is ready -->    
                     <!-- {{attribute.translations[activeLanguage].label}} -->
                 </h2>
@@ -54,7 +54,7 @@
         <label translate>Task name</label>
         <div class="form-field framed">
           <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-          <p>{{task.translations[defaultLanguage].label}}</p>
+          <p>{{task.label}}</p>
           </div>
         <p>Add your translation:</p>
         <input type="text" placeholder="{{ 'survey.task_name' | translate }}" ng-model="task.translations[activeLanguage].label">
@@ -64,7 +64,7 @@
         <label>Task description</label>
         <div class="form-field framed">
             <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-            <p>{{task.translations[defaultLanguage].description}}</p>
+            <p>{{task.description}}</p>
         </div>
         <p>Add your translation:</p>
         <textarea placeholder="{{ 'survey.task_description' | translate }}" ng-model="task.translations[activeLanguage].description"></textarea>
@@ -75,7 +75,7 @@
         <div class="listing-item" ng-repeat="field in task.fields track by $index" >
           <div class="listing-item-primary" ng-click="openfield(field)">
               <h2 class="listing-item-title">
-                {{field.translations[activeLanguage].label || field.translations[defaultLanguage].label}}
+                {{field.translations[activeLanguage].label || field.label}}
               </h2>
           </div>
         </div>
