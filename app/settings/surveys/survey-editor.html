@@ -39,10 +39,13 @@
 
     <div class="full-col">
       <div class="button-group button-tab-section" >
-        <button ng-repeat="language in languages" type="button" class="button button-tab" ng-class="{'active': activeLanguage === language}" ng-click="switchToLanguage(language)">
+        <button type="button" class="button button-tab" ng-class="{'active': activeLanguage === defaultLanguage}" ng-show="defaultLanguage" ng-click="switchToLanguage(defaultLanguage)">
+          {{'languages.' + defaultLanguage | translate}}
+            <span> ({{'translations.default' | translate}})</span>
+        </button>
+        <button ng-repeat="language in survey.enabled_languages.available track by $index"" type="button" class="button button-tab" ng-class="{'active': activeLanguage === language}" ng-click="switchToLanguage(language)">
           {{('languages.' + language) | translate}}
-            <span ng-show="language === defaultLanguage"> ({{'translations.default' | translate}})</span>
-            <svg class="iconic">
+            <svg class="iconic" ng-click="removeLanguage($index)">
                 <use xlink:href="/img/iconic-sprite.svg#x"></use>
             </svg>
         </button>

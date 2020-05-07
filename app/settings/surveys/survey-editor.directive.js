@@ -273,7 +273,7 @@ function SurveyEditorController(
 
 
     function selectLanguage (language) {
-        if ($scope.survey.enabled_languages.available.indexOf(language) > 1) {
+        if ($scope.survey.enabled_languages.available.indexOf(language) > -1) {
             $scope.showLangError = true;
         } else {
             $scope.showLangError = false;
@@ -281,7 +281,6 @@ function SurveyEditorController(
             $scope.activeLanguage = $scope.defaultLanguage;
             $scope.survey.enabled_languages.default = language;
         }
-
     }
 
     function loadFormData() {
@@ -643,6 +642,13 @@ function SurveyEditorController(
     $scope.openLanguages = function() {
         ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
     }
+    $scope.removeLanguage = function(index) {
+        Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
+        .then(function() {
+            $scope.survey.enabled_languages.available.splice(index,1);
+            $scope.activeLanguage = $scope.defaultLanguage;
+        });
+    };
     $scope.switchToLanguage = function(language) {
         $scope.activeLanguage = language;
     }
