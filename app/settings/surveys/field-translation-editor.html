@@ -4,7 +4,7 @@
             <label translate>Translate field name</label>
             <div class="form-field framed">
                 <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-                <p>{{translateField.translations[defaultLanguage].label}}</p>
+                <p>{{translateField.label}}</p>
                
             </div>
             <p>Add your translation below:</p>
@@ -16,7 +16,7 @@
         <div class="form-field framed">
            <label>Translate field description:</label>
             <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-            <p>{{translateField.translations[defaultLanguage].instructions}}</p> 
+            <p>{{translateField.instructions}}</p> 
         </div>
         <p>Add your translation below:</p>
         <div class="form-field">
@@ -29,7 +29,7 @@
         <div class="form-field framed">
             <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
             <ol>
-                <li ng-repeat="(key, option) in translateField.translations[defaultLanguage].options track by $index" id={{key}}>{{translateField.translations[defaultLanguage].options[key]}}</li>
+                <li ng-repeat="(key, option) in translateField.options track by $index" id={{key}}>{{translateField.options[key]}}</li>
             </ol>
         </div>
 
@@ -47,7 +47,7 @@
         <label translate="app.default_value">Default value (optional):</label>
         <div class="form-field framed">
             <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-            <p>{{translateField.translations[defaultLanguage].default}}</p>
+            <p>{{translateField.default}}</p>
         </div>
         <div class="form-field">
             <div ng-switch="editField.input">

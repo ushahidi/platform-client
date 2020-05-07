@@ -33,8 +33,7 @@ SurveyEditorController.$inject = [
     'Features',
     'UshahidiSdk',
     'Session',
-    'Util'
-];
+    'Util'];
 function SurveyEditorController(
     $scope,
     $q,
@@ -101,14 +100,14 @@ function SurveyEditorController(
     $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
     $scope.roles = [];
+    $scope.languagesToSelect = require('./language-list.json');
 
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
     $scope.location_precision = 1000;
-    //TODO: Get from config!
-    $scope.languages = ['en', 'es', 'sw', 'fa-IR'];
-    $scope.activeLanguage = 'en';
-    $scope.defaultLanguage = 'en';
+    $scope.selectLanguage = selectLanguage;
+    $scope.showLangError = false;
+
     activate();
 
     function activate() {
@@ -160,7 +159,6 @@ function SurveyEditorController(
                             {
                                 cardinality: 0,
                                 input: 'text',
-
                                 priority: 1,
                                 required: true,
                                 type: 'title',
@@ -177,7 +175,7 @@ function SurveyEditorController(
                                 options: [],
                                 config: {},
                                 form_stage_id: getInterimId(),
-                                translations:getTranslationObject({label:'VOILA!'})
+                                translations:getTranslationObject({label:'Description'})
                             }
                         ],
                         is_public: true
@@ -273,6 +271,19 @@ function SurveyEditorController(
         });
     }
 
+
+    function selectLanguage (language) {
+        if ($scope.survey.enabled_languages.available.indexOf(language) > 1) {
+            $scope.showLangError = true;
+        } else {
+            $scope.showLangError = false;
+            $scope.defaultLanguage = language;
+            $scope.activeLanguage = $scope.defaultLanguage;
+            $scope.survey.enabled_languages.default = language;
+        }
+
+    }
+
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
@@ -280,6 +291,8 @@ function SurveyEditorController(
             //Getting roles for the survey
             // TODO: Double-check the structure
             $scope.survey = res;
+            $scope.defaultLanguage = $scope.survey.enabled_languages.default;
+            $scope.activeLanguage = $scope.defaultLanguage;
             getRoles($scope.survey.id);
             // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {

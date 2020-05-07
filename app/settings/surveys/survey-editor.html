@@ -60,13 +60,13 @@
           <!--  TODO: add placeholder text-->
             <label translate>survey.survey_name</label>
             <!-- Use once api handles translations  -->
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations[defaultLanguage].name">
+            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
         </div>
 
           <div class="form-field survey">
             <label translate>app.description</label>
             <!-- Use once api handles translations  -->
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations[defaultLanguage].description"></textarea>
+            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description"></textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
@@ -128,7 +128,7 @@
                   </div>
                   <h2 class="listing-item-title">
                     <!-- Use once api handles translations -->
-                      {{field.translations[defaultLanguage].label}}
+                      {{field.label}}
                     <span class="listing-item-image tooltip" ng-show="field.response_private">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
@@ -230,6 +230,26 @@
           </fieldset>
 
           <color-picker color-container="survey"></color-picker>
+
+          <div class="form-field select">
+            <label>Select default language for this survey</label>
+            <div class="custom-select">
+                <select
+                      ng-model="selectedLanguage"
+                      ng-options="lang.code as lang.name for lang in languagesToSelect"
+                      ng-value="lang.code"
+                      ng-change="selectLanguage(selectedLanguage)"
+                  >
+                      <option value="" translate="app.select_language">Select language</option>
+                  </select>
+            </div>
+            <div ng-show="showLangError" class="alert error">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <p>You cannot select this language since there is already a translation for it.</p>
+            </div>
+        </div>
           <!-- <fieldset data-fieldset-type="color">
               <legend><span class="swatch" style="background-color: #A51A1A;"></span>Survey color</legend>
               <p>Your survey's color will be used for map markers, and the left border of the survey and its responses.</p>
@@ -249,14 +269,14 @@
       <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-show="defaultLanguage === activeLanguage">
         <div class="form-field title section-title">
             <label class="hidden" translate="survey.task_name">Section name</label>
-            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.translations[defaultLanguage].label">
+            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
             <label class="hidden" translate="survey.task_description">Section description</label>
 
             <textarea
               name="description"
               placeholder="{{ 'survey.describe_this_task' | translate }}"
               rows="1"
-              ng-model="task.translations[defaultLanguage].description"
+              ng-model="task.description"
               ></textarea>
 
             <!-- <p class="alert">
@@ -345,7 +365,7 @@
                           </svg>
                       </div>
                       <h2 class="listing-item-title">
-                          {{field.translations[defaultLanguage].label}}
+                          {{field.label}}
                         <span class="listing-item-image tooltip" ng-show="field.response_private">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
