@@ -6,7 +6,8 @@
                 <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
                 <label class="checked">
                     <input type="checkbox" checklist-value="form.id" checklist-model="filters.form">
-                    <bdi>{{ ::form.name }}</bdi>
+                    <bdi ng-if="form.translations[userLanguage].name ">{{form.translations[userLanguage].name}}</bdi>
+                    <bdi ng-if="!form.translations[userLanguage].name">{{form.name}}</bdi>
                 </label>
             </div>
              <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>

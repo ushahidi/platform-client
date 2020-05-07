@@ -106,6 +106,7 @@ function (
                 UserEndpoint.update(user);
             });
         }
+        $rootScope.$broadcast('language:changed');
     };
 
     return {

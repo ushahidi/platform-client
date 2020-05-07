@@ -1,7 +1,7 @@
 module.exports = FormSelectDirective;
 
-FormSelectDirective.$inject = ['FormEndpoint'];
-function FormSelectDirective(FormEndpoint) {
+FormSelectDirective.$inject = ['$rootScope', 'UshahidiSdk', 'Session', 'Util', 'TranslationService'];
+function FormSelectDirective($rootScope, UshahidiSdk, Session, Util, TranslationService) {
     return {
         restrict: 'E',
         replace: true,
@@ -16,7 +16,9 @@ function FormSelectDirective(FormEndpoint) {
         if (!ngModel) {
             return;
         }
-
+        $rootScope.$on('language:changed', function () {
+            getUserLanguage();
+        });
         scope.forms = [];
         scope.selectedForms = [];
         scope.toggleAll = toggleAll;
@@ -32,11 +34,23 @@ function FormSelectDirective(FormEndpoint) {
         }
         function activate() {
             // Load forms
-            scope.forms = FormEndpoint.query();
+            const token = Session.getSessionDataEntry('accessToken');
+            const ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
+            ushahidi.getSurveys().then(surveys=>{
+                scope.forms = surveys;
+            });
+
+            getUserLanguage();
 
             scope.$watch('selectedForms', saveValueToView, true);
             scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
+        }
+
+        function getUserLanguage() {
+            TranslationService.getLanguage().then(language => {
+                scope.userLanguage = language;
+            });
         }
         function renderModelValue() {
             // Update selectedForms w/o breaking references used by checklist-model
