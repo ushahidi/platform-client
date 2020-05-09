@@ -562,10 +562,11 @@ function SurveyEditorController(
         // Save the survey
         //TODO: Use the sdk:
         $scope.removeInterimIds();
-        SurveysSdk.saveSurvey($scope.survey).then(res=>{
-             // Display success message
-             saveRoles();
-             SurveyNotify.success(
+        SurveysSdk.saveSurvey($scope.survey).then(response => {
+            $scope.survey = response.data.result;
+            saveRoles();
+            // Display success message
+            SurveyNotify.success(
                 'notify.form.edit_form_success',
                 { name: $scope.survey.name },
                 { formId: $scope.survey.id }
