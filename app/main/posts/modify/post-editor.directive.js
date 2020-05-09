@@ -36,7 +36,9 @@ PostEditorController.$inject = [
     '_',
     'PostActionsService',
     'MediaEditService',
-    '$state'
+    '$state',
+    'SurveysSdk',
+    'TranslationService'
   ];
 
 function PostEditorController(
@@ -61,7 +63,9 @@ function PostEditorController(
     _,
     PostActionsService,
     MediaEditService,
-    $state
+    $state,
+    SurveysSdk,
+    TranslationService
   ) {
 
     // Setup initial stages container
@@ -88,6 +92,7 @@ function PostEditorController(
 
     function activate() {
         $scope.post.form = $scope.form;
+        $scope.availableSurveyLanguages = [$scope.form.enabled_languages.default, ...$scope.form.enabled_languages.available];
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
@@ -102,6 +107,9 @@ function PostEditorController(
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
+        TranslationService.getLanguage().then(language => {
+            $scope.activeSurveyLanguage = {language};
+        });
     }
 
     function setVisibleStage(stageId) {
@@ -109,7 +117,7 @@ function PostEditorController(
     }
 
     function loadData() {
-
+            $scope.tasks = $scope.post.form.tasks;
         var requests = [
             FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
             FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
@@ -203,7 +211,7 @@ function PostEditorController(
                 // Return lowest priority incomplete task - not including post
                 incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
-            $scope.tasks = tasks;
+            // $scope.tasks = tasks;
         });
 
     }

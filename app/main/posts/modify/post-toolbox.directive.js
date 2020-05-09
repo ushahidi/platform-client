@@ -16,7 +16,9 @@ function PostToolboxDirective(
         restrict: 'E',
         scope: {
             post:  '=',
-            form: '='
+            form: '=',
+            availableLanguages: '=',
+            activeSurveyLanguage: '='
         },
         template: require('./post-toolbox.html'),
         link: PostToolboxLink
@@ -30,7 +32,7 @@ function PostToolboxDirective(
         $scope.showUserRealname = showUserRealname;
         $scope.showAuthorRealname = showAuthorRealname;
         $scope.loadAuthorFormDefaults = loadAuthorFormDefaults;
-
+        $scope.changeLanguage = changeLanguage;
         activate();
 
         function activate() {
@@ -43,6 +45,10 @@ function PostToolboxDirective(
         function changeStatus(status) {
             $scope.post.status = status;
             $scope.form.status.$setDirty();
+        }
+
+        function changeLanguage(language) {
+            $scope.activeSurveyLanguage.language = language;
         }
 
         // TODO: this function should be moved to a general service handling permissions

@@ -44,7 +44,8 @@
     </fieldset>
   </div>
   <!-- END: IF -->
-
+  <!-- Display in other languages (if translations are available) -->
+  <survey-language-selector available-languages="availableLanguages" active-survey-language="activeSurveyLanguage"></survey-language-selector>
   <!--// IF: User has permission to change the author & post timestamp //-->
   <div class="tool" dropdown auto-close="disabled" ng-if="allowedChangeOwner()">
     <h6 class="tool-heading" translate="post.author">Author</h6>

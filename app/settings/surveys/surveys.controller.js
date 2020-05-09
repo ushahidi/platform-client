@@ -8,9 +8,7 @@ module.exports = [
     'Notify',
     '_',
     'Features',
-    'UshahidiSdk',
-    'Util',
-    'Session',
+    'SurveysSdk',
 function (
     $scope,
     $rootScope,
@@ -20,7 +18,7 @@ function (
     Notify,
     _,
     Features,
-    UshahidiSdk,
+    SurveysSdk,
     Util,
     Session
 ) {
@@ -31,9 +29,6 @@ function (
     if ($rootScope.hasManageSettingsPermission() === false) {
         return $location.path('/');
     }
-
-    const token = Session.getSessionDataEntry('accessToken');
-    $scope.ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
 
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
@@ -49,11 +44,11 @@ function (
 
     // Get all the forms for display
     $scope.refreshForms = function () {
-        $scope.ushahidi.getSurveys().then(function (forms) {
+        SurveysSdk.getSurveys().then(function (forms) {
             $scope.forms = forms;
         });
     };
-    // use SDK?
+
     $scope.deleteSurvey = function (survey) {
         Notify.deleteWithInput('survey', survey.name).then(function () {
             // If we haven't saved the survey

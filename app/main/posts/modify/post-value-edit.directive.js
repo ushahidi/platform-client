@@ -11,7 +11,8 @@ function PostValueEdit() {
             attribute: '=',
             postField: '=',
             medias: '=',
-            categories: '='
+            categories: '=',
+            activeSurveyLanguage:'='
         },
         controller: PostValueEditController,
         template: require('./post-value-edit.html')

@@ -6,7 +6,8 @@
             <li><a href="/" ng-controller="navigation as nav"><bdi>{{nav.site.name}}</bdi></a></li>
         </ol>
 
-        <h1 class="mode-context-title"><bdi>{{post.form.name}}</bdi></h1>
+        <h1 class="mode-context-title">
+            <bdi>{{post.form.translations[activeSurveyLanguage.language].name || post.form.name}}</bdi></h1>
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
@@ -20,6 +21,7 @@
       <p markdown-to-html="post.form.description"></p>
     </div>
   </div>
+  
 
   <main role="main">
       <div class="toolbar">
@@ -48,19 +50,21 @@
 
       </div>
 
-     <div class="main-col">
+     <div class="full-col">
 
           <div class="form-sheet">
               <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
 
               <!-- Start Post custom fields -->
+
               <post-value-edit
-                  ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+                  ng-repeat="attribute in tasks[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
                   post-field=true
                   form="postForm"
                   medias="medias"
                   attribute="attribute"
+                  active-survey-language="activeSurveyLanguage"
               ></post-value-edit>
               <!-- End Post custom fields -->
               <!-- IF: Editing an existing post -->
@@ -76,7 +80,9 @@
              <!-- IF: User has permission to see other 'Tasks' -->
 
               <post-toolbox form="postForm" post="post"></post-toolbox>
-
+              <div class="toolbox">
+                <survey-language-selector available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage"></survey-language-selector>
+                </div>
 
          </div>
          <post-tabs

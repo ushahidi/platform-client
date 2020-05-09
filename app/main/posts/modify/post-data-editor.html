@@ -20,8 +20,11 @@
               ng-change="selectForm(form)"
               ng-model="post.form"
             >
-              <option selected disabled translate>post.unstructured.add_survey.choose</option>
-              <option ng-repeat="form in forms" ng-value="form">{{form.name}}</option>
+              <option selected disabled translate>post.unstructured.add_survey.choose</option>              
+              <option ng-repeat="form in forms" ng-value="form">
+                {{form.translations[activeSurveyLanguage].name || form.name}}
+              </option>
+
             </select>
           <div class="alert error" ng-show="editForm.form.$dirty" ng-repeat="(error, value) in editForm.form.$error">
             <svg class="iconic">
@@ -34,12 +37,13 @@
         <!-- Start Post custom fields -->
 
         <post-value-edit
-            ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+            ng-repeat="attribute in tasks[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
             post="post"
             post-field=true
             form="editForm"
             medias="medias"
             attribute="attribute"
+            active-survey-language="activeSurveyLanguage"
             ng-if="form"
         ></post-value-edit>
       </div>
@@ -53,7 +57,7 @@
         END: IF -->
         <!-- IF: User has permission to see other 'Tasks' -->
 
-        <post-toolbox form="editForm" post="post" ng-if="form"></post-toolbox>
+        <post-toolbox form="editForm" available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage" post="post" ng-if="form"></post-toolbox>
         <post-tabs
           ng-show="tasks.length > 1"
           form="editForm"

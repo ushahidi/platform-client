@@ -38,7 +38,9 @@ PostDataEditorController.$inject = [
     'MediaEditService',
     '$state',
     '$transitions',
-    'LoadingProgress'
+    'LoadingProgress',
+    'SurveysSdk',
+    'TranslationService'
 ];
 function PostDataEditorController(
     $scope,
@@ -65,7 +67,9 @@ function PostDataEditorController(
     MediaEditService,
     $state,
     $transitions,
-    LoadingProgress
+    LoadingProgress,
+    SurveysSdk,
+    TranslationService
   ) {
 
     // Setup initial stages container
@@ -178,14 +182,16 @@ function PostDataEditorController(
         if ($scope.post.form) {
             $scope.selectForm();
         } else {
-            FormEndpoint.queryFresh().$promise.then(function (results) {
-                $scope.forms = results;
-            });
+            SurveysSdk.getSurveys().then(forms => {
+                $scope.forms = forms;
+            })
         }
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
-
+        TranslationService.getLanguage().then(language => {
+            $scope.activeSurveyLanguage = {language};
+        });
     }
 
     function setVisibleStage(stageId) {
@@ -206,6 +212,10 @@ function PostDataEditorController(
     }
 
     function loadData() {
+        SurveysSdk.getSurveys(parseInt($scope.post.form.id)).then(form => {
+              $scope.tasks = form.tasks;
+              $scope.availableSurveyLanguages = [form.enabled_languages.default, ...form.enabled_languages.available]
+        })
 
         var requests = [
             FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
@@ -227,7 +237,6 @@ function PostDataEditorController(
                 $state.go('posts.data.detail', {view: 'data', postId: $scope.post.id});
                 return;
             }
-
             var post = $scope.post;
             var tasks = _.sortBy(results[0], 'priority');
             var attributes = _.chain(results[1])
@@ -305,7 +314,7 @@ function PostDataEditorController(
                 // Return lowest priority incomplete task - not including post
                 incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
-            $scope.tasks = tasks;
+            // $scope.tasks = tasks;
         });
 
     }

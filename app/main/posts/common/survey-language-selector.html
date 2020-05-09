@@ -1,0 +1,36 @@
+
+<!-- Display in other languages (if translations are available) -->
+<div class="tool" dropdown ng-show="availableLanguages.length > 1">
+    <fieldset class="custom-fieldset init">
+      <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+        <span class="legend-label">
+          <span class="custom-fieldset-value">
+            <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#globe"></use>
+            </svg>
+            <span>View this survey in another language</span>
+          </span>
+        </span>
+        <svg class="iconic chevron">
+          <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+        </svg>
+      </legend>
+      <div class="toggle-content form-field init" dropdown-menu>
+        <div class="form-field radio icon-input"
+             name="lang"
+             ng-repeat="lang in availableLanguages"
+             ng-click="changeLanguage(lang)"
+             ng-model="activeSurveyLanguage"
+             >
+          <label for="{{lang}}">
+            <svg class="iconic">
+              <use xlink:href="/img/iconic-sprite.svg#globe"></use>
+              </svg>
+          <input type="radio" id="{{lang}}"  />
+          <span>{{'languages.' +lang | translate}}
+          </span>
+        </label>
+      </div>
+      </div>
+    </fieldset>
+  </div>

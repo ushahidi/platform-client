@@ -31,9 +31,7 @@ SurveyEditorController.$inject = [
     'SurveyNotify',
     'ModalService',
     'Features',
-    'UshahidiSdk',
-    'Session',
-    'Util'];
+    'SurveysSdk'];
 function SurveyEditorController(
     $scope,
     $q,
@@ -52,9 +50,7 @@ function SurveyEditorController(
     SurveyNotify,
     ModalService,
     Features,
-    UshahidiSdk,
-    Session,
-    Util
+    SurveysSdk
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -110,21 +106,16 @@ function SurveyEditorController(
     activate();
 
     function activate() {
-        const token = Session.getSessionDataEntry('accessToken');
-        $scope.ushahidi = new UshahidiSdk.Surveys(Util.url(''), token);
         $scope.tab_history = {};
 
         // Set initial menu tab
         $scope.switchTab('post', 'survey-build');
-        // TODO: Connect to SDK
         $scope.loadRoleData();
         $scope.save = $translate.instant('app.save');
         $scope.saving = $translate.instant('app.saving');
-        // TODO: Connect to SDK
         ConfigEndpoint.get({id: 'map'}, function (map) {
             $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
         });
-        // TODO: Connect to SDK
         Features.loadFeatures()
         .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
@@ -137,7 +128,7 @@ function SurveyEditorController(
             // When creating new survey
             // pre-fill object with default tasks and attributes
             $scope.survey =    {
-                enabled_languages:{default:null, available:[]},
+                enabled_languages:{default:'en', available:[]},
                 color: null,
                 require_approval: true,
                 everyone_can_create: true,
@@ -241,7 +232,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        $scope.ushahidi.getSurveys().then(function (forms) {
+        SurveysSdk.getSurveys().then(function (forms) {
             $scope.availableForms = forms.results;
         });
     }
@@ -271,7 +262,7 @@ function SurveyEditorController(
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        $scope.ushahidi.getSurveys(parseInt($scope.surveyId)).then(res => {
+        SurveysSdk.getSurveys(parseInt($scope.surveyId)).then(res => {
             //Getting roles for the survey
             // TODO: Double-check the structure
             $scope.survey = res;
@@ -487,7 +478,6 @@ function SurveyEditorController(
             task.fields.push(field);
         }
     }
-    //is this done automatically in the new form-endpoint?
     function deleteField(field, task) {
         Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
             // If we have not yet saved this field

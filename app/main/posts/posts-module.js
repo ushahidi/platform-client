@@ -40,7 +40,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterPostOrderAscDesc', require('./views/filters/filter-post-order-asc-desc.directive.js'))
 .directive('filterUnlockedOnTop', require('./views/filters/filter-unlocked-on-top.directive.js'))
 .directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
-
+.directive('surveyLanguageSelector', require('./common/survey-language-selector.directive.js'))
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
 .directive('postViewMap', require('./views/post-view-map.directive.js'))

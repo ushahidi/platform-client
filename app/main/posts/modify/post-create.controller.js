@@ -6,7 +6,7 @@ module.exports = [
     '$transition$',
     'PostEntity',
     'PostEndpoint',
-    'FormEndpoint',
+    'SurveysSdk',
 function (
     $scope,
     $translate,
@@ -15,7 +15,7 @@ function (
     $transition$,
     postEntity,
     PostEndpoint,
-    FormEndpoint
+    SurveysSdk
 ) {
     $translate('post.create_post').then(function (title) {
         $scope.title = title;
@@ -28,7 +28,7 @@ function (
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
 
-    FormEndpoint.getFresh({ id: $transition$.params().id }).$promise.then(function (form) {
+    SurveysSdk.getSurveys(parseInt($transition$.params().id)).then(function (form) {
         $scope.form = form;
     });
 }];
