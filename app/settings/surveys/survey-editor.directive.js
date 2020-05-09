@@ -558,11 +558,11 @@ function SurveyEditorController(
     //Start - modify Survey
     function saveSurvey() {
         // Set saving to true to disable user actions
-        $scope.saving_survey = true;
+        // $scope.saving_survey = true;
         // Save the survey
         //TODO: Use the sdk:
         $scope.removeInterimIds();
-        $scope.forms.saveForm(survey).then(res=>{
+        SurveysSdk.saveSurvey($scope.survey).then(res=>{
              // Display success message
              saveRoles();
              SurveyNotify.success(

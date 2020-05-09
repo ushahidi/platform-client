@@ -14,5 +14,9 @@ function (
         return ushahidi.getSurveys(id);
     }
 
-    return {getSurveys};
+    const saveSurvey = function(survey) {
+        return ushahidi.saveSurvey(survey);
+    }
+
+    return {getSurveys, saveSurvey};
 }];

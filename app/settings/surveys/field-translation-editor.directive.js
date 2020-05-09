@@ -43,7 +43,7 @@ function FieldTranslationEditor($rootScope, Editor, ModalService) {
                 translateField.translations = {};
                 translateField.translations[$scope.activeLanguage] = {};
             }
-            editField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
+            translateField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
             ModalService.close();
         }
     }
