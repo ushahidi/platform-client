@@ -5,7 +5,6 @@ describe('post editor directive', function () {
         isolateScope,
         Notify,
         element;
-
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
@@ -54,10 +53,15 @@ describe('post editor directive', function () {
 
         $scope.form = {
             id: 1,
+            enabled_languages: {
+                default: 'en',
+                available : ['es']
+            },
             name: 'test form',
             type: 'Report',
             description: 'Testing form',
-            created: '1970-01-01T00:00:00+00:00'
+            created: '1970-01-01T00:00:00+00:00',
+            tasks:[{id:42}, {id:43}]
         };
 
         element = '<post-editor post="post" form="form"></post-editor>';

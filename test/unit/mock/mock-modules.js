@@ -55,6 +55,7 @@ angular.module('ushahidi.mock', [])
 .value('translateFilter', function (value) {
     return value;
 })
+.service('SurveysSdk', require('./services/sdk/SurveysSdk.js'))
 
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))
 .factory('socket', require('./factories/socket-factory.mock.js'))

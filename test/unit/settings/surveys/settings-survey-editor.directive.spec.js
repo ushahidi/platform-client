@@ -106,7 +106,7 @@ describe('setting survey editor directive', function () {
     it('it should switch activeLanguage', function() {
         compile();
         let isolateScope = element.isolateScope();
-        expect(isolateScope.activeLanguage).toEqual('en-EN');
+        expect(isolateScope.activeLanguage).toBeUndefined;
         isolateScope.switchToLanguage('es-ES');
         expect(isolateScope.activeLanguage).toEqual('es-ES');
 
