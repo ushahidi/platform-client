@@ -73,7 +73,7 @@
       <div class="listing init" style="margin-left: 4px;">
         <h2 class="listing-heading" >Fields (click to add translation):</h2>
         <div class="listing-item" ng-repeat="field in task.fields track by $index" >
-          <div class="listing-item-primary" ng-click="openfield(field)">
+          <div class="listing-item-primary" ng-click="openField(field)">
               <h2 class="listing-item-title">
                 {{field.translations[activeLanguage].label || field.label}}
               </h2>
