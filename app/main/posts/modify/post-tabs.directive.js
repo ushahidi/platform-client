@@ -7,8 +7,8 @@ function PostVerticalTabs() {
         scope: {
             form: '=',
             post: '=',
-            stages: '=',
-            attributes: '=',
+            tasks: '=',
+            fields: '=',
             visibleStage: '=',
             medias: '='
         },

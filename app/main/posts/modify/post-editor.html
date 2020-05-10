@@ -82,15 +82,15 @@
               <post-toolbox form="postForm" post="post"></post-toolbox>
               <div class="toolbox">
                 <survey-language-selector available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage"></survey-language-selector>
-                </div>
+            </div>
 
          </div>
          <post-tabs
              ng-show="tasks.length > 1"
              form="postForm"
              post="post"
-             stages="tasks"
-             attributes="attributes"
+             tasks="tasks"
+             fields="fields"
              medias="medias"
              visible-stage="visibleStage">
           </post-tabs>

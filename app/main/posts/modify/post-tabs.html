@@ -1,6 +1,6 @@
-<div class="form-sheet" ng-repeat="stage in stages | limitTo: 1 - stages.length">
+<div class="form-sheet" ng-repeat="task in tasks | limitTo: 1 - tasks.length">
     <header class="form-sheet-summary">
-        <h1 class="form-sheet-title section-title">{{stage.label}}</h1>
+        <h1 class="form-sheet-title section-title">{{task.label}}</h1>
     </header>
     <div ng-show="stage.show_when_published" class="alert">
         <p translate="survey.task_visible_when_published">This task will be visible when post is published</p>
@@ -23,10 +23,10 @@
         </div>
     </div>
     <post-value-edit
-            ng-repeat="attribute in stage.attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+            ng-repeat="field in task.fields | orderBy: 'priority' as filtered_result track by field.id"
             post="post"
             form="form"
             medias="medias"
-            attribute="attribute"
+            attribute="field"
     ></post-value-edit>
 </div>
