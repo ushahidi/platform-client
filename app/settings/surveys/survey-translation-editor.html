@@ -8,11 +8,8 @@
         <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
         <p>{{survey.name}}</p>
         </div>
-        <!-- TODO: Use this when backend is ready -->
-        <!-- <p>{{survey.translations[activeLanguage].name}}</p> -->
-        <!-- TODO: add ng-model for translation -->
         <p>Add your translation below:</p>
-        <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.translations[activeLanguage].name">
+        <input type="text" placeholder="Write your translation here" ng-model="survey.translations[activeLanguage].name">
     </div>
 
       <div class="form-field survey">
@@ -24,7 +21,7 @@
         </div>
         <p>Add your translation below:</p>
         <!-- TODO: add ng-model for translation -->
-        <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.translations[activeLanguage].description"></textarea>
+        <textarea placeholder="Write your translation here" ng-model="survey.translations[activeLanguage].description"></textarea>
     </div>
 
     <div class="survey-details" >
@@ -34,8 +31,6 @@
             <div class="listing-item-primary" ng-click="openField(field)">
                 <h2 class="listing-item-title">
                   {{field.translations[activeLanguage].label || field.label}}
-                  <!-- TODO: Use this when backend is ready -->    
-                    <!-- {{attribute.translations[activeLanguage].label}} -->
                 </h2>
             </div>
           </div>
@@ -57,7 +52,7 @@
           <p>{{task.label}}</p>
           </div>
         <p>Add your translation:</p>
-        <input type="text" placeholder="{{ 'survey.task_name' | translate }}" ng-model="task.translations[activeLanguage].label">
+        <input type="text" placeholder="Write your translation here" ng-model="task.translations[activeLanguage].label">
     </div>
 
       <div class="form-field survey">
@@ -67,7 +62,7 @@
             <p>{{task.description}}</p>
         </div>
         <p>Add your translation:</p>
-        <textarea placeholder="{{ 'survey.task_description' | translate }}" ng-model="task.translations[activeLanguage].description"></textarea>
+        <textarea placeholder="Write your translation here" ng-model="task.translations[activeLanguage].description"></textarea>
     </div>
     <div class="survey-details" >
       <div class="listing init" style="margin-left: 4px;">

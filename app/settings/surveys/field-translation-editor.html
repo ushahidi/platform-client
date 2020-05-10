@@ -8,7 +8,7 @@
                
             </div>
             <p>Add your translation below:</p>
-            <input type="text" ng-model="translateField.translations[activeLanguage].label" ng-required="true" placeholder="Add your translation">
+            <input type="text" ng-model="translateField.translations[activeLanguage].label" ng-required="true" placeholder="Write your translation here">
         </form>
      </div>
 
@@ -37,7 +37,7 @@
             <p>Add your translation below:</p>
                <ol>
                     <li ng-repeat="(key, option) in translateField.options track by $index" key={{key}}>
-                        <input class="input-inline" type="text" placeholder="{{ 'form.field_option_placeholder'| translate }}" ng-model="translateField.translations[activeLanguage].options[key]">
+                        <input class="input-inline" type="text" placeholder="Write your translation here" ng-model="translateField.translations[activeLanguage].options[key]">
                     </li>
                 </ol> 
         </div>
@@ -51,18 +51,13 @@
         </div>
         <div class="form-field">
             <div ng-switch="editField.input">
-                <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editField.translations[activeLanguage].default">
+                <input ng-switch-when="location" type="text" placeholder="Write your translation here" ng-model="editField.translations[activeLanguage].default">
                 <input ng-switch-when="date" type="text" date-time="editField.default" ng-model="editField.translations[activeLanguage].default">
                 <input ng-switch-when="int" type="number" step="1" ng-model="editField.translations[activeLanguage].default">
                 <input ng-switch-when="decimal" type="number" ng-model="editField.translations[activeLanguage].default">
-                <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editField.translations[activeLanguage].default">
+                <input ng-switch-default type="text" placeholder="Write your translation here" ng-model="editField.translations[activeLanguage].default">
             </div>
         </div>
-    </div>
-    
-    <div class="form-field" ng-if="editField.input ==='tags'">
-        <label translate>The categories themselves needs to be translated in the Settings->Categories section.</label>
-        <a href="/settings/categories" target="_blank">Open Categories-settings in a new tab</a>
     </div>
 
     <div class="form-field">
