@@ -26,6 +26,7 @@ function AddLanguageController($rootScope, $scope, ModalService) {
 
     function add() {
         if (!$scope.showLangError) {
+            $scope.switchToLanguage($scope.selectedLanguage);
             $scope.survey.enabled_languages.available.push($scope.selectedLanguage);
             ModalService.close();
         }

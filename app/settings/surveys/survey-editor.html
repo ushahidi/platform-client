@@ -43,7 +43,7 @@
           {{'languages.' + defaultLanguage | translate}}
             <span> ({{'translations.default' | translate}})</span>
         </button>
-        <button ng-repeat="language in survey.enabled_languages.available track by $index"" type="button" class="button button-tab" ng-class="{'active': activeLanguage === language}" ng-click="switchToLanguage(language)">
+        <button ng-repeat="language in survey.enabled_languages.available track by $index" type="button" class="button button-tab" ng-class="{'active': activeLanguage === language}" ng-click="switchToLanguage(language)">
           {{('languages.' + language) | translate}}
             <svg class="iconic" ng-click="removeLanguage($index)">
                 <use xlink:href="/img/iconic-sprite.svg#x"></use>
