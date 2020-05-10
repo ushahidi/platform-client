@@ -37,13 +37,13 @@ function FieldTranslationEditor($rootScope, Editor, ModalService) {
 
         initiateEditor();
 
-        function save(translateField, task) {
-            $scope.translateEditor.setMarkdown($scope.translateField.translations[$scope.activeLanguage].instructions);
-            if (!translateField.translations[$scope.activeLanguage]) {
-                translateField.translations = {};
-                translateField.translations[$scope.activeLanguage] = {};
+        function save() {
+
+            if (!$scope.translateField.translations[$scope.activeLanguage]) {
+                $scope.translateField.translations = {};
+                $scope.translateField.translations[$scope.activeLanguage] = {};
             }
-            translateField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
+            $scope.translateField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
             ModalService.close();
         }
     }

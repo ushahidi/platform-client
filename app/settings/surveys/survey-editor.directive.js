@@ -31,7 +31,8 @@ SurveyEditorController.$inject = [
     'SurveyNotify',
     'ModalService',
     'Features',
-    'SurveysSdk'];
+    'SurveysSdk',
+    'TranslationService'];
 function SurveyEditorController(
     $scope,
     $q,
@@ -50,7 +51,8 @@ function SurveyEditorController(
     SurveyNotify,
     ModalService,
     Features,
-    SurveysSdk
+    SurveysSdk,
+    TranslationService
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -116,11 +118,23 @@ function SurveyEditorController(
         ConfigEndpoint.get({id: 'map'}, function (map) {
             $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
         });
+
         Features.loadFeatures()
         .then(() => {
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
             $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
         });
+        TranslationService.getLanguage().then(language => {
+            //active language is the same as default when starting out.
+            if (!$scope.survey.enabled_languages) {
+                $scope.survey.enabled_languages = {
+                    default: language,
+                    available: []
+                }
+            }
+            $scope.defaultLanguage = language;
+            $scope.activeLanguage = language;
+            });
 
         if ($scope.surveyId) {
             loadFormData();
@@ -128,7 +142,6 @@ function SurveyEditorController(
             // When creating new survey
             // pre-fill object with default tasks and attributes
             $scope.survey =    {
-                enabled_languages:{default:'en', available:[]},
                 color: null,
                 require_approval: true,
                 everyone_can_create: true,
@@ -171,7 +184,6 @@ function SurveyEditorController(
                     }
                 ]
             };
-
             $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
@@ -197,11 +209,7 @@ function SurveyEditorController(
     function onlyOptional(editField) {
         return editField.type !== 'title' && editField.type !== 'description';
     }
-    function getTranslationObject(object) {
-        let obj = {};
-        obj[$scope.defaultLanguage] = object;
-        return obj;
-    }
+
     function switchTab(section, tab) {
         // First unset last active tab
         var old_tab = $scope.tab_history[section];
@@ -262,12 +270,10 @@ function SurveyEditorController(
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        SurveysSdk.getSurveys(parseInt($scope.surveyId)).then(res => {
+        SurveysSdk.getSurveys($scope.surveyId).then(res => {
             //Getting roles for the survey
-            // TODO: Double-check the structure
             $scope.survey = res;
             $scope.defaultLanguage = $scope.survey.enabled_languages.default;
-            //active language is the same as default when starting out.
             $scope.activeLanguage = $scope.defaultLanguage;
             getRoles($scope.survey.id);
             // removing data if duplicated survey
@@ -560,8 +566,8 @@ function SurveyEditorController(
         // Set saving to true to disable user actions
         // $scope.saving_survey = true;
         // Save the survey
-        //TODO: Use the sdk:
         $scope.removeInterimIds();
+        console.log($scope.survey)
         SurveysSdk.saveSurvey($scope.survey).then(response => {
             $scope.survey = response.data.result;
             saveRoles();
