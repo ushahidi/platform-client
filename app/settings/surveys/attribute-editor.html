@@ -50,14 +50,14 @@
     <!-- End of editing/adding categories -->
         <div class="form-field" ng-if="editField.input === 'relation'">
             <label translate>survey.field_allowed_relation_survey</label>
-            <ul name="visible-to">
-               <li ng-repeat="relationForm in availableForms | filter : filterNotCurrentForm">
+            <div name="visible-to">
+               <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
                    <label>
                        <input type="checkbox" checklist-model="editField.config.input.form" checklist-value="relationForm.id" />
                         {{relationForm.name}}
                    </label>
-               </li>
-            </ul>
+                  </div>
+              </div>
         </div>
         <div class="form-field switch" ng-show="onlyOptional() && editField.input !== 'tags'">
           <label translate="survey.required">Require this field be completed</label>
