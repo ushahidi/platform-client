@@ -23,7 +23,9 @@ function (
     }
 
     const deleteSurvey = function(id) {
-        return ushahidi.deleteSurvey(id);
+        return ushahidi
+                .setToken(Session.getSessionDataEntry('accessToken'))
+                .deleteSurvey(id);
     }
 
     return {getSurveys, saveSurvey, deleteSurvey};
