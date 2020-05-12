@@ -22,5 +22,9 @@ function (
             .saveSurvey(survey);
     }
 
-    return {getSurveys, saveSurvey};
+    const deleteSurvey = function(id) {
+        return ushahidi.deleteSurvey(id);
+    }
+
+    return {getSurveys, saveSurvey, deleteSurvey};
 }];

@@ -58,9 +58,7 @@ function (
                 return;
             }
 
-            FormEndpoint.delete({
-                id: survey.id
-            }).$promise.then(function () {
+            SurveysSdk.deleteSurvey(survey.id).then(function () {
                 Notify.notify('notify.form.destroy_form_success', { name: survey.name });
                 $scope.refreshForms();
             }, $scope.handleResponseErrors);
