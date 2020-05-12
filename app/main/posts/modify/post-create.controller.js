@@ -27,8 +27,5 @@ function (
     PostEndpoint.options().$promise.then(function (options) {
         $scope.post.allowed_privileges = options.allowed_privileges;
     });
-
-    SurveysSdk.getSurveys(parseInt($transition$.params().id)).then(function (form) {
-        $scope.form = form;
-    });
+    $scope.formId = $transition$.params().id;
 }];

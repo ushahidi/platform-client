@@ -241,7 +241,7 @@ function SurveyEditorController(
     function loadAvailableForms() {
         // Get available forms for relation field
         SurveysSdk.getSurveys().then(function (forms) {
-            $scope.availableForms = forms.results;
+            $scope.availableSurveys = forms;
         });
     }
     function loadAvailableCategories() {
@@ -275,10 +275,12 @@ function SurveyEditorController(
             $scope.survey = res;
             $scope.defaultLanguage = $scope.survey.enabled_languages.default;
             $scope.activeLanguage = $scope.defaultLanguage;
+            _.each($scope.survey.tasks, (task => {
+                delete task.icon;
+            }));
             getRoles($scope.survey.id);
             // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {
-                $scope.survey.translations[$scope.defaultLanguage] = {};
                 delete $scope.survey.id;
                 delete $scope.survey.created;
                 delete $scope.survey.updated;
@@ -567,7 +569,7 @@ function SurveyEditorController(
         // $scope.saving_survey = true;
         // Save the survey
         $scope.removeInterimIds();
-        console.log($scope.survey)
+        $scope.survey.base_language = $scope.survey.enabled_languages.default;
         SurveysSdk.saveSurvey($scope.survey).then(response => {
             $scope.survey = response.data.result;
             saveRoles();

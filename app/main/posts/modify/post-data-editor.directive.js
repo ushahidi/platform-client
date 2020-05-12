@@ -212,16 +212,7 @@ function PostDataEditorController(
     }
 
     function loadData() {
-        SurveysSdk.getSurveys(parseInt($scope.post.form.id)).then(form => {
-              $scope.tasks = form.tasks;
-              $scope.availableSurveyLanguages = [form.enabled_languages.default, ...form.enabled_languages.available]
-        })
-
-        var requests = [
-            FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
-            TagEndpoint.queryFresh().$promise
-        ];
+        var requests = [SurveysSdk.getSurveys(parseInt($scope.post.form.id)), TagEndpoint.queryFresh().$promise];
 
         // If existing Post attempt to acquire lock
         if ($scope.post.id) {
@@ -229,94 +220,84 @@ function PostDataEditorController(
         }
 
         return $q.all(requests).then(function (results) {
-
-            if ($scope.post.id && !results[3]) {
+            if ($scope.post.id && !results[2]) {
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
                 $state.go('posts.data.detail', {view: 'data', postId: $scope.post.id});
                 return;
             }
-            var post = $scope.post;
-            var tasks = _.sortBy(results[0], 'priority');
-            var attributes = _.chain(results[1])
-                .sortBy('priority')
-                .value();
-            var categories = results[2];
 
+            $scope.tasks = results[0].tasks;
+            $scope.availableSurveyLanguages = [results[0].enabled_languages.default, ...results[0].enabled_languages.available]
+
+            var post = $scope.post;
+            var categories = results[1];
             // Set Post Lock
-            $scope.post.lock = results[3];
+            $scope.post.lock = results[2];
 
             // Initialize values on post (helps avoid madness in the template)
-            attributes.map(function (attr) {
-                // Create associated media entity
-                if (attr.input === 'upload') {
-                    $scope.medias[attr.key] = {};
-                }
-                if (attr.input === 'tags') {
-                    // adding category-objects attribute-options
-                    attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
-                }
-
-                // @todo don't assign default when editing? or do something more sane
-                if (!$scope.post.values[attr.key]) {
-                    if (attr.input === 'location') {
-                        // Prepopulate location fields from message location
-                        if ($scope.post.values.message_location) {
-                            $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
+            $scope.tasks.map(task => {
+                task.fields.map (attr => {
+                    // Create associated media entity
+                    if (attr.input === 'upload') {
+                        $scope.medias[attr.key] = {};
+                    }
+                    if (attr.input === 'tags') {
+                        // adding category-objects attribute-options
+                        attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
+                    }
+                    // @todo don't assign default when editing? or do something more sane
+                    if (!$scope.post.values[attr.key]) {
+                        if (attr.input === 'location') {
+                            // Prepopulate location fields from message location
+                            if ($scope.post.values.message_location) {
+                                $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
+                            } else {
+                                $scope.post.values[attr.key] = [null];
+                            }
+                        }  else if (attr.input === 'number') {
+                            $scope.post.values[attr.key] = [parseInt(attr.default)];
+                        } else if (attr.input === 'date' || attr.input === 'datetime') {
+                            $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
                         } else {
-                            $scope.post.values[attr.key] = [null];
+                            $scope.post.values[attr.key] = [attr.default];
                         }
-                    }  else if (attr.input === 'number') {
-                        $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
-                        $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
-                    } else {
-                        $scope.post.values[attr.key] = [attr.default];
+                        // Date picker requires date object
+                        // ensure that dates are preserved in UTC
+                        if ($scope.post.values[attr.key][0]) {
+                            $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).toDate();
+                        }
+                    } else if (attr.input === 'number') {
+                        // Number input requires a number
+                        if ($scope.post.values[attr.key][0]) {
+                            $scope.post.values[attr.key][0] = parseFloat($scope.post.values[attr.key][0]);
+                        }
+                    } else if (attr.input === 'tags') {
+                        // tag.id needs to be a number
+                        if ($scope.post.values[attr.key]) {
+                            $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
+                                return parseInt(id);
+                            });
+                        }
                     }
-                } else if (attr.input === 'date' || attr.input === 'datetime') {
-                    // Date picker requires date object
-                    // ensure that dates are preserved in UTC
-                    if ($scope.post.values[attr.key][0]) {
-                        $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).toDate();
-                    }
-                } else if (attr.input === 'number') {
-                    // Number input requires a number
-                    if ($scope.post.values[attr.key][0]) {
-                        $scope.post.values[attr.key][0] = parseFloat($scope.post.values[attr.key][0]);
-                    }
-                } else if (attr.input === 'tags') {
-                    // tag.id needs to be a number
-                    if ($scope.post.values[attr.key]) {
-                        $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
-                            return parseInt(id);
-                        });
-                    }
-                }
-            });
-
-            _.each(tasks, function (task) {
-                task.attributes = _.filter(attributes, function (attribute) {
-                    return attribute.form_stage_id === task.id;
                 });
             });
-
             // If number of completed stages matches number of tasks - not including Post,
             // assume they're all complete, and just show the first task
-            if (post.completed_stages.length === tasks.length - 1 && tasks.length > 1) {
-                $scope.setVisibleStage(tasks[1].id);
+            if (post.completed_stages.length === $scope.tasks.length - 1 && $scope.tasks.length > 1) {
+                $scope.setVisibleStage($scope.tasks[1].id);
             } else {
                 // Get incomplete stages
-                var incompleteStages = _.filter(tasks, function (task) {
+                var incompleteStages = _.filter($scope.tasks, function (task) {
                     return !_.contains(post.completed_stages, task.id);
                 });
 
                 // Return lowest priority incomplete task - not including post
                 incompleteStages.length > 1 ? $scope.setVisibleStage(incompleteStages[1].id) : '';
             }
-            // $scope.tasks = tasks;
         });
-
     }
 
     function canSavePost() {
