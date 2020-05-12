@@ -72,14 +72,16 @@ function (
     };
 
     $scope.getLanguages = function (enabled_languages) {
-        let languages = [...enabled_languages.available];
-        languages.push(enabled_languages.default);
-        let languageString = languages.length > 1 ? $translate.instant('translations.languages') : $translate.instant('translations.language');
-        _.each(languages,(language, index) => {
-            let divider = index !== 0 ? ',' : ':';
-            languageString = `${languageString + divider} ${$translate.instant(`languages.${language}`)}`;
+        let languages = [enabled_languages.default, ...enabled_languages.available];
+        languages = _.without(languages, "");
+        if (languages.length > 0) {
+            let languageString = languages.length > 1 ? $translate.instant('translations.languages') : $translate.instant('translations.language');
+            _.each(languages,(language, index) => {
+                let divider = index !== 0 ? ',' : ':';
+                languageString = `${languageString + divider} ${$translate.instant(`languages.${language}`)}`;
         });
-        return languageString;
+            return languageString;
+        }
     }
     $scope.refreshForms();
 }];

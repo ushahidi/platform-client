@@ -72,7 +72,7 @@
                             <a ui-sref="settings.surveys.targeted.published({id: form.id})" ng-show="form.targeted_survey && targetedSurveysEnabled">{{form.name}}</a>
 
                         <p class="listing-item-secondary" markdown-to-html="form.description"></p>
-                        <p class="listing-item-languages" ng-if="form.enabled_languages" translate={{getLanguages(form.enabled_languages)}}></p>
+                        <p class="listing-item-languages" ng-show="form.enabled_languages" >{{getLanguages(form.enabled_languages)}}</p>
                     </div>
                 </div>
 
