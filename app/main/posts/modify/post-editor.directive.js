@@ -132,7 +132,6 @@ function PostEditorController(
                 $state.go('posts.data.detail', {view: 'data', postId: $scope.post.id});
                 return;
             }
-            console.log('here')
             $scope.post.form = results[0];
             $scope.tasks = results[0].tasks;
             $scope.availableSurveyLanguages = [results[0].enabled_languages.default, ...results[0].enabled_languages.available]

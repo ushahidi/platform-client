@@ -184,6 +184,7 @@ function PostDataEditorController(
         } else {
             SurveysSdk.getSurveys().then(forms => {
                 $scope.forms = forms;
+                $scope.$apply();
             })
         }
         $scope.medias = {};

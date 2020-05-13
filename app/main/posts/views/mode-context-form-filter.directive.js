@@ -46,6 +46,7 @@ function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurv
         // Load forms
         SurveysSdk.getSurveys().then(forms => {
             $scope.forms = forms;
+            $scope.$apply();
         });
         getUserLanguage();
         var postCountRequest = getPostStats($scope.filters);

@@ -46,6 +46,7 @@ function (
     $scope.refreshForms = function () {
         SurveysSdk.getSurveys().then(function (forms) {
             $scope.forms = forms;
+            $scope.$apply();
         });
     };
 

@@ -36,6 +36,7 @@ function FormSelectDirective($rootScope, TranslationService, SurveysSdk) {
             // Load forms
             SurveysSdk.getSurveys().then(surveys => {
                 scope.forms = surveys;
+                scope.$apply();
             });
 
             getUserLanguage();
