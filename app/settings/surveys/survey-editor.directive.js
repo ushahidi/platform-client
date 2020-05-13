@@ -302,7 +302,7 @@ function SurveyEditorController(
                     task.id = $scope.getInterimId();
                     delete task.url;
 
-                    _.each(task.fieldss, function (field) {
+                    _.each(task.fields, function (field) {
                         field.form_stage_id = task.id;
                         delete field.id;
                         delete field.url;
@@ -575,7 +575,7 @@ function SurveyEditorController(
     //Start - modify Survey
     function saveSurvey() {
         // Set saving to true to disable user actions
-        // $scope.saving_survey = true;
+        $scope.saving_survey = true;
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
