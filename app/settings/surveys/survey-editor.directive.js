@@ -570,7 +570,7 @@ function SurveyEditorController(
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
-        SurveysSdk.saveSurvey().then(response => {
+        SurveysSdk.saveSurvey($scope.survey).then(response => {
             $scope.survey = response.data.result;
             saveRoles();
             // Display success message
