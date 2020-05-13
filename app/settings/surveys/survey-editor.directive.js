@@ -274,6 +274,14 @@ function SurveyEditorController(
             //Getting roles for the survey
             $scope.survey = res;
             $scope.defaultLanguage = $scope.survey.enabled_languages.default;
+
+            // Making sure translations are of type objects
+            _.map($scope.survey.tasks, task=>{
+                task.translations = Object.assign({}, task.translations);
+                _.map(task.fields,field => {
+                    field.translations = Object.assign({},field.translations);
+                });
+            });
             $scope.activeLanguage = $scope.defaultLanguage;
             _.each($scope.survey.tasks, (task => {
                 delete task.icon;
@@ -486,6 +494,7 @@ function SurveyEditorController(
             task.fields.push(field);
         }
     }
+
     function deleteField(field, task) {
         Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
             // If we have not yet saved this field
@@ -570,6 +579,7 @@ function SurveyEditorController(
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
+        console.log($scope.survey)
         SurveysSdk.saveSurvey($scope.survey).then(response => {
             $scope.survey = response.data.result;
             saveRoles();

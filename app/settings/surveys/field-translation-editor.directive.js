@@ -5,7 +5,6 @@ function FieldTranslationEditor($rootScope, Editor, ModalService) {
         template: require('./field-translation-editor.html'),
         link: function($scope, $element, $attrs) {
             $scope.save = save;
-
             const initiateEditor = function () {
                 const editorHeight = 180;
 
@@ -38,11 +37,6 @@ function FieldTranslationEditor($rootScope, Editor, ModalService) {
         initiateEditor();
 
         function save() {
-
-            if (!$scope.translateField.translations[$scope.activeLanguage]) {
-                $scope.translateField.translations = {};
-                $scope.translateField.translations[$scope.activeLanguage] = {};
-            }
             $scope.translateField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
             ModalService.close();
         }

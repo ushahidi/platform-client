@@ -14,11 +14,15 @@ function SurveyTranslationEditor() {
     };
 }
 
-SurveyTranslationEditorController.$inject = ['$scope', 'ModalService'];
-function SurveyTranslationEditorController($scope, ModalService) {
+SurveyTranslationEditorController.$inject = ['$scope', 'ModalService','_'];
+function SurveyTranslationEditorController($scope, ModalService, _) {
     $scope.openField = openField;
 
-    function openField(field) {
+    function openField(field, task) {
+        $scope.activeTask = task;
+        if (!field.translations[$scope.activeLanguage]) {
+            field.translations[$scope.activeLanguage] = {}
+        }
         $scope.translateField = field;
         ModalService.openTemplate('<field-translation-editor></field-translation-editor>', 'translations.translate_field', '', $scope, true, true);
     }
