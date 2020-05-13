@@ -12,6 +12,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
         errors: errors,
         errorsPretranslated: errorsPretranslated,
         apiErrors: apiErrors,
+        sdkErrors: sdkErrors,
         success: success,
         confirm: confirm,
         confirmModal: confirmModal,
@@ -108,6 +109,20 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
             return;
         }
 
+        SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
+    }
+    function sdkErrors(errors) {
+        let scope = getScope();
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            scope.errors = Object.values(errors)[0];
+          } else {
+            scope.errors = [errors];
+          }
+        if (!scope.errors || scope.errors.length === 0) {
+            return;
+        }
         SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
     }
 

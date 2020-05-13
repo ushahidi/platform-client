@@ -323,9 +323,9 @@ function SurveyEditorController(
         $location.url('/settings/surveys');
     }
 
-    function handleResponseErrors(errorResponse) {
+    function handleResponseErrors(error) {
         $scope.saving_survey = false;
-        Notify.apiErrors(errorResponse);
+        Notify.sdkErrors(error);
     }
 
     // START -- Reorder tasks
@@ -570,7 +570,7 @@ function SurveyEditorController(
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
-        SurveysSdk.saveSurvey($scope.survey).then(response => {
+        SurveysSdk.saveSurvey().then(response => {
             $scope.survey = response.data.result;
             saveRoles();
             // Display success message
