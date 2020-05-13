@@ -579,7 +579,6 @@ function SurveyEditorController(
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
-        console.log($scope.survey)
         SurveysSdk.saveSurvey($scope.survey).then(response => {
             $scope.survey = response.data.result;
             saveRoles();
@@ -635,13 +634,21 @@ function SurveyEditorController(
     $scope.openLanguages = function() {
         ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
     }
-    $scope.removeLanguage = function(index) {
+    $scope.removeLanguage = function(index, language) {
         Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
         .then(function() {
             $scope.survey.enabled_languages.available.splice(index,1);
+            delete $scope.survey.translations[language];
+            _.map($scope.survey.tasks, task => {
+                delete task.translations[language];
+                _.map(task.fields, field => {
+                    delete field.translations[language];
+                });
+            });
             $scope.activeLanguage = $scope.defaultLanguage;
         });
     };
+
     $scope.switchToLanguage = function(language) {
         $scope.activeLanguage = language;
     };
