@@ -8,9 +8,10 @@ function PostVerticalTabs() {
             form: '=',
             post: '=',
             tasks: '=',
-            fields: '=',
             visibleStage: '=',
-            medias: '='
+            medias: '=',
+            activeSurveyLanguage:'='
+
         },
         template: require('./post-tabs.html'),
         controller: PostVerticalTabsController
