@@ -113,10 +113,10 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
     }
     function sdkErrors(errors) {
         let scope = getScope();
-        if (error.response) {
+        if (errors.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-            scope.errors = Object.values(errors)[0];
+            scope.errors = _.flatten(Object.values(errors.response.data));
           } else {
             scope.errors = [errors];
           }
