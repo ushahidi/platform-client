@@ -1,15 +1,25 @@
 <!-- survey-name and descriptions + fields -->
 <section class="form-sheet" translate-language="{{activeLanguage}}">
     <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
-    <div class="form-field survey">
-        <label translate>survey.survey_name</label>
+    <div class="form-field survey required">
+        <label translate required>survey.survey_name</label>
         <div class="form-field framed">
-
-        <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-        <p>{{survey.name}}</p>
+          <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+          <p>{{survey.name}}</p>
         </div>
         <p>Add your translation below:</p>
-        <input type="text" placeholder="Write your translation here" ng-model="survey.translations[activeLanguage].name">
+        <form name="translatedName">
+          <input type="text" placeholder="Write your translation here" ng-model="survey.translations[activeLanguage].name" required>
+          <div
+                class="alert error"
+                ng-show="translatedName.$invalid && translatedName.$dirty"
+            >
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span>Translation for survey-name is required</span>
+            </div>
+        </form>
     </div>
 
       <div class="form-field survey">

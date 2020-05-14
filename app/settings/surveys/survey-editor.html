@@ -59,11 +59,22 @@
       <section class="form-sheet" ng-show="defaultLanguage === activeLanguage">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
-        <div class="form-field survey">
+        <div class="form-field survey required">
           <!--  TODO: add placeholder text-->
-            <label translate>survey.survey_name</label>
+          <form name="surveyName">
+            <label translate required>survey.survey_name</label>
             <!-- Use once api handles translations  -->
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
+            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name" required>
+              <div
+                class="alert error"
+                ng-show="surveyName.$invalid && surveyName.$dirty"
+            >
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span>Survey-name is required</span>
+            </div>
+          </form>
         </div>
 
           <div class="form-field survey">
@@ -95,7 +106,6 @@
         <div id="survey-build-post" class="survey-details tabs-target" >
           <div class="listing init" style="margin-left: 4px;">
             <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
-
             <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
               <div class="listing-item-select">
                   <div class="buttons-updown">

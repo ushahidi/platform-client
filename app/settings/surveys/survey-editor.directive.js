@@ -577,6 +577,8 @@ function SurveyEditorController(
     function saveSurvey() {
         // Set saving to true to disable user actions
         $scope.saving_survey = true;
+        // check there is translations for survey-names in all languages
+        if (validateSurveyTranslations()) {
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
@@ -595,6 +597,15 @@ function SurveyEditorController(
         })
         // Catch and handle errors
         .catch(handleResponseErrors);
+    } else {
+        $scope.saving_survey = false;
+        Notify.error(`You need to add translations for all names, check that you have translated the survey-names for all added languages`);
+    }
+    }
+    function validateSurveyTranslations() {
+        return _.every($scope.survey.enabled_languages.available, language => {
+            return $scope.survey.translations[language] && $scope.survey.translations[language].name;
+        });
     }
 
     function saveRoles() {
