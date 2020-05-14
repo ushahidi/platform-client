@@ -274,18 +274,19 @@ function SurveyEditorController(
             //Getting roles for the survey
             $scope.survey = res;
             $scope.defaultLanguage = $scope.survey.enabled_languages.default;
+            $scope.selectedLanguage = $scope.defaultLanguage;
 
             // Making sure translations are of type objects
-            _.map($scope.survey.tasks, task=>{
+            // make required
+            $scope.survey.translations = Object.assign({}, $scope.survey.translations);
+            _.map($scope.survey.tasks, task => {
                 task.translations = Object.assign({}, task.translations);
+                delete task.icon;
                 _.map(task.fields,field => {
-                    field.translations = Object.assign({},field.translations);
+                    field.translations = Object.assign({}, field.translations);
                 });
             });
             $scope.activeLanguage = $scope.defaultLanguage;
-            _.each($scope.survey.tasks, (task => {
-                delete task.icon;
-            }));
             getRoles($scope.survey.id);
             // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {
