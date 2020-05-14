@@ -14,28 +14,19 @@
                                   <option value="" translate="app.select_language">Select language</option>
                               </select>
                         </div>
-                        <div ng-show="showLangError" class="alert error">
-                            <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                            </svg>
-                            <p>You cannot select this language since there is already a translation for it.</p>
-                        </div>
                     </div>
-                    <!-- v class="form-column">
-                        <div ng-repeat="language in languagesToSelect" class="form-field checkbox">
-                            <label for={{langague.code}}>
-                                <input type="checkbox" ng-model="addLanguage" ng-value="language.code" id={{language.code}}>
-                                {{language.name}}
-                            </label>            
-                        </div>
-                    </div> -->
-                </div> 
             </fieldset>
+            <div ng-show="showLangError" class="alert error">
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <p>{{langError}}</p>
+            </div>   
+        </div>
         <div class="modal-actions">
             <div class="form-field">
                 <button type="button" class="button modal-trigger" ng-click="add()">Add</button>
-
-                <button type="button" class="button-alpha modal-trigger">Cancel</button>
+                <button type="button" class="button-alpha modal-trigger" ng-click="cancel()">Cancel</button>
             </div>
         </div>
     </div>
