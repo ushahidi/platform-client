@@ -19,10 +19,7 @@ SurveyEditorController.$inject = [
     '$location',
     '$translate',
     '$state',
-    'FormEndpoint',
     'FormRoleEndpoint',
-    'FormStageEndpoint',
-    'FormAttributeEndpoint',
     'ConfigEndpoint',
     'RoleEndpoint',
     'TagEndpoint',
@@ -39,10 +36,7 @@ function SurveyEditorController(
     $location,
     $translate,
     $state,
-    FormEndpoint,
     FormRoleEndpoint,
-    FormStageEndpoint,
-    FormAttributeEndpoint,
     ConfigEndpoint,
     RoleEndpoint,
     TagEndpoint,
@@ -192,8 +186,7 @@ function SurveyEditorController(
 
         if (!$scope.surveyId) {
 
-            //TODO Use sdk
-            $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
+            $q.all([Features.loadFeatures(), SurveysSdk.getSurveys()]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -296,7 +289,6 @@ function SurveyEditorController(
                 delete $scope.survey.url;
                 delete $scope.survey.can_create;
                 delete $scope.survey.tags;
-
                 // Reset Task and Field IDs
                 _.each($scope.survey.tasks, function (task) {
                     task.form_id = undefined;
@@ -504,31 +496,13 @@ function SurveyEditorController(
                 task.fields = _.filter(task.fields, function (item) {
                     return item.label !== field.label;
                 });
-                // Field delete is currently only available in modal
-                // so close the modal
-                ModalService.close();
-                return;
+            } else {
+                task.fields = _.filter(task.fields, function (item) {
+                    return item.id !== field.id;
+                });
             }
 
-            FormAttributeEndpoint.delete({
-                formId: $scope.survey.id,
-                id: field.id
-            }).$promise.then(function (field) {
-                // Remove field from scope, binding should take care of the rest
-                var index = _.findIndex(task.fields, function (item) {
-                    return item.id === field.id;
-                });
-
-                task.fields.splice(index, 1);
-
-                FormStageEndpoint.invalidateCache();
-
-                Notify.notify('notify.form.destroy_attribute_success', {name: field.label});
-
-                // Field is only available in modal so
-                // close the modal
-                ModalService.close();
-            });
+            Notify.notify('notify.form.destroy_attribute_success', {name: field.label});
         });
     }
 
@@ -546,7 +520,7 @@ function SurveyEditorController(
         $scope.survey.tasks.push(dup);
         $scope.switchTab(dup.id, 'section-build');
     }
-    //is this done automatically in the new form-endpoint?
+
     function deleteTask(task) {
         Notify.confirmDelete('notify.form.delete_stage_confirm', 'notify.form.delete_stage_confirm_desc').then(function () {
             // If we haven't saved the task yet then we can just drop it
@@ -554,21 +528,13 @@ function SurveyEditorController(
                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
                     return item.label !== task.label;
                 });
-                return;
-            }
-
-            FormStageEndpoint.delete({
-                formId: $scope.survey.id,
-                id: task.id
-            }).$promise.then(function () {
-                // Remove stage from scope, binding should take care of the rest
-                Notify.notify('notify.form.destroy_stage_success', {name: task.label});
-
-                $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
+            } else {
+                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
                     return item.id !== task.id;
                 });
+            }
+            Notify.notify('notify.form.destroy_stage_success', {name: task.label});
 
-            });
         });
     }
     // END - modify task
