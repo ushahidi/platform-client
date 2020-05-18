@@ -4,7 +4,7 @@ module.exports = [
     '$rootScope',
     '$location',
     '$q',
-    'TagEndpoint',
+    'CategoriesSdk',
     'Notify',
     '_',
 function (
@@ -32,15 +32,15 @@ function (
 
 
     $scope.refreshView = function () {
-        TagEndpoint.queryFresh().$promise.then(function (tags) {
-            $scope.allCategories = tags;
-            $scope.categories = _.map(_.where(tags, { parent_id: null }), function (tag) {
-                if (tag && tag.children) {
-                    tag.children = _.map(tag.children, function (child) {
-                        return _.findWhere(tags, {id: parseInt(child.id)});
+        CategoriesSdk.getCategories().then(function (categories) {
+            $scope.allCategories = categories;
+            $scope.categories = _.map(_.where(categories, { parent_id: null }), function (category) {
+                if (category && category.children) {
+                    category.children = _.map(category.children, function (child) {
+                        return _.findWhere(category, {id: parseInt(child.id)});
                     });
                 }
-                return tag;
+                return category;
             });
         });
         $scope.selectedCategories = [];
@@ -59,8 +59,8 @@ function (
     $scope.deleteCategories = function () {
         Notify.confirmDelete('notify.category.bulk_destroy_confirm', 'notify.category.bulk_destroy_confirm_desc', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
-            angular.forEach($scope.selectedCategories, function (tagId) {
-                calls.push(TagEndpoint.delete({id: tagId }).$promise);
+            angular.forEach($scope.selectedCategories, function (categoryId) {
+                calls.push(CategoriesSdk.deleteCategory({id: categoryId }));
             });
             $q.all(calls).then(function () {
                 Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
@@ -69,8 +69,8 @@ function (
         });
     };
 
-    $scope.isToggled = function (tag) {
-        return $scope.selectedCategories.indexOf(tag.id) > -1;
+    $scope.isToggled = function (category) {
+        return $scope.selectedCategories.indexOf(category.id) > -1;
     };
 
     $scope.toggleCategory = function (tag) {
