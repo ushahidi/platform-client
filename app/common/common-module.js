@@ -64,6 +64,7 @@ angular.module('ushahidi.common', [
 
 //UshahidiSDK-wrappers
 .service('SurveysSdk', require('./services/endpoints/sdk/SurveysSdk.js'))
+.service('CategoriesSdk', require('./services/endpoints/sdk/CategoriesSdk.js'))
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
