@@ -31,8 +31,7 @@
         </div>
         <!-- end toolbar -->
 
-        <div class="main-col">
-
+        <div class="full-col">
             <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
                 <div class="alert" ng-hide="categories.length">
                     <p ng-hide="categories.length"><em translate>empty.category</em></p>
@@ -46,6 +45,8 @@
 
                     <div class="listing-item-primary">
                         <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: category.id})">{{category.tag}}</a></h2>
+                        <p class="listing-item-secondary" ng-show="category.enabled_languages" >{{getLanguages(category.enabled_languages)}}</p>
+
                     </div>
                     <div class="listing-item-secondary">
                         <button class="button-beta button-flat" ng-click="deleteCategory(category)">

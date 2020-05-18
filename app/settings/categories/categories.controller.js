@@ -13,7 +13,7 @@ function (
     $rootScope,
     $location,
     $q,
-    TagEndpoint,
+    CategoriesSdk,
     Notify,
     _
 ) {
@@ -47,9 +47,9 @@ function (
     };
     $scope.refreshView();
 
-    $scope.deleteCategory = function (tag) {
+    $scope.deleteCategory = function (category) {
         Notify.confirmDelete('notify.category.destroy_confirm', 'notify.category.destroy_confirm_desc').then(function () {
-            TagEndpoint.delete(tag).$promise.then(function () {
+            CategoriesSdk.deleteCategory(category.id).then(function () {
                 Notify.notify('notify.category.destroy_success', { name: tag.tag });
                 $scope.refreshView();
             }, handleResponseErrors);
@@ -60,7 +60,7 @@ function (
         Notify.confirmDelete('notify.category.bulk_destroy_confirm', 'notify.category.bulk_destroy_confirm_desc', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
             angular.forEach($scope.selectedCategories, function (categoryId) {
-                calls.push(CategoriesSdk.deleteCategory({id: categoryId }));
+                calls.push(CategoriesSdk.deleteCategory(categoryId));
             });
             $q.all(calls).then(function () {
                 Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
@@ -86,4 +86,16 @@ function (
         Notify.apiErrors(errorResponse);
     }
 
+    $scope.getLanguages = function (enabled_languages) {
+        let languages = [enabled_languages.default, ...enabled_languages.available];
+        languages = _.without(languages, '');
+        if (languages.length > 0) {
+            let languageString = languages.length > 1 ? $translate.instant('translations.languages') : $translate.instant('translations.language');
+            _.each(languages,(language, index) => {
+                let divider = index !== 0 ? ',' : ':';
+                languageString = `${languageString + divider} ${$translate.instant(`languages.${language}`)}`;
+        });
+            return languageString;
+        }
+    }
 }];
