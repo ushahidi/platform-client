@@ -34,14 +34,8 @@ function (
     $scope.refreshView = function () {
         CategoriesSdk.getCategories().then(function (categories) {
             $scope.allCategories = categories;
-            $scope.categories = _.map(_.where(categories, { parent_id: null }), function (category) {
-                if (category && category.children) {
-                    category.children = _.map(category.children, function (child) {
-                        return _.findWhere(category, {id: parseInt(child.id)});
-                    });
-                }
-                return category;
-            });
+            $scope.categories = _.map(_.where(categories, { parent_id: null }));
+            $scope.$apply();
         });
         $scope.selectedCategories = [];
     };
