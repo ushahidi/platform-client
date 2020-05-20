@@ -94,7 +94,7 @@ function (
                     translations:{}
                 };
             }
-            //  // Normalize parent category
+            //Normalize parent category
             if ($scope.category.parent) {
                 $scope.category.parent_id = $scope.category.parent.id;
                 $scope.category.parent_id_original = $scope.category.parent.id;
@@ -120,26 +120,22 @@ function (
         return parentName;
     }
 
-    function saveCategory(category) {
+    function saveCategory() {
         // Set processing to disable user actions
         $scope.processing = true;
 
         //Ensure slug is updated to tag
-        category.slug = category.tag;
+        $scope.category.slug = $scope.category.tag;
 
         // If child category with new parent
-        if (category.parent_id && category.parent_id !== category.parent_id_original) {
-            let parent = _.findWhere($scope.parents, { id: category.parent_id });
+        if ($scope.category.parent_id && $scope.category.parent_id !== $scope.category.parent_id_original) {
+            let parent = _.findWhere($scope.parents, { id: $scope.category.parent_id });
             // apply new permissions to child category
-            category.role = parent.role;
+            $scope.category.role = parent.role;
         }
 
         // Save category
-        $q.when(
-            TagEndpoint
-            .saveCache(category)
-            .$promise
-        )
+        CategoriesSdk.saveCategory($scope.category)
         .then(function (result) {
             // If parent category, apply parent category permisions to child categories
             if (result.children && result.children.length) {
@@ -162,11 +158,9 @@ function (
     function updateChildrenPermissions(category) {
         var promises = [];
         _.each(category.children, function (child) {
+            child.role = category.role;
             promises.push(
-              TagEndpoint
-              .saveCache({ id: child.id, role: category.role })
-              .$promise
-            );
+              CategoriesSdk.saveCategory(child));
         });
         return $q.all(promises);
     }

@@ -24,7 +24,7 @@
         <div class="toolbar">
             <div class="button-group">
                 <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
+                <button class="button-alpha" type="button" ng-click="saveCategory()" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
                 {{save}}</button>
                 <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
                   <div class="loading">
