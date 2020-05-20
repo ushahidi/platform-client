@@ -5,7 +5,7 @@ module.exports = [
     '$location',
     'RoleEndpoint',
     'TagEndpoint',
-    'FormEndpoint',
+    'CategoriesSdk',
     'Notify',
     '_',
     'Util',
@@ -19,7 +19,7 @@ function (
     $location,
     RoleEndpoint,
     TagEndpoint,
-    FormEndpoint,
+    CategoriesSdk,
     Notify,
     _,
     Util,
@@ -35,14 +35,6 @@ function (
 
     // Set initial category properties and page title
     if ($location.path() === '/settings/categories/create') {
-        // Set initial category properties
-        $scope.category = {
-            type: 'category',
-            icon: 'tag',
-            color: '',
-            parent_id: null,
-            parent_id_original: null
-        };
         // Allow parent category selector
         $scope.isParent = false;
         // Translate and set add category page title
@@ -51,8 +43,6 @@ function (
             $scope.$emit('setPageTitle', title);
         });
     } else {
-        // Get and set initial category properties
-        getCategory();
         // Translate and set edit category page title
         $translate('category.edit_tag').then(function (title) {
             $scope.title = title;
@@ -63,7 +53,6 @@ function (
     // Change mode
     $scope.$emit('event:mode:change', 'settings');
 
-    $scope.addParent = addParent;
     $scope.deleteCategory = deleteCategory;
     $scope.getParentName = getParentName;
     $scope.saveCategory = saveCategory;
@@ -78,7 +67,7 @@ function (
 
     function activate() {
         getRoles();
-        getParentCategories();
+        getCategories();
     }
 
     function getRoles() {
@@ -87,32 +76,36 @@ function (
         });
     }
 
-    function getParentCategories() {
-        TagEndpoint.queryFresh({ level: 'parent' }).$promise.then(function (tags) {
-            // Remove current tag to avoid circular reference
-            $scope.parents = _.filter(tags, function (tag) {
-                return tag.id !== parseInt($transition$.params().id);
-            });
-        });
-    }
-
-    function getCategory() {
-        TagEndpoint.getFresh({ id: $transition$.params().id }).$promise.then(function (tag) {
-            $scope.category = tag;
-            // Normalize parent category
+    function getCategories() {
+        CategoriesSdk.getCategories().then(function (categories) {
+            // setting parents for dropdown
+            $scope.parents = _.map(_.where(categories, { parent_id: null }));
+            // setting category-object we are working on, existing or new
+            if ($transition$.params().id) {
+                $scope.category = _.filter(categories, {id: parseInt($transition$.params().id)})[0];
+            } else {
+                $scope.category = {
+                    type: 'category',
+                    icon: 'tag',
+                    color: '',
+                    parent_id: null,
+                    parent_id_original: null,
+                    enabled_languages: {},
+                    translations:{}
+                };
+            }
+            //  // Normalize parent category
             if ($scope.category.parent) {
                 $scope.category.parent_id = $scope.category.parent.id;
                 $scope.category.parent_id_original = $scope.category.parent.id;
                 delete $scope.category.parent;
             }
+
             if ($scope.category.children && $scope.category.children.length) {
                 $scope.isParent = true;
             }
+            $scope.$apply();
         });
-    }
-
-    function addParent(id) {
-        return TagEndpoint.getFresh({id: id});
     }
 
     function getParentName() {
