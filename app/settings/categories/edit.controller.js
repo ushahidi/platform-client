@@ -4,11 +4,9 @@ module.exports = [
     '$translate',
     '$location',
     'RoleEndpoint',
-    'TagEndpoint',
     'CategoriesSdk',
     'Notify',
     '_',
-    'Util',
     '$transition$',
     '$q',
     '$state',
@@ -18,11 +16,9 @@ function (
     $translate,
     $location,
     RoleEndpoint,
-    TagEndpoint,
     CategoriesSdk,
     Notify,
     _,
-    Util,
     $transition$,
     $q,
     $state
@@ -170,12 +166,11 @@ function (
             'notify.category.destroy_confirm',
             'notify.category.destroy_confirm_desc'
         ).then(function () {
-            return TagEndpoint
-            .delete({ id: category.id })
-            .$promise
+            return CategoriesSdk
+            .deleteCategory(category.id)
             .then(function () {
                 Notify.notify('notify.category.destroy_success');
-                $location.url('/settings/categories');
+                $state.go('settings.categories', {}, { reload: true });
             });
         })
         .catch(handleResponseErrors);
@@ -187,7 +182,7 @@ function (
     }
 
     function cancel() {
-        $location.path('/settings/categories');
+        $state.go('settings.categories', {}, { reload: true });
     }
 
 }];

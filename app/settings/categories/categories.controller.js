@@ -44,7 +44,7 @@ function (
     $scope.deleteCategory = function (category) {
         Notify.confirmDelete('notify.category.destroy_confirm', 'notify.category.destroy_confirm_desc').then(function () {
             CategoriesSdk.deleteCategory(category.id).then(function () {
-                Notify.notify('notify.category.destroy_success', { name: tag.tag });
+                Notify.notify('notify.category.destroy_success', { name: category.tag });
                 $scope.refreshView();
             }, handleResponseErrors);
         });
