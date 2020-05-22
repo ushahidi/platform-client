@@ -14,7 +14,7 @@ angular.module('ushahidi.settings', [])
 .directive('targetedQuestion', require('./surveys/targeted-surveys/targeted-question.directive.js'))
 .directive('settingsMap', require('./site/map.directive.js'))
 .directive('settingsEditor', require('./site/editor.directive.js'))
-
+.directive('categoryTranslationEditor', require('./categories/category-translation-editor.directive.js'))
 .directive('filterUsers', require('./users/filter-users.directive.js'))
 
 .directive('customRoles', require('./roles/roles.directive.js'))

@@ -13,6 +13,7 @@ module.exports = [
     'TranslationService',
     'ModalService',
     'UtilsSdk',
+    'LoadingProgress',
 function (
     $scope,
     $rootScope,
@@ -27,7 +28,8 @@ function (
     $state,
     TranslationService,
     ModalService,
-    UtilsSdk
+    UtilsSdk,
+    LoadingProgress
 ) {
 
     // Redirect to home if not authorized
@@ -44,6 +46,27 @@ function (
             $scope.title = title;
             $scope.$emit('setPageTitle', title);
         });
+            $scope.category = {
+                base_language: 'en',
+                type: 'category',
+                icon: 'tag',
+                color: '',
+                parent_id: null,
+                parent_id_original: null,
+                translations: {}
+            };
+            TranslationService.getLanguage().then(language => {
+                //active language is the same as default when starting out.
+                if (!$scope.category.enabled_languages) {
+                    $scope.category.enabled_languages = {
+                        default: language,
+                        available: []
+                    }
+                }
+                $scope.defaultLanguage = language;
+                $scope.activeLanguage = language;
+                $scope.selectedLanguage = language;
+                });
     } else {
         // Translate and set edit category page title
         $translate('category.edit_tag').then(function (title) {
@@ -64,6 +87,8 @@ function (
     $scope.processing = false;
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
+    $scope.isLoading = LoadingProgress.getLoadingState;
+
 
     activate();
 
@@ -91,22 +116,14 @@ function (
             // setting category-object we are working on, existing or new
             if ($transition$.params().id) {
                 $scope.category = _.filter(categories, {id: parseInt($transition$.params().id)})[0];
-            } else {
-                $scope.category = {
-                    type: 'category',
-                    icon: 'tag',
-                    color: '',
-                    parent_id: null,
-                    parent_id_original: null,
-                    enabled_languages: {},
-                    translations:{}
-                };
+                $scope.defaultLanguage = $scope.category.enabled_languages.default;
+                $scope.activeLanguage = $scope.category.enabled_languages.default;
+                $scope.selectedLanguage = $scope.category.enabled_languages.default;
             }
             //Normalize parent category
             if ($scope.category.parent) {
                 $scope.category.parent_id = $scope.category.parent.id;
                 $scope.category.parent_id_original = $scope.category.parent.id;
-                delete $scope.category.parent;
             }
 
             if ($scope.category.children && $scope.category.children.length) {
@@ -119,11 +136,7 @@ function (
     function getParentName() {
         var parentName = 'Nothing';
         if ($scope.category && $scope.parents) {
-            $scope.parents.forEach(function (parent) {
-                if (parent.id === $scope.category.parent_id) {
-                    parentName = parent.tag;
-                }
-            });
+            // parentName = $scope.category.parent.tag;
         }
         return parentName;
     }
@@ -134,14 +147,13 @@ function (
 
         //Ensure slug is updated to tag
         $scope.category.slug = $scope.category.tag;
-
+        $scope.category.base_language = $scope.category.enabled_languages.default;
         // If child category with new parent
         if ($scope.category.parent_id && $scope.category.parent_id !== $scope.category.parent_id_original) {
             let parent = _.findWhere($scope.parents, { id: $scope.category.parent_id });
             // apply new permissions to child category
             $scope.category.role = parent.role;
         }
-
         // Save category
         CategoriesSdk.saveCategory($scope.category)
         .then(function (result) {
@@ -197,4 +209,33 @@ function (
         $state.go('settings.categories', {}, { reload: true });
     }
 
+    $scope.selectLanguage = function  (language) {
+        if ($scope.category.enabled_languages.available.indexOf(language) > -1) {
+            $scope.showLangError = true;
+        } else {
+            $scope.showLangError = false;
+            $scope.defaultLanguage = language;
+            $scope.activeLanguage = $scope.defaultLanguage;
+            $scope.selectedLanguage = $scope.defaultLanguage;
+            $scope.category.enabled_languages.default = language;
+        }
+    }
+
+    $scope.switchToLanguage = function(language) {
+        $scope.activeLanguage = language;
+    };
+
+    $scope.removeLanguage = function(index, language) {
+        Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
+        .then(function() {
+            $scope.category.enabled_languages.available.splice(index,1);
+            delete $scope.category.translations[language];
+            $scope.activeLanguage = $scope.defaultLanguage;
+        });
+    };
+
+    $scope.openLanguages = function() {
+        $scope.enabled_languages = $scope.category.enabled_languages;
+        ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
+    }
 }];
