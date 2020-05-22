@@ -119,6 +119,7 @@ function (
                 $scope.defaultLanguage = $scope.category.enabled_languages.default;
                 $scope.activeLanguage = $scope.category.enabled_languages.default;
                 $scope.selectedLanguage = $scope.category.enabled_languages.default;
+                $scope.category.translations = Object.assign({}, $scope.category.translations);
             }
             //Normalize parent category
             if ($scope.category.parent) {

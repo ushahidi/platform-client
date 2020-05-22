@@ -65,6 +65,7 @@
 
                         <div class="listing-item-primary">
                             <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: child.id})">{{child.tag}}</a></h2>
+                            <p class="listing-item-secondary" ng-show="child.enabled_languages" >{{getLanguages(child.enabled_languages)}}</p>
                         </div>
                         <div class="listing-item-secondary">
                             <button class="button-beta button-flat" ng-click="deleteCategory(child)">

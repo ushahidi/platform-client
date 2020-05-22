@@ -127,7 +127,7 @@
                 </div>
               </fieldset>
               <div class="form-field select">
-                <label>Select default language for this survey
+                <label>Select default language for this category
                 <div class="custom-select">
                     <select
                           ng-model="selectedLanguage"
@@ -176,7 +176,7 @@
                  </button>
              </div>
           </div>
+          <category-translation-editor category="category" default-language="defaultLanguage" active-language="activeLanguage" ng-show="defaultLanguage !== activeLanguage"></category-translation-editor>
         </div>
-        <category-translation-editor ng-show="defaultLanguage !== activeLanguage"></category-translation-editor>
     </main>
 </div>
