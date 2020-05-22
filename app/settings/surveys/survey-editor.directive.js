@@ -650,6 +650,7 @@ function SurveyEditorController(
 
     // Translations
     $scope.openLanguages = function() {
+        $scope.enabled_languages = $scope.survey.enabled_languages;
         ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
     }
     $scope.removeLanguage = function(index, language) {

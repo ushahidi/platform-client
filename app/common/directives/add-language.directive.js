@@ -25,17 +25,19 @@ function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
     activate();
 
     function selectLanguage(language) {
-        if ($scope.survey.enabled_languages.available.indexOf(language) > -1 || $scope.survey.enabled_languages.default === language) {
+        if ($scope.enabled_languages.available.indexOf(language) > -1 || $scope.enabled_languages.default === language) {
             $scope.showLangError = true;
             $scope.langError = 'You cannot select this language since ';
-            $scope.langError = $scope.survey.enabled_languages.default === language ?  `${$scope.langError} it is the default language for this survey.` : `${$scope.langError} there is already a translation for it.`;
+            $scope.langError = $scope.enabled_languages.default === language ?  `${$scope.langError} it is the default language for this survey.` : `${$scope.langError} there is already a translation for it.`;
         } else {
             $scope.showLangError = false;
         }
     }
+
     function cancel() {
         ModalService.close();
     }
+
     function add() {
         if (!$scope.selectedLanguage) {
             $scope.langError = 'You need to select a language first';
@@ -43,13 +45,8 @@ function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
         }
         if (!$scope.showLangError) {
             $scope.switchToLanguage($scope.selectedLanguage);
-            $scope.survey.enabled_languages.available.push($scope.selectedLanguage);
+            $scope.enabled_languages.available.push($scope.selectedLanguage);
             ModalService.close();
         }
-    }
-
-    activate();
-    function activate() {
-
     }
 }
