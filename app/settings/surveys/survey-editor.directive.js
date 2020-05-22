@@ -32,7 +32,8 @@ SurveyEditorController.$inject = [
     'ModalService',
     'Features',
     'SurveysSdk',
-    'TranslationService'];
+    'TranslationService',
+    'UtilsSdk'];
 function SurveyEditorController(
     $scope,
     $q,
@@ -52,7 +53,8 @@ function SurveyEditorController(
     ModalService,
     Features,
     SurveysSdk,
-    TranslationService
+    TranslationService,
+    UtilsSdk
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -134,6 +136,10 @@ function SurveyEditorController(
             }
             $scope.defaultLanguage = language;
             $scope.activeLanguage = language;
+            });
+
+            UtilsSdk.getLanguages().then(languages => {
+                $scope.languagesToSelect = languages.results;
             });
 
         if ($scope.surveyId) {

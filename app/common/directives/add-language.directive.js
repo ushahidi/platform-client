@@ -9,14 +9,20 @@ function AddLanguageDirective() {
         template: require('./add-language.html')
     };
 }
-AddLanguageController.$inject = ['$rootScope','$scope', 'ModalService'];
+AddLanguageController.$inject = ['$rootScope','$scope', 'ModalService','UtilsSdk'];
 
-function AddLanguageController($rootScope, $scope, ModalService) {
-    $scope.languagesToSelect = require('../../settings/surveys/language-list.json');
+function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
     $scope.selectLanguage = selectLanguage;
     $scope.selectedLanguage = '';
     $scope.add = add;
     $scope.cancel = cancel;
+
+    function activate() {
+        UtilsSdk.getLanguages().then(languages => {
+            $scope.languagesToSelect = languages.results;
+        });
+    }
+    activate();
 
     function selectLanguage(language) {
         if ($scope.survey.enabled_languages.available.indexOf(language) > -1 || $scope.survey.enabled_languages.default === language) {

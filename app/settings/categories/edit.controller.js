@@ -10,6 +10,9 @@ module.exports = [
     '$transition$',
     '$q',
     '$state',
+    'TranslationService',
+    'ModalService',
+    'UtilsSdk',
 function (
     $scope,
     $rootScope,
@@ -21,7 +24,10 @@ function (
     _,
     $transition$,
     $q,
-    $state
+    $state,
+    TranslationService,
+    ModalService,
+    UtilsSdk
 ) {
 
     // Redirect to home if not authorized
@@ -62,10 +68,16 @@ function (
     activate();
 
     function activate() {
+        getLanguages();
         getRoles();
         getCategories();
     }
 
+    function getLanguages() {
+        UtilsSdk.getLanguages().then(languages => {
+            $scope.languagesToSelect = languages.results;
+        });
+    }
     function getRoles() {
         RoleEndpoint.query().$promise.then(function (roles) {
             $scope.roles = roles;
