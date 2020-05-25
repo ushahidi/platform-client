@@ -30,7 +30,8 @@ SurveyEditorController.$inject = [
     'Features',
     'SurveysSdk',
     'TranslationService',
-    'UtilsSdk'];
+    'UtilsSdk',
+    'CategoriesSdk'];
 function SurveyEditorController(
     $scope,
     $q,
@@ -48,7 +49,8 @@ function SurveyEditorController(
     Features,
     SurveysSdk,
     TranslationService,
-    UtilsSdk
+    UtilsSdk,
+    CategoriesSdk
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -245,7 +247,7 @@ function SurveyEditorController(
     }
     function loadAvailableCategories() {
         // Get available categories.
-        TagEndpoint.queryFresh().$promise.then(function (tags) {
+        CategoriesSdk.getCategories().then(function (tags) {
             $scope.availableCategories = tags;
             // adding category-objects attribute-options
             $scope.availableCategories = _.chain($scope.availableCategories)
@@ -274,6 +276,7 @@ function SurveyEditorController(
             $scope.survey = res;
             $scope.defaultLanguage = $scope.survey.enabled_languages.default;
             $scope.selectedLanguage = $scope.defaultLanguage;
+            $scope.activeLanguage = $scope.defaultLanguage;
 
             // Making sure translations are of type objects
             // make required
@@ -285,7 +288,6 @@ function SurveyEditorController(
                     field.translations = Object.assign({}, field.translations);
                 });
             });
-            $scope.activeLanguage = $scope.defaultLanguage;
             getRoles($scope.survey.id);
             // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {

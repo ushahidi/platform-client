@@ -9,7 +9,8 @@ function CategorySelectorDirective() {
             selected: '=',
             enableParents: '=',
             form: '=',
-            available: '='
+            available: '=',
+            activeLanguage:'='
         },
         controller: CategorySelectorController,
         template: require('./category-selector.html')
