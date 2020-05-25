@@ -28,7 +28,7 @@
                     value="category.id"
                     checklist-model="selectedParents"
             >
-            <bdi>{{category.translations[activeLanguage].tag || category.tag}}</bdi>
+            <bdi>{{category.translations[activeLanguage.language].tag || category.tag}}</bdi>
         </label>
         <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
             <label>
@@ -40,7 +40,7 @@
                     ng-selected="selected.indexOf(category.id) >-1"
                     checklist-change="changeCategories()"
                 >
-                <bdi>{{child.translations[activeLanguage].tag || child.tag}}</bdi>
+                <bdi>{{child.translations[activeLanguage.language].tag || child.tag}}</bdi>
         </label>
         </div>
     </div>

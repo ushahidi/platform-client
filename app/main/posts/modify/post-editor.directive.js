@@ -31,14 +31,14 @@ PostEditorController.$inject = [
     'FormStageEndpoint',
     'FormAttributeEndpoint',
     'UserEndpoint',
-    'TagEndpoint',
     'Notify',
     '_',
     'PostActionsService',
     'MediaEditService',
     '$state',
     'SurveysSdk',
-    'TranslationService'
+    'TranslationService',
+    'CategoriesSdk'
   ];
 
 function PostEditorController(
@@ -58,14 +58,14 @@ function PostEditorController(
     FormStageEndpoint,
     FormAttributeEndpoint,
     UserEndpoint,
-    TagEndpoint,
     Notify,
     _,
     PostActionsService,
     MediaEditService,
     $state,
     SurveysSdk,
-    TranslationService
+    TranslationService,
+    CategoriesSdk
   ) {
 
     // Setup initial stages container
@@ -117,7 +117,7 @@ function PostEditorController(
     }
 
     function loadData() {
-        var requests = [SurveysSdk.getSurveys($scope.formId), TagEndpoint.queryFresh().$promise];
+        var requests = [SurveysSdk.getSurveys($scope.formId), CategoriesSdk.getCategories()];
 
         // If existing Post attempt to acquire lock
         if ($scope.post.id) {
