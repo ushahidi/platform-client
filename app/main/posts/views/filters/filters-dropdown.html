@@ -17,8 +17,8 @@
     <h4 class="dropdown-menu-title" translate="app.filter_by"></h4>
     <filter-saved-search ng-model="filters.saved_search"></filter-saved-search>
     <filter-status ng-model="filters.status"></filter-status>
-    <filter-category ng-model="filters.tags"></filter-category>
-    <filter-form ng-model="filters.form"></filter-form>
+    <filter-category user-language="userLanguage" ng-model="filters.tags"></filter-category>
+    <filter-form user-language="userLanguage"  ng-model="filters.form"></filter-form>
     <filter-source ng-model="filters.source"></filter-source>
     <filter-date date-after-model="filters.date_after" date-before-model="filters.date_before"></filter-date>
     <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>

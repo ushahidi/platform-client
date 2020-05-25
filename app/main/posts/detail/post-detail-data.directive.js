@@ -24,7 +24,6 @@ PostDetailDataController.$inject = [
     'PostEndpoint',
     'CollectionEndpoint',
     'UserEndpoint',
-    'TagEndpoint',
     'FormAttributeEndpoint',
     'FormStageEndpoint',
     'FormEndpoint',
@@ -34,7 +33,8 @@ PostDetailDataController.$inject = [
     'moment',
     'PostSurveyService',
     '$state',
-    '$window'
+    '$window',
+    'CategoriesSdk'
 ];
 function PostDetailDataController(
     $scope,
@@ -46,7 +46,6 @@ function PostDetailDataController(
     PostEndpoint,
     CollectionEndpoint,
     UserEndpoint,
-    TagEndpoint,
     FormAttributeEndpoint,
     FormStageEndpoint,
     FormEndpoint,
@@ -56,7 +55,8 @@ function PostDetailDataController(
     moment,
     PostSurveyService,
     $state,
-    $window
+    $window,
+    CategoriesSdk
 ) {
     $scope.$watch('post', function (post) {
         activate();
@@ -94,7 +94,7 @@ function PostDetailDataController(
                 FormEndpoint.get({id: $scope.post.form.id}),
                 FormStageEndpoint.query({formId: $scope.post.form.id, postStatus: $scope.post.status}).$promise,
                 FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
-                TagEndpoint.query().$promise
+                CategoriesSdk.getCategories()
             ]).then(function (results) {
                 $scope.form = results[0];
                 $scope.form_name = results[0].name;

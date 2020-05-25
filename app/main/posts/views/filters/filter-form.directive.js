@@ -5,7 +5,9 @@ function FormSelectDirective($rootScope, TranslationService, SurveysSdk) {
     return {
         restrict: 'E',
         replace: true,
-        scope: {},
+        scope: {
+            userLanguage:'='
+        },
         require: 'ngModel',
         link: FormSelectLink,
         template: require('./filter-form.html')
@@ -38,19 +40,15 @@ function FormSelectDirective($rootScope, TranslationService, SurveysSdk) {
                 scope.forms = surveys;
                 scope.$apply();
             });
+            console.log(scope)
 
-            getUserLanguage();
+            // getUserLanguage();
 
             scope.$watch('selectedForms', saveValueToView, true);
             scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
         }
 
-        function getUserLanguage() {
-            TranslationService.getLanguage().then(language => {
-                scope.userLanguage = language;
-            });
-        }
         function renderModelValue() {
             // Update selectedForms w/o breaking references used by checklist-model
             Array.prototype.splice.apply(scope.selectedForms, [0, scope.selectedForms.length].concat(ngModel.$viewValue));
