@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <div class="form-field" ng-if="translateField.options.length > 1">
+    <div class="form-field" ng-if="translateField.options.length > 1 && translateField.input !== 'tags'">
         <label translate>form.field_options</label>
         <div class="form-field framed">
             <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
