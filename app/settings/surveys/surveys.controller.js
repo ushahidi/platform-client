@@ -4,7 +4,6 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
-    'FormEndpoint',
     'Notify',
     '_',
     'Features',
@@ -14,13 +13,10 @@ function (
     $rootScope,
     $translate,
     $location,
-    FormEndpoint,
     Notify,
     _,
     Features,
-    SurveysSdk,
-    Util,
-    Session
+    SurveysSdk
 ) {
 
     // Change layout class
