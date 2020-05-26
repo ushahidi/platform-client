@@ -63,8 +63,11 @@ function (
                         available: []
                     }
                 }
-                $scope.defaultLanguage = language;
-                $scope.activeLanguage = language;
+                $scope.languages = {
+                    defaultLanguage: language,
+                    activeLanguage: language
+                };
+
                 $scope.selectedLanguage = language;
                 });
     } else {
@@ -116,8 +119,11 @@ function (
             // setting category-object we are working on, existing or new
             if ($transition$.params().id) {
                 $scope.category = _.filter(categories, {id: parseInt($transition$.params().id)})[0];
-                $scope.defaultLanguage = $scope.category.enabled_languages.default;
-                $scope.activeLanguage = $scope.category.enabled_languages.default;
+                $scope.languages = {
+                    defaultLanguage: $scope.category.enabled_languages.default,
+                    activeLanguage: $scope.category.enabled_languages.default
+                };
+
                 $scope.selectedLanguage = $scope.category.enabled_languages.default;
                 $scope.category.translations = Object.assign({}, $scope.category.translations);
             }
@@ -215,28 +221,23 @@ function (
             $scope.showLangError = true;
         } else {
             $scope.showLangError = false;
-            $scope.defaultLanguage = language;
-            $scope.activeLanguage = $scope.defaultLanguage;
+
+            $scope.languages  = {
+                defaultLanguage: language,
+                activeLanguage: $scope.defaultLanguage
+            };
+
             $scope.selectedLanguage = $scope.defaultLanguage;
             $scope.category.enabled_languages.default = language;
         }
     }
-
-    $scope.switchToLanguage = function(language) {
-        $scope.activeLanguage = language;
-    };
 
     $scope.removeLanguage = function(index, language) {
         Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
         .then(function() {
             $scope.category.enabled_languages.available.splice(index,1);
             delete $scope.category.translations[language];
-            $scope.activeLanguage = $scope.defaultLanguage;
+            $scope.languages.activeLanguage = $scope.languages.defaultLanguage;
         });
     };
-
-    $scope.openLanguages = function() {
-        $scope.enabled_languages = $scope.category.enabled_languages;
-        ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
-    }
 }];

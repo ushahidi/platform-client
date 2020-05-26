@@ -1,0 +1,19 @@
+<div class="button-group button-tab-section" >
+    <button type="button" class="button button-tab" ng-class="{'active': activeLanguage === defaultLanguage}" ng-show="defaultLanguage" ng-click="switchToLanguage(defaultLanguage)">
+      {{'languages.' + defaultLanguage | translate}}
+        <span> ({{'translations.default' | translate}})</span>
+    </button>
+    <button ng-repeat="language in enabledLanguages.available track by $index" type="button" class="button button-tab" ng-class="{'active': activeLanguage === language}" ng-click="switchToLanguage(language)">
+      {{('languages.' + language) | translate}}
+        <svg class="iconic" ng-click="removeLanguage({index: $index, language:language})">
+            <use xlink:href="/img/iconic-sprite.svg#x"></use>
+        </svg>
+    </button>
+    <button type="button" ng-click="openLanguages()" class="button button-right modal-trigger">
+      <svg class="iconic">
+          <use xlink:href="/img/iconic-sprite.svg#plus"></use>
+      </svg>
+      {{"form.add_language" | translate}}
+    </button>
+  
+  </div>

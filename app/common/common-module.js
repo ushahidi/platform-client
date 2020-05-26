@@ -112,7 +112,7 @@ angular.module('ushahidi.common', [
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 .directive('loadingDots', require('./directives/loading-dots.directive.js'))
 .directive('addLanguage', require('./directives/add-language.directive.js'))
-
+.directive('translationsSwitch', require('./directives/translation-switch.directive.js'))
 // Event actions
 .constant('EVENT', {
     ACTIONS : {
