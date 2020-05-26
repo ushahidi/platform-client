@@ -11,7 +11,6 @@ module.exports = [
     '$q',
     '$state',
     'TranslationService',
-    'ModalService',
     'UtilsSdk',
     'LoadingProgress',
 function (
@@ -27,7 +26,6 @@ function (
     $q,
     $state,
     TranslationService,
-    ModalService,
     UtilsSdk,
     LoadingProgress
 ) {
