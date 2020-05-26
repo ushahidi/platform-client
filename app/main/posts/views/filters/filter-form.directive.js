@@ -1,7 +1,7 @@
 module.exports = FormSelectDirective;
 
-FormSelectDirective.$inject = ['$rootScope','TranslationService', 'SurveysSdk'];
-function FormSelectDirective($rootScope, TranslationService, SurveysSdk) {
+FormSelectDirective.$inject = ['$rootScope', 'SurveysSdk'];
+function FormSelectDirective($rootScope, SurveysSdk) {
     return {
         restrict: 'E',
         replace: true,
