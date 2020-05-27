@@ -42,7 +42,9 @@
                 </ol> 
         </div>
     </div>
-        
+    <div class="form-field alert" ng-if="translateField.input === 'tags'">
+        <p>Please note, to add translations to category-names, head over to <a href="/settings/categories" class="link-blue" target="_blank">Category Settings</a></p>
+    </div>
     <div class="form-field switch" ng-if="translateField.default">
         <label translate="app.default_value">Default value (optional):</label>
         <div class="form-field framed">

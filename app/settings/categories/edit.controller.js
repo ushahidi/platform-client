@@ -141,7 +141,7 @@ function (
     function getParentName() {
         var parentName = 'Nothing';
         if ($scope.category && $scope.parents) {
-            // parentName = $scope.category.parent.tag;
+            parentName = $scope.category.parent.tag;
         }
         return parentName;
     }

@@ -10,7 +10,8 @@ function CategorySelectorDirective() {
             enableParents: '=',
             form: '=',
             available: '=',
-            activeLanguage:'='
+            activeLanguage:'=',
+            displayWarning:'='
         },
         controller: CategorySelectorController,
         template: require('./category-selector.html')
@@ -43,6 +44,12 @@ function CategorySelectorController($scope, _) {
         $scope.categories = [];
 
         $scope.categories = $scope.available;
+        $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
+            let available = [category.enabled_languages.default, ...category.enabled_languages.available];
+            if (available.indexOf($scope.activeLanguage.language) === -1) {
+                return category;
+            }
+        });
         // making sure no children are selected without their parents
         $scope.changeCategories();
     }
