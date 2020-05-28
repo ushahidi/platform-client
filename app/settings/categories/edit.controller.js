@@ -140,7 +140,7 @@ function (
 
     function getParentName() {
         var parentName = 'Nothing';
-        if ($scope.category && $scope.parents) {
+        if ($scope.category && $scope.parents.length > 0) {
             parentName = $scope.category.parent.tag;
         }
         return parentName;
@@ -166,18 +166,17 @@ function (
             if (result.children && result.children.length) {
                 return updateChildrenPermissions(result);
             }
-        })
-        .then(function () {
             // Display success message
             Notify.notify(
                 'notify.category.save_success',
                 { name: $scope.category.tag }
             );
-            // Redirect to categories list
+             // Redirect to categories list
             $state.go('settings.categories', {}, { reload: true });
-        })
+        }, function(err) {
         // Catch and handle errors
-        .catch(handleResponseErrors);
+            handleResponseErrors(err);
+        });
     }
 
     function updateChildrenPermissions(category) {
