@@ -64,6 +64,8 @@ angular.module('ushahidi.common', [
 
 //UshahidiSDK-wrappers
 .service('SurveysSdk', require('./services/endpoints/sdk/SurveysSdk.js'))
+.service('CategoriesSdk', require('./services/endpoints/sdk/CategoriesSdk.js'))
+.service('UtilsSdk', require('./services/endpoints/sdk/UtilsSdk.js'))
 // Other services
 .service('ViewHelper', require('./services/view-helper.js'))
 .service('Features', require('./services/features.js'))
@@ -110,7 +112,7 @@ angular.module('ushahidi.common', [
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
 .directive('loadingDots', require('./directives/loading-dots.directive.js'))
 .directive('addLanguage', require('./directives/add-language.directive.js'))
-
+.directive('translationsSwitch', require('./directives/translation-switch.directive.js'))
 // Event actions
 .constant('EVENT', {
     ACTIONS : {

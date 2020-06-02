@@ -5,221 +5,32 @@ module.exports = [function () {
                 then: function (successCallback, failCallback) {
                     if (id) {
                         successCallback({
-                            'enabled_languages': {
-                                    'default': 'en',
-                                    'available' : ['es']
-                                        },
-                                'id': 9,
-                                'parent_id': null,
-                                'color': null,
-                                'type': 'report',
-                                'disabled': false,
-                                'hide_author': false,
-                                'hide_time': false,
-                                'hide_location': false,
-                                'require_approval': true,
-                                'everyone_can_create': true,
-                                'targeted_survey': false,
-                                'can_create': [],
-                                'name':'Namn pa enkäten',
-                                'description':'Beskrivning',
-                                'translations':{'es':{'name':'','description':''}},
-                                'tags': [],
-                                'tasks':[{
-                                    'description': null,
-                                    'form_id': 9,
-                                    'icon': null,
-                                    'id': 9,
-                                    'priority': 0,
-                                    'required': false,
-                                    'show_when_published': true,
-                                    'task_is_internal_only': false,
-                                    'type': 'post',
-                                            'label':'',
-                                    'description':'',
-                                    'translations':{'es':{'label':'','description':''}},
-                                    'fields':[
-                                        {
-                                            'cardinality': 0,
-                                            'config': [],
-                                            'form_stage_id': 9,
-                                            'id': 36,
-                                            'input': 'text',
-                                            'key': 'c3104844-3623-482a-ae06-2bbae6a91aeb',
-                                            'priority': 1,
-                                            'required': true,
-                                            'response_private': false,
-                                            'type': 'title',
-                                            'label':'Title',
-                                            'instructions':'',
-                                            'options':[],
-                                            'default':'',
-                                            'translations': {'es':{'label':'Title in Spanish', 'instructions':'', 'options':[], 'default':''}}
-                                        },{
-                                            'cardinality': 0,
-                                            'config': [],
-                                            'form_stage_id': 9,
-                                            'id': 37,
-                                            'input': 'text',
-                                            'key': '0fe7fa4d-91a6-4662-b21d-a397a37efeb0',
-                                            'priority': 2,
-                                            'label':'Description',
-                                            'instructions':'',
-                                            'options':[],
-                                            'default':'',
-                                            'required': true,
-                                            'response_private': false,
-                                            'type': 'description',
-                                            'translations': {'es':{'label':'Description in Spanish'}}
-                                        }
-                                    ]
-                                }
-                            ]
+                            'id': 1,
+                            'enabled_languages': {'default': 'en','available' : ['es']},
+                            'type': 'report',
+                            'name':'test form',
+                            'description':'Testing form',
+                            'translations':{'es':{'name':'','description':''}}
                         });
                     } else {
-                        successCallback([{
-                            'enabled_languages': {
-                                    'default': 'en',
-                                    'available' : ['es']
-                                        },
-                                'id': 10,
-                                'parent_id': null,
-                                'color': null,
+                        successCallback([
+                            {
+                                'id': 1,
+                                'enabled_languages': {'default': 'en','available' : ['es']},
                                 'type': 'report',
-                                'disabled': false,
-                                'hide_author': false,
-                                'hide_time': false,
-                                'hide_location': false,
-                                'require_approval': true,
-                                'everyone_can_create': true,
-                                'targeted_survey': false,
-                                'can_create': [],
-                                'name':'Namn pa enkäten',
-                                'description':'Beskrivning',
-                                'translations':{'es':{'name':'','description':''}},
-                                'tags': [],
-                                'tasks':[{
-                                    'description': null,
-                                    'form_id': 9,
-                                    'icon': null,
-                                    'id': 9,
-                                    'priority': 0,
-                                    'required': false,
-                                    'show_when_published': true,
-                                    'task_is_internal_only': false,
-                                    'type': 'post',
-                                            'label':'',
-                                    'description':'',
-                                    'translations':{'es':{'label':'','description':''}},
-                                    'fields':[
-                                        {
-                                            'cardinality': 0,
-                                            'config': [],
-                                            'form_stage_id': 9,
-                                            'id': 36,
-                                            'input': 'text',
-                                            'key': 'c3104844-3623-482a-ae06-2bbae6a91aeb',
-                                            'priority': 1,
-                                            'required': true,
-                                            'response_private': false,
-                                            'type': 'title',
-                                            'label':'Title',
-                                            'instructions':'',
-                                            'options':[],
-                                            'default':'',
-                                            'translations': {'es':{'label':'Title in Spanish', 'instructions':'', 'options':[], 'default':''}}
-                                        },{
-                                            'cardinality': 0,
-                                            'config': [],
-                                            'form_stage_id': 9,
-                                            'id': 37,
-                                            'input': 'text',
-                                            'key': '0fe7fa4d-91a6-4662-b21d-a397a37efeb0',
-                                            'priority': 2,
-                                            'label':'Description',
-                                            'instructions':'',
-                                            'options':[],
-                                            'default':'',
-                                            'required': true,
-                                            'response_private': false,
-                                            'type': 'description',
-                                            'translations': {'es':{'label':'Description in Spanish'}}
-                                        }
-                                    ]
-                                }
-                            ]
-                        },{
-                            'enabled_languages': {
-                                    'default': 'en',
-                                    'available' : ['es']
-                                        },
-                                'id': 9,
-                                'parent_id': null,
-                                'color': null,
+                                'name':'test form 1',
+                                'description':'Testing form 1',
+                                'translations':{'es':{'name':'Testing form in spanish 1','description':'Testing description in spanish 1'}}
+                            },
+                            {
+                                'id': 2,
+                                'enabled_languages': {'default': 'en','available' : ['it']},
                                 'type': 'report',
-                                'disabled': false,
-                                'hide_author': false,
-                                'hide_time': false,
-                                'hide_location': false,
-                                'require_approval': true,
-                                'everyone_can_create': true,
-                                'targeted_survey': false,
-                                'can_create': [],
-                                'name':'Namn pa enkäten',
-                                'description':'Beskrivning',
-                                'translations':{'es':{'name':'','description':''}},
-                                'tags': [],
-                                'tasks':[{
-                                    'description': null,
-                                    'form_id': 9,
-                                    'icon': null,
-                                    'id': 9,
-                                    'priority': 0,
-                                    'required': false,
-                                    'show_when_published': true,
-                                    'task_is_internal_only': false,
-                                    'type': 'post',
-                                            'label':'',
-                                    'description':'',
-                                    'translations':{'es':{'label':'','description':''}},
-                                    'fields':[
-                                        {
-                                            'cardinality': 0,
-                                            'config': [],
-                                            'form_stage_id': 9,
-                                            'id': 36,
-                                            'input': 'text',
-                                            'key': 'c3104844-3623-482a-ae06-2bbae6a91aeb',
-                                            'priority': 1,
-                                            'required': true,
-                                            'response_private': false,
-                                            'type': 'title',
-                                            'label':'Title',
-                                            'instructions':'',
-                                            'options':[],
-                                            'default':'',
-                                            'translations': {'es':{'label':'Title in Spanish', 'instructions':'', 'options':[], 'default':''}}
-                                        },{
-                                            'cardinality': 0,
-                                            'config': [],
-                                            'form_stage_id': 9,
-                                            'id': 37,
-                                            'input': 'text',
-                                            'key': '0fe7fa4d-91a6-4662-b21d-a397a37efeb0',
-                                            'priority': 2,
-                                            'label':'Description',
-                                            'instructions':'',
-                                            'options':[],
-                                            'default':'',
-                                            'required': true,
-                                            'response_private': false,
-                                            'type': 'description',
-                                            'translations': {'es':{'label':'Description in Spanish'}}
-                                        }
-                                    ]
-                                }
-                            ]
-                        }]);
+                                'name':'test form 2',
+                                'description':'Testing form 2',
+                                'translations':{'it':{'name':'Testing form in italian 2','description':'Testing description in italian 2'}}
+                            }
+                        ]);
                     }
                 }
             }},

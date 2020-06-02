@@ -11,7 +11,8 @@ function PostCategoryEditorDirective() {
             postValue: '=',
             available: '=',
             selected: '=',
-            form: '='
+            form: '=',
+            activeSurveyLanguage:'='
         },
         controller: PostCategoryEditorController,
         template: require('./post-category-editor.html')

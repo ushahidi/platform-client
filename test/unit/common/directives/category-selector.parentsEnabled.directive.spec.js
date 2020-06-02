@@ -23,10 +23,11 @@ describe('category-selector directive with enableParents=true', function () {
                     {id: 2, parent_id: 1, tag: '2'},
                     {id: 4, parent_id: 1, tag: '4'},
                     {id: 5, tag: '5', parent_id: 1}
-                ]
+                ],
+                enabled_languages: {default: 'en', available: ['es', 'sw']}
             },
             {
-                id: 3, tag: '3', children: []
+                id: 3, tag: '3', children: [], enabled_languages: {default: 'en', available: ['es', 'sw']}
             }
         ];
         $scope.selected = [];
@@ -35,8 +36,10 @@ describe('category-selector directive with enableParents=true', function () {
                 return true;
             }
         };
+        $scope.activeLanguage = {language:'en'};
+
         element = $compile(
-            angular.element('<category-selector enable-parents="true" available="available" selected="selected" form="form"></category-selector>')
+            angular.element('<category-selector active-language="activeLanguage" enable-parents="true" available="available" selected="selected" form="form"></category-selector>')
         )($scope);
         $scope.$digest();
         isolateScope = element.isolateScope();

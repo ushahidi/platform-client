@@ -31,31 +31,32 @@
         </div>
         <!-- end toolbar -->
 
-        <div class="main-col">
-
+        <div class="full-col">
             <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
                 <div class="alert" ng-hide="categories.length">
                     <p ng-hide="categories.length"><em translate>empty.category</em></p>
                 </div>
+                <div ng-repeat="category in categories">
+                    <div id="category-{{category.id}}" class="listing-item" ng-class="{ 'warning': isToggled(category) }">
 
-                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories" ng-class="{ 'warning': isToggled(category) }">
+                        <div class="listing-item-select" ng-click="toggleCategory(category)">
+                            <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)"></input>
+                        </div>
 
-                    <div class="listing-item-select" ng-click="toggleCategory(category)">
-                        <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)"></input>
+                        <div class="listing-item-primary">
+                            <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: category.id})">{{category.tag}}</a></h2>
+                            <p class="listing-item-secondary" ng-show="category.enabled_languages" >{{getLanguages(category.enabled_languages)}}</p>
+
+                        </div>
+                        <div class="listing-item-secondary">
+                            <button class="button-beta button-flat" ng-click="deleteCategory(category)">
+                                <svg class="iconic">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                </svg>
+                                <span class="hidden">Delete</span>
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: category.id})">{{category.tag}}</a></h2>
-                    </div>
-                    <div class="listing-item-secondary">
-                        <button class="button-beta button-flat" ng-click="deleteCategory(category)">
-                            <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                            </svg>
-                            <span class="hidden">Delete</span>
-                        </button>
-                    </div>
-
                     <div id="category-{{child.id}}" class="listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleCategory(child)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
 
                         <div class="listing-item-select">
@@ -64,6 +65,7 @@
 
                         <div class="listing-item-primary">
                             <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: child.id})">{{child.tag}}</a></h2>
+                            <p class="listing-item-secondary" ng-show="child.enabled_languages" >{{getLanguages(child.enabled_languages)}}</p>
                         </div>
                         <div class="listing-item-secondary">
                             <button class="button-beta button-flat" ng-click="deleteCategory(child)">

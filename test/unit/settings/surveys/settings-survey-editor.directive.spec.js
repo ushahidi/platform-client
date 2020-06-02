@@ -7,12 +7,10 @@ describe('setting survey editor directive', function () {
         Notify,
         element,
         mockFormEndpoint,
-        mockFeatures,
-        ModalService;
+        mockFeatures;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
-
 
         var testApp = makeTestApp();
 
@@ -35,16 +33,15 @@ describe('setting survey editor directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q, _ModalService_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
         Notify = _Notify_;
-        ModalService = _ModalService_;
         $location = _$location_;
 
-        spyOn($location, 'path');
-        spyOn(Notify, 'limit');
+        spyOn($location, 'path').and.callThrough();
+        spyOn(Notify, 'limit').and.callThrough();
 
         mockFormEndpoint = {
             queryFresh : function () {
@@ -61,7 +58,7 @@ describe('setting survey editor directive', function () {
         mockFeatures = {
             limit: 2,
             loadFeatures : function () {
-                return $q.resolve();
+                return $q.resolve(true);
             },
             getLimit : function () {
                 return this.limit;
@@ -76,47 +73,35 @@ describe('setting survey editor directive', function () {
         element = '<survey-editor></survey-editor>';
         element = $compile(element)($scope);
         $scope.$digest();
-    }
 
+    }
+// Activate-function
     it('should redirect if over survey limit', function () {
         mockFeatures.limit = 3;
-
         compile();
-
-        expect(Notify.limit).toHaveBeenCalled();
-        expect($location.path).toHaveBeenCalled();
+        setTimeout(function() {
+            expect(Notify.limit).toHaveBeenCalled();
+            expect($location.path).toHaveBeenCalled()
+        }, 900);
     });
 
     it('should not redirect if under survey limit', function () {
         mockFeatures.limit = 5;
 
         compile();
-
+        setTimeout(function() {
         expect(Notify.limit).not.toHaveBeenCalled();
         expect($location.path).not.toHaveBeenCalled();
+        }, 900);
     });
 
     it('should not redirect if NO survey limit', function () {
         mockFeatures.limit = true;
 
         compile();
-        expect(Notify.limit).not.toHaveBeenCalled();
-        expect($location.path).not.toHaveBeenCalled();
+        setTimeout(function() {
+            expect(Notify.limit).not.toHaveBeenCalled();
+            expect($location.path).not.toHaveBeenCalled();
+        }, 900);
     });
-    it('it should switch activeLanguage', function() {
-        compile();
-        let isolateScope = element.isolateScope();
-        expect(isolateScope.activeLanguage).toBeUndefined;
-        isolateScope.switchToLanguage('es-ES');
-        expect(isolateScope.activeLanguage).toEqual('es-ES');
-
-    })
-    it('should open language-modal', function () {
-        compile();
-        let isolateScope = element.isolateScope();
-        spyOn(ModalService, 'openTemplate');
-        isolateScope.openLanguages();
-        expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
-
-    })
 });

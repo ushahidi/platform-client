@@ -20,8 +20,17 @@ describe('view for translating a survey', function () {
         $scope = _$rootScope_.$new();
 
         ModalService = _ModalService_;
-
-        element = '<survey-translation-editor></survey-translation-editor>';
+        $scope.survey = {
+            'id': 1,
+            'enabled_languages': {'default': 'en','available' : ['es']},
+            'type': 'report',
+            'name':'test form',
+            'description':'Testing form',
+            'translations':{'es':{'name':'','description':''}}
+        };
+        $scope.defaultLanguage = 'en';
+        $scope.activeLanguage = 'sw';
+        element = '<survey-translation-editor survey="survey" default-language="defaultLanguage" active-language="activeLanguage"></survey-translation-editor>';
         element = $compile(element)($scope);
         isolateScope = element.isolateScope();
         $scope.$digest();
@@ -30,9 +39,8 @@ describe('view for translating a survey', function () {
 
 
     it('should open attribute-translation-modal', function () {
-        let isolateScope = element.isolateScope();
         spyOn(ModalService, 'openTemplate');
-        isolateScope.openField({});
+        isolateScope.openField({id:1, translations:{}}, {id:2});
         expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
     });
 });

@@ -22,14 +22,15 @@ SurveyEditorController.$inject = [
     'FormRoleEndpoint',
     'ConfigEndpoint',
     'RoleEndpoint',
-    'TagEndpoint',
     '_',
     'Notify',
     'SurveyNotify',
     'ModalService',
     'Features',
     'SurveysSdk',
-    'TranslationService'];
+    'TranslationService',
+    'UtilsSdk',
+    'CategoriesSdk'];
 function SurveyEditorController(
     $scope,
     $q,
@@ -39,14 +40,15 @@ function SurveyEditorController(
     FormRoleEndpoint,
     ConfigEndpoint,
     RoleEndpoint,
-    TagEndpoint,
     _,
     Notify,
     SurveyNotify,
     ModalService,
     Features,
     SurveysSdk,
-    TranslationService
+    TranslationService,
+    UtilsSdk,
+    CategoriesSdk
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -126,8 +128,14 @@ function SurveyEditorController(
                     available: []
                 }
             }
-            $scope.defaultLanguage = language;
-            $scope.activeLanguage = language;
+            $scope.languages = {
+                defaultLanguage: language,
+                activeLanguage: language
+            }
+            });
+
+            UtilsSdk.getLanguages().then(languages => {
+                $scope.languagesToSelect = languages.results;
             });
 
         if ($scope.surveyId) {
@@ -198,7 +206,6 @@ function SurveyEditorController(
         }
     }
 
-
     function onlyOptional(editField) {
         return editField.type !== 'title' && editField.type !== 'description';
     }
@@ -237,9 +244,10 @@ function SurveyEditorController(
             $scope.availableSurveys = forms;
         });
     }
+
     function loadAvailableCategories() {
         // Get available categories.
-        TagEndpoint.queryFresh().$promise.then(function (tags) {
+        CategoriesSdk.getCategories().then(function (tags) {
             $scope.availableCategories = tags;
             // adding category-objects attribute-options
             $scope.availableCategories = _.chain($scope.availableCategories)
@@ -266,8 +274,11 @@ function SurveyEditorController(
         SurveysSdk.getSurveys($scope.surveyId).then(res => {
             //Getting roles for the survey
             $scope.survey = res;
-            $scope.defaultLanguage = $scope.survey.enabled_languages.default;
-            $scope.selectedLanguage = $scope.defaultLanguage;
+            $scope.languages = {
+                defaultLanguage: $scope.survey.enabled_languages.default,
+                activeLanguage: $scope.survey.enabled_languages.default
+            }
+            $scope.selectedLanguage = $scope.survey.enabled_languages.default;
 
             // Making sure translations are of type objects
             // make required
@@ -279,7 +290,6 @@ function SurveyEditorController(
                     field.translations = Object.assign({}, field.translations);
                 });
             });
-            $scope.activeLanguage = $scope.defaultLanguage;
             getRoles($scope.survey.id);
             // removing data if duplicated survey
             if ($scope.actionType === 'duplicate') {
@@ -609,9 +619,6 @@ function SurveyEditorController(
     };
 
     // Translations
-    $scope.openLanguages = function() {
-        ModalService.openTemplate('<add-language></add-language>', 'form.select_language', false, $scope, true, true);
-    }
     $scope.removeLanguage = function(index, language) {
         Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
         .then(function() {
@@ -623,12 +630,8 @@ function SurveyEditorController(
                     delete field.translations[language];
                 });
             });
-            $scope.activeLanguage = $scope.defaultLanguage;
+            $scope.languages.activeLanguage = $scope.languages.defaultLanguage;
         });
-    };
-
-    $scope.switchToLanguage = function(language) {
-        $scope.activeLanguage = language;
     };
 
     $scope.selectLanguage = function  (language) {
@@ -636,8 +639,10 @@ function SurveyEditorController(
             $scope.showLangError = true;
         } else {
             $scope.showLangError = false;
-            $scope.defaultLanguage = language;
-            $scope.activeLanguage = $scope.defaultLanguage;
+            $scope.languages = {
+                defaultLanguage: language,
+                activeLanguage:language
+            }
             $scope.survey.enabled_languages.default = language;
         }
     }

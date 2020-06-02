@@ -1,0 +1,22 @@
+<div translate-language="{{activeLanguage}}">
+    <div class="form-sheet">
+        <div class="form-field">
+            <label translate>category.editor.name</label>
+            <div class="form-field framed">
+
+            <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <p>{{category.tag}}</p>
+        </div>
+        <p>Add your translation below:</p>
+            <input type="text" placeholder="Add your translation" ng-minlength="2" ng-maxlength="255" ng-model="category.translations[activeLanguage].tag" required>
+        </div>
+        <div class="form-field">
+            <label translate>category.editor.description</label>
+            <div class="form-field framed">
+                <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+                <p>{{category.description}}</p>
+            </div>
+            <textarea name="description" placeholder="Add your translation" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.translations[activeLanguage].description"></textarea>
+        </div>
+    </div>
+</div>

@@ -9,27 +9,35 @@ function AddLanguageDirective() {
         template: require('./add-language.html')
     };
 }
-AddLanguageController.$inject = ['$rootScope','$scope', 'ModalService'];
+AddLanguageController.$inject = ['$rootScope','$scope', 'ModalService','UtilsSdk'];
 
-function AddLanguageController($rootScope, $scope, ModalService) {
-    $scope.languagesToSelect = require('../../settings/surveys/language-list.json');
+function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
     $scope.selectLanguage = selectLanguage;
     $scope.selectedLanguage = '';
     $scope.add = add;
     $scope.cancel = cancel;
 
+    function activate() {
+        UtilsSdk.getLanguages().then(languages => {
+            $scope.languagesToSelect = languages.results;
+        });
+    }
+    activate();
+
     function selectLanguage(language) {
-        if ($scope.survey.enabled_languages.available.indexOf(language) > -1 || $scope.survey.enabled_languages.default === language) {
+        if ($scope.enabledLanguages.available.indexOf(language) > -1 || $scope.enabledLanguages.default === language) {
             $scope.showLangError = true;
             $scope.langError = 'You cannot select this language since ';
-            $scope.langError = $scope.survey.enabled_languages.default === language ?  `${$scope.langError} it is the default language for this survey.` : `${$scope.langError} there is already a translation for it.`;
+            $scope.langError = $scope.enabledLanguages.default === language ?  `${$scope.langError} it is the default language for this survey.` : `${$scope.langError} there is already a translation for it.`;
         } else {
             $scope.showLangError = false;
         }
     }
+
     function cancel() {
         ModalService.close();
     }
+
     function add() {
         if (!$scope.selectedLanguage) {
             $scope.langError = 'You need to select a language first';
@@ -37,13 +45,8 @@ function AddLanguageController($rootScope, $scope, ModalService) {
         }
         if (!$scope.showLangError) {
             $scope.switchToLanguage($scope.selectedLanguage);
-            $scope.survey.enabled_languages.available.push($scope.selectedLanguage);
+            $scope.enabledLanguages.available.push($scope.selectedLanguage);
             ModalService.close();
         }
-    }
-
-    activate();
-    function activate() {
-
     }
 }

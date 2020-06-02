@@ -43,7 +43,6 @@ describe('post editor directive', function () {
     });
 
 
-
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
@@ -64,7 +63,7 @@ describe('post editor directive', function () {
             tasks:[{id:42}, {id:43}]
         };
 
-        element = '<post-editor post="post" form="form"></post-editor>';
+        element = '<post-editor post="post" form-id="form.id"></post-editor>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
@@ -76,11 +75,15 @@ describe('post editor directive', function () {
         });
 
         it('should load the associated form', function () {
-            expect($scope.post.form.name).toEqual('test form');
+            isolateScope.loadData().then(() => {
+                expect(isolateScope.post.form.name).toEqual('test form');
+            });
         });
 
         it('should load the associated form stages', function () {
-            expect(isolateScope.tasks.length).toEqual(2);
+            isolateScope.loadData().then(() => {
+                expect(isolateScope.tasks.length).toEqual(2);
+            });
         });
     });
     describe('test directive functions', function () {
