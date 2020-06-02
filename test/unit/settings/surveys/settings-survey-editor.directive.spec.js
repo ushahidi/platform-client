@@ -33,14 +33,12 @@ describe('setting survey editor directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q, _ModalService_, _ConfigEndpoint_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _$location_, $q) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
         Notify = _Notify_;
-        ModalService = _ModalService_;
         $location = _$location_;
-        ConfigEndpoint = _ConfigEndpoint_;
 
         spyOn($location, 'path').and.callThrough();
         spyOn(Notify, 'limit').and.callThrough();
@@ -75,7 +73,6 @@ describe('setting survey editor directive', function () {
         element = '<survey-editor></survey-editor>';
         element = $compile(element)($scope);
         $scope.$digest();
-        isolateScope = element.isolateScope();
 
     }
 // Activate-function
