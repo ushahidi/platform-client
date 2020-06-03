@@ -54,13 +54,13 @@
 
      <div class="full-col">
 
-          <div class="form-sheet">
+        <div class="form-sheet">
               <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
 
               <!-- Start Post custom fields -->
 
               <post-value-edit
-                  ng-repeat="attribute in tasks[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
+                  ng-repeat="attribute in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
                   post-field=true
                   form="postForm"
@@ -83,15 +83,15 @@
 
               <post-toolbox form="postForm" post="post"></post-toolbox>
               <div class="toolbox">
-                <survey-language-selector available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage"></survey-language-selector>
+                <survey-language-selector available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage" ></survey-language-selector>
             </div>
 
          </div>
          <post-tabs
-             ng-show="tasks.length > 1"
+             ng-show="post.post_content.length > 1"
              form="postForm"
              post="post"
-             tasks="tasks"
+             tasks="post.post_content"
              active-survey-language="activeSurveyLanguage"
              medias="medias"
              visible-stage="visibleStage">

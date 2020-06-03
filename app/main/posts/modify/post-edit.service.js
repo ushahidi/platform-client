@@ -11,13 +11,12 @@ function (
 ) {
     var PostEditService = {
         cleanPostValues: function (post) {
-            _.each(post.values, function (value, key) {
-                // Strip out empty values
-                post.values[key] = _.filter(value);
-                // Remove entirely if no values are left
-                if (!post.values[key].length) {
-                    delete post.values[key];
-                }
+            _.each(post.post_content, function (task) {
+                _.each(task.fields, (field) => {
+                    if (field.input === 'tags') {
+                        field.value = _.filter(field.value);
+                    }
+                });
             });
             return post;
         },

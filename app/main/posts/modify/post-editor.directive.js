@@ -34,7 +34,8 @@ PostEditorController.$inject = [
     '$state',
     'SurveysSdk',
     'TranslationService',
-    'CategoriesSdk'
+    'CategoriesSdk',
+    'PostsSdk'
   ];
 
 function PostEditorController(
@@ -57,7 +58,8 @@ function PostEditorController(
     $state,
     SurveysSdk,
     TranslationService,
-    CategoriesSdk
+    CategoriesSdk,
+    PostsSdk
   ) {
 
     // Setup initial stages container
@@ -109,12 +111,12 @@ function PostEditorController(
     }
 
     function loadData() {
-        var requests = [SurveysSdk.getSurveys($scope.formId), CategoriesSdk.getCategories()];
+            var requests = [SurveysSdk.getSurveys($scope.formId), CategoriesSdk.getCategories()];
 
-        // If existing Post attempt to acquire lock
-        if ($scope.post.id) {
-            requests.push(PostLockEndpoint.getLock({'post_id': $scope.post.id}).$promise);
-        }
+            // // If existing Post attempt to acquire lock
+            if ($scope.post.id) {
+                requests.push(PostLockEndpoint.getLock({'post_id': $scope.post.id}).$promise);
+            }
 
         return $q.all(requests).then(function (results) {
             if ($scope.post.id && !results[2]) {
@@ -125,56 +127,51 @@ function PostEditorController(
                 return;
             }
             $scope.post.form = results[0];
-            $scope.tasks = results[0].tasks;
-            $scope.availableSurveyLanguages = [results[0].enabled_languages.default, ...results[0].enabled_languages.available]
+            $scope.post.post_content = results[0].tasks;
+            $scope.availableSurveyLanguages = [results[0].enabled_languages.default, ...results[0].enabled_languages.available];
 
-            var post = $scope.post;
             var categories = results[1];
             // Set Post Lock
             $scope.post.lock = results[2];
 
             // Initialize values on post (helps avoid madness in the template)
-            $scope.tasks.map(task => {
+             $scope.post.post_content.map(task => {
                 task.fields.map (attr => {
                     // Create associated media entity
                     if (attr.input === 'upload') {
-                        $scope.medias[attr.key] = {};
+                        $scope.medias[attr.id] = {};
                     }
                     if (attr.input === 'tags') {
                         // adding category-objects attribute-options
                         attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
                     }
                     // @todo don't assign default when editing? or do something more sane
-                    if (!$scope.post.values[attr.key]) {
-                        if (attr.input === 'location') {
-                            // Prepopulate location fields from message location
-                            if ($scope.post.values.message_location) {
-                                $scope.post.values[attr.key] = angular.copy($scope.post.values.message_location);
-                            } else {
-                                $scope.post.values[attr.key] = [null];
-                            }
-                        }  else if (attr.input === 'number') {
-                            $scope.post.values[attr.key] = [parseInt(attr.default)];
+                    if (!attr.value) {
+                         if (attr.input === 'number') {
+                             if (attr.default) {
+                                attr.value = parseInt(attr.default);
+                             }
                         } else if (attr.input === 'date' || attr.input === 'datetime') {
-                            $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
-                        } else {
-                            $scope.post.values[attr.key] = [attr.default];
+                            attr.value = attr.default ? new Date(attr.default) : new Date();
+                        }
+                        else if (attr.input === 'tags') {
+                            attr.value = [];
                         }
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
-                        if ($scope.post.values[attr.key][0]) {
-                            $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).toDate();
+                        if (attr.value) {
+                            attr.value = moment(attr.value).toDate();
                         }
                     } else if (attr.input === 'number') {
                         // Number input requires a number
-                        if ($scope.post.values[attr.key][0]) {
-                            $scope.post.values[attr.key][0] = parseFloat($scope.post.values[attr.key][0]);
+                        if (attr.value) {
+                            attr.value = parseFloat(attr.value);
                         }
                     } else if (attr.input === 'tags') {
                         // tag.id needs to be a number
-                        if ($scope.post.values[attr.key]) {
-                            $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
+                        if (attr.value) {
+                            attr.value = attr.value.map(function (id) {
                                 return parseInt(id);
                             });
                         }
@@ -235,32 +232,11 @@ function PostEditorController(
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-
-            // Avoid messing with original object
             // Clean up post values object
-            if ('message_location' in $scope.post.values) {
-                $scope.post.values.message_location = [];
-            }
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            // adding neccessary tags to post.tags, needed for filtering
-            if ($scope.tagKeys.length > 0) {
-                post.tags = _.chain(post.values)
-                .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
-            }
-            var request;
-            if (post.id) {
-                request = PostEndpoint.update(post);
-            } else {
-                request = PostEndpoint.save(post);
-            }
-            request.$promise.then(function (response) {
+            post.base_language = $scope.activeSurveyLanguage.language;
+            PostsSdk.savePost(post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
                     $scope.post.id = response.id;

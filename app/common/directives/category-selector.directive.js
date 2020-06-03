@@ -37,19 +37,17 @@ function CategorySelectorController($scope, _) {
     };
 
     function activate() {
-        // remove default null value when creating a new post
-        if ($scope.selected[0] === null) {
-            $scope.selected = [];
-        }
         $scope.categories = [];
 
         $scope.categories = $scope.available;
-        $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
+        if ($scope.displayWarning) {
+            $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
             let available = [category.enabled_languages.default, ...category.enabled_languages.available];
             if (available.indexOf($scope.activeLanguage.language) === -1) {
                 return category;
             }
         });
+    }
         // making sure no children are selected without their parents
         $scope.changeCategories();
     }

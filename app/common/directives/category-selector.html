@@ -9,7 +9,7 @@
             <em><span translate="category.select_all"></span></em>
         </label>
     </div>
-    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
+    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-if="category.parent_id === null">
         <label>
             <input
                 ng-show="category.children.length === 0 || enableParents === true"
