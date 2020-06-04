@@ -23,23 +23,12 @@
 
     </div>
   </div>
-  
+
 
   <main role="main">
       <div class="toolbar">
-          <div class="button-group" ng-show="post.id">
-              <button type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
-              <button type="submit" class="button-alpha"  ng-if="!saving_post">{{save}}</button>
-              <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{saving}}
-                <div class="loading">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-              </button>
-          </div>
-          <div class="button-group" ng-show="!post.id">
-              <post-share button="true" ng-show="!post.id"></post-share>
+          <div class="button-group">
+              <post-share button="true"></post-share>
               <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
               <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
                 <div class="loading">
@@ -55,10 +44,9 @@
      <div class="full-col">
 
         <div class="form-sheet">
-              <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
+              <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
 
               <!-- Start Post custom fields -->
-
               <post-value-edit
                   ng-repeat="attribute in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
                   post="post"
@@ -69,23 +57,10 @@
                   active-survey-language="activeSurveyLanguage"
               ></post-value-edit>
               <!-- End Post custom fields -->
-              <!-- IF: Editing an existing post -->
 
-              <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
-              <div class="postcard-metadata">
-                  <strong>This post will need to be moderated</strong> before it's visible to the public.
-              </div>
-              END: IF -->
-
-
-
-             <!-- IF: User has permission to see other 'Tasks' -->
-
-              <post-toolbox form="postForm" post="post"></post-toolbox>
               <div class="toolbox">
                 <survey-language-selector available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage" ></survey-language-selector>
             </div>
-
          </div>
          <post-tabs
              ng-show="post.post_content.length > 1"
@@ -93,25 +68,9 @@
              post="post"
              tasks="post.post_content"
              active-survey-language="activeSurveyLanguage"
-             medias="medias"
-             visible-stage="visibleStage">
+             medias="medias">
           </post-tabs>
-
-          <post-messages post="post" ng-if="post.contact.id"></post-messages>
-          <!-- <div class="form-sheet">
-            <div class="form-sheet-actions">
-                  <div class="form-field" ng-show="!post.id">
-                      <a href="timeline.html" type="submit" class="button button-alpha" translate="app.submit">Submit</a>
-                      <a href="post-add.html" class="button button-gamma button-flat" translate"app.submit_antoher">Submit &amp; add another</a>
-                  </div>
-                  <div class="form-field" ng-show="post.id">
-                      <a href="timeline.html" type="submit" class="button button-alpha" translate="app.save">Save</a>
-                      <a href="post-add.html" class="button button-gamma button-flat" ng-click="cancel()" translate"app.cancel">Cancel</a>
-                  </div>
-            </div>
-          </div> -->
           <ush-logo></ush-logo>
       </div> <!-- END main column -->
-
   </main>
 </form>

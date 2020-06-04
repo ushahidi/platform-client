@@ -1,7 +1,12 @@
 <form class="input-relation">
-	<p ng-if="model">{{ selectedPost.title }} ({{ model }}) <button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate></button></p>
+	<p ng-if="model">{{ selectedPost.title }} ({{ model }}) 
+		<button class="button-beta" type="button" ng-click="clearPost()" translate>
+			<svg class="iconic">
+				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+			</svg>
+		</button></p>
     <div class="input-inline">
-        <input class="form-control" type="text" placeholder="Search.." ng-model="searchTerm">
+        <input class="form-control" type="text" placeholder="Search..." ng-model="searchTerm">
         <button type="button" ng-click="search($event)">
 						<div class="loading" ng-if="searching">
 								<div class="line"></div>
@@ -20,7 +25,11 @@
 		</div>
     <ul>
     	<li ng-repeat="post in results">
-    		<button type="button" class="button-secondary icon-only check" ng-click="selectPost(post)" translate></button> {{ post.id }} : {{ post.title }}
+    		<button type="button" class="button-beta" ng-click="selectPost(post)" translate>
+				<svg class="iconic">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#check"></use>
+				</svg>
+		</button> {{ post.id + ' : ' + post.title }}
     	</li>
     </ul>
 </form>

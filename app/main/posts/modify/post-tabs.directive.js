@@ -20,18 +20,10 @@ function PostVerticalTabs() {
 
 PostVerticalTabsController.$inject = [
     '$scope',
-    'FormEndpoint',
-    'FormStageEndpoint',
-    'FormAttributeEndpoint',
-    'PostEditService',
     '_'
 ];
 function PostVerticalTabsController(
     $scope,
-    FormEndpoint,
-    FormStageEndpoint,
-    FormAttributeEndpoint,
-    PostEditService,
     _
 ) {
     $scope.setVisibleStage = setVisibleStage;
