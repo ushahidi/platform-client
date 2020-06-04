@@ -4,7 +4,8 @@ describe('post editor directive', function () {
         $scope,
         isolateScope,
         Notify,
-        element;
+        element,
+        PostsSdk;
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
@@ -43,35 +44,32 @@ describe('post editor directive', function () {
     });
 
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _PostsSdk_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
+        PostsSdk = _PostsSdk_;
 
-        $scope.post = fixture.load('posts/120.json');
-
-        $scope.form = {
-            id: 1,
-            enabled_languages: {
-                default: 'en',
-                available : ['es']
-            },
-            name: 'test form',
-            type: 'Report',
-            description: 'Testing form',
-            created: '1970-01-01T00:00:00+00:00',
-            tasks:[{id:42}, {id:43}]
+        $scope.post = {
+            title: '',
+            description: '',
+            locale: 'en',
+            post_content: [],
+            completed_stages: [],
+            published_to: [],
+            post_date: new Date(),
+            enabled_languages: {}
         };
 
-        element = '<post-editor post="post" form-id="form.id"></post-editor>';
+        element = '<post-editor post="post" form-id="1"></post-editor>';
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
     }));
 
     describe('Initial parameter loading', function () {
-        it('should load provided post', function () {
-            expect($scope.post.id).toEqual(120);
+        it('should load inital values', function () {
+            expect($scope.post.id).toBeUndefined();
         });
 
         it('should load the associated form', function () {
@@ -80,9 +78,9 @@ describe('post editor directive', function () {
             });
         });
 
-        it('should load the associated form stages', function () {
+        it('should load the associated post-content', function () {
             isolateScope.loadData().then(() => {
-                expect(isolateScope.tasks.length).toEqual(2);
+                expect($scope.post.post_content.length).toEqual(2);
             });
         });
     });

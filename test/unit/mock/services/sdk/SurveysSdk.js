@@ -10,7 +10,8 @@ module.exports = [function () {
                             'type': 'report',
                             'name':'test form',
                             'description':'Testing form',
-                            'translations':{'es':{'name':'','description':''}}
+                            'translations':{'es':{'name':'','description':''}},
+                            'tasks': [{'id': 1,'fields': [{'id':1}, {'id':2}]}]
                         });
                     } else {
                         successCallback([
