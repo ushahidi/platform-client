@@ -54,19 +54,5 @@ describe('post value edit directive', function () {
             expect(isolateScope.isCheckbox({input: 'checkbox'})).toBe(true);
         });
 
-        it('should allow adding and removing of values', function () {
-            expect(isolateScope.canAddValue({cardinality: 0})).toBe(true);
-
-            $scope.post.values.test = [1,2];
-            expect(isolateScope.canAddValue({cardinality: 1, key: 'test'})).toBe(false);
-
-            expect(isolateScope.canRemoveValue({key: 'test'})).toBe(true);
-
-            isolateScope.addValue({key: 'test'});
-            expect($scope.post.values.test.length).toEqual(3);
-
-            isolateScope.removeValue({key: 'test'});
-            expect($scope.post.values.test.length).toEqual(2);
-        });
     });
 });
