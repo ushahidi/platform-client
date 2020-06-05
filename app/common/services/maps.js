@@ -2,26 +2,30 @@ module.exports = Maps;
 
 Maps.$inject = ['ConfigEndpoint', 'Leaflet', '_', 'CONST'];
 function Maps(ConfigEndpoint, L, _, CONST) {
+
+    // mapbox static tiles API styles
+    // references:
+    //   https://docs.mapbox.com/help/troubleshooting/migrate-legacy-static-tiles-api/#leaflet-implementations
+    //   https://docs.mapbox.com/api/maps/#mapbox-styles
+    function _mapboxStaticTiles(name, mapid) {
+        return {
+            name: name,
+            url: 'https://api.mapbox.com/styles/v1/{mapid}/tiles/{z}/{x}/{y}?access_token={apikey}',
+            layerOptions: {
+                apikey: CONST.MAPBOX_API_KEY,
+                tileSize: 512,
+                maxZoom: 18,
+                zoomOffset: -1,
+                mapid: mapid,
+                attribution: '&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
+            }
+        };
+    }
+
     var layers = {
         baselayers : {
-            satellite: {
-                name: 'Satellite',
-                url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                layerOptions: {
-                    apikey: CONST.MAPBOX_API_KEY,
-                    mapid: 'mapbox.satellite',
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
-                }
-            },
-            streets: {
-                name: 'Streets',
-                url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                layerOptions: {
-                    apikey: CONST.MAPBOX_API_KEY,
-                    mapid: 'mapbox.streets',
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>, &copy; <a href="https://www.mapbox.com/about/maps/"">Mapbox</a> | <a href="https://www.mapbox.com/feedback/" target="_blank">Improve the underlying map</a>'
-                }
-            },
+            satellite: _mapboxStaticTiles('Satellite', 'mapbox/satellite-v9'),
+            streets: _mapboxStaticTiles('Streets', 'mapbox/streets-v11'),
             hOSM: {
                 name: 'Humanitarian',
                 url: '//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
