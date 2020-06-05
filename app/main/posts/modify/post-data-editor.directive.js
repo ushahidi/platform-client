@@ -177,6 +177,46 @@ function PostDataEditorController(
         $scope.form = $scope.post.form;
         $scope.availableSurveyLanguages = [$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available]
         $scope.getLock();
+        if (!$scope.post.post_content) {
+            $scope.post.post_content = $scope.post.form.tasks;
+            // Initialize values on unstructured post
+            $scope.post.post_content.map(task => {
+                task.fields.map (attr => {
+                    // Create associated media entity
+                    if (attr.input === 'upload') {
+                        $scope.medias[attr.id] = {};
+                    }
+                    if (attr.input === 'tags') {
+                        // adding category-objects attribute-options
+                        attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
+                        // tag.id needs to be a number
+                        if (attr.value) {
+                            attr.value = attr.value.map(function (id) {
+                                return parseInt(id);
+                            });
+                        } else {
+                            attr.value = [];
+                        }
+                    }
+                    if (attr.input === 'number') {
+                        if (attr.value) {
+                            attr.value = parseFloat(attr.value);
+                        } else if (attr.default) {
+                            attr.value = parseInt(attr.default);
+                        }
+                    }
+                    if (attr.input === 'date' || attr.input === 'datetime') {
+                        // Date picker requires date object
+                        // ensure that dates are preserved in UTC
+                        if (attr.value) {
+                            attr.value = moment(attr.value).toDate();
+                        } else {
+                            attr.value = attr.default ? new Date(attr.default) : new Date();
+                        }
+                    }
+                });
+            });
+        }
         if ($scope.post.status === 'published' && !canSavePost()) {
             Notify.error('post.valid.invalid_state');
         }
