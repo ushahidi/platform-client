@@ -1,4 +1,4 @@
-module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment, _) {
+module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoint, moment, _, PostsSdk) {
     return {
         restrict: 'E',
         replace: true,
@@ -6,8 +6,7 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             key: '=',
             value: '=',
             attribute: '=',
-            type: '=',
-            tags: '='
+            type: '='
         },
         template: require('./post-value.html'),
         link: function ($scope) {
@@ -15,30 +14,15 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             // Depending on whether we are dealing with a post task or a standard task
             // the css class is swapped. This Boolean manages that distinction.
             $scope.standardTask = $scope.type === 'standard';
-            // TODO Move to Service
-            $scope.formatTags = function (tagIds) {
-                // getting tag-names and formatting them for displaying
-                var formatedTags = ' ';
-                _.each(tagIds, function (tag, index) {
-                    var tagObj = _.where($scope.tags, {id: parseInt(tag)});
-                    if (tagObj[0]) {
-                        tag = tagObj[0].tag;
-                        if (index < tagIds.length - 1) {
-                            formatedTags += tag + ', ';
-                        } else {
-                            formatedTags += tag;
-                        }
-                    }
-                });
-                return formatedTags;
-            };
+
             if ($scope.attribute.type === 'relation') {
-                $scope.value = $scope.value.map(function (entry) {
-                    return PostEndpoint.get({ id : entry });
+                PostsSdk.getPosts($scope.value).then(post=>{
+                    $scope.value = post;
+                    $scope.$apply();
                 });
-            }
-            if ($scope.attribute.input === 'tags') {
-                $scope.value = $scope.formatTags($scope.value);
+
+            } if ($scope.attribute.type === 'varchar' || $scope.attribute.type === 'title' || $scope.attribute.type === 'description' || $scope.attribute.type === 'text') {
+                $scope.value = [$scope.value];
             }
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {

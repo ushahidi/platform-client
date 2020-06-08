@@ -13,9 +13,8 @@
           <bdi>{{value}}</bdi>
         </p>
       </div>
-
-      <div ng-repeat="entry in value track by $index" ng-if="attribute.type === 'relation'">
-          <a ui-sref="posts.detail.data({postId: entry.id})"><bdi>{{entry.title}}<bdi></a>
+      <div ng-if="attribute.type === 'relation'">
+          <a ui-sref="posts.data.detail({postId: value.id})">{{value.title}}</a>
       </div>
      <div ng-repeat="entry in value track by $index" ng-if="attribute.type !== 'relation' && attribute.input !== 'tags'">
           <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{entry}}<bdi></p>
