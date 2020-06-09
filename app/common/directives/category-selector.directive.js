@@ -38,7 +38,6 @@ function CategorySelectorController($scope, _) {
 
     function activate() {
         $scope.categories = [];
-
         $scope.categories = $scope.available;
         if ($scope.displayWarning) {
             $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
@@ -47,8 +46,17 @@ function CategorySelectorController($scope, _) {
                 return category;
             }
         });
+
     }
-        // making sure no children are selected without their parents
+    // with v4, the selected categories are delivered as objects
+    $scope.selected = _.map($scope.selected, category => {
+        if (typeof category === 'object') {
+            return category.id
+        } else {
+            return category
+        }
+    });
+    // making sure no children are selected without their parents
         $scope.changeCategories();
     }
 
