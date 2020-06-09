@@ -10,7 +10,10 @@
         <svg class="iconic" style="margin-right:4px;">
             <use xlink:href="/img/iconic-sprite.svg#tag"></use>
         </svg>
-          <bdi>{{value}}</bdi>
+          <bdi ng-repeat="category in value track by $index">
+            {{category.tag}}
+            <span ng-if="$index < (value.length -1)">,</span> 
+          </bdi>
         </p>
       </div>
       <div ng-if="attribute.type === 'relation'">
