@@ -32,7 +32,7 @@ describe('view for translating a survey', function () {
     it('should open attribute-translation-modal', function () {
         let isolateScope = element.isolateScope();
         spyOn(ModalService, 'openTemplate');
-        isolateScope.openField({});
+        isolateScope.openField({id:1, translations:{}}, {id:2});
         expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
     });
 });

@@ -40,7 +40,6 @@ function FormSelectDirective($rootScope, SurveysSdk) {
                 scope.forms = surveys;
                 scope.$apply();
             });
-            console.log(scope)
 
             // getUserLanguage();
 
