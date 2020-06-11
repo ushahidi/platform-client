@@ -38,7 +38,7 @@
     <!-- end toolbar -->
 
     <div class="full-col">
-      <translations-switch default-language="languages.defaultLanguage" active-language="languages.activeLanguage" enabled-languages="survey.enabled_languages" remove-language="removeLanguage()"></translations-switch>
+      <translations-switch default-language="languages.defaultLanguage" active-language="languages.activeLanguage" enabled-languages="survey.enabled_languages" remove-language="removeLanguage(index, language)"></translations-switch>
       <section class="form-sheet" ng-show="languages.defaultLanguage === languages.activeLanguage">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
