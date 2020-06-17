@@ -1,0 +1,56 @@
+<section class="form-sheet" translate-language="{{activeLanguage}}">
+    <!-- translation for Post title -->
+    <div class="form-field required">
+        <label translate required>Post title</label>
+        <div class="form-field framed">
+            <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <p>{{post.title}}</p>
+        </div>
+        <p>Add your translation below:</p>
+        <form name="translatedTitle">
+            <input type="text" placeholder="Write your translation here" ng-model="post.translations[activeLanguage].title" required>
+            <div
+              class="alert error"
+              ng-show="translatedTitle.$invalid && translatedTitle.$dirty"
+            >
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span>Translation for post-title is required</span>
+            </div>
+        </form>
+    </div>
+    <!-- Translation for Post description -->
+    <div class="form-field survey required">
+        <label translate required>Post description</label>
+        <div class="form-field framed">
+            <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <p>{{post.description}}</p>
+        </div>
+        <p>Add your translation below:</p>
+        <input type="text" placeholder="Write your translation here" ng-model="post.translations[activeLanguage].description" required>
+    </div>
+    <!-- Translation for other text-post fields -->
+    <div class="form-field required" ng-repeat="task in post.post_content">
+          <div class="form-field required" ng-repeat="field in task.fields" ng-if="canTranslate(field)">
+              <label translate required> {{field.label}}</label>
+              <div class="form-field framed">
+                  <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
+                  <p>{{field.value}}</p>
+              </div>
+              <p>Add your translation below:</p>
+              <input
+                  ng-if="field.input === 'text'"
+                  type='text'
+                  placeholder="Write your translation here"
+                  ng-model="field['translated-values'][activeLanguage]"
+              >
+              <textarea
+                  ng-if="field.input === 'textarea'"
+                  placeholder="Write your translation here"
+                  ng-model="field['translated-values'][activeLanguage]"
+              ></textarea>
+          </div>
+      </div>
+</section>
+   

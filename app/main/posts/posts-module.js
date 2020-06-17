@@ -41,6 +41,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterUnlockedOnTop', require('./views/filters/filter-unlocked-on-top.directive.js'))
 .directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
 .directive('surveyLanguageSelector', require('./common/survey-language-selector.directive.js'))
+.directive('postTranslationEditor', require('./modify/post-translation-editor.directive.js'))
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
 .directive('postViewMap', require('./views/post-view-map.directive.js'))
