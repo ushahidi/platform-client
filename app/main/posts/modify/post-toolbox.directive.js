@@ -49,6 +49,7 @@ function PostToolboxDirective(
 
         function changeLanguage(language) {
             $scope.activeSurveyLanguage.language = language;
+            $scope.post.enabled_languages.default = language;
         }
 
         // TODO: this function should be moved to a general service handling permissions

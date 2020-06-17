@@ -8,7 +8,8 @@ function SurveyLanguageSelector() {
         restrict: 'E',
         scope: {
             availableLanguages:'=',
-            activeSurveyLanguage:'='
+            activeLanguage:'=',
+            title: '='
         },
         controller: SurveyLanguageSelectorController,
         template: require('./survey-language-selector.html')
@@ -23,6 +24,6 @@ function SurveyLanguageSelectorController($scope) {
 
 
 function changeLanguage(language) {
-        $scope.activeSurveyLanguage.language = language;
+        $scope.activeLanguage.language = language;
     }
 };

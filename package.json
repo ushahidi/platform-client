@@ -129,7 +129,7 @@
     "socket.io-client": "2.0.3",
     "sortablejs": "1.10.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "^4.4.2",
+    "ushahidi-platform-pattern-library": "^4.4.2-pre.2",
     "ushahidi-platform-sdk": "^0.2.1"
   },
   "engines": {

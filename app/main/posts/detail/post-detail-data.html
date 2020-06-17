@@ -64,7 +64,9 @@
           ng-show="task.id === visibleTask">
         <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
       </div>
-
+      <div class="toolbox">
+        <survey-language-selector title="'View this post in another language'" available-languages="availableLanguages" active-language="activeLanguage" ></survey-language-selector>
+    </div>
 <div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div
         ng-repeat="field in task.fields"
