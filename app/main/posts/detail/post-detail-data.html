@@ -53,7 +53,7 @@
         ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
         ng-class="{'active': visibleTask == task.id}">
           <a ng-click="activateTaskTab(task.id)">
-            <bdi>{{task.label}}</bdi>
+            <bdi>{{task.translations.languages[active].label || task.label}}</bdi>
           </a>
           <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
           </span>
@@ -84,8 +84,8 @@
           media-id="postValue.value"></post-media-value>
         <post-value
             ng-if="field.type !== 'media'"
-            value="field.value"
             attribute="field"
+            active-language="languages.active"
             type="'standard'">
         </post-value>
       </div>
