@@ -2,7 +2,7 @@
 
     <div ng-if="attribute.input !== 'video'">
       <h2 class="form-label">
-          <bdi>{{attribute.label}}</bdi>
+          <bdi>{{attribute.translations[activeLanguage].label || attribute.label}}</bdi>
       </h2>
 
       <div ng-if="attribute.input === 'tags'">
@@ -10,19 +10,29 @@
         <svg class="iconic" style="margin-right:4px;">
             <use xlink:href="/img/iconic-sprite.svg#tag"></use>
         </svg>
-          <bdi ng-repeat="category in value track by $index">
+          <bdi ng-repeat="category in attribute.value track by $index">
             {{category.tag}}
-            <span ng-if="$index < (value.length -1)">,</span> 
+            <span ng-if="$index < (attribute.value.length -1)">,</span> 
           </bdi>
         </p>
       </div>
       <div ng-if="attribute.type === 'relation'">
           <a ui-sref="posts.data.detail({postId: value.id})">{{value.title}}</a>
       </div>
-     <div ng-repeat="entry in value track by $index" ng-if="attribute.type !== 'relation' && attribute.input !== 'tags'">
-          <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{entry}}<bdi></p>
-          <p ng-if="attribute.type === 'markdown'" markdown-to-html="entry"></p>
+      <div ng-if="isText(attribute.type)">   
+        <div ng-if="!attribute.translations[activeLanguage].value">
+          <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value}}<bdi></p>
+          <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value"></p>
+        </div>
+        <div ng-if="attribute.translations[activeLanguage].value">
+            <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.translations[activeLanguage].value}}<bdi></p>
+            <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.translation[activeLanguage].value"></p>
+        </div>
       </div>
+      <div ng-if="!isText(attribute.type)">
+      </div>
+
+      
     </div>
 
     <post-video-view
