@@ -128,10 +128,9 @@ function SurveyEditorController(
                     available: []
                 }
             }
-            $scope.languages = {
-                defaultLanguage: language,
-                activeLanguage: language
-            }
+            $scope.languages.default = {
+                default: language,
+                active: language            }
             });
 
             UtilsSdk.getLanguages().then(languages => {
@@ -275,8 +274,10 @@ function SurveyEditorController(
             //Getting roles for the survey
             $scope.survey = res;
             $scope.languages = {
-                defaultLanguage: $scope.survey.enabled_languages.default,
-                activeLanguage: $scope.survey.enabled_languages.default
+                default: $scope.survey.enabled_languages.default,
+                active: $scope.survey.enabled_languages.default,
+                available: $scope.survey.enabled_languages.available,
+                surveyLanguages: [$scope.survey.enabled_languages.default, ...$scope.survey.enabled_languages.available]
             }
             $scope.selectedLanguage = $scope.survey.enabled_languages.default;
 
@@ -630,7 +631,7 @@ function SurveyEditorController(
                     delete field.translations[language];
                 });
             });
-            $scope.languages.activeLanguage = $scope.languages.defaultLanguage;
+            $scope.languages.active = $scope.languages.default;
         });
     };
 
@@ -640,8 +641,8 @@ function SurveyEditorController(
         } else {
             $scope.showLangError = false;
             $scope.languages = {
-                defaultLanguage: language,
-                activeLanguage:language
+                default: language,
+                active:language
             }
             $scope.survey.enabled_languages.default = language;
         }

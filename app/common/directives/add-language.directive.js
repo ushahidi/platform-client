@@ -9,18 +9,24 @@ function AddLanguageDirective() {
         template: require('./add-language.html')
     };
 }
-AddLanguageController.$inject = ['$rootScope','$scope', 'ModalService','UtilsSdk'];
+AddLanguageController.$inject = ['$scope', 'ModalService','UtilsSdk', '_'];
 
-function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
+function AddLanguageController($scope, ModalService, UtilsSdk, _) {
     $scope.selectLanguage = selectLanguage;
     $scope.selectedLanguage = '';
     $scope.add = add;
     $scope.cancel = cancel;
 
     function activate() {
-        UtilsSdk.getLanguages().then(languages => {
-            $scope.languagesToSelect = languages.results;
-        });
+        UtilsSdk.getLanguages().then(languageList => {
+                $scope.languagesToSelect = _.filter(languageList.results, language => {
+                    if ($scope.languagesToSelect && $scope.languagesToSelect.indexOf(language.code) > -1 && language.code !== $scope.languages.default) {
+                        return language;
+                    } else if (!$scope.languagesToSelect && language.code !== $scope.languages.default) {
+                        return language;
+                    }
+                });
+            });
     }
     activate();
 
@@ -31,6 +37,8 @@ function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
             $scope.langError = $scope.enabledLanguages.default === language ?  `${$scope.langError} it is the default language for this survey.` : `${$scope.langError} there is already a translation for it.`;
         } else {
             $scope.showLangError = false;
+            $scope.activeLanguage = language;
+
         }
     }
 
@@ -45,7 +53,7 @@ function AddLanguageController($rootScope, $scope, ModalService, UtilsSdk) {
         }
         if (!$scope.showLangError) {
             $scope.switchToLanguage($scope.selectedLanguage);
-            $scope.enabledLanguages.available.push($scope.selectedLanguage);
+            $scope.languages.available.push($scope.selectedLanguage);
             ModalService.close();
         }
     }

@@ -17,8 +17,7 @@ function PostToolboxDirective(
         scope: {
             post:  '=',
             form: '=',
-            availableLanguages: '=',
-            activeSurveyLanguage: '='
+            languages: '='
         },
         template: require('./post-toolbox.html'),
         link: PostToolboxLink

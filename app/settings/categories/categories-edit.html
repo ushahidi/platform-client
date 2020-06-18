@@ -1,4 +1,4 @@
-<div translate-language="{{defaultLanguage}}">
+<div translate-language="{{languages.default}}">
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
@@ -52,14 +52,12 @@
 
         <div class="full-col" ng-show="category">
           <translations-switch
-            default-language="languages.defaultLanguage"
-            active-language="languages.activeLanguage"
-            enabled-languages="category.enabled_languages"
+            languages="languages"
             remove-language="removeLanguage(index, language)"
             >
           </translations-switch>
 
-          <form name="form" ng-show="languages.defaultLanguage === languages.activeLanguage">
+          <form name="form" ng-show="languages.default === languages.active">
             <div class="form-sheet">
               <!-- Title -->
               <div class="form-field">
@@ -151,7 +149,7 @@
             </div>
           </form>
           
-          <div class="form-sheet" ng-show="category.id && (languages.defaultLanguage === languages.activeLanguage)">
+          <div class="form-sheet" ng-show="category.id && (languages.default === languages.active)">
              <div class="form-sheet-summary">
                  <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
              </div>
@@ -169,9 +167,9 @@
           </div>
           <category-translation-editor
             category="category"
-            default-language="languages.defaultLanguage"
-            active-language="languages.activeLanguage"
-            ng-show="languages.defaultLanguage !== languages.activeLanguage"
+            default-language="languages.default"
+            active-language="languages.active"
+            ng-show="languages.default !== languages.active"
             >
           </category-translation-editor>
         </div>

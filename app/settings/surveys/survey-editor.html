@@ -1,4 +1,4 @@
-<div translate-language="{{languages.defaultLanguage}}">
+<div translate-language="{{languages.default}}">
   <!-- mode-context needs to be in each template -->
   <div class="mode-context init" dropdown>
       <header class="mode-context-header">
@@ -38,8 +38,8 @@
     <!-- end toolbar -->
 
     <div class="full-col">
-      <translations-switch default-language="languages.defaultLanguage" active-language="languages.activeLanguage" enabled-languages="survey.enabled_languages" remove-language="removeLanguage(index, language)"></translations-switch>
-      <section class="form-sheet" ng-show="languages.defaultLanguage === languages.activeLanguage">
+      <translations-switch languages="languages" remove-language="removeLanguage(index, language)"></translations-switch>
+      <section class="form-sheet" ng-show="languages.default === languages.active">
         <!-- TODO: get form colour here -->
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
         <div class="form-field survey required">
@@ -261,7 +261,7 @@
         </div>
       </section>
       <!-- Task sections -->
-      <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-show="languages.defaultLanguage === languages.activeLanguage">
+      <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-show="languages.default === languages.active">
         <div class="form-field title section-title">
             <label class="hidden" translate="survey.task_name">Section name</label>
             <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
@@ -447,7 +447,7 @@
         </div>
       </section>
       <!-- Add nw section/task -->
-      <div class="listing-item" ng-show="languages.defaultLanguage === languages.activeLanguage">
+      <div class="listing-item" ng-show="languages.default === languages.active">
         
           <div class="listing-item-primary">
               <button ng-click="openTaskModal()" class="button-gamma init" data-toggle="field-type">
@@ -458,7 +458,7 @@
               </button>
           </div>
       </div>
-      <survey-translation-editor ng-show="languages.activeLanguage !== languages.defaultLanguage" active-language="languages.activeLanguage" default-language="languages.defaultLanguage" survey="survey"></survey-translation-editor>
+      <survey-translation-editor ng-show="languages.active !== languages.default" active-language="languages.active" default-language="languages.default" survey="survey"></survey-translation-editor>
 
     </div>
   </main>

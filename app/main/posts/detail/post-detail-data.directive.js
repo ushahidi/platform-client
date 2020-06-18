@@ -37,10 +37,6 @@ function PostDetailDataController(
     $scope.$watch('post', function (post) {
         activate();
     });
-    // /* need to check for embed here to set the correct class
-    // * if coming from map to detail-view in embed, TODO: should go to a service! */
-    // var isEmbed = ($window.self !== $window.top) ? true : false;
-    // isEmbed ? $rootScope.setLayout('layout-d layout-embed') : $rootScope.setLayout('layout-d');
 
     $scope.post = $scope.post;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
@@ -67,14 +63,17 @@ function PostDetailDataController(
                         $scope.$emit('setPageTitle', title);
                     });
                 }
+                // Setting languages for view
+                $scope.languages = {
+                    active: $scope.post.enabled_languages.default,
+                    surveyLanguages: [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available]
+                }
                 // Make the first task visible
                 if (!_.isEmpty($scope.post.post_content) && $scope.post.post_content.length > 1) {
                     $scope.visibleTask = $scope.post.post_content[1].id;
                 }
 
                 _.each($scope.post.post_content, function (task) {
-                    // Set post task id
-                    // NOTE: This assumes that there is only one Post Task per Post
                     // Mark completed tasks
                         if (_.indexOf($scope.post.completed_stages, task.id) !== -1) {
                             task.completed = true;
@@ -108,16 +107,20 @@ function PostDetailDataController(
         return taskHasValues;
     };
 
-    $scope.showType = function (type, field) {
-        if (type === 'point') {
-            return false;
-        }
-        if (type === 'geometry') {
-            return false;
-        }
-
-        return true;
-    };
+    $scope.showType = function (type) {
+        switch (type) {
+            case 'point':
+                return false;
+            case 'geometry':
+                return false;
+            case 'title':
+                return false;
+            case 'description':
+                return false;
+            default:
+                return true;
+        };
+    }
 
     $scope.activateTaskTab = function (selectedTaskId) {
         $scope.visibleTask = selectedTaskId;
@@ -134,7 +137,6 @@ function PostDetailDataController(
                 errors.push($filter('translate')('post.modify.incomplete_step', {stage: task.label}));
             }
         });
-
         if (errors.length) {
             Notify.errorsPretranslated(errors); // todo WTF
             return;
@@ -146,7 +148,6 @@ function PostDetailDataController(
             .then(function () {
                 var message = $scope.post.status === 'draft' ? 'notify.post.set_draft' : 'notify.post.publish_success';
                 var role = message === 'draft' ? 'draft' : (_.isEmpty($scope.post.published_to) ? 'everyone' : $scope.post.published_to.join(', '));
-
                 Notify.notify(message, {role: role});
             }, function (errorResponse) {
                 Notify.apiErrors(errorResponse);

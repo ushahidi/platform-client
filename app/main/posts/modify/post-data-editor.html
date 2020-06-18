@@ -1,7 +1,21 @@
-<form name="editForm" novalidate>
+<translations-switch
+        languages= "languages"
+        languages-to-select="languages.surveyLanguages",
+        remove-language="removeLanguage(index, language)"
+        ng-if="languages.surveyLanguages.length > 1"
+        >
+      </translations-switch>
+      <post-translation-editor
+        ng-if="languages.default !== languages.active"
+        post="post"
+        active-language="languages.active"
+        default-language="languages.default"
+      ></post-translation-editor>
+<form name="editForm" novalidate ng-if="languages.default === languages.active">
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-        <!-- End post stage default fields -->
+   
+<!-- End post stage default fields -->
         <div class="form-field">
           <twitter-widget ng-if="post.data_source_message_id" twitter-widget-id="post.data_source_message_id" twitter-widget-options="{'align': 'left'}">
           </twitter-widget>
@@ -49,9 +63,8 @@
         <!-- End Post custom fields -->
 
         <!-- IF: User has permission to see other 'Tasks' -->
-        <post-toolbox form="editForm" available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage" post="post" ng-if="form"></post-toolbox>
+        <post-toolbox form="editForm" languages="languages" post="post" ng-if="form"></post-toolbox>
 
-        <post-toolbox form="editForm" available-languages="availableSurveyLanguages" active-survey-language="activeSurveyLanguage" post="post" ng-if="form"></post-toolbox>
         <post-tabs
           ng-show="post.post_content.length > 1"
           form="editForm"

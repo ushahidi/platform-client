@@ -6,9 +6,8 @@ function TranslationSwitchDirective() {
     return {
         restrict: 'E',
         scope: {
-            defaultLanguage:'=',
-            activeLanguage:'=',
-            enabledLanguages:'=',
+            languages:'=',
+            languagesToSelect:'=',
             removeLanguage:'&'
         },
         controller: TranslationSwitchController,
@@ -24,7 +23,7 @@ function TranslationSwitchController($scope, ModalService) {
     }
 
     $scope.switchToLanguage = function(language) {
-        $scope.activeLanguage = language;
+        $scope.languages.active = language;
     };
 
     $scope.openLanguages = function() {

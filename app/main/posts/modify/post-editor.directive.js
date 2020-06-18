@@ -92,7 +92,7 @@ function PostEditorController(
         return $q.all(requests).then(function (results) {
             $scope.post.form = results[0];
             $scope.post.post_content = results[0].tasks;
-            $scope.availableSurveyLanguages = [results[0].enabled_languages.default, ...results[0].enabled_languages.available];
+            $scope.languages = {default: results[0].enabled_languages.default, active: results[0].enabled_languages.default,  surveyLanguages: [results[0].enabled_languages.default, ...results[0].enabled_languages.available]}
 
             var categories = results[1];
 

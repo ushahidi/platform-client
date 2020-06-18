@@ -12,10 +12,10 @@
             }"
         >
             <label>
-                <bdi>{{attribute.translations[activeSurveyLanguage.language].label || attribute.label}}</bdi>
+                <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
             </label>
-            <p markdown-to-html="attribute.translations[activeSurveyLanguage.language].instructions" ng-if="attribute.translations[activeSurveyLanguage.language].instructions">
-            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage.language].instructions"></p>
+            <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions"></p>
             <input id="title" name="title" type="text" ng-model="post.title" ng-required="true" ng-minlength=2 ng-maxlength=150 adaptive-input>
             <div
                 class="alert error"
@@ -40,10 +40,10 @@
             adaptive-form
         >
             <label>
-                <bdi>{{attribute.translations[activeSurveyLanguage.language].label || attribute.label}}</bdi>
+                <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
             </label>
-            <p markdown-to-html="attribute.translations[activeSurveyLanguage.language].instructions" ng-if="attribute.translations[activeSurveyLanguage.language].instructions">
-            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage.language].instructions">            </p>
+            <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions">            </p>
             <textarea id="content" name="content" data-min-rows="1" rows="1"
                 ng-model="post.description" ng-required="true" adaptive-input msd-elastic>
             </textarea>
@@ -74,11 +74,11 @@
             <svg ng-show="attribute.response_private" class="iconic">
                 <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
             </svg>
-            <bdi>{{attribute.translations[activeSurveyLanguage.language].label || attribute.label}}</bdi>
+            <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
         </label>
         <!-- Attribute Instructions -->
-        <p markdown-to-html="attribute.translations[activeSurveyLanguage.language].instructions" ng-if="attribute.translations[activeSurveyLanguage.language].instructions">
-        <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage.language].instructions">            </p>            
+        <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+        <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions">            </p>            
         <!-- attributes which use the form-field structure -->
                 <div ng-switch="attribute.input">
                     <!-- Standard fields -->
@@ -221,12 +221,12 @@
                     <svg ng-show="attribute.response_private" class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                     </svg>
-                    <bdi>{{attribute.translations[activeSurveyLanguage.language].label || attribute.label}}<bdi>
+                    <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}<bdi>
                     
                 </label>
                 <!-- Attribute Instructions -->
-                <p markdown-to-html="attribute.translations[activeSurveyLanguage.language].instructions" ng-if="attribute.translations[activeSurveyLanguage.language].instructions">
-                <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage.language].instructions"></p>
+                <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+                <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions"></p>
                 <!-- attributes which use the form-field structure -->
                 <div ng-switch="attribute.input">
                     <!-- type: radio -->
@@ -241,7 +241,7 @@
                                     value="{{option}}"
                                 >
                                 
-                                <bdi>{{attribute.translations[activeSurveyLanguage.language].options[key] || option}}</bdi>
+                                <bdi>{{attribute.translations[activeSurveyLanguage].options[key] || option}}</bdi>
                             </label>
                         </div>
                     </div>
@@ -257,7 +257,7 @@
                                 checklist-value="option"
                                 value="option"
                             >
-                                <bdi>{{attribute.translations[activeSurveyLanguage.language].options[index] || option}}</bdi>
+                                <bdi>{{attribute.translations[activeSurveyLanguage].options[index] || option}}</bdi>
                         </label>
                         </div>
                     </div>

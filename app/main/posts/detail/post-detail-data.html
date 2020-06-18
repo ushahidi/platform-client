@@ -1,6 +1,6 @@
 <div>
   <layout-class layout="d"></layout-class>
-  <article class="postcard" role="article">
+  <article class="postcard" role="article" translate-language="{{language.active}}">
     <button class="button-beta button-flat postcard-close" ng-click="close()">
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
@@ -9,9 +9,12 @@
     <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
     <post-lock ng-if="post.lock" post="post"></post-lock>
     <div class="postcard-body">
-      <h1 class="form-sheet-title survey-title" linkify>
-        <bdi>{{post.title}}</bdi>
-      </h1>
+      <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.active].name || post.form.name}}</h1>
+      <p><bdi>{{post.form.translations[languages.active].description || post.form.description}}</bdi></p>
+      
+      <h2 class="form-sheet-title survey-title" linkify>
+        <bdi>{{post.translations[languages.active].title || post.title}}</bdi>
+      </h2>
       <div class="postcard-header">
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>
         <post-actions post="post"></post-actions>
@@ -21,11 +24,12 @@
       <div
         ng-if="post.description"
         class="postcard-field">
-          <p markdown-to-html="post.description"></p>
+          <p ng-if="!post.translations[languages.active].description" markdown-to-html="post.description"></p>
+          <p ng-if="post.translations[languages.active].description" markdown-to-html="post.translations[languages.active].description"></p>
       </div>
       <span 
       ng-repeat="field in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by field.id"
-      ng-if="showType(field.type, field) && field.value"
+      ng-if="showType(field.type) && field.value"
       >
         <post-media-value
           ng-if="field.type === 'media'"
@@ -34,9 +38,9 @@
           media-id="field.value"></post-media-value>
         <post-value
           ng-if="field.type !== 'media'"
-          value="field.value"
           attribute="field"
-          type="'post'"></post-value>
+          type="'post'"
+          active-language="languages.active"></post-value>
       </span>
       <post-detail-map ng-if="field.type === 'point'" post-id="post.id"></post-detail-map>
     </div>
@@ -65,7 +69,7 @@
         <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
       </div>
       <div class="toolbox">
-        <survey-language-selector title="'View this post in another language'" available-languages="availableLanguages" active-language="activeLanguage" ></survey-language-selector>
+        <survey-language-selector title="'View this post in another language'" languages="languages"></survey-language-selector>
     </div>
 <div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div

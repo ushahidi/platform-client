@@ -7,7 +7,7 @@
         </ol>
 
         <h1 class="mode-context-title">
-            <bdi>{{post.form.translations[activeSurveyLanguage.language].name || post.form.name}}</bdi></h1>
+            <bdi>{{post.form.translations[languages.active].name || post.form.name}}</bdi></h1>
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
@@ -54,12 +54,12 @@
                   form="postForm"
                   medias="medias"
                   attribute="attribute"
-                  active-survey-language="activeSurveyLanguage"
+                  active-survey-language="languages.active"
               ></post-value-edit>
               <!-- End Post custom fields -->
 
               <div class="toolbox">
-                <survey-language-selector title="'View and add to this survey in another language'" available-languages="availableSurveyLanguages" active-language="activeSurveyLanguage" ></survey-language-selector>
+                <survey-language-selector title="'View and add to this survey in another language'" languages="languages"></survey-language-selector>
             </div>
          </div>
          <post-tabs

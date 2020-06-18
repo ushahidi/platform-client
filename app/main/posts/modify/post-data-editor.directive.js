@@ -70,7 +70,7 @@ function PostDataEditorController(
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.selectForm = selectForm;
     $scope.isSaving = LoadingProgress.getSavingState;
-
+    $scope.removeLanguage = removeLanguage;
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
@@ -167,15 +167,11 @@ function PostDataEditorController(
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
-
-        TranslationService.getLanguage().then(language => {
-            $scope.activeSurveyLanguage = {language};
-        });
     }
 
     function selectForm() {
         $scope.form = $scope.post.form;
-        $scope.availableSurveyLanguages = [$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available]
+        $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available] };
         $scope.getLock();
         if (!$scope.post.post_content) {
             $scope.post.post_content = $scope.post.form.tasks;
@@ -183,6 +179,9 @@ function PostDataEditorController(
             $scope.post.post_content.map(task => {
                 task.fields.map (attr => {
                     // Create associated media entity
+                    if (!attr['translated-values']) {
+                        attr['translated-values'] = {};
+                    }
                     if (attr.input === 'upload') {
                         $scope.medias[attr.id] = {};
                     }
@@ -274,7 +273,7 @@ function PostDataEditorController(
             // Avoid messing with original object
             // Clean up post values object
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            post.base_language = $scope.activeSurveyLanguage.language;
+            post.base_language = $scope.languages.default;
             PostsSdk.savePost(post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.editForm.$dirty = false;
@@ -304,6 +303,19 @@ function PostDataEditorController(
             });
         });
     }
+    function removeLanguage(index, language) {
+            Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
+            .then(function() {
+                $scope.languages.active = $scope.languages.default;
+                $scope.languages.available.splice(index, 1);
+                delete $scope.post.translations[language];
+                _.each($scope.post.post_content, task=>{
+                    _.each(task.fields, field => {
+                        delete field['translated-values'][language];
+                    })
+                });
+            });
+        };
 
     function cancel() {
         $state.go('posts.data.detail',{postId: $scope.post.id});

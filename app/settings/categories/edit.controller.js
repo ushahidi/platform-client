@@ -55,19 +55,14 @@ function (
             };
             TranslationService.getLanguage().then(language => {
                 //active language is the same as default when starting out.
-                if (!$scope.category.enabled_languages) {
-                    $scope.category.enabled_languages = {
-                        default: language,
-                        available: []
-                    }
-                }
                 $scope.languages = {
-                    defaultLanguage: language,
-                    activeLanguage: language
-                };
+                    default: language,
+                    active: language
+                }
 
+                $scope.languages.available = scope.category.enabled_languages ? $scope.category.enabled_languages.available : [];
                 $scope.selectedLanguage = language;
-                });
+            });
     } else {
         // Translate and set edit category page title
         $translate('category.edit_tag').then(function (title) {
@@ -118,8 +113,9 @@ function (
             if ($transition$.params().id) {
                 $scope.category = _.filter(categories, {id: parseInt($transition$.params().id)})[0];
                 $scope.languages = {
-                    defaultLanguage: $scope.category.enabled_languages.default,
-                    activeLanguage: $scope.category.enabled_languages.default
+                    default: $scope.category.enabled_languages.default,
+                    active: $scope.category.enabled_languages.default,
+                    available: $scope.category.enabled_languages.available
                 };
 
                 $scope.selectedLanguage = $scope.category.enabled_languages.default;
@@ -140,7 +136,7 @@ function (
 
     function getParentName() {
         var parentName = 'Nothing';
-        if ($scope.category && $scope.parents.length > 0) {
+        if ($scope.category && $scope.category.parent.length > 0) {
             parentName = $scope.category.parent.tag;
         }
         return parentName;
@@ -220,11 +216,12 @@ function (
             $scope.showLangError = false;
 
             $scope.languages  = {
-                defaultLanguage: language,
-                activeLanguage: $scope.defaultLanguage
+                default: language,
+                active: language,
+                available: $scope.category.enabled_languages.available
             };
 
-            $scope.selectedLanguage = $scope.defaultLanguage;
+            $scope.selectedLanguage = language
             $scope.category.enabled_languages.default = language;
         }
     }
@@ -234,7 +231,7 @@ function (
         .then(function() {
             $scope.category.enabled_languages.available.splice(index,1);
             delete $scope.category.translations[language];
-            $scope.languages.activeLanguage = $scope.languages.defaultLanguage;
+            $scope.languages.active = $scope.languages.default;
         });
     };
 }];
