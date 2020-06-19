@@ -22,7 +22,8 @@ PostDetailDataController.$inject = [
     'Notify',
     'PostSurveyService',
     '$state',
-    'PostsSdk'
+    'PostsSdk',
+    'SurveysSdk'
 ];
 function PostDetailDataController(
     $scope,
@@ -32,13 +33,14 @@ function PostDetailDataController(
     Notify,
     PostSurveyService,
     $state,
-    PostsSdk
+    PostsSdk,
+    SurveysSdk
 ) {
     $scope.$watch('post', function (post) {
         activate();
     });
 
-    $scope.post = $scope.post;
+    $scope.post = $scope.post.data.result;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
 
@@ -56,8 +58,13 @@ function PostDetailDataController(
         }
 
         // Load the post form
-        if ($scope.post.form && $scope.post.form.id) {
+        if ($scope.post && $scope.post.form_id) {
                 // Set page title to '{form.name} Details' if a post title isn't provided.
+                SurveysSdk.getSurveys($scope.post.form_id).then(form => {
+                    $scope.post.form = form;
+                    $scope.$apply();
+                });
+
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: $scope.post.form.name}).then(function (title) {
                         $scope.$emit('setPageTitle', title);

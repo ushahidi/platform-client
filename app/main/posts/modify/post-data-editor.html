@@ -14,7 +14,7 @@
 <form name="editForm" novalidate ng-if="languages.default === languages.active">
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-    <header class="form-sheet-summary">
+    <header class="form-sheet-summary" ng-if="post.form">
       <h1 class="form-sheet-title survey-title">{{post.form.name}}</h1>
       <p>{{post.form.description}}</p>
   </header>
