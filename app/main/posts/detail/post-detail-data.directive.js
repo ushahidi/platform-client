@@ -62,9 +62,6 @@ function PostDetailDataController(
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 SurveysSdk.getSurveys($scope.post.form_id).then(form => {
                     $scope.post.form = form;
-                    $scope.$apply();
-                });
-
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: $scope.post.form.name}).then(function (title) {
                         $scope.$emit('setPageTitle', title);
@@ -86,8 +83,9 @@ function PostDetailDataController(
                             task.completed = true;
                         }
                     });
-                };
-            }
+                });
+            };
+        }
 
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {

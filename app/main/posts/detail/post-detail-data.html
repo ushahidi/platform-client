@@ -22,10 +22,10 @@
       <twitter-widget ng-if="post.source==='twitter'" twitter-widget-id="post.data_source_message_id">
       </twitter-widget>
       <div
-        ng-if="post.description"
+        ng-if="post.content"
         class="postcard-field">
-          <p ng-if="!post.translations[languages.active].description" markdown-to-html="post.description"></p>
-          <p ng-if="post.translations[languages.active].description" markdown-to-html="post.translations[languages.active].description"></p>
+          <p ng-if="!post.translations[languages.active].content" markdown-to-html="post.content"></p>
+          <p ng-if="post.translations[languages.active].content" markdown-to-html="post.translations[languages.active].content"></p>
       </div>
       <span 
       ng-repeat="field in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by field.id"

@@ -54,7 +54,7 @@ function PostDataEditorController(
 
     // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
-
+    $scope.post = $scope.post.data.result;
     $scope.validationErrors = [];
     $scope.enableTitle = true;
     $scope.getLock = getLock;
@@ -156,7 +156,7 @@ function PostDataEditorController(
     activate();
 
     function activate() {
-        if ($scope.post.form) {
+        if ($scope.post.form_id) {
             $scope.selectForm();
         } else {
             SurveysSdk.getSurveys().then(forms => {
@@ -170,8 +170,13 @@ function PostDataEditorController(
     }
 
     function selectForm() {
-        $scope.form = $scope.post.form;
-        $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available] };
+        SurveysSdk.getSurveys($scope.post.form_id).then(forms => {
+            $scope.forms = forms;
+            $scope.$apply();
+            $scope.form = $scope.post.form;
+            $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available] };
+
+        });
         $scope.getLock();
         if (!$scope.post.post_content) {
             $scope.post.post_content = $scope.post.form.tasks;
