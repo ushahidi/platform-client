@@ -75,14 +75,14 @@
 <div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div
         ng-repeat="field in task.fields"
-        ng-if="field.value && showType(field.type)"
+        ng-if="field.value.value && showType(field.type)"
         ng-show="task.id === visibleTask"
-        ng-class="{'listing-item-primary': form_attributes[postValue.key].type === 'media'}"
+        ng-class="{'listing-item-primary': field.type === 'media'}"
       >
         <post-media-value
-          ng-if="form_attributes[postValue.key].type === 'media'"
-          label="{{form_attributes[postValue.key].label}}"
-          media-id="postValue.value"></post-media-value>
+          ng-if="field.type === 'media'"
+          label="{{field.label}}"
+          media-id="field.value.value"></post-media-value>
         <post-value
             ng-if="field.type !== 'media'"
             attribute="field"
