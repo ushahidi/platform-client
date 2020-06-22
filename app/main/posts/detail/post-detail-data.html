@@ -35,14 +35,15 @@
           ng-if="field.type === 'media'"
           media-has-caption="field.config.hasCaption"
           label="{{field.label}}"
-          media-id="field.value"></post-media-value>
+          media-id="field.value.value"></post-media-value>
         <post-value
-          ng-if="field.type !== 'media'"
+          ng-if="field.type !== 'media' && field.type !== 'point'"
           attribute="field"
           type="'post'"
           active-language="languages.active"></post-value>
-      </span>
-      <post-detail-map ng-if="field.type === 'point'" post-id="post.id"></post-detail-map>
+          <post-detail-map ng-if="field.type === 'point'" post-id="post.id"></post-detail-map>
+    </span>
+
     </div>
   </article>
   <div class="listing card init" ng-show="post.post_content.length > 1">

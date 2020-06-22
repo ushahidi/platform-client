@@ -121,8 +121,6 @@ function PostDetailDataController(
 
     $scope.showType = function (type) {
         switch (type) {
-            case 'point':
-                return false;
             case 'geometry':
                 return false;
             case 'title':
