@@ -23,7 +23,8 @@ PostDetailDataController.$inject = [
     'PostSurveyService',
     '$state',
     'PostsSdk',
-    'SurveysSdk'
+    'SurveysSdk',
+    'TranslationService'
 ];
 function PostDetailDataController(
     $scope,
@@ -34,7 +35,8 @@ function PostDetailDataController(
     PostSurveyService,
     $state,
     PostsSdk,
-    SurveysSdk
+    SurveysSdk,
+    TranslationService
 ) {
     $scope.$watch('post', function (post) {
         activate();
@@ -43,6 +45,10 @@ function PostDetailDataController(
     $scope.post = $scope.post.data.result;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
+    $scope.languages = {
+        active: '',
+        surveyLanguages: []
+    };
 
     activate();
 
@@ -56,6 +62,9 @@ function PostDetailDataController(
                 $scope.$emit('setPageTitle', title);
             });
         }
+        TranslationService.getLanguage().then(language => {
+            $scope.languages.active = language;
+        });
 
         // Load the post form
         if ($scope.post && $scope.post.form_id) {
@@ -67,11 +76,9 @@ function PostDetailDataController(
                         $scope.$emit('setPageTitle', title);
                     });
                 }
-                // Setting languages for view
-                $scope.languages = {
-                    active: $scope.post.enabled_languages.default,
-                    surveyLanguages: [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available]
-                }
+                // Setting available languages for view
+                $scope.languages.surveyLanguages = [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available];
+
                 // Make the first task visible
                 if (!_.isEmpty($scope.post.post_content) && $scope.post.post_content.length > 1) {
                     $scope.visibleTask = $scope.post.post_content[1].id;

@@ -6,15 +6,7 @@
       </h2>
 
       <div ng-if="attribute.input === 'tags'">
-       <p>
-        <svg class="iconic" style="margin-right:4px;">
-            <use xlink:href="/img/iconic-sprite.svg#tag"></use>
-        </svg>
-          <bdi ng-repeat="category in attribute.value track by $index">
-            {{category.tag}}
-            <span ng-if="$index < (attribute.value.length -1)">,</span> 
-          </bdi>
-        </p>
+       <post-category-value field="attribute" active-language="activeLanguage"></post-category-value>
       </div>
       <div ng-if="attribute.type === 'relation'">
           <a ui-sref="posts.data.detail({postId: value.id})">{{value.title}}</a>
