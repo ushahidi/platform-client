@@ -159,7 +159,6 @@ function PostEditorController(
             post.base_language = $scope.activeSurveyLanguage.language;
             post.type = 'report';
             post.form_id = post.form.id;
-            post.post_date = post.post_date.toString();
             delete post.form;
             PostsSdk.savePost(post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
