@@ -157,6 +157,10 @@ function PostEditorController(
             // Clean up post values object
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
             post.base_language = $scope.activeSurveyLanguage.language;
+            post.type = 'report';
+            post.form_id = post.form.id;
+            post.post_date = post.post_date.toString();
+            delete post.form;
             PostsSdk.savePost(post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
