@@ -28,7 +28,7 @@
             <p>{{post.description}}</p>
         </div>
         <p>Add your translation below:</p>
-        <input type="text" placeholder="Write your translation here" ng-model="post.translations[activeLanguage].description" required>
+        <input type="text" placeholder="Write your translation here" ng-model="post.translations[activeLanguage].content" required>
     </div>
     <!-- Translation for other text-post fields -->
     <div class="form-field required" ng-repeat="task in post.post_content">
@@ -36,19 +36,19 @@
               <label translate required> {{field.label}}</label>
               <div class="form-field framed">
                   <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-                  <p>{{field.value}}</p>
+                  <p>{{field.value.value}}</p>
               </div>
               <p>Add your translation below:</p>
               <input
                   ng-if="field.input === 'text'"
                   type='text'
                   placeholder="Write your translation here"
-                  ng-model="field['translated-values'][activeLanguage]"
+                  ng-model="field.value.translations[activeLanguage].value"
               >
               <textarea
                   ng-if="field.input === 'textarea'"
                   placeholder="Write your translation here"
-                  ng-model="field['translated-values'][activeLanguage]"
+                  ng-model="field.value.translations[activeLanguage].value"
               ></textarea>
           </div>
       </div>

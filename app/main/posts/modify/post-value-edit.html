@@ -231,7 +231,7 @@
                 <div ng-switch="attribute.input">
                     <!-- type: radio -->
                     <div ng-switch-when="radio">
-                        <div class="form-field radio" ng-repeat="option in attribute.options">
+                        <div class="form-field radio" ng-repeat="(index,option) in attribute.options track by index">
                             <label>
                                 <input
                                     name="values_{{attribute.id}}"
@@ -240,8 +240,7 @@
                                     ng-required="attribute.required"
                                     value="{{option}}"
                                 >
-                                
-                                <bdi>{{attribute.translations[activeSurveyLanguage].options[key] || option}}</bdi>
+                                <bdi>{{attribute.translations[activeSurveyLanguage].options[index] || option}}</bdi>
                             </label>
                         </div>
                     </div>

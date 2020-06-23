@@ -11,7 +11,7 @@
         active-language="languages.active"
         default-language="languages.default"
       ></post-translation-editor>
-<form name="editForm" novalidate>
+<form name="editForm" novalidate ng-show="languages.default === languages.active">
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
     <header class="form-sheet-summary" ng-if="post.form">
@@ -66,7 +66,7 @@
         <!-- End Post custom fields -->
 
         <!-- IF: User has permission to see other 'Tasks' -->
-        <post-toolbox form="editForm" languages="languages" post="post" ng-if="post.form"></post-toolbox>
+        <post-toolbox form="editForm" post="post" ng-if="post.form"></post-toolbox>
 
         <post-tabs
           ng-show="post.post_content.length > 1"

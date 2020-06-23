@@ -58,7 +58,7 @@
               ></post-value-edit>
               <!-- End Post custom fields -->
 
-              <div class="toolbox">
+            <div class="toolbox" ng-if="languages.available.length > 1">
                 <survey-language-selector title="'View and add to this survey in another language'" languages="languages"></survey-language-selector>
             </div>
          </div>

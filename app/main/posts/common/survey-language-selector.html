@@ -1,6 +1,6 @@
 
 <!-- Display in other languages (if translations are available) -->
-<div class="tool" dropdown ng-show="languages.surveyLanguages.length > 1">
+<div class="tool" dropdown>
     <fieldset class="custom-fieldset init">
       <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
         <span class="legend-label">
@@ -18,9 +18,9 @@
       <div class="toggle-content form-field init" dropdown-menu>
         <div class="form-field radio icon-input"
              name="lang"
-             ng-repeat="lang in languages.surveyLanguages"
+             ng-repeat="lang in languages.available"
              ng-click="changeLanguage(lang)"
-             ng-model="languages.surveyLanguages"
+             ng-model="languages.available"
              >
           <label for="{{lang}}">
             <svg class="iconic">

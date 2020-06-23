@@ -173,10 +173,9 @@ function PostDataEditorController(
 
     function selectForm(form) {
             $scope.post.form = form;
+            $scope.post.translations = Object.assign({}, $scope.post.translations);
+
             $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available] };
-            if ($scope.post.post_content.length === 0 || $scope.post.post_content[0].type !== 'post') {
-                $scope.post.post_content = [$scope.post.form.tasks[0], ...$scope.post.post_content];
-            }
         $scope.getLock();
         if (!$scope.post.post_content) {
             $scope.post.post_content = $scope.post.form.tasks;
@@ -260,11 +259,11 @@ function PostDataEditorController(
 
     function savePost() {
         // Checking if changes are made
-        if ($scope.editForm && !$scope.editForm.$dirty) {
-            Notify.infoModal('post.valid.no_changes');
-            $rootScope.$broadcast('event:edit:post:data:mode:saveError');
-            return;
-        }
+        // if ($scope.editForm && !$scope.editForm.$dirty) {
+        //     Notify.infoModal('post.valid.no_changes');
+        //     $rootScope.$broadcast('event:edit:post:data:mode:saveError');
+        //     return;
+        // }
 
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
@@ -277,14 +276,14 @@ function PostDataEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
-            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            post.base_language = $scope.languages.default;
-            PostsSdk.savePost(post).then(function (response) {
+            // var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+            $scope.post.base_language = $scope.languages.default;
+            PostsSdk.savePost($scope.post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.editForm.$dirty = false;
                 // Save the updated post back to outside context
                 ignoreCancelEvent = true;
-                $state.go('posts.data.detail', {view: 'data', postId: response.id});
+                $state.go('posts.data.detail', {view: 'data', postId: response.data.result.id});
 
                 Notify.notify(success_message, { name: $scope.post.title });
 

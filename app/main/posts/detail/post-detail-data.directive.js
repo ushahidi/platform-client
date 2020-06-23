@@ -46,25 +46,13 @@ function PostDetailDataController(
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
     $scope.languages = {
-        active: '',
-        surveyLanguages: []
+        active: $scope.post.enabled_languages.default,
+        available: [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available]
     };
 
     activate();
 
     function activate() {
-        // Set page title to post title, if there is one available.
-        if ($scope.post.title && $scope.post.title.length) {
-            $scope.$emit('setPageTitle', $scope.post.title);
-        } else {
-            $translate('post.post_details').then(function (title) {
-                $scope.title = title;
-                $scope.$emit('setPageTitle', title);
-            });
-        }
-        TranslationService.getLanguage().then(language => {
-            $scope.languages.active = language;
-        });
 
         // Load the post form
         if ($scope.post && $scope.post.form_id) {
@@ -78,7 +66,7 @@ function PostDetailDataController(
                     });
                 }
                 // Setting available languages for view
-                $scope.languages.surveyLanguages = [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available];
+                // $scope.languages.surveyLanguages = [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available];
 
                 // Make the first task visible
                 if (!_.isEmpty($scope.post.post_content) && $scope.post.post_content.length > 1) {

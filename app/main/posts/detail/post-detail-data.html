@@ -7,12 +7,15 @@
       </svg>
     </button>
     <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
+    <div class="toolbox" ng-if="languages.available.length > 1">
+      <survey-language-selector title="'View this post in another language'" languages="languages"></survey-language-selector>
+  </div>
     <post-lock ng-if="post.lock" post="post"></post-lock>
     <div class="postcard-body">
       <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.active].name || post.form.name}}</h1>
       <p><bdi>{{post.form.translations[languages.active].description || post.form.description}}</bdi></p>
       
-      <h2 class="form-sheet-title survey-title" linkify>
+      <h2 class="form-sheet-title survey-title">
         <bdi>{{post.translations[languages.active].title || post.title}}</bdi>
       </h2>
       <div class="postcard-header">
@@ -69,9 +72,7 @@
           ng-show="task.id === visibleTask">
         <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
       </div>
-      <div class="toolbox">
-        <survey-language-selector title="'View this post in another language'" languages="languages"></survey-language-selector>
-    </div>
+      
 <div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div
         ng-repeat="field in task.fields"

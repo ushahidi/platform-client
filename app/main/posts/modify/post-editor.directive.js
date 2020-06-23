@@ -92,7 +92,7 @@ function PostEditorController(
         return $q.all(requests).then(function (results) {
             $scope.post.form = results[0];
             $scope.post.post_content = results[0].tasks;
-            $scope.languages = {default: results[0].enabled_languages.default, active: results[0].enabled_languages.default,  surveyLanguages: [results[0].enabled_languages.default, ...results[0].enabled_languages.available]}
+            $scope.languages = {default: results[0].enabled_languages.default, active: results[0].enabled_languages.default,  available: [results[0].enabled_languages.default, ...results[0].enabled_languages.available]}
 
             var categories = results[1];
 
@@ -156,7 +156,7 @@ function PostEditorController(
         resolveMedia().then(function () {
             // Clean up post values object
             var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            post.base_language = $scope.activeSurveyLanguage.language;
+            post.base_language = $scope.languages.active;
             post.type = 'report';
             post.form_id = post.form.id;
             delete post.form;
