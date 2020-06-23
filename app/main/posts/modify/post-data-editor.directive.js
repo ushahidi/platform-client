@@ -157,7 +157,9 @@ function PostDataEditorController(
 
     function activate() {
         if ($scope.post.form_id) {
-            $scope.selectForm();
+            SurveysSdk.getSurveys($scope.post.form_id).then(form => {
+            $scope.selectForm(form);
+            });
         } else {
             SurveysSdk.getSurveys().then(forms => {
                 $scope.forms = forms;
@@ -169,14 +171,12 @@ function PostDataEditorController(
         $scope.submittingText = $translate.instant('app.submitting');
     }
 
-    function selectForm() {
-        SurveysSdk.getSurveys($scope.post.form_id).then(forms => {
-            $scope.forms = forms;
-            $scope.$apply();
-            $scope.form = $scope.post.form;
+    function selectForm(form) {
+            $scope.post.form = form;
             $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available] };
-
-        });
+            if ($scope.post.post_content.length === 0 || $scope.post.post_content[0].type !== 'post') {
+                $scope.post.post_content = [$scope.post.form.tasks[0], ...$scope.post.post_content];
+            }
         $scope.getLock();
         if (!$scope.post.post_content) {
             $scope.post.post_content = $scope.post.form.tasks;
@@ -243,7 +243,7 @@ function PostDataEditorController(
     function canSavePost() {
         return PostEditService.validatePost($scope.post, $scope.editForm, $scope.post.post_content);
     }
-
+    //TODO: Use sdk
     function deletePost(post) {
         PostActionsService.delete(post).then(function () {
             $location.path('/');

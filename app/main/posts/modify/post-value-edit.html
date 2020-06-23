@@ -34,7 +34,7 @@
             ng-if="attribute.type==='description'"
             class="form-field init required"
             ng-class="{
-                'error': form.description.$invalid && form.content.$dirty,
+                'error': form.content.$invalid && form.content.$dirty,
                 'success': !form.content.$invalid && form.content.$dirty
             }"
             adaptive-form
@@ -104,7 +104,7 @@
                         <post-datetime
                             id="values{{attribute.id}}"
                             name="values_{{attribute.id}}"
-                            ng-model="attribute.value"
+                            ng-model="attribute.value.value"
                             ng-required="attribute.required"
                         ></post-datetime>
                     </div>
@@ -113,7 +113,7 @@
                         ng-switch-when="select"
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         >
                         <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
@@ -124,7 +124,7 @@
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
                         type="number"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         >
                     <!-- type: text -->
@@ -134,7 +134,7 @@
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
                         type="text"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         adaptive-input
                         >
@@ -147,7 +147,7 @@
                         style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         adaptive-input
                         msd-elastic>
@@ -163,7 +163,7 @@
                         style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         adaptive-input
                         msd-elastic>
@@ -174,7 +174,7 @@
                         key="id"
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
-                        model="attribute.value"
+                        model="attribute.value.value"
                         ng-required="attribute.required"
                         ng-switch-when="relation"></post-relation>
                     <!-- type: location -->
@@ -183,7 +183,7 @@
                         key="key"
                         id="values{{attribute.id}}"
                         name="values_{{attribute.id}}"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         ng-switch-when="location"></post-location>
                     <!-- type: upload -->
@@ -192,7 +192,7 @@
                         name="values_{{attribute.id}}"
                         media-has-caption="attribute.config.hasCaption"
                         media="medias[attribute.id]"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                     ></post-media>
                     <!-- type: upload -->
@@ -200,7 +200,7 @@
                         ng-switch-when="video"
                         name="values_{{attribute.id}}"
                         video-url="attribute.value"
-                        ng-model="attribute.value"
+                        ng-model="attribute.value.value"
                         ng-required="attribute.required"
                     ></post-video-input>
                 </div>
@@ -236,7 +236,7 @@
                                 <input
                                     name="values_{{attribute.id}}"
                                     type="radio"
-                                    ng-model="attribute.value"
+                                    ng-model="attribute.value.value"
                                     ng-required="attribute.required"
                                     value="{{option}}"
                                 >
@@ -251,7 +251,7 @@
                         <label>
                             <input
                                 type="checkbox"
-                                checklist-model="attribute.value"
+                                checklist-model="attribute.value.value"
                                 ng-required="attribute.required"
                                 name="values_{{attribute.id}}_{{option}}"
                                 checklist-value="option"
@@ -265,11 +265,11 @@
                     <div ng-switch-when="tags">
                         <post-category-editor
                             available="attribute.options"
-                            selected="attribute.value"
+                            selected="attribute.value.value"
                             form="form"
                             form-id="post.form.id"
                             attribute="attribute"
-                            post-value="attribute.value"
+                            post-value="attribute.value.value"
                             active-survey-language="activeSurveyLanguage"
                         ></post-category-editor>
                     </div>

@@ -71,6 +71,7 @@ function PostDetailDataController(
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 SurveysSdk.getSurveys($scope.post.form_id).then(form => {
                     $scope.post.form = form;
+                    // We might want to remove this since the form-name is already in the title now
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: $scope.post.form.name}).then(function (title) {
                         $scope.$emit('setPageTitle', title);
