@@ -128,7 +128,7 @@ function SurveyEditorController(
                     available: []
                 }
             }
-            $scope.languages.default = {
+            $scope.languages = {
                 default: language,
                 active: language            }
             });
