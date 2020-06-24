@@ -11,7 +11,6 @@ module.exports = [
     '$q',
     '$state',
     'TranslationService',
-    'UtilsSdk',
     'LoadingProgress',
 function (
     $scope,
@@ -26,7 +25,6 @@ function (
     $q,
     $state,
     TranslationService,
-    UtilsSdk,
     LoadingProgress
 ) {
 
@@ -95,9 +93,7 @@ function (
     }
 
     function getLanguages() {
-        UtilsSdk.getLanguages().then(languages => {
-            $scope.languagesToSelect = languages.results;
-        });
+        $scope.languagesToSelect = require('../../common/global/language-list.json');
     }
     function getRoles() {
         RoleEndpoint.query().$promise.then(function (roles) {

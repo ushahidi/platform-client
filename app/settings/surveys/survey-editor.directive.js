@@ -29,7 +29,6 @@ SurveyEditorController.$inject = [
     'Features',
     'SurveysSdk',
     'TranslationService',
-    'UtilsSdk',
     'CategoriesSdk'];
 function SurveyEditorController(
     $scope,
@@ -47,7 +46,6 @@ function SurveyEditorController(
     Features,
     SurveysSdk,
     TranslationService,
-    UtilsSdk,
     CategoriesSdk
 ) {
     $scope.saving = false;
@@ -94,7 +92,7 @@ function SurveyEditorController(
     $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
     $scope.roles = [];
-    $scope.languagesToSelect = require('./language-list.json');
+    $scope.languagesToSelect = require('../../common/global/language-list.json');
 
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
@@ -131,10 +129,6 @@ function SurveyEditorController(
             $scope.languages = {
                 default: language,
                 active: language            }
-            });
-
-            UtilsSdk.getLanguages().then(languages => {
-                $scope.languagesToSelect = languages.results;
             });
 
         if ($scope.surveyId) {
