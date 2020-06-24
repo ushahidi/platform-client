@@ -16,7 +16,7 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
             $scope.standardTask = $scope.type === 'standard';
             $scope.isText = isText;
             function isText() {
-                if ($scope.attribute.type === 'varchar' || $scope.attribute.type === 'title' || $scope.attribute.type === 'description' || $scope.attribute.type === 'text' || $scope.attribute.type === 'markdown') {
+                if ($scope.attribute.type === 'title' || $scope.attribute.type === 'description' || $scope.attribute.input === 'text' ||  $scope.attribute.type === 'text' || $scope.attribute.type === 'markdown') {
                     return true;
                 }
                 return false;

@@ -65,8 +65,6 @@ function PostDetailDataController(
                         $scope.$emit('setPageTitle', title);
                     });
                 }
-                // Setting available languages for view
-                // $scope.languages.surveyLanguages = [$scope.post.enabled_languages.default, ...$scope.post.enabled_languages.available];
 
                 // Make the first task visible
                 if (!_.isEmpty($scope.post.post_content) && $scope.post.post_content.length > 1) {
