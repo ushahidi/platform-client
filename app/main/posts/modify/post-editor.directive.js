@@ -100,20 +100,23 @@ function PostEditorController(
             $scope.post.post_content.map(task => {
                 task.fields.map (attr => {
                     // Create associated media entity
+                    if (!attr.value) {
+                        attr.value = {};
+                    }
                     if (attr.input === 'upload') {
                         $scope.medias[attr.id] = {};
                     }
                     if (attr.input === 'tags') {
                         // adding category-objects attribute-options
-                        attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
+                        // attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
                         // tag.id needs to be a number
-                        if (attr.value) {
-                            attr.value = attr.value.map(function (id) {
-                                return parseInt(id);
-                            });
-                        } else {
-                            attr.value = [];
-                        }
+                        // if (attr.value.value) {
+                        //     attr.value = attr.value.map(function (id) {
+                        //         return parseInt(id);
+                        //     });
+                        // } else {
+                            attr.value.value = [];
+                        // }
                     }
                     if (attr.input === 'number') {
                         if (attr.value) {
@@ -125,8 +128,8 @@ function PostEditorController(
                     if (attr.input === 'date' || attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
-                        if (attr.value) {
-                            attr.value = moment(attr.value).toDate();
+                        if (attr.value.value) {
+                            attr.value.value = moment(attr.value.value).toDate();
                         } else {
                             attr.value = attr.default ? new Date(attr.default) : new Date();
                         }

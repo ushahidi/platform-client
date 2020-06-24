@@ -118,15 +118,6 @@ function SurveyEditorController(
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
             $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
         });
-        TranslationService.getLanguage().then(language => {
-            //active language is the same as default when starting out.
-            if (!$scope.survey.enabled_languages) {
-                $scope.survey.enabled_languages = {
-                    default: language,
-                    available: []
-                }
-                }
-            });
 
         if ($scope.surveyId) {
             loadFormData();
@@ -176,6 +167,21 @@ function SurveyEditorController(
                     }
                 ]
             };
+            TranslationService.getLanguage().then(language => {
+                //active language is the same as default when starting out.
+                if (!$scope.survey.enabled_languages) {
+                    $scope.survey.enabled_languages = {
+                        default: language,
+                        available: []
+                    }
+                    $scope.languages = {
+                        default: $scope.survey.enabled_languages.default,
+                        active: $scope.survey.enabled_languages.default,
+                        available: $scope.survey.enabled_languages.available,
+                        surveyLanguages: [$scope.survey.enabled_languages.default, ...$scope.survey.enabled_languages.available]
+                    }
+                    }
+                });
             $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
@@ -264,13 +270,26 @@ function SurveyEditorController(
         SurveysSdk.getSurveys($scope.surveyId).then(res => {
             //Getting roles for the survey
             $scope.survey = res;
-            $scope.languages = {
-                default: $scope.survey.enabled_languages.default,
-                active: $scope.survey.enabled_languages.default,
-                available: $scope.survey.enabled_languages.available,
-                surveyLanguages: [$scope.survey.enabled_languages.default, ...$scope.survey.enabled_languages.available]
-            }
-            $scope.selectedLanguage = $scope.survey.enabled_languages.default;
+
+            TranslationService.getLanguage().then(language => {
+                //active language is the same as default when starting out.
+                if (!$scope.survey.enabled_languages) {
+                    $scope.survey.enabled_languages = {
+                        default: language,
+                        available: []
+                    }
+                }
+                if ($scope.survey.enabled_languages.default === '') {
+                    $scope.survey.enabled_languages.default = language;
+                }
+                $scope.languages = {
+                    default: $scope.survey.enabled_languages.default,
+                    active: $scope.survey.enabled_languages.default,
+                    available: $scope.survey.enabled_languages.available,
+                    surveyLanguages: [$scope.survey.enabled_languages.default, ...$scope.survey.enabled_languages.available]
+                }
+                $scope.selectedLanguage = $scope.survey.enabled_languages.default;
+            });
 
             // Making sure translations are of type objects
             // make required
