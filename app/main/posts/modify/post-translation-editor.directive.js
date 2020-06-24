@@ -25,7 +25,7 @@ function PostTranslationEditorController($scope, _) {
 
     function canTranslate(field) {
         return field.type === 'text' ||
-            field.type === 'textarea'
+            (field.input === 'text' && field.type !== 'title' && field.type !== 'description');
     }
 
 }
