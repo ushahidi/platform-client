@@ -21,10 +21,16 @@
             <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value.translation[activeLanguage].value"></p>
         </div>
       </div>
-      <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags'"">
+      <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  !attribute.value.translations[activeLanguage].value">
           <p linkify><bdi>{{attribute.value.value}}<bdi></p>
       </div>
-      <div ng-if="!isText() && attribute.input ==='checkbox'" ng-repeat="entry in attribute.value.value track by $index"  >
+      <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  attribute.value.translations[activeLanguage].value">
+        <p linkify><bdi>{{attribute.value.translations[activeLanguage].value}}<bdi></p>
+      </div>
+      <div ng-if="attribute.input ==='checkbox' && !attribute.value.translations[activeLanguage].value " ng-repeat="entry in attribute.value.value"  >
+        <p linkify><bdi>{{entry}}<bdi></p>
+      </div>
+      <div ng-if="attribute.input ==='checkbox' && attribute.value.translations[activeLanguage].value " ng-repeat="entry in attribute.value.translations[activeLanguage].value"  >
         <p linkify><bdi>{{entry}}<bdi></p>
       </div>
     </div>

@@ -27,6 +27,32 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
                     $scope.$apply();
                 });
             }
+            if ($scope.attribute.input === 'checkbox' || $scope.attribute.input === 'radio' || $scope.attribute.input === 'select') {
+                if (!$scope.attribute.value.translations) {
+                    $scope.attribute.value.translations = {};
+                }
+                $scope.attribute.value.translations = Object.assign({}, $scope.attribute.value.translations);
+                 _.each($scope.attribute.translations, (translation, key) => {
+                    let translatedOptions = [];
+                    if ($scope.attribute.input === 'checkbox') {
+                        _.each($scope.attribute.value.value, (value, index) => {
+                            if (translation.options && translation.options[index]) {
+                                    translatedOptions.push(translation.options[index]);
+                            }
+                        });
+                    } else {
+                        _.each($scope.attribute.options, (value, index) => {
+                            if (value === $scope.attribute.value.value) {
+                                translatedOptions = translation.options[index];
+                            }
+                        });
+                    }
+                        if (!$scope.attribute.value.translations[key]) {
+                            $scope.attribute.value.translations[key] = {};
+                        }
+                        $scope.attribute.value.translations[key].value = translatedOptions;
+                    });
+                }
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {
                     $scope.attribute.value.value = moment($scope.attribute.value.value).format('LL');
