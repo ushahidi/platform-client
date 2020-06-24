@@ -125,10 +125,7 @@ function SurveyEditorController(
                     default: language,
                     available: []
                 }
-            }
-            $scope.languages = {
-                default: language,
-                active: language            }
+                }
             });
 
         if ($scope.surveyId) {
@@ -636,7 +633,9 @@ function SurveyEditorController(
             $scope.showLangError = false;
             $scope.languages = {
                 default: language,
-                active:language
+                active:language,
+                available: $scope.survey.enabled_languages.available
+
             }
             $scope.survey.enabled_languages.default = language;
         }

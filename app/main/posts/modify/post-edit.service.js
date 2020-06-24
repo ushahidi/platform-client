@@ -52,7 +52,7 @@ function (
 
             // Validate required fields for each task that needs to be validated
             _.each(tasks_to_validate, function (task) {
-                var required_attributes = _.where(task.attributes, {required: true});
+                var required_attributes = _.where(task.fields, {required: true});
 
                 _.each(required_attributes, function (attribute) {
                     if (attribute.type !== 'title' && attribute.type !== 'description') {
