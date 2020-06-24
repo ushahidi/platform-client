@@ -9,7 +9,8 @@ function PostTranslationEditor() {
         scope: {
             post: '=',
             activeLanguage:'=',
-            defaultLanguage:'='
+            defaultLanguage:'=',
+            form: '='
         },
         template: require('./post-translation-editor.html')
     };

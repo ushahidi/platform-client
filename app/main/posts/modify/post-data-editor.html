@@ -4,13 +4,14 @@
         remove-language="removeLanguage(index, language)"
         ng-if="languages.surveyLanguages.length > 1"
         >
-      </translations-switch>
-      <post-translation-editor
+</translations-switch>
+<post-translation-editor
         ng-if="languages.default !== languages.active"
         post="post"
         active-language="languages.active"
         default-language="languages.default"
-      ></post-translation-editor>
+        form="editForm"
+></post-translation-editor>
 <form name="editForm" novalidate ng-show="languages.default === languages.active">
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
@@ -34,7 +35,7 @@
           <label translate>post.unstructured.add_survey.title</label>
               <select
               class="custom-select"
-              ng-change="selectForm(form)"
+              ng-change="loadData(form)"
               ng-model="post.form"
             >
               <option selected disabled translate>post.unstructured.add_survey.choose</option>              

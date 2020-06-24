@@ -30,7 +30,8 @@ PostDataEditorController.$inject = [
     'LoadingProgress',
     'SurveysSdk',
     'TranslationService',
-    'PostsSdk'
+    'PostsSdk',
+    'moment'
 ];
 function PostDataEditorController(
     $scope,
@@ -49,7 +50,8 @@ function PostDataEditorController(
     LoadingProgress,
     SurveysSdk,
     TranslationService,
-    PostsSdk
+    PostsSdk,
+    moment
     ) {
 
     // Setup initial stages container
@@ -68,7 +70,7 @@ function PostDataEditorController(
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
-    $scope.selectForm = selectForm;
+    $scope.loadData = loadData;
     $scope.isSaving = LoadingProgress.getSavingState;
     $scope.removeLanguage = removeLanguage;
     var ignoreCancelEvent = false;
@@ -157,9 +159,10 @@ function PostDataEditorController(
 
     function activate() {
         if ($scope.post.form_id) {
-            SurveysSdk.getSurveys($scope.post.form_id).then(form => {
-            $scope.selectForm(form);
+            SurveysSdk.getSurveys($scope.post.form_id).then(result => {
+                $scope.loadData(result);
             });
+
         } else {
             SurveysSdk.getSurveys().then(forms => {
                 $scope.forms = forms;
@@ -171,35 +174,41 @@ function PostDataEditorController(
         $scope.submittingText = $translate.instant('app.submitting');
     }
 
-    function selectForm(form) {
-            $scope.post.form = form;
-            $scope.post.translations = Object.assign({}, $scope.post.translations);
-
-            $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available] };
+    function loadData(form) {
+        $scope.post.form = form;
         $scope.getLock();
+        $scope.post.translations = Object.assign({}, $scope.post.translations);
+        $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available]};
+
         if (!$scope.post.post_content) {
             $scope.post.post_content = $scope.post.form.tasks;
-            // Initialize values on unstructured post
+        }
+            // Initialize values on empty post-fields
             $scope.post.post_content.map(task => {
                 task.fields.map (attr => {
-                    // Create associated media entity
-                    if (!attr['translated-values']) {
-                        attr['translated-values'] = {};
+                    if (!attr.value) {
+                        attr.value = {};
                     }
+                    if (!attr.value.translations) {
+                        attr.value.translations = {};
+                    } else {
+                        attr.value.translations = Object.assign({}, attr.value.translations);
+                    }
+                    // Create associated media entity
                     if (attr.input === 'upload') {
                         $scope.medias[attr.id] = {};
                     }
                     if (attr.input === 'tags') {
                         // adding category-objects attribute-options
-                        attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
+                        // attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
                         // tag.id needs to be a number
-                        if (attr.value) {
-                            attr.value = attr.value.map(function (id) {
-                                return parseInt(id);
-                            });
-                        } else {
-                            attr.value = [];
-                        }
+                        // if (attr.value.value) {
+                        //     attr.value.value = attr.value.value.map(function (id) {
+                        //         return parseInt(id);
+                        //     });
+                        // } else {
+                            attr.value.value = [];
+                        // }
                     }
                     if (attr.input === 'number') {
                         if (attr.value) {
@@ -219,7 +228,6 @@ function PostDataEditorController(
                     }
                 });
             });
-        }
         if ($scope.post.status === 'published' && !canSavePost()) {
             Notify.error('post.valid.invalid_state');
         }
@@ -259,11 +267,11 @@ function PostDataEditorController(
 
     function savePost() {
         // Checking if changes are made
-        // if ($scope.editForm && !$scope.editForm.$dirty) {
-        //     Notify.infoModal('post.valid.no_changes');
-        //     $rootScope.$broadcast('event:edit:post:data:mode:saveError');
-        //     return;
-        // }
+        if ($scope.editForm && !$scope.editForm.$dirty && !$scope.editForm.translatedTitle.$dirty) {
+            Notify.infoModal('post.valid.no_changes');
+            $rootScope.$broadcast('event:edit:post:data:mode:saveError');
+            return;
+        }
 
         if (!$scope.canSavePost()) {
             Notify.error('post.valid.validation_fail');
@@ -276,9 +284,9 @@ function PostDataEditorController(
 
             // Avoid messing with original object
             // Clean up post values object
-            // var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            $scope.post.base_language = $scope.languages.default;
-            PostsSdk.savePost($scope.post).then(function (response) {
+            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
+            post.base_language = $scope.languages.default;
+            PostsSdk.savePost(post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.editForm.$dirty = false;
                 // Save the updated post back to outside context
