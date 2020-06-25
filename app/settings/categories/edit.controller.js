@@ -58,7 +58,11 @@ function (
                     active: language
                 }
 
-                $scope.languages.available = scope.category.enabled_languages ? $scope.category.enabled_languages.available : [];
+                $scope.languages.available = $scope.category.enabled_languages ? $scope.category.enabled_languages.available : [];
+                $scope.category.enabled_languages = {
+                    default: language,
+                    available: []
+                }
                 $scope.selectedLanguage = language;
             });
     } else {
@@ -132,7 +136,7 @@ function (
 
     function getParentName() {
         var parentName = 'Nothing';
-        if ($scope.category && $scope.category.parent.length > 0) {
+        if ($scope.category && $scope.category.parent && $scope.category.parent.length > 0) {
             parentName = $scope.category.parent.tag;
         }
         return parentName;
@@ -198,7 +202,7 @@ function (
 
     function handleResponseErrors(errorResponse) {
         $scope.processing = false;
-        Notify.apiErrors(errorResponse);
+        Notify.sdkErrors(errorResponse);
     }
 
     function cancel() {
