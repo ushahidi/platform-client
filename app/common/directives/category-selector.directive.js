@@ -37,7 +37,6 @@ function CategorySelectorController($scope, _) {
     };
 
     function activate() {
-        $scope.categories = [];
         $scope.categories = $scope.available;
         if ($scope.displayWarning) {
             $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
@@ -71,7 +70,7 @@ function CategorySelectorController($scope, _) {
             $scope.selectedParents.splice(0, $scope.selectedParents.length);
         } else {
             _.each($scope.available, function (category) {
-                var isParentWithChildren = !category.parent_id && category.children.length > 0;
+                var isParentWithChildren = !category.parent_id && category.children && category.children.length > 0;
                 if (!_.contains($scope.selected, category.id) && !isParentWithChildren) {
                     $scope.selected.push.apply($scope.selected, [category.id]);
                 } else if (isParentWithChildren && !_.contains($scope.selectedParents, category.id)) {
@@ -118,7 +117,7 @@ function CategorySelectorController($scope, _) {
                 .intersection($scope.selected)
                 .value();
             var parentIndexSelected = -1;
-            var isParentWithChildren = !category.parent_id && category.children.length > 0;
+            var isParentWithChildren = !category.parent_id && category.children && category.children.length > 0;
             // If children are selected, add to disabled categories
             if (selectedChildren.length > 0) {
                 $scope.disabledCategories[category.id] = true;

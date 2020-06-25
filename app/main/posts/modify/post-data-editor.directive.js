@@ -199,16 +199,8 @@ function PostDataEditorController(
                         $scope.medias[attr.id] = {};
                     }
                     if (attr.input === 'tags') {
-                        // adding category-objects attribute-options
-                        // attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
-                        // tag.id needs to be a number
-                        // if (attr.value.value) {
-                        //     attr.value.value = attr.value.value.map(function (id) {
-                        //         return parseInt(id);
-                        //     });
-                        // } else {
-                            attr.value.value = [];
-                        // }
+                        attr.value = Object.assign({}, attr.value);
+                        attr.value.value = angular.copy($scope.post.categories);
                     }
                     if (attr.input === 'number') {
                         if (attr.value) {
@@ -281,12 +273,7 @@ function PostDataEditorController(
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-
-            // Avoid messing with original object
-            // Clean up post values object
-            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            post.base_language = $scope.languages.default;
-            PostsSdk.savePost(post).then(function (response) {
+            PostsSdk.savePost($scope.post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.editForm.$dirty = false;
                 // Save the updated post back to outside context

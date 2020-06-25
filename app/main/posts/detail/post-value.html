@@ -9,7 +9,7 @@
         <h2 class="form-label">
           <bdi>{{attribute.translations[activeLanguage].label || attribute.label}}</bdi>
       </h2>
-       <post-category-value field="attribute" active-language="activeLanguage"></post-category-value>
+       <post-category-value categories="post.categories" active-language="activeLanguage"></post-category-value>
       </div>
       <div ng-if="attribute.type === 'relation'">
           <a ui-sref="posts.data.detail({postId: attribute.value.value.id})">{{attribute.value.value.title}}</a>

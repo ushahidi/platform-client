@@ -106,18 +106,6 @@ function PostEditorController(
                     if (attr.input === 'upload') {
                         $scope.medias[attr.id] = {};
                     }
-                    if (attr.input === 'tags') {
-                        // adding category-objects attribute-options
-                        // attr.options = PostActionsService.filterPostEditorCategories(attr.options, categories);
-                        // tag.id needs to be a number
-                        // if (attr.value.value) {
-                        //     attr.value = attr.value.map(function (id) {
-                        //         return parseInt(id);
-                        //     });
-                        // } else {
-                            attr.value.value = [];
-                        // }
-                    }
                     if (attr.input === 'number') {
                         if (attr.value) {
                             attr.value = parseFloat(attr.value);
@@ -157,13 +145,11 @@ function PostEditorController(
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-            // Clean up post values object
-            var post = PostEditService.cleanPostValues(angular.copy($scope.post));
-            post.base_language = $scope.languages.active;
-            post.type = 'report';
-            post.form_id = post.form.id;
-            delete post.form;
-            PostsSdk.savePost(post).then(function (response) {
+            $scope.post.base_language = $scope.languages.active;
+            $scope.post.type = 'report';
+            $scope.post.form_id = $scope.post.form.id;
+            delete $scope.post.form;
+            PostsSdk.savePost($scope.post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
