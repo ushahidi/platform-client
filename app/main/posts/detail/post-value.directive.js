@@ -6,7 +6,8 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
             key: '=',
             attribute: '=',
             type: '=',
-            activeLanguage: '='
+            activeLanguage: '=',
+            post: '='
         },
         template: require('./post-value.html'),
         link: function ($scope) {
