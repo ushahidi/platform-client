@@ -17,15 +17,13 @@ PostCategoryValueController.$inject = ['$scope', '_', 'CategoriesSdk'];
 
 function PostCategoryValueController($scope, _, CategoriesSdk) {
     function activate() {
-        CategoriesSdk.getCategories().then(categories=>{
-            _.each($scope.field.value, (value => {
-                value.value = _.find(categories, category=>{
-                    if (category.id === value.value) {
-                        return category.tag;
-                        }
+    $scope.field.value.value = [];
+        _.each($scope.field.value, category => {
+                _.each($scope.field.options, option => {
+                    if (option.id === category.value) {
+                       $scope.field.value.value.push(option);
+                    }
                 });
-                $scope.$apply();
-            }));
         });
     }
     activate();

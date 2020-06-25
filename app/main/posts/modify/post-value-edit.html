@@ -211,7 +211,8 @@
                     <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
                 </div>
             </div>
-            <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0">
+
+            <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options">
                 <!-- Attribute Label -->
                 <label ng-class="{
                     'error': form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
@@ -262,6 +263,7 @@
                     </div>
                     <!-- type: categories -->
                     <div ng-switch-when="tags">
+                        {{attribute.value.value}}
                         <post-category-editor
                             available="attribute.options"
                             selected="attribute.value.value"

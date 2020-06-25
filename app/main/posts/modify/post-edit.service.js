@@ -14,7 +14,7 @@ function (
             _.each(post.post_content, function (task) {
                 _.each(task.fields, (field) => {
                     if (field.input === 'tags') {
-                        field.value = _.filter(field.value);
+                        field.value.value = _.filter(field.value.value);
                     }
                 });
             });
