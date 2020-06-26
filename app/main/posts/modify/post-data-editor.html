@@ -16,8 +16,8 @@
   <div class="form-sheet" role="article">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
     <header class="form-sheet-summary" ng-if="post.form">
-      <h1 class="form-sheet-title survey-title">{{post.form.name}}</h1>
-      <p>{{post.form.description}}</p>
+      <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.default].name || post.form.name}}</h1>
+      <p>{{post.form.translations[languages.default].description || post.form.description}}</p>
   </header>
 <!-- End post stage default fields -->
         <div class="form-field" ng-if="post.data_source_message_id">
@@ -40,7 +40,7 @@
             >
               <option selected disabled translate>post.unstructured.add_survey.choose</option>              
               <option ng-repeat="form in forms" ng-value="form">
-                {{form.translations[activeSurveyLanguage].name || form.name}}
+                {{form.translations[languages.default].name || form.name}}
               </option>
 
             </select>
@@ -60,7 +60,7 @@
             form="editForm"
             medias="medias"
             attribute="attribute"
-            active-survey-language="activeSurveyLanguage"
+            active-survey-language="languages.active"
             ng-if="post.form"
         ></post-value-edit>
       </div>
@@ -78,6 +78,7 @@
           medias="medias"
           visible-stage="visibleStage"
           ng-if="form"
+          active-survey-language="languages.default"
         >
         </post-tabs>
         <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
