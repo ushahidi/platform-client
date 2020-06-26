@@ -40,7 +40,7 @@
    </div>
    <!-- editing/adding categories -->
     <div class="form-field" ng-if="editField.input ==='tags'">
-        <label translate>Which categories should be available</label>
+        <label translate="category.which_categories">Which categories should be available</label>
         <category-selector
             available="availableCategories"
             selected="editField.options"
@@ -87,7 +87,7 @@
           <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
           </svg>
-            Only people with permission to edit responses will be able to see responses to this field.
+            {{'survey.only_edit' | translate}}
         </p>
         <div class="toggle-switch">
            <input class="tgl" id="switchprivateresponse" type="checkbox" ng-model="editField.response_private">

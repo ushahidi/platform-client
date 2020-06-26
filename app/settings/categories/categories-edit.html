@@ -115,8 +115,9 @@
                   </div>
                 </div>
               </fieldset>
-              <div class="form-field select">
-                <label>Select default language for this category
+              <div class="form-field">
+                <label translate="translations.category_select_default"></label>
+                <p class="alert" translate="translations.default_lang_info"></p>
                 <div class="custom-select">
                     <select
                           ng-model="selectedLanguage"
@@ -126,15 +127,16 @@
                       >
                       </select>
                 </div>
-              </label>
+              
+              
               <div class="form-field" ng-show="category.parent_id && category.parent.base_language !== selectedLanguage">
-                <span>Please note that the selected a default language for this child-category is different from its parent ({{'languages.' + category.parent.base_language | translate}}).</span>
+                <span translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span> ({{'languages.' + category.parent.base_language | translate}}).</span>
               </div>
                 <div ng-show="showLangError" class="alert error">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
-                    <p>You cannot select this language since there is already a translation for it.</p>
+                    <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
                 </div>
             </div>
             
