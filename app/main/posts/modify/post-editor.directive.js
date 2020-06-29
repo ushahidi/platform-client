@@ -157,14 +157,15 @@ function PostEditorController(
             $scope.post.form_id = $scope.post.form.id;
             delete $scope.post.form;
             PostsSdk.savePost($scope.post).then(function (response) {
-                var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
-                if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
+                const post = response.data.result;
+                var success_message = (post.status && post.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
+                if (post.id && post.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
-                    $scope.post.id = response.id;
+                    $scope.post.id = post.id;
                     Notify.notify(success_message, { name: $scope.post.title });
-                    $state.go('posts.data.detail', {postId: response.id});
+                    $state.go('posts.data.detail', {postId: post.id});
                 } else {
-                    Notify.notify(success_message, { name: $scope.post.title });
+                    Notify.notify(success_message, { name: post.title });
                     $state.go('posts.map.all');
                 }
             }, function (errorResponse) { // errors
