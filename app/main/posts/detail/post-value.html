@@ -21,7 +21,7 @@
         </div>
         <div ng-if="attribute.value.translations[activeLanguage].value">
             <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value.translations[activeLanguage].value}}<bdi></p>
-            <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value.translation[activeLanguage].value"></p>
+            <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value.translations[activeLanguage].value"></p>
         </div>
       </div>
       <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  !attribute.value.translations[activeLanguage].value">
