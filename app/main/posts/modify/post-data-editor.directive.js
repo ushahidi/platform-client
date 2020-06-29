@@ -212,10 +212,10 @@ function PostDataEditorController(
                     if (attr.input === 'date' || attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
-                        if (attr.value) {
-                            attr.value = moment(attr.value).toDate();
+                        if (attr.value.value) {
+                            attr.value.value = moment(attr.value.value).toDate();
                         } else {
-                            attr.value = attr.default ? new Date(attr.default) : new Date();
+                            attr.value.value = attr.default ? new Date(attr.default) : new Date();
                         }
                     }
                 });
