@@ -1,6 +1,6 @@
 <div>
   <layout-class layout="d"></layout-class>
-  <article class="postcard" role="article" translate-language="{{language.active}}">
+  <article class="postcard" role="article" translate-language="{{languages.active}}">
     <button class="button-beta button-flat postcard-close" ng-click="close()">
       <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
@@ -45,12 +45,12 @@
           type="'post'"
           post="post"
           active-language="languages.active"></post-value>
-          <post-detail-map ng-if="field.type === 'point'" post-id="post.id"></post-detail-map>
+          <post-detail-map ng-if="field.type === 'point'" label="{{field.translations[languages.active].label || field.label}}"post-id="post.id"></post-detail-map>
     </span>
 
     </div>
   </article>
-  <div class="listing card init" ng-show="post.post_content.length > 1">
+  <div class="listing card init" ng-show="post.post_content.length > 1" translate-language="{{languages.active}}">
     <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
     <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
       <ul>
@@ -58,7 +58,7 @@
         ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
         ng-class="{'active': visibleTask == task.id}">
           <a ng-click="activateTaskTab(task.id)">
-            <bdi>{{task.translations.languages[active].label || task.label}}</bdi>
+            <bdi>{{task.translations[languages.active].label || task.label}}</bdi>
           </a>
           <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
           </span>
@@ -95,5 +95,5 @@
     </div>
   </div>
   </div>
-  <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
+  <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'" ></post-messages>
 </div>

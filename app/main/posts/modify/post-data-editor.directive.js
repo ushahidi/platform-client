@@ -178,6 +178,9 @@ function PostDataEditorController(
         $scope.post.form = form;
         $scope.getLock();
         $scope.post.translations = Object.assign({}, $scope.post.translations);
+        if (!$scope.post.enabled_languages) {
+            $scope.post.enabled_languages = {default: '', available: []};
+        }
         $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available]};
 
         if (!$scope.post.post_content) {

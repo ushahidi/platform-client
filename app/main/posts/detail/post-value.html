@@ -40,6 +40,6 @@
 
     <post-video-view
       ng-if="attribute.input === 'video'"
-      label="{{attribute.label}}"
+      label="{{attribute.translations[activeLanguage].label || attribute.label}}"
       video-url="attribute.value.value"></post-video-view>
 </div>
