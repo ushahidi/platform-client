@@ -1672,7 +1672,7 @@
         "translate_field_name": "Translate field name",
         "translate_field_desc": "Translate field description",
         "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
-        "parent_child_lang": "Please note that the selected a default language for this child-category is different from its parent",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
         "post_title_required":"Translation for post-title is required",
         "add_a_language": "Add a language",
         "error_no_default": "You need to specify a default language before adding a new translation.",

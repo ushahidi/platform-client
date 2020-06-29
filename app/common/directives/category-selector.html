@@ -45,10 +45,10 @@
         </div>
     </div>
     <div ng-if="categoryTranslationUnavailable.length > 0 && displayWarning" class="alert">
-        <span ng-if="categoryTranslationUnavailable.length === 1">Please note: The following category is not available in {{'languages.' + activeLanguage.language | translate | lowercase}}. Its default-language will be displayed instead:</span>
-        <span ng-if="categoryTranslationUnavailable.length > 1">Please note: The following categories are not available in {{'languages.' + activeLanguage.language | translate | lowercase}}. Their default-languages will be displayed instead:</span>
+        <span ng-if="categoryTranslationUnavailable.length === 1">Please note: The following category is not available in {{'languages.' + activeLanguage.language | translate}}. Its default-language will be displayed instead:</span>
+        <span ng-if="categoryTranslationUnavailable.length > 1">Please note: The following categories are not available in {{'languages.' + activeLanguage.language | translate}}. Their default-languages will be displayed instead:</span>
         <ul>
-            <li ng-repeat="category in categoryTranslationUnavailable">{{category.tag}} (default language: {{'languages.' + category.enabled_languages.default | translate | lowercase}})</li>
+            <li ng-repeat="category in categoryTranslationUnavailable">{{category.tag}} (Default language: {{'languages.' + category.enabled_languages.default | translate }})</li>
         </ul>
         To add translations to categories, head over to <a href="/settings/categories" class="link-blue" target="_blank">Category Settings</a></p>
     </div>

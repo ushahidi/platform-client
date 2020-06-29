@@ -130,7 +130,7 @@
               
               
               <div class="form-field" ng-show="category.parent_id && category.parent.base_language !== selectedLanguage">
-                <span translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span> ({{'languages.' + category.parent.base_language | translate}}).</span>
+                <p translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span> ({{'languages.' + category.parent.base_language | translate}}).</p>
               </div>
                 <div ng-show="showLangError" class="alert error">
                     <svg class="iconic">
