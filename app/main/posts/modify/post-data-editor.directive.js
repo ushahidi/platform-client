@@ -202,11 +202,18 @@ function PostDataEditorController(
                         attr.value = Object.assign({}, attr.value);
                         attr.value.value = angular.copy($scope.post.categories);
                     }
-                    if (attr.input === 'number') {
-                        if (attr.value) {
-                            attr.value = parseFloat(attr.value);
+                    if (attr.type === 'decimal') {
+                        if (attr.value.value) {
+                            attr.value.value = parseFloat(attr.value.value);
                         } else if (attr.default) {
-                            attr.value = parseInt(attr.default);
+                            attr.value.value = parseFloat(attr.default);
+                        }
+                    }
+                    if (attr.type === 'int') {
+                        if (attr.value.value) {
+                            attr.value.value = parseInt(attr.value.value);
+                        } else if (attr.default) {
+                            attr.value.value = parseInt(attr.default);
                         }
                     }
                     if (attr.input === 'date' || attr.input === 'datetime') {
