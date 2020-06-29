@@ -36,7 +36,7 @@ function AddLanguageController($scope, ModalService, _) {
             $scope.langError = $scope.languages.default === language ?  `${$scope.langError} it is the default language for this survey.` : `${$scope.langError} there is already a translation for it.`;
         } else {
             $scope.showLangError = false;
-            $scope.language.active = language;
+            $scope.languages.active = language;
 
         }
     }

@@ -68,16 +68,13 @@
 
         <!-- IF: User has permission to see other 'Tasks' -->
         <post-toolbox form="editForm" post="post" ng-if="post.form"></post-toolbox>
-
         <post-tabs
           ng-show="post.post_content.length > 1"
           form="editForm"
           post="post"
           tasks="post.post_content"
-          fields="fields"
           medias="medias"
           visible-stage="visibleStage"
-          ng-if="form"
           active-survey-language="languages.default"
         >
         </post-tabs>
