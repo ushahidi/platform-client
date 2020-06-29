@@ -9,12 +9,12 @@
         <h2 class="form-label">
           <bdi>{{attribute.translations[activeLanguage].label || attribute.label}}</bdi>
       </h2>
-       <post-category-value categories="post.categories" active-language="activeLanguage"></post-category-value>
+       <post-category-value categories="attribute.value" active-language="activeLanguage"></post-category-value>
       </div>
       <div ng-if="attribute.type === 'relation'">
           <a ui-sref="posts.data.detail({postId: attribute.value.value.id})">{{attribute.value.value.title}}</a>
       </div>
-      <div ng-if="isText(attribute.type)">   
+      <div ng-if="isText(attribute.type)">
         <div ng-if="!attribute.value.translations[activeLanguage].value">
           <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value.value}}<bdi></p>
           <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value.value"></p>
