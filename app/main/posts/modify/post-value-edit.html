@@ -116,8 +116,10 @@
                         ng-model="attribute.value.value"
                         ng-required="attribute.required"
                         >
-                        <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
-                    </select>
+                        <option ng-repeat="option in attribute.options track by $index" value="{{option}}">
+                            <bdi>{{attribute.translations[activeSurveyLanguage].options[$index] || option}}</bdi>                        
+                        </option>
+                        </select>
                     <!-- type: number -->
                     <input
                         ng-switch-when="number"
