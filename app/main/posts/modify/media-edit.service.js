@@ -35,21 +35,21 @@ function (
                     // Checking if media is marked for deletion
                     if (media.deleted) {
                         MediaEditService.deleteMedia(media.id);
-                        mediaField[0].value = null;
+                        mediaField[0].value.value = null;
                         // Check if new media or if the media file has changed
                         // otherwise just update the caption
                     // Check if a new file was uploaded
                     } else if (media.file) {
                         calls.push(MediaEditService.uploadFile(media).then(function (media) {
                             //TODO: Add correct place to save id
-                            mediaField[0].value = media ? media.id : null;
+                            mediaField[0].value.value = media ? media.id : null;
                         }));
                     // Otherwise update the media as it has changed
                     } else {
                         // Remove irrelevant fields
                         delete media.changed;
                         calls.push(MediaEditService.update(media).then(function (media) {
-                            mediaField[0].value = media ? media.id : null;
+                            mediaField[0].value.value = media ? media.id : null;
                         }));
                     }
                 }
