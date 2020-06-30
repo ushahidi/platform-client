@@ -106,8 +106,9 @@
                             type="radio"
                             name="parent_label"
                             id="parent_label-{{parent.id}}"
-                            ng-checked="parent.id === category.parent_id"
+                            ng-selected="parent.id === category.parent_id"
                             ng-value="parent.id"
+                            ng-change="setParent(parent)"
                             ng-model="category.parent_id"
                           />
                           <bdi>{{parent.tag}}</bdi>
@@ -124,13 +125,12 @@
                           ng-options="lang.code as lang.name for lang in languagesToSelect"
                           ng-value="lang.code"
                           ng-change="selectLanguage(selectedLanguage)"
+                          ng-selected="lang.code === selectedLanguage"
                       >
                       </select>
                 </div>
-              
-              
-              <div class="form-field" ng-show="category.parent_id && category.parent.base_language !== selectedLanguage">
-                <p translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span> ({{'languages.' + category.parent.base_language | translate}}).</p>
+              <div class="form-field" ng-if="category.parent" ng-show="checkParentLanguage(category.parent)">
+                <p translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span>({{'languages.' + category.parent.base_language | translate}}.</p>
               </div>
                 <div ng-show="showLangError" class="alert error">
                     <svg class="iconic">

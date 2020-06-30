@@ -86,7 +86,8 @@ function (
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.isLoading = LoadingProgress.getLoadingState;
-
+    $scope.setParent = setParent;
+    $scope.checkParentLanguage = checkParentLanguage;
 
     activate();
 
@@ -122,8 +123,8 @@ function (
                 $scope.category.translations = Object.assign({}, $scope.category.translations);
             }
             //Normalize parent category
-            if ($scope.category.parent) {
-                $scope.category.parent_id = $scope.category.parent.id;
+            if ($scope.category.parent_id) {
+                $scope.category.parent = _.find($scope.parents, {id: $scope.category.parent_id});
                 $scope.category.parent_id_original = $scope.category.parent.id;
             }
 
@@ -135,12 +136,28 @@ function (
     }
 
     function getParentName() {
-        var parentName = 'Nothing';
-        if ($scope.category && $scope.category.parent && $scope.category.parent.length > 0) {
+        let parentName = 'Nothing';
+        if ($scope.category && $scope.category.parent) {
             parentName = $scope.category.parent.tag;
         }
         return parentName;
     }
+
+    function setParent(parent) {
+        $scope.category.parent = parent;
+    }
+
+    function checkParentLanguage(parent) {
+        if (parent.enabled_languages) {
+            return parent.enabled_languages.default !== $scope.selectedLanguage;
+        };
+
+        if (parent.base_language) {
+            return parent.base_language !== $scope.selectedLanguage;
+        };
+        return true;
+    }
+
 
     function saveCategory() {
         // Set processing to disable user actions
