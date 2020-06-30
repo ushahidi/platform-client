@@ -26,7 +26,7 @@
         <label translate="post.post_desc">Post description</label>
         <div class="form-field framed">
             <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
-            <p>{{post.description}}</p>
+            <p>{{post.content}}</p>
         </div>
         <p translate="translations.add_translation">Add your translation below:</p>
         <input type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="post.translations[activeLanguage].content" required>
