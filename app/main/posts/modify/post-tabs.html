@@ -1,6 +1,6 @@
 <div class="form-sheet" ng-repeat="task in tasks | limitTo: 1 - tasks.length">
     <header class="form-sheet-summary">
-        <h1 class="form-sheet-title section-title">{{task.translations[activeSurveyLanguage.language].label || task.label}}</h1>
+        <h1 class="form-sheet-title section-title">{{task.translations[activeSurveyLanguage].label || task.label}}</h1>
     </header>
     <div ng-show="stage.show_when_published" class="alert">
         <p translate="survey.task_visible_when_published">This task will be visible when post is published</p>
