@@ -77,7 +77,7 @@
 <div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div
         ng-repeat="field in task.fields"
-        ng-if="field.value.value && showType(field.type)"
+        ng-if="field.value && showType(field.type)"
         ng-show="task.id === visibleTask"
         ng-class="{'listing-item-primary': field.type === 'media'}"
       >

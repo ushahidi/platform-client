@@ -10,6 +10,17 @@ function (
     Notify
 ) {
     var PostEditService = {
+        cleanTagValues: function (post) {
+            _.each(post.post_content, task => {
+                _.each(task.fields, field => {
+                    if (field.type === 'tags') {
+                        let value = angular.copy(field.value);
+                        field.value = {value};
+                    }
+                });
+            });
+            return post;
+        },
         validatePost: function (post, form, tasks) {
             // First get tasks to be validated
             // The post task is always validated

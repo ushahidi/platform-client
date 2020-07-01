@@ -156,8 +156,9 @@ function PostEditorController(
             $scope.post.type = 'report';
             $scope.post.form_id = $scope.post.form.id;
             delete $scope.post.form;
-            PostsSdk.savePost($scope.post).then(function (response) {
-                const post = response.data.result;
+            let post = PostEditService.cleanTagValues(angular.copy($scope.post));
+            PostsSdk.savePost(post).then(function (response) {
+                post = response.data.result;
                 var success_message = (post.status && post.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 if (post.id && post.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;

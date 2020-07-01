@@ -1,10 +1,32 @@
-<category-selector
-        enable-parents="false"
-        selected="selected"
-        form="form"
-        available="available"
-        active-language="activeSurveyLanguage"
-></category-selector>
+<div class="form-fieldgroup checkbox">
+        <div class="form-field checkbox" ng-repeat="category in parents track by $index">
+                <label>
+                        <input
+                            type="checkbox"
+                            checklist-value="category.id"
+                            value="category.id"
+                            checklist-model="selected"
+                            ng-checked="selected.indexOf(category.id) > -1"
+                            ng-disabled="category.children.length > 0"
+                        >
+                        <bdi>{{category.translations[activeLanguage].tag || category.tag}}</bdi>
+                    </label>
+                    <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checklist-model="selected"
+                                checklist-value="child.id"
+                                ng-checked="selected.indexOf(child.id) > -1"
+                                value="child.id"
+                                checklist-change="changeParent(category)"
+                            >
+                            <bdi>{{child.translations[activeLanguage].tag || child.tag}}</bdi>
+                    </label>
+                    </div>
+        
+        </div>
+</div>
 <add-category
         form-id="formId"
         attribute="attribute"

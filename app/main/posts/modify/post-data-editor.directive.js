@@ -189,9 +189,10 @@ function PostDataEditorController(
             // Initialize values on empty post-fields
             $scope.post.post_content.map(task => {
                 task.fields.map (attr => {
-                    if (!attr.value) {
-                        attr.value = {};
-                    }
+                    if (attr.type !== 'tags') {
+                        if (!attr.value) {
+                            attr.value = {};
+                        }
                     if (!attr.value.translations) {
                         attr.value.translations = {};
                     } else {
@@ -200,10 +201,6 @@ function PostDataEditorController(
                     // Create associated media entity
                     if (attr.input === 'upload') {
                         $scope.medias[attr.id] = {};
-                    }
-                    if (attr.input === 'tags') {
-                        attr.value = Object.assign({}, attr.value);
-                        attr.value.value = angular.copy($scope.post.categories);
                     }
                     if (attr.type === 'decimal') {
                         if (attr.value.value) {
@@ -228,6 +225,7 @@ function PostDataEditorController(
                             attr.value.value = attr.default ? new Date(attr.default) : new Date();
                         }
                     }
+                }
                 });
             });
         if ($scope.post.status === 'published' && !canSavePost()) {
@@ -283,7 +281,8 @@ function PostDataEditorController(
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-            PostsSdk.savePost($scope.post).then(function (response) {
+            let post = PostEditService.cleanTagValues(angular.copy($scope.post));
+            PostsSdk.savePost(post).then(function (response) {
                 var success_message = (response.status && response.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
                 $scope.editForm.$dirty = false;
                 // Save the updated post back to outside context

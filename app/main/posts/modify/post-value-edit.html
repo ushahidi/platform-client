@@ -1,5 +1,6 @@
 <div>
     <!-- Container for form-field structured elements -->
+    
     <div ng-if="attribute.type === 'description' || attribute.type === 'title'">
         <!-- Split between Title Desc and other values -->
         <div
@@ -267,7 +268,7 @@
                     <div ng-switch-when="tags">
                         <post-category-editor
                             available="attribute.options"
-                            selected="attribute.value.value"
+                            selected="attribute.value"
                             form="form"
                             form-id="post.form.id"
                             attribute="attribute"
