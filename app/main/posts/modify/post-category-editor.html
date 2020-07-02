@@ -1,11 +1,20 @@
 <div class="form-fieldgroup checkbox">
+    <div class="form-field checkbox">
+        <label>
+            <input
+                  type="checkbox"
+                  ng-checked="selected.length === available.length"
+                  ng-click="selectAll()"
+            >
+            <em><span translate="category.select_all"></span></em>
+        </label>
+    </div>
         <div class="form-field checkbox" ng-repeat="category in parents track by $index">
-                <label>
+            <label>
                         <input
                             type="checkbox"
-                            checklist-value="category.id"
                             value="category.id"
-                            checklist-model="selected"
+                            ng-model="selected"
                             ng-checked="selected.indexOf(category.id) > -1"
                             ng-disabled="category.children.length > 0"
                         >
@@ -15,11 +24,10 @@
                         <label>
                             <input
                                 type="checkbox"
-                                checklist-model="selected"
-                                checklist-value="child.id"
+                                ng-model="selected"
                                 ng-checked="selected.indexOf(child.id) > -1"
                                 value="child.id"
-                                checklist-change="changeParent(category)"
+                                ng-change="toggleParent(category, child.id)"
                             >
                             <bdi>{{child.translations[activeLanguage].tag || child.tag}}</bdi>
                     </label>
