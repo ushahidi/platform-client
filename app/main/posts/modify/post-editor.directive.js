@@ -170,18 +170,7 @@ function PostEditorController(
                     $state.go('posts.map.all');
                 }
             }, function (errorResponse) { // errors
-                var validationErrors = [];
-                // @todo refactor limit handling
-                _.each(errorResponse.data.errors, function (value, key) {
-                    // Ultimately this should check individual status codes
-                    // for the moment just check for the message we expect
-                    if (value.title === 'limit::posts') {
-                        Notify.limit('limit.post_limit_reached');
-                    } else {
-                        validationErrors.push(value);
-                    }
-                });
-                Notify.errors(_.pluck(validationErrors, 'message'));
+                Notify.sdkErrors(errorResponse);
                 $scope.saving_post = false;
             });
         });

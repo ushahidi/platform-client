@@ -294,18 +294,7 @@ function PostDataEditorController(
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
             }, function (errorResponse) { // errors
-                var validationErrors = [];
-                // @todo refactor limit handling
-                _.each(errorResponse.data.errors, function (value, key) {
-                    // Ultimately this should check individual status codes
-                    // for the moment just check for the message we expect
-                    if (value.title === 'limit::posts') {
-                        Notify.limit('limit.post_limit_reached');
-                    } else {
-                        validationErrors.push(value);
-                    }
-                });
-                Notify.errors(_.pluck(validationErrors, 'message'));
+                Notify.sdkErrors(errorResponse);
                 $rootScope.$broadcast('event:edit:post:data:mode:saveError');
 
             });
