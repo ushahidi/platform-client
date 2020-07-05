@@ -18,9 +18,9 @@ function PostCategoryEditorDirective() {
         template: require('./post-category-editor.html')
     };
 }
-PostCategoryEditorController.$inject = ['$rootScope','$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify', '_'];
+PostCategoryEditorController.$inject = ['$scope', '_'];
 
-function PostCategoryEditorController($rootScope, $scope, TagEndpoint, FormAttributeEndpoint, Notify, _) {
+function PostCategoryEditorController($scope, _) {
     $scope.toggleParent = toggleParent;
     $scope.selectAll = selectAll;
     $scope.isSelectAll = false;
