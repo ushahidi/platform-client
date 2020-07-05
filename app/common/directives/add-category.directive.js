@@ -6,18 +6,18 @@ function AddCategoryDirective() {
     return {
         restrict: 'E',
         scope: {
-            formId: '=',
+            survey: '=',
             attribute: '=',
-            postValue: '=',
+            activeLanguage: '=',
             available: '='
         },
         controller: AddCategoryController,
         template: require('./add-category.html')
     };
 }
-AddCategoryController.$inject = ['$rootScope','$scope', 'TagEndpoint', 'FormAttributeEndpoint', 'Notify'];
+AddCategoryController.$inject = ['$rootScope','$scope', 'CategoriesSdk', 'SurveysSdk', 'Notify', '_'];
 
-function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEndpoint, Notify) {
+function AddCategoryController($rootScope, $scope, CategoriesSdk, SurveysSdk, Notify, _) {
     $scope.showInput = false;
     $scope.categoryName = '';
     $scope.category = {
@@ -25,7 +25,7 @@ function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEnd
         icon: 'tag',
         color: '',
         parent_id: null,
-        forms: [$scope.formId]
+        base_language: $scope.activeLanguage
     };
 
     activate();
@@ -44,27 +44,29 @@ function AddCategoryController($rootScope, $scope, TagEndpoint, FormAttributeEnd
         $event.preventDefault();
         $scope.category.tag = $scope.categoryName;
         $scope.category.slug = $scope.categoryName;
-        TagEndpoint.saveCache($scope.category).$promise.then(function (response) {
-            if (response.id) {
+        CategoriesSdk.saveCategory($scope.category).then(function (response) {
+            let category = response.data.result;
+            $scope.fieldToEdit;
+            if (category.id) {
                 // adding new tag to render it in checklist
-                $scope.attribute.options.push(response);
-                $scope.postValue.push(response.id);
-                // copying original attribute to be able to extract option.ids
-                var attribute = angular.copy($scope.attribute);
-                attribute.options = attribute.options.map(function (option) {
-                    return option.id;
+                _.each($scope.survey.tasks, task=>{
+                    _.each(task.fields, field => {
+                        if (field.id === $scope.attribute.id) {
+                            $scope.fieldToEdit = field;
+                        }
+                    });
                 });
+                $scope.fieldToEdit.options.push(category);
                 //assigning values for saving
-                attribute.formId = $scope.formId;
-                FormAttributeEndpoint
-                    .saveCache(attribute).$promise.then(function (response) {
+                SurveysSdk.saveSurvey($scope.survey)
+                    .then(function (response) {
                         // resetting input-value
                         $scope.categoryName = '';
                     });
-                Notify.notify('category added', {response: response});
-                $scope.available.push.apply($scope.available, response);
+                $scope.available.push(category);
+                $scope.$apply();
+                Notify.notify('category added', {response: category});
             }
-
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
         });

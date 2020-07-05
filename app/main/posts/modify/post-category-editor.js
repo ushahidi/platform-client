@@ -6,7 +6,7 @@ function PostCategoryEditorDirective() {
     return {
         restrict: 'E',
         scope: {
-            formId: '=',
+            survey: '=',
             attribute: '=',
             postValue: '=',
             available: '=',
