@@ -24,6 +24,7 @@ function PostCategoryEditorController($rootScope, $scope, TagEndpoint, FormAttri
     $scope.toggleParent = toggleParent;
     $scope.selectAll = selectAll;
     $scope.isSelectAll = false;
+    $scope.toggleCategory = toggleCategory;
 
     function activate () {
             groupCategories();
@@ -55,18 +56,28 @@ function PostCategoryEditorController($rootScope, $scope, TagEndpoint, FormAttri
             }
         }
 
-        if (parent.children) {
+        if (parent.children && parent.children.length > 0) {
             let selectedChildren = _.chain(parent.children)
-                        .pluck('id')
-                        .intersection($scope.selected)
-                        .value();
-                    if (selectedChildren.length > 0 && $scope.selected.indexOf(parent.id) === -1) {
-                        $scope.selected.push(parent.id)
-                    }
-                    if (selectedChildren.length === 0 && $scope.selected.indexOf(parent.id) >= 0) {
-                        $scope.selected.splice($scope.selected.indexOf(parent.id),1);
-                    }
-                }
+                .pluck('id')
+                .intersection($scope.selected)
+                .value();
+            if (selectedChildren.length > 0 && $scope.selected.indexOf(parent.id) === -1) {
+                $scope.selected.push(parent.id)
+            }
+            if (selectedChildren.length === 0 && $scope.selected.indexOf(parent.id) >= 0) {
+                $scope.selected.splice($scope.selected.indexOf(parent.id),1);
+            }
+        }
+    }
+
+    function toggleCategory(category) {
+        if (!category.children || category.children.length === 0) {
+            if ($scope.selected.indexOf(category.id) === -1) {
+                $scope.selected.push(category.id)
+            } else {
+                $scope.selected.splice($scope.selected.indexOf(category.id),1);
+            }
+        }
     }
 
     function selectAll() {
