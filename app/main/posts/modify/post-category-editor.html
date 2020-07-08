@@ -18,7 +18,7 @@
                     ng-disabled="category.children.length > 0"
                     ng-click="toggleCategory(category)"
                 >
-                    <bdi>{{category.translations[activeLanguage].tag || category.tag}}</bdi>
+                    <bdi>{{category.translations[activeSurveyLanguage].tag || category.tag}}</bdi>
         </label>
         <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
             <label>
@@ -28,7 +28,7 @@
                         value="child.id"
                         ng-click="toggleParent(category, child.id)"
                     >
-                    <bdi>{{child.translations[activeLanguage].tag || child.tag}}</bdi>
+                    <bdi>{{child.translations[activeSurveyLanguage].tag || child.tag}}</bdi>
             </label>
         </div>
     </div>
@@ -36,6 +36,6 @@
 <add-category
         survey="survey"
         attribute="attribute"
-        active-language="activeLanguage"
+        active-language="activeSurveyLanguage"
         available="parents"
 ></add-category>

@@ -1,6 +1,6 @@
 <div>
     <!-- Container for form-field structured elements -->
-    
+
     <div ng-if="attribute.type === 'description' || attribute.type === 'title'">
         <!-- Split between Title Desc and other values -->
         <div
@@ -79,7 +79,7 @@
         </label>
         <!-- Attribute Instructions -->
         <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
-        <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions">            </p>            
+        <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions">            </p>
         <!-- attributes which use the form-field structure -->
                 <div ng-switch="attribute.input">
                     <!-- Standard fields -->
@@ -118,7 +118,7 @@
                         ng-required="attribute.required"
                         >
                         <option ng-repeat="option in attribute.options track by $index" value="{{option}}">
-                            <bdi>{{attribute.translations[activeSurveyLanguage].options[$index] || option}}</bdi>                        
+                            <bdi>{{attribute.translations[activeSurveyLanguage].options[$index] || option}}</bdi>
                         </option>
                         </select>
                     <!-- type: number -->
@@ -225,8 +225,7 @@
                     <svg ng-show="attribute.response_private" class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                     </svg>
-                    <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}<bdi>
-                    
+                    <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
                 </label>
                 <!-- Attribute Instructions -->
                 <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
