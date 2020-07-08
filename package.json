@@ -130,7 +130,7 @@
     "sortablejs": "1.10.0",
     "underscore": "^1.7.0",
     "ushahidi-platform-pattern-library": "^4.4.2-pre.2",
-    "ushahidi-platform-sdk": "^0.2.6"
+    "ushahidi-platform-sdk": "^0.2.8"
   },
   "engines": {
     "node": ">=10.0"
