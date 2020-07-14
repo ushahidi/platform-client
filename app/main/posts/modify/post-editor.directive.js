@@ -136,7 +136,7 @@ function PostEditorController(
 
     function canSavePost() {
         return PostEditService.validatePost(
-            $scope.post, $scope.postForm, $scope.tasks
+            $scope.post, $scope.postForm, $scope.post.post_content
         );
     }
 
