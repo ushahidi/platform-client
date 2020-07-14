@@ -51,6 +51,7 @@ let paths = {
     output: root,
     // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
     config: resolveToApp('config.js'),
+    languages: resolveToApp('common/locales'),
     dest: path.join(__dirname, 'server/www')
 };
 
@@ -103,28 +104,34 @@ function buildTar() {
 }
 
 // Downloading translations from transifex
-function transifexDownload(done) {
+function copyLanguages(done) {
     // argv.dev checks if the --dev flag was sent when calling the task
     let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
     // Make sure we have dest dir
     try {
-        fs.mkdirSync(destination);
+        fs.mkdirSync(destination + '/locales/');
     }
     catch (err) {
         if (err.code !== 'EEXIST') {
             throw err;
         }
     }
-    require('./gulp/transifex-download')(destination + '/locales/', done);
+    src([paths.languages + '/*']).pipe(dest(destination + '/locales/'));
+
     done();
 }
-
+function downloadLanguages(done) {
+    // argv.dev checks if the --dev flag was sent when calling the task
+    let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
+    require('./gulp/transifex-download')('app/common/locales/', done);
+    done();
+}
 /**
 * Build-options
 */
 
 // use webpack.config.js to build modules
-task('dist', series(clean, distWebpack, distConfig, transifexDownload));
+task('dist', series(clean, distWebpack, distConfig, downloadLanguages, copyLanguages));
 task('build', series('dist'));
 
 /**
@@ -300,3 +307,6 @@ task('verify', verify);
 
 // Run helper in browser
 task('dev:verifier', series(startVerifier, devServer));
+
+// Run helper in console
+task('languages', downloadLanguages);
