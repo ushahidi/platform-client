@@ -135,7 +135,9 @@ function PostEditorController(
     }
 
     function canSavePost() {
-        return PostEditService.validatePost($scope.post, $scope.postForm, $scope.tasks);
+        return PostEditService.validatePost(
+            $scope.post, $scope.postForm, $scope.tasks
+        );
     }
 
     function resolveMedia() {

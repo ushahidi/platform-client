@@ -8,25 +8,31 @@ function (
     UshahidiSdk
 ) {
 
-    const token = Session.getSessionDataEntry('accessToken');
-    const ushahidi = new UshahidiSdk.Categories(Util.url(''), token);
+    let _ushahidi = null;
+
+    const ushahidi = function () {
+        if (_ushahidi) { return _ushahidi; }
+        return new UshahidiSdk.Categories(
+            Util.url(''),
+            Session.getSessionDataEntry('accessToken'),
+            Session.getSessionDataEntry('accessTokenExpires')
+        );
+    }
+
     const getCategories = function(id) {
-        return ushahidi
-                    .setToken(Session.getSessionDataEntry('accessToken'))
+        return ushahidi()
                     .getCategories(id);
     }
 
     const saveCategory = function(category) {
-        return ushahidi
-            .setToken(Session.getSessionDataEntry('accessToken'))
+        return ushahidi()
             .saveCategory(category);
     }
 
     const deleteCategory = function(id) {
-        return ushahidi
-                .setToken(Session.getSessionDataEntry('accessToken'))
+        return ushahidi()
                 .deleteCategory(id);
     }
 
-    return {getCategories, saveCategory, deleteCategory};
+    return { getCategories, saveCategory, deleteCategory };
 }];
