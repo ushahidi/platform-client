@@ -344,6 +344,11 @@
                 "delete_this" : "Delete this task"
             }
         },
+        "fields" : {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
+            }
+        },
         "targeted_survey": {
             "title": "Create a new targeted survey",
             "description":"Send questions via SMS to a list of those phone numbers.",
@@ -809,7 +814,7 @@
         "valid" : {
             "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
-            "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
+            "validation_fail" : "Required fields are missing, these fields are marked with an *.",
             "title" : {
                 "required" : "A title is required",
                 "minlength" : "Title is too short",

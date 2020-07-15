@@ -3,11 +3,13 @@ module.exports = [
     'ModalService',
     '_',
     'Editor',
+    'Notify',
 function (
     $rootScope,
     ModalService,
     _,
-    Editor
+    Editor,
+    Notify
     ) {
     return {
         restrict: 'E',
@@ -54,7 +56,9 @@ function (
                     editField.translations = {};
                 }
                 editField.instructions = $scope.editor.getMarkdown();
-                if (!$scope.fieldLabel.$invalid) {
+                if ($scope.fieldLabel.$invalid) {
+                    Notify.error('survey.fields.validation.required');
+                } else {
                     editField.label = $scope.label;
                     $scope.addNewField(editField, activeTask);
                 }
@@ -64,8 +68,8 @@ function (
                 ModalService.close();
             };
 
-            $scope.onlyOptional = function () {
-                return $scope.editField.type !== 'title' && $scope.editField.type !== 'description';
+            $scope.onlyOptional = function (editField) {
+                return editField.type !== 'title' && editField.type !== 'description';
             };
 
             $scope.canDisplay = function () {

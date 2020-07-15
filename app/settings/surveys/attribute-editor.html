@@ -61,7 +61,7 @@
                   </div>
               </div>
         </div>
-        <div class="form-field switch" ng-show="onlyOptional() && editField.input !== 'tags'">
+        <div class="form-field switch" ng-show="onlyOptional(editField) && editField.input !== 'tags'">
           <label translate="survey.required">Require this field be completed</label>
           <div class="toggle-switch">
              <input class="tgl" id="switchnewfield" type="checkbox" ng-model="editField.required">
