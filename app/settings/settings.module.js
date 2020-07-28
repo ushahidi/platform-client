@@ -4,6 +4,8 @@ angular.module('ushahidi.settings', [])
 .service('ImportNotify', require('./data-import/import.notify.service.js'))
 .directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
 
+.directive('gmailAuth', require('./datasources/gmail-auth.directive.js'))
+
 .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
 .directive('surveyTranslationEditor', require('./surveys/survey-translation-editor.directive.js'))
 .directive('fieldTranslationEditor', require('./surveys/field-translation-editor.directive.js'))

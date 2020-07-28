@@ -1,9 +1,12 @@
 module.exports = [
     '$q',
+    '$http',
     '$scope',
     '$rootScope',
     '$location',
     '$translate',
+    '$window',
+    'Util',
     'ConfigEndpoint',
     'DataProviderEndpoint',
     'FormEndpoint',
@@ -11,19 +14,24 @@ module.exports = [
     'Notify',
     '_',
     'Features',
+    'ModalService',
 function (
     $q,
+    $http,
     $scope,
     $rootScope,
     $location,
     $translate,
+    $window,
+    Util,
     ConfigEndpoint,
     DataProviderEndpoint,
     FormEndpoint,
     FormAttributeEndpoint,
     Notify,
     _,
-    Features
+    Features,
+    ModalService
 ) {
 
     // Redirect to home if not authorized
@@ -38,6 +46,7 @@ function (
 
     // Displays a loading indicator when busy querying endpoints.
     $scope.saving = false;
+    $scope.processing = false;
     $scope.settings = {};
     $scope.available_providers = [];
     $scope.formEnabled = [];
@@ -47,11 +56,16 @@ function (
     $scope.forms = {};
     $scope.selectedForm = {};
     $scope.savedProviders = {};
+    $scope.authenticable_providers = {};
 
     // Translate and set page title.
     $translate('settings.data_sources.data_sources').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
+    });
+
+    Features.loadFeatures().then(function () {
+        $scope.isGmailSupportEnabled = Features.isFeatureEnabled('gmail-support');
     });
 
     $scope.allowedTypeMapping = function (field_type, attribute_type) {
@@ -120,6 +134,58 @@ function (
         $scope.formEnabled[provider_id] = !$scope.formEnabled[provider_id];
     };
 
+    $scope.initializeProvider = function (provider) {
+        if ($scope.processing) {
+            return false;
+        }
+        if (provider === 'gmail') {
+            $scope.processing = true;
+            $http.get(Util.url('/api/v5/config/data-provider/gmail/initialize')).then(
+                function(response) {
+                    $window.open(response.data.auth_url, 'popup', 'height=700, width=550, left=300, top=200');
+                    setTimeout(
+                        () => ModalService.openTemplate('<gmail-auth></gmail-auth>', 'Connect Your Gmail Account', false, $scope, true, false)
+                    , 3000);
+                },
+                function (errorResponse) { // error
+                    Notify.apiErrors(errorResponse);
+                }).finally(function () {
+                    $scope.processing = false;
+                });
+        }
+    };
+
+    $scope.disconnectProvider = function (provider) {
+        if ($scope.processing) {
+            return false;
+        }
+        if (provider === 'gmail') {
+            $scope.processing = true;
+            $http.post(Util.url('/api/v5/config/data-provider/gmail/unauthorize')).then(
+                function(response) {
+                    toggleGmailConnectionButton();
+                    Notify.notify(response.data.message);
+                },
+                function (errorResponse) { // error
+                    Notify.apiErrors(errorResponse);
+                }).finally(function () {
+                    $scope.processing = false;
+                });
+        }
+    }
+
+    $scope.authorizeGmailProvider = function (code) {
+        var payload = {code};
+        return $http.post(Util.url('/api/v5/config/data-provider/gmail/authorize'), payload).then(
+            function(response) {
+                Notify.notify(response.data.message);
+                toggleGmailConnectionButton();
+            },
+            function (errorResponse) { // error
+                Notify.apiErrors(errorResponse);
+            });
+    };
+
     $scope.saveProviderSettings = function (provider) {
         if ($scope.saving) {
             return false;
@@ -156,6 +222,10 @@ function (
         }
     };
 
+    var toggleGmailConnectionButton = function () {
+        $scope.settings.gmail.authenticated = !$scope.settings.gmail.authenticated;
+    }
+
     var addSavedProvider = function (provider) {
         if (!$scope.savedProviders[provider]) {
             $scope.savedProviders[provider] = true;
@@ -171,6 +241,7 @@ function (
         $scope.providers = response[0];
         $scope.settings = response[1];
         $scope.surveys = response[2];
+        $scope.authenticable_providers = response[1]['authenticable-providers'];
         $scope.available_providers = response[3]['data-providers'];
 
         // Enable form elements as appropriate
@@ -183,7 +254,6 @@ function (
                 $scope.setSelectedForm(form, name);
             }
         });
-
         // Keep track of providers with saved settings
         $scope.savedProviders = {};
 
