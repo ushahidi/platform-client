@@ -20,7 +20,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "eslint": "gulp eslint",
     "eslintfix": "gulp eslintfix",
-    "verify": "gulp verify"
+    "verify": "gulp verify",
+    "languages" : "gulp languages"
   },
   "pre-commit": [
     "eslint"
