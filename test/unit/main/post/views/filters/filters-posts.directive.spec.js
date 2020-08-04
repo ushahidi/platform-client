@@ -58,13 +58,13 @@ describe('filters-posts directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('reactiveFilters should be false', function () {
-            expect(PostFilters.reactiveFilters).toEqual(false); // revisit where we set the default for this?
+        it('reactToFilters should be false', function () {
+            expect(PostFilters.reactToFilters).toEqual(false); // revisit where we set the default for this?
         });
-        it('should enable reactiveFilters when I call applyFiltersLocked', function () {
-            expect(PostFilters.reactiveFilters).toEqual(false);
+        it('should enable reactToFilters when I call applyFiltersLocked', function () {
+            expect(PostFilters.reactToFilters).toEqual(false);
             isolateScope.applyFilters();
-            expect(PostFilters.reactiveFilters).toEqual(true);
+            expect(PostFilters.reactToFilters).toEqual(true);
         });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.removeQueryFilter();

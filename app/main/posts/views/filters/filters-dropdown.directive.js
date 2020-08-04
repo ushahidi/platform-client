@@ -64,8 +64,5 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         $scope.savedSearch.user_id = $rootScope.currentUser ? $rootScope.currentUser.userId : null;
         ModalService.openTemplate('<saved-search-editor saved-search="savedSearch"></saved-search-editor>', modalHeaderText, 'star', $scope, false, false);
     };
-    $scope.disableApplyButton = function () {
-        return $state.$current.includes['posts.map'] ? true : false;
-    };
 }
 
