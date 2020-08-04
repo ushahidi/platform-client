@@ -5,15 +5,16 @@
         ng-if="languages.surveyLanguages.length > 1"
         >
 </translations-switch>
-<post-translation-editor
-        ng-if="languages.default !== languages.active"
-        post="post"
-        active-language="languages.active"
-        default-language="languages.default"
-        form="editForm"
-></post-translation-editor>
-<form name="editForm" novalidate ng-show="languages.default === languages.active">
-  <div class="form-sheet" role="article">
+<form name="editForm" novalidate>
+    <post-translation-editor
+      ng-show="languages.default !== languages.active"
+      post="post"
+      active-language="languages.active"
+      default-language="languages.default"
+      form="editForm"
+    ></post-translation-editor>
+
+  <div class="form-sheet" role="article" ng-show="languages.default === languages.active">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
     <header class="form-sheet-summary" ng-if="post.form">
       <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.default].name || post.form.name}}</h1>
@@ -67,9 +68,9 @@
         <!-- End Post custom fields -->
 
         <!-- IF: User has permission to see other 'Tasks' -->
-        <post-toolbox form="editForm" post="post" ng-if="post.form"></post-toolbox>
+        <post-toolbox form="editForm" post="post" ng-if="post.form" ng-show="languages.default === languages.active"></post-toolbox>
         <post-tabs
-          ng-show="post.post_content.length > 1"
+          ng-show="post.post_content.length > 1 && languages.default === languages.active"
           form="editForm"
           post="post"
           tasks="post.post_content"
@@ -78,7 +79,7 @@
           active-survey-language="languages.default"
         >
         </post-tabs>
-        <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
+        <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'" ng-show="languages.default === languages.active"></post-messages>
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
 

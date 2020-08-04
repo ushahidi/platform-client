@@ -154,6 +154,13 @@ function PostDataEditorController(
             }
         });
     }
+    $rootScope.$on('event:translations:languageAdded', function() {
+        // Need to wait for the form to be initiated before setting it dirty.
+        $scope.$watch('editForm', function() {
+            // Setting the form dirty if a new language is added. This is to detect changes when saving.
+            $scope.editForm.$setDirty();
+        });
+    });
 
     activate();
 
@@ -267,7 +274,7 @@ function PostDataEditorController(
 
     function savePost() {
         // Checking if changes are made
-        if ($scope.editForm && !$scope.editForm.$dirty && !$scope.editForm.translatedTitle.$dirty) {
+        if ($scope.editForm && !$scope.editForm.$dirty) {
             Notify.infoModal('post.valid.no_changes');
             $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
@@ -303,13 +310,15 @@ function PostDataEditorController(
     function removeLanguage(index, language) {
             Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
             .then(function() {
+                // Setting form dirty so we can detect changes upon save.
+                $scope.editForm.$setDirty();
                 $scope.languages.active = $scope.languages.default;
                 $scope.languages.available.splice(index, 1);
                 delete $scope.post.translations[language];
-                _.each($scope.post.post_content, task=>{
+                _.each($scope.post.post_content, task => {
                     _.each(task.fields, field => {
-                        delete field['translated-values'][language];
-                    })
+                        delete field.value.translations[language];
+                    });
                 });
             });
         };
