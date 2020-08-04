@@ -14,6 +14,7 @@ function SurveyEditor() {
 }
 
 SurveyEditorController.$inject = [
+    '$rootScope',
     '$scope',
     '$q',
     '$location',
@@ -31,6 +32,7 @@ SurveyEditorController.$inject = [
     'TranslationService',
     'CategoriesSdk'];
 function SurveyEditorController(
+    $rootScope,
     $scope,
     $q,
     $location,
@@ -586,6 +588,7 @@ function SurveyEditorController(
         .catch(handleResponseErrors);
     } else {
         $scope.saving_survey = false;
+        $rootScope.$broadcast('event:surveys:translationMissing');
         Notify.error(`You need to add translations for all names, check that you have translated the survey-names for all added languages`);
     }
     }

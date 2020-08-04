@@ -8,18 +8,26 @@
           <p>{{survey.name}}</p>
         </div>
         <p translate="translations.add_translation">Add your translation below:</p>
-        <form name="translatedName">
-          <input type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="survey.translations[activeLanguage].name" required>
+
+        <form name="form.translation">
+          <input
+            name="name"
+            type="text"
+            placeholder="{{'translations.edit_placeholder' | translate }}"
+            ng-model="survey.translations[activeLanguage].name"
+            class="form-field"
+            required
+          >
           <div
                 class="alert error"
-                ng-show="translatedName.$invalid && translatedName.$dirty"
+                ng-show="form.translation.$dirty && !survey.translations[activeLanguage].name"
             >
                 <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="translations.survey_name_required">Translation for survey-name is required</span>
             </div>
-        </form>
+          </form>
     </div>
 
       <div class="form-field survey">
