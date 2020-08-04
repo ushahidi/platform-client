@@ -9,9 +9,9 @@ function AddLanguageDirective() {
         template: require('./add-language.html')
     };
 }
-AddLanguageController.$inject = ['$scope', 'ModalService', '_'];
+AddLanguageController.$inject = ['$rootScope','$scope', 'ModalService', '_'];
 
-function AddLanguageController($scope, ModalService, _) {
+function AddLanguageController($rootScope, $scope, ModalService, _) {
     $scope.selectLanguage = selectLanguage;
     $scope.selectedLanguage = '';
     $scope.add = add;
@@ -53,6 +53,7 @@ function AddLanguageController($scope, ModalService, _) {
         if (!$scope.showLangError) {
             $scope.switchToLanguage($scope.selectedLanguage);
             $scope.languages.available.push($scope.selectedLanguage);
+            $rootScope.$broadcast('event:translations:languageAdded');
             ModalService.close();
         }
     }

@@ -50,6 +50,13 @@ function (
             if (!form.content || form.content.$invalid) {
                 return false;
             }
+            // Validate post-translations
+            _.each(post.enabled_languages.available, language=>{
+                if (!post.translations[language] || !post.translations[language].title) {
+                    isPostValid = false;
+                    form.translatedTitle.$setDirty();
+                }
+            })
 
             // Validate required fields for each task that needs to be validated
             _.each(tasks_to_validate, function (task) {

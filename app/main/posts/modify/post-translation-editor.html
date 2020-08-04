@@ -7,19 +7,26 @@
             <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
             <p>{{post.title}}</p>
         </div>
-        <p translate="translations.add_translation">Add your translation below:</p>
-        <form name="form.translatedTitle">
-            <input type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="post.translations[activeLanguage].title" required>
+        <p>{{"translations.add_translation" | translate}}
+            <span class="required"></span>
+        </p>
+            <input
+                name="translatedTitle"
+                class="form-field"
+                type="text"
+                placeholder="{{'translations.edit_placeholder' | translate }}"
+                ng-model="post.translations[activeLanguage].title"
+                required
+            >
             <div
               class="alert error"
-              ng-show="form.translatedTitle.$invalid && form.translatedTitle.$dirty"
+              ng-show="form.translatedTitle.$dirty && !post.translations[activeLanguage].title"
             >
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="translations.post_title_required">Translation for post-title is required</span>
             </div>
-        </form>
     </div>
     <!-- Translation for Post description -->
     <div class="form-field survey">
@@ -29,12 +36,12 @@
             <p>{{post.content}}</p>
         </div>
         <p translate="translations.add_translation">Add your translation below:</p>
-        <input type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="post.translations[activeLanguage].content" required>
+        <input type="text" name="description" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="post.translations[activeLanguage].content">
     </div>
     <!-- Translation for other text-post fields -->
     <div class="form-field" ng-repeat="task in post.post_content">
-          <div class="form-field required" ng-repeat="field in task.fields" ng-if="canTranslate(field) && field.value.value">
-              <label translate required> {{field.label}}</label>
+          <div class="form-field" ng-repeat="field in task.fields" ng-if="canTranslate(field) && field.value.value">
+              <label translate> {{field.label}}</label>
               <div class="form-field framed">
                 <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
                   <p ng-if="field.type !== 'markdown'">{{field.value.value}}</p>
@@ -44,12 +51,14 @@
               <p translate="translations.add_translation">Add your translation below:</p>
               <input
                   ng-if="field.input === 'text'"
+                  name="translations_{{field.id}}"
                   type='text'
                   placeholder="{{'translations.edit_placeholder' | translate }}"
                   ng-model="field.value.translations[activeLanguage].value"
               >
               <textarea
                   ng-if="field.input === 'textarea'"
+                  name="translations_{{field.id}}"
                   placeholder="{{'translations.edit_placeholder' | translate }}"
                   ng-model="field.value.translations[activeLanguage].value"
               ></textarea>
@@ -60,10 +69,10 @@
                 class="adapt-field"
                 style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
                 ng-model="field.value.translations[activeLanguage].value"
+                name="translations_{{field.id}}"
                 adaptive-input
                 msd-elastic>
             </textarea>
           </div>
       </div>
 </section>
-   
