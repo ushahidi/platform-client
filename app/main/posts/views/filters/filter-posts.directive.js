@@ -28,6 +28,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
 
     function activate() {
         // Watch all click events on the page
+        $scope.filtersInView = angular.copy($scope.filters);
         $document.on('click', handleDocumentClick);
 
         $scope.$on('$destroy', () => {
@@ -45,6 +46,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
 
     function applyFilters() {
         PostFilters.reactToFilters = true;
+        PostFilters.setFilters($scope.filtersInView);
         $scope.status.isopen = false;
     }
 
