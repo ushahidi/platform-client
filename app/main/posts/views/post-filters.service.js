@@ -361,7 +361,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return null;
     }
     function countFilters(filters) {
-        let filtersToCount = filters ? filters: this.getFilters();
+        let filtersToCount = filters ? filters : this.getFilters();
         let count = _.keys(this.getActiveFilters(filtersToCount)).length;
 
         // Hacky workaround to make sure set is counted in filter counter
