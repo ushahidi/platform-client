@@ -39,6 +39,8 @@ function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurv
 
         if (diffLength > 0) {
             getPostStats(PostFilters.getFilters()).$promise.then(updateCounts);
+            PostFilters.reactToFilters = true;
+            $rootScope.$broadcast('event:filters:modeContext');
         }
     }, true);
 

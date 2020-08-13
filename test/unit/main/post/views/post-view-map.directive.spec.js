@@ -126,10 +126,11 @@ describe('post view map directive', function () {
             isolateScope.filters = {
                 status : 'published'
             };
+            PostFilters.reactToFilters = true;
         });
 
         expect(L.geoJson).toHaveBeenCalled();
-        expect(L.geoJson.calls.count()).toEqual(3);
+        expect(L.geoJson.calls.count()).toEqual(2);
         expect(geojson.addTo).toHaveBeenCalledWith(map);
     });
 
