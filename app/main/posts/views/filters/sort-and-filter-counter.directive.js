@@ -13,7 +13,7 @@ function SortAndFilterCounterDirective(PostFilters) {
 
     function SortAndFilterCounterDirectiveLink($scope, $element, $attrs, ngModel) {
         $scope.$watch(function () {
-            return PostFilters.countFilters();
+            return PostFilters.countFilters($scope.filters);
         }, handleFiltersUpdate, true);
 
         function handleFiltersUpdate() {
