@@ -58,7 +58,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
 
             FilterTransformers.requestsFiltersData().then(function (all) {
                 $scope.$watch(function () {
-                    return PostFilters.getActiveFilters(PostFilters.getFilters());
+                    return PostFilters.getActiveFilters($scope.filters);
                 }, handleFiltersUpdate, true);
             });
         }
@@ -158,7 +158,7 @@ function ActiveSearchFilters($translate, $filter, PostFilters, _, FilterTransfor
                 PostFilters.clearFilter(filterKey, value);
                 $scope.savedSearch = savedSearch;
             } else {
-                PostFilters.clearFilter(filterKey, value);
+                $scope.filters = PostFilters.clearFilterFromArray(filterKey, value, $scope.filters);
             }
         }
 

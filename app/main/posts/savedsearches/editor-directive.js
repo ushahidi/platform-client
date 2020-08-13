@@ -50,6 +50,7 @@ function (
             $scope.cpySavedSearch.description = $filter('translate')($scope.cpySavedSearch.description);
             $scope.cpySavedSearch.name = $filter('translate')($scope.cpySavedSearch.name);
             $scope.save = function (savedSearch) {
+                PostFilters.reactToFilters = true;
                 $scope.isSaving = true;
                 var persist = savedSearch.id ? SavedSearchEndpoint.update : SavedSearchEndpoint.save;
                 persist(savedSearch)
