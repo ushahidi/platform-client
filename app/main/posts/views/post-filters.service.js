@@ -33,7 +33,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
-        reactToFilters: true,
+        reactiveFilters: true,
         /**
          * This flag is used to syncronize the "internalChange" state globally
          * (useful between filters bug icons and checkboxes).
@@ -163,7 +163,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         // Replace filterState with defaults
         angular.copy(getDefaults(), filterState);
         // Trigger reactive filters
-        this.reactToFilters = true;
+        this.reactiveFilters = true;
         return filterState;
     }
 
@@ -216,7 +216,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (key === 'saved_search') {
                     return true;
                 }
-                if (key === 'reactToFilters') {
+                if (key === 'reactiveFilters') {
                     return true;
                 }
                 // Is value empty?
@@ -302,7 +302,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return _.omit(
             filters,
             function (value, key, object) {
-                if (key === 'reactToFilters') {
+                if (key === 'reactiveFilters') {
                     return true;
                 }
                 // Ignore difference in saved_search

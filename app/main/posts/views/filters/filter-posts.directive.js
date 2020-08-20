@@ -23,7 +23,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     $scope.showDropdown = showDropdown;
     $scope.removeQueryFilter = removeQueryFilter;
     $scope.applyFilters = applyFilters;
-    PostFilters.reactToFilters = false;
+    PostFilters.reactiveFilters = false;
     activate();
 
     function activate() {
@@ -44,7 +44,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     }
 
     function applyFilters() {
-        PostFilters.reactToFilters = true;
+        PostFilters.reactiveFilters = true;
         $scope.status.isopen = false;
     }
 
