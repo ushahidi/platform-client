@@ -80,17 +80,17 @@
        </div>
        <!-- end: media upload toggle to make caption an optional field-->
        <div class="form-field switch" ng-show="canMakePrivate()">
-          <label translate="survey.make_response_private">Make responses private</label>
-          <p data-fieldgroup-target="field-private-message-3" class="init active" translate="survey.response_private_desc" ng-show="editAttribute.response_private">
-            <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
-            </svg>
-              Only people with permission to edit responses will be able to see responses to this field.
-          </p>
-          <div class="toggle-switch">
-             <input class="tgl" id="switchprivateresponse" type="checkbox" ng-model="editAttribute.response_private">
-             <label class="tgl-btn" for="switchprivateresponse"></label>
-          </div>
+        <label translate="survey.make_response_private">Make responses private</label>
+        <p data-fieldgroup-target="field-private-message-3" class="init active" translate="survey.response_private_desc" ng-show="editAttribute.response_private">
+          <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+          </svg>
+            Only people with permission to edit responses will be able to see responses to this field.
+        </p>
+        <div class="toggle-switch">
+           <input class="tgl" id="switchprivateresponse" type="checkbox" ng-model="editAttribute.response_private">
+           <label class="tgl-btn" for="switchprivateresponse"></label>
+        </div>
        </div>
        <div class="form-field switch" ng-if="canDisplay()">
             <label translate="app.default_value">Default value (optional):</label>

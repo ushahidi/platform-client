@@ -33,7 +33,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         cleanUIFilters: cleanUIFilters,
         cleanRemovedValuesFromObject: cleanRemovedValuesFromObject,
         addIfCurrentObjectMatchesOriginal: addIfCurrentObjectMatchesOriginal,
-        reactiveFilters: true,
+        reactToFilters: true,
         /**
          * This flag is used to syncronize the "internalChange" state globally
          * (useful between filters bug icons and checkboxes).
@@ -163,7 +163,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         // Replace filterState with defaults
         angular.copy(getDefaults(), filterState);
         // Trigger reactive filters
-        this.reactiveFilters = true;
+        this.reactToFilters = true;
         return filterState;
     }
 
@@ -216,7 +216,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
                 if (key === 'saved_search') {
                     return true;
                 }
-                if (key === 'reactiveFilters') {
+                if (key === 'reactToFilters') {
                     return true;
                 }
                 // Is value empty?
@@ -302,7 +302,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         return _.omit(
             filters,
             function (value, key, object) {
-                if (key === 'reactiveFilters') {
+                if (key === 'reactToFilters') {
                     return true;
                 }
                 // Ignore difference in saved_search
@@ -360,8 +360,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
         }
         return null;
     }
-    function countFilters() {
-        let count = _.keys(this.getActiveFilters(this.getFilters())).length;
+    function countFilters(filters) {
+        let filtersToCount = filters ? filters : this.getFilters();
+        let count = _.keys(this.getActiveFilters(filtersToCount)).length;
 
         // Hacky workaround to make sure set is counted in filter counter
         // Can probably be refactored to just include set in the filterState

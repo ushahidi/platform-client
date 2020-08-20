@@ -7,7 +7,7 @@
 
     <div class="form-field">
         <label class="input-label" translate>set.description</label>
-        <textarea ng-model="cpySavedSearch.description" />
+        <textarea ng-model="cpySavedSearch.description"></textarea>
     </div>
 
     <!-- Who can see? -->
@@ -15,7 +15,7 @@
     <div class="modal-actions">
         <div class="form-field">
             <button type="button" class="button-link  modal-trigger" ng-click="cancel()" translate>app.cancel</button>
-            <button type="button" class="button-alpha modal-trigger" ng-show="!isSaving" ng-click="save(cpySavedSearch)" translate>app.save_and_close</button>
+            <button type="button" class="button-alpha modal-trigger" ng-show="!isSaving" ng-click="save(cpySavedSearch)" translate>set.save_apply</button>
             <button ng-click="saveSearch()" ng-show="isSaving" disabled class="button-beta" type="button">
                 <div class="loading">
                     <div class="line"></div>

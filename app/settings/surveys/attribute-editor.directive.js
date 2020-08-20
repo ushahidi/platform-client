@@ -40,7 +40,7 @@ function (
                     usageStatistics: false
                 });
 
-                $scope.editor.setValue($scope.editAttribute.instructions);
+                $scope.editor.setMarkdown($scope.editAttribute.instructions);
                 /** This is a hack to override the tui-editor's own inline-style
                  * that makes the scroll get stuck inside the editor-area */
                 let editor = document.querySelector('#editSection');
@@ -50,7 +50,7 @@ function (
             initiateEditor();
 
             $scope.save = function (editAttribute, activeTask) {
-                editAttribute.instructions = $scope.editor.getValue();
+                editAttribute.instructions = $scope.editor.getMarkdown();
                 if (!$scope.attributeLabel.$invalid) {
                     $scope.editAttribute.label = $scope.label;
                     $scope.addNewAttribute(editAttribute, activeTask);
@@ -70,7 +70,7 @@ function (
             };
 
             $scope.canMakePrivate = function () {
-                return $scope.editAttribute.type !== 'tags';
+                return $scope.editAttribute.type !== 'tags' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description';
             };
 
             $scope.canDisableCaption = function () {

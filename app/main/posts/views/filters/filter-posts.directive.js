@@ -15,21 +15,26 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element'];
-function FilterPostsController($scope, PostFilters, $state, $document, $element) {
+FilterPostsController.$inject = ['$rootScope', '$scope', 'PostFilters', '$state', '$document', '$element'];
+function FilterPostsController($rootScope, $scope, PostFilters, $state, $document, $element) {
     $scope.searchSavedToggle = false;
     $scope.status = { isopen: false };
     $scope.hideDropdown = hideDropdown;
     $scope.showDropdown = showDropdown;
     $scope.removeQueryFilter = removeQueryFilter;
     $scope.applyFilters = applyFilters;
-    PostFilters.reactiveFilters = false;
+    PostFilters.reactToFilters = false;
     activate();
+
+    $rootScope.$on('event:filters:modeContext', function () {
+        $scope.filters = PostFilters.getFilters();
+        activateViewFilters();
+    });
 
     function activate() {
         // Watch all click events on the page
         $document.on('click', handleDocumentClick);
-
+        activateViewFilters();
         $scope.$on('$destroy', () => {
             $document.off('click', handleDocumentClick);
         });
@@ -43,8 +48,13 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
         });
     }
 
+    function activateViewFilters () {
+        $scope.filtersInView = angular.copy($scope.filters);
+    }
+
     function applyFilters() {
-        PostFilters.reactiveFilters = true;
+        PostFilters.reactToFilters = true;
+        PostFilters.setFilters($scope.filtersInView);
         $scope.status.isopen = false;
     }
 
