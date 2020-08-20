@@ -153,12 +153,12 @@ function PostViewDataController(
         } else {
             getPosts(false, false);
         }
-        // whenever the reactToFilters varable is set to true, do a dummy update of $scope.filters.reactToFilters
+        // whenever the reactiveFilters var changes, do a dummy update of $scope.filters.reactiveFilters
         // to force the $scope.filters watcher to run
         $scope.$watch(function () {
-            return PostFilters.reactToFilters;
+            return PostFilters.reactiveFilters;
         }, function () {
-            if (PostFilters.reactToFilters === true) {
+            if (PostFilters.reactiveFilters === true) {
                 $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
             }
         }, true);
@@ -166,9 +166,9 @@ function PostViewDataController(
         $scope.$watch(function () {
             return $scope.filters;
         }, function (newValue, oldValue) {
-            if (PostFilters.reactToFilters === true && (newValue !== oldValue)) {
+            if (PostFilters.reactiveFilters === true && (newValue !== oldValue)) {
                 getPosts(false, false, true, goToFirstPostIfPostDoesNotMatchFilters);
-                PostFilters.reactToFilters = false;
+                PostFilters.reactiveFilters = false;
             }
         }, true);
         $scope.$watch('selectedPosts.length', function () {
