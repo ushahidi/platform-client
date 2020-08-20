@@ -15,8 +15,8 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$rootScope', '$scope', 'PostFilters', '$state', '$document', '$element'];
-function FilterPostsController($rootScope, $scope, PostFilters, $state, $document, $element) {
+FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element'];
+function FilterPostsController($scope, PostFilters, $state, $document, $element) {
     $scope.searchSavedToggle = false;
     $scope.status = { isopen: false };
     $scope.hideDropdown = hideDropdown;
@@ -26,15 +26,10 @@ function FilterPostsController($rootScope, $scope, PostFilters, $state, $documen
     PostFilters.reactToFilters = false;
     activate();
 
-    $rootScope.$on('event:filters:modeContext', function () {
-        $scope.filters = PostFilters.getFilters();
-        activateViewFilters();
-    });
-
     function activate() {
         // Watch all click events on the page
         $document.on('click', handleDocumentClick);
-        activateViewFilters();
+
         $scope.$on('$destroy', () => {
             $document.off('click', handleDocumentClick);
         });
@@ -48,13 +43,8 @@ function FilterPostsController($rootScope, $scope, PostFilters, $state, $documen
         });
     }
 
-    function activateViewFilters () {
-        $scope.filtersInView = angular.copy($scope.filters);
-    }
-
     function applyFilters() {
         PostFilters.reactToFilters = true;
-        PostFilters.setFilters($scope.filtersInView);
         $scope.status.isopen = false;
     }
 
