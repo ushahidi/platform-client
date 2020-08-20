@@ -32,9 +32,9 @@
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
         <a type="button" class="searchbar-options-filter button">
-            <sort-and-filter-counter></sort-and-filter-counter>
+            <sort-and-filter-counter filters="filtersInView"></sort-and-filter-counter>
         </a>
     </div>
 
-    <filters-dropdown uib-dropdown-menu class="dropdown-menu" dropdown-status="status" filters="filters"></filters-dropdown>
+    <filters-dropdown uib-dropdown-menu class="dropdown-menu" dropdown-status="status" filters="filtersInView"></filters-dropdown>
 </form>
