@@ -123,24 +123,17 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         function watchFilters() {
             // whenever filters change, reload the posts on the map
             $scope.$watch(function () {
-                return PostFilters.reactToFilters;
-            }, function () {
-                if (PostFilters.reactToFilters === true) {
-                    $scope.filters.reactToFilters = $scope.filters.reactToFilters ? !$scope.filters.reactToFilters : true;
-                }
-            }, true);
-            $scope.$watch(function () {
                 return $scope.filters;
             }, function (newValue, oldValue) {
                 var diff = _.omit(newValue, function (value, key, obj) {
                     return _.isEqual(oldValue[key], value);
                 });
                 var diffLength = _.keys(diff).length;
-                if (PostFilters.reactToFilters === true && diffLength > 0) {
+
+                if (diffLength > 0) {
                     cancelCurrentRequests();
                     clearData();
                     reloadMapPosts();
-                    PostFilters.reactToFilters = false;
                 }
             }, true);
         }

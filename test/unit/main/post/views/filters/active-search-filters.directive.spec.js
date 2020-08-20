@@ -84,7 +84,7 @@ describe('post active search filters directive', function () {
 
 
         it('should remove a given filter from the PostFilters object', function () {
-            spyOn(PostFilters, 'clearFilterFromArray');
+            spyOn(PostFilters, 'clearFilter');
             var mockEvent = {
                 type: 'click',
                 stopPropagation: function () {},
@@ -92,7 +92,7 @@ describe('post active search filters directive', function () {
             };
             directiveScope.removeFilter('test', 'test', false, mockEvent);
 
-            expect(PostFilters.clearFilterFromArray).toHaveBeenCalled();
+            expect(PostFilters.clearFilter).toHaveBeenCalled();
         });
     });
     describe('test clean filters', function () {
