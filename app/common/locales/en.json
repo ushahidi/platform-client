@@ -85,6 +85,7 @@
         "filter_by" :"Filter by...",
         "sort_filter": "Sort & filter",
         "apply_filters" : "Apply",
+        "close_and_view": "Close and view results",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
         "filter_by_survey" : "Filter by survey",

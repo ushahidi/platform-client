@@ -80,6 +80,19 @@ describe('post filters-dropdown directive', function () {
             isolateScope.saveSavedSearchModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
         });
+        it('should return currect button text', function () {
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.map': true
+            };
+            expect(isolateScope.getButtonText()).toEqual('app.close_and_view');
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.data': true,
+                'posts.map': false
+            };
+            expect(isolateScope.getButtonText()).toEqual('app.apply_filters');
+        });
     });
     describe('test children', function () {
         it('should have a filter-post-order-asc-desc directive child', function () {
