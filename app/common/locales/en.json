@@ -940,8 +940,7 @@
         "edit_savedsearch" : "Edit Search",
         "set_settings" : "Collection Settings",
         "add_notification" : "Add Notification",
-        "remove" : "remove",
-        "save_apply": "Save Search and Apply"
+        "remove" : "remove"
     },
     "category": {
         "add_tag" : "Add Category",
