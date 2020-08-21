@@ -80,7 +80,7 @@ describe('post filters-dropdown directive', function () {
             isolateScope.saveSavedSearchModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
         });
-        it('should return currect button text', function () {
+        it('should return correct button text', function () {
             mockState.$current.includes = {
                 'posts': true,
                 'posts.map': true
