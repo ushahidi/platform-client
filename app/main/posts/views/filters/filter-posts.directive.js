@@ -21,6 +21,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     $scope.status = { isopen: false };
     $scope.hideDropdown = hideDropdown;
     $scope.showDropdown = showDropdown;
+    $scope.toggleDropdown = toggleDropdown;
     $scope.removeQueryFilter = removeQueryFilter;
     $scope.applyFilters = applyFilters;
     PostFilters.reactiveFilters = false;
@@ -72,5 +73,15 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
 
         // Otherwise close the dropdown
         $scope.$apply(hideDropdown);
+    }
+    function toggleDropdown(event) {
+        switch (event.keyCode) {
+            case 27: $scope.hideDropdown();
+                break;
+            case 13: $scope.hideDropdown();
+                break;
+            default:
+                $scope.showDropdown();
+        }
     }
 }

@@ -78,5 +78,26 @@ describe('filters-posts directive', function () {
             isolateScope.removeQueryFilter();
             expect(isolateScope.filters.q).toEqual('');
         });
+        it('should close dropdown when pressing escape', function () {
+            spyOn(isolateScope, 'hideDropdown').and.callThrough();
+            let event = {keyCode: 13};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.hideDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(false);
+        });
+        it('should close dropdown when pressing enter', function () {
+            spyOn(isolateScope, 'hideDropdown').and.callThrough();
+            let event = {keyCode: 27};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.hideDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(false);
+        });
+        it('should open dropdown when pressing any key except enter and escape', function () {
+            spyOn(isolateScope, 'showDropdown').and.callThrough();
+            let event = {keyCode: 22};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.showDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(true);
+        });
     });
 });
