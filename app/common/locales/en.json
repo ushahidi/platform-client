@@ -643,6 +643,7 @@
         "in_this_deployment" : " in this deployment, yet.",
         "posts_total": " {{posts}} of {{total_nb}} posts",
         "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
+        "search_results": "Results:",
         "by" : "by",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
