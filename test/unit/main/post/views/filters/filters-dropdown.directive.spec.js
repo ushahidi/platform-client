@@ -93,6 +93,20 @@ describe('post filters-dropdown directive', function () {
             };
             expect(isolateScope.getButtonText()).toEqual('app.apply_filters');
         });
+        it('should return true if user is in map-view', function () {
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.map': true
+            };
+            expect(isolateScope.displayStats()).toEqual(true);
+        });
+        it('should return false if user is not in map-view', function () {
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.map': false
+            };
+            expect(isolateScope.displayStats()).toEqual(false);
+        })
     });
     describe('test children', function () {
         it('should have a filter-post-order-asc-desc directive child', function () {

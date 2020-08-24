@@ -7,7 +7,8 @@ function FilterPostsDirective() {
         scope: {
             filters: '=',
             onOpen: '&',
-            onClose: '&'
+            onClose: '&',
+            stats: '='
         },
         replace: true,
         controller: FilterPostsController,
