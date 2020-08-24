@@ -4,7 +4,7 @@
     <!-- floating action button -->
     <add-post-button></add-post-button>
 
-    <filter-posts filters="filters" embed-only="false" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
+    <filter-posts filters="filters" stats="stats" embed-only="false" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
 
     <div class="button-group" embed-only="false" ng-hide="filtersActive">
         <div ng-if="!editMode()">
@@ -20,7 +20,7 @@
     </div>
 
     <div embed-only="true" class="hide-until-medium">
-        <filter-posts filters="filters" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
+        <filter-posts filters="filters" stats="stats" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
         <div class="button-group">
             <div ng-hide="filtersActive">
                 <div ng-if="!editMode()">

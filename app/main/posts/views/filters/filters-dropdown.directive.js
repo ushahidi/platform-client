@@ -6,7 +6,8 @@ function FiltersDropdown() {
         restrict: 'E',
         scope: {
             dropdownStatus: '=',
-            filters: '='
+            filters: '=',
+            stats: '='
         },
         controller: FiltersDropdownController,
         template: require('./filters-dropdown.html')
@@ -67,6 +68,10 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
             return 'app.close_and_view';
         }
         return 'app.apply_filters';
-    }
+    };
+
+    $scope.displayStats = function () {
+        return $state.$current.includes['posts.map'];
+    };
 }
 
