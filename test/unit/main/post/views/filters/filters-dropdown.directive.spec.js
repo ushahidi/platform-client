@@ -80,15 +80,18 @@ describe('post filters-dropdown directive', function () {
             isolateScope.saveSavedSearchModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
         });
-        it('should return false when calling disableApplyButton if in data-view', function () {
-            expect(isolateScope.disableApplyButton()).toEqual(false);
-        });
-        it('should return true when calling disableApplyButton if in map-view', function () {
+        it('should return correct button text', function () {
             mockState.$current.includes = {
-                    'posts': true,
-                    'posts.map': true
-                };
-            expect(isolateScope.disableApplyButton()).toEqual(true);
+                'posts': true,
+                'posts.map': true
+            };
+            expect(isolateScope.getButtonText()).toEqual('app.close_and_view');
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.data': true,
+                'posts.map': false
+            };
+            expect(isolateScope.getButtonText()).toEqual('app.apply_filters');
         });
     });
     describe('test children', function () {

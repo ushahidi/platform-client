@@ -44,7 +44,9 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element)
     }
 
     function applyFilters() {
-        PostFilters.reactiveFilters = true;
+        if ($state.$current.includes['posts.data']) {
+            PostFilters.reactiveFilters = true;
+        }
         $scope.status.isopen = false;
     }
 
