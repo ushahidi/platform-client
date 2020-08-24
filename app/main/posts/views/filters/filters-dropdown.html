@@ -7,7 +7,7 @@
         <div class="form-field">
             <strong class="form-field" translate="post.posts_total_map" translate-values="{'posts': stats.filteredPosts, 'total_nb': stats.totalItems, 'unmapped': stats.unmapped  }"></strong>
         </div>
-        <div class="form-field">
+        <div class="form-field" ng-if="stats.totalItems === 0 || stats.filteredPosts === 0">
             <strong class="form-field" ng-if="stats.totalItems === 0" translate="post.no_posts_yet_location"></strong>
             <strong class="form-field" ng-if="stats.filteredPosts === 0 && stats.totalItems > 0" translate="post.no_search_results_location"></strong>
         </div>
