@@ -252,11 +252,15 @@
                                         ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}" />
 
                                     <input ng-if="option.rules.indexOf('date') > -1"
-                                        id="{{provider.id}}_{{option_key}}" type="date"
-                                        name="{{ option_key }}" placeholder="yyyy-MM-dd"
-                                        min="2001-01-01T00:00:00" max="2013-12-31T00:00:00"
+                                        type="date"
+                                        pick-a-date="date"
+                                        pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+                                        id="gmail_date"
+                                        name="gmail_date"
+                                        placeholder="Select Start Date"
                                         ng-model="settings[provider.id][option_key]"
-                                        ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving"
+                                        ng-required="option.rules.indexOf('required') > -1"
+                                        ng-disabled="saving"
                                         ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}"/>
 
                                     <input ng-if="option.rules.indexOf('number') == -1 && option.rules.indexOf('email') == -1 && option.rules.indexOf('password') == -1 && option.rules.indexOf('date') == -1"
