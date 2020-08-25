@@ -5,17 +5,25 @@ describe('filters-posts directive', function () {
         PostFilters,
         element,
         isolateScope,
-        $compile;
+        $compile,
+        mockState = {
+            '$current': {
+                name: 'posts.data',
+                includes: {
+                    'posts': true,
+                    'posts.data': true
+                }
+            }
+        };
+;
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
         testApp
         .directive('filterPosts', require('app/main/posts/views/filters/filter-posts.directive'))
         .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
-        .service('$state', () => {
-            return {
-                go : () => {}
-            };
+        .service('$state', function () {
+            return mockState;
         })
         ;
         angular.mock.module('testApp');
@@ -58,17 +66,38 @@ describe('filters-posts directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('reactToFilters should be false', function () {
-            expect(PostFilters.reactToFilters).toEqual(false); // revisit where we set the default for this?
+        it('reactiveFilters should be false', function () {
+            expect(PostFilters.reactiveFilters).toEqual(false); // revisit where we set the default for this?
         });
-        it('should enable reactToFilters when I call applyFiltersLocked', function () {
-            expect(PostFilters.reactToFilters).toEqual(false);
+        it('should enable reactiveFilters when I call applyFiltersLocked', function () {
+            expect(PostFilters.reactiveFilters).toEqual(false);
             isolateScope.applyFilters();
-            expect(PostFilters.reactToFilters).toEqual(true);
+            expect(PostFilters.reactiveFilters).toEqual(true);
         });
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.removeQueryFilter();
             expect(isolateScope.filters.q).toEqual('');
+        });
+        it('should close dropdown when pressing escape', function () {
+            spyOn(isolateScope, 'hideDropdown').and.callThrough();
+            let event = {keyCode: 13};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.hideDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(false);
+        });
+        it('should close dropdown when pressing enter', function () {
+            spyOn(isolateScope, 'hideDropdown').and.callThrough();
+            let event = {keyCode: 27};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.hideDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(false);
+        });
+        it('should open dropdown when pressing any key except enter and escape', function () {
+            spyOn(isolateScope, 'showDropdown').and.callThrough();
+            let event = {keyCode: 22};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.showDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(true);
         });
     });
 });

@@ -3,6 +3,18 @@
         <post-active-search-filters ng-model="filters" filters-var="filters"></post-active-search-filters>
     </div>
     <div class="divider"></div>
+    <div ng-if="displayStats()">
+        <h4 class="dropdown-menu-title" translate="post.search_results">Results...</h4>
+        <div class="form-field">
+            <strong class="form-field" translate="post.posts_total_map" translate-values="{'posts': stats.filteredPosts, 'total_nb': stats.totalItems, 'unmapped': stats.unmapped  }"></strong>
+        </div>
+        <div class="form-field" ng-if="stats.totalItems === 0 || stats.filteredPosts === 0">
+            <strong class="form-field" ng-if="stats.totalItems === 0" translate="post.no_posts_yet_location"></strong>
+            <strong class="form-field" ng-if="stats.filteredPosts === 0 && stats.totalItems > 0" translate="post.no_search_results_location"></strong>
+        </div>
+    </div>
+    <div class="divider" ng-if="displayStats()"></div>
+
     <!-- sorting options -->
     <h4 class="dropdown-menu-title" translate="app.sort_by"></h4>
 
@@ -26,5 +38,4 @@
 </div>
 <div class="form-field filter-actions">
     <button type="button" class="button-beta" ng-click="clearFilters()" translate>global_filter.restore_defaults</button>
-    <button type="submit" class="button-alpha" translate>app.apply_filters</button>
-</div>
+    <button type="submit" class="button-alpha" translate>{{getButtonText()}}</button></div>
