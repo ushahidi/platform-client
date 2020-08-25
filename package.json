@@ -21,7 +21,7 @@
     "eslint": "gulp eslint",
     "eslintfix": "gulp eslintfix",
     "verify": "gulp verify",
-    "languages" : "gulp languages"
+    "languages": "gulp languages"
   },
   "pre-commit": [
     "eslint"
@@ -130,7 +130,7 @@
     "socket.io-client": "2.0.3",
     "sortablejs": "1.10.0",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "^4.4.1"
+    "ushahidi-platform-pattern-library": "^4.4.3"
   },
   "engines": {
     "node": ">=10.0"
