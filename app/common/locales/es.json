@@ -93,7 +93,7 @@
         "name": "Nombre",
         "key": "Clave",
         "survey_web_address": "Dirección web de su encuesta",
-        "default_value": "Default value (optional):",
+        "default_value": "Valor predeterminado (opcional):",
         "select_one": "Seleccionar una",
         "sort_and_filter": "Clasificar y filtrar",
         "saved_search": "Guardar búsqueda",
@@ -121,14 +121,14 @@
         }
     },
     "demo_warnings": {
-        "close": "Close",
+        "close": "Cerrar",
         "visitor": {
             "not_expired": "Desarrollo {{site_name}} utiliza una versión de prueba gratuita de Ushahidi. Solo verás los primeros 25 mensajes en los próximos {{días}} días.",
-            "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
+            "expired": "La puesta en marcha de {{site_name}} está utilizando una prueba gratuita de Ushahidi. Solo verás las primeras 25 publicaciones."
         },
         "user": {
             "expired": "Tu prueba de 30 días ha terminado. Actualiza ahora para sacar el máximo partido de Ushahidi.",
-            "not_expired": "You have {{days}} days left in your free trial. Upgrade now for unlimited posts and full access to Ushahidi.",
+            "not_expired": "Te quedan {{days}} días en tu prueba gratuita. Actualice ahora para publicaciones ilimitadas y acceso completo a Ushahidi.",
             "limit_reached": "¡Buen trabajo! Tienes más de 25 posts. Actualiza el plan ahora para ver el resto de sus posts o ponte en contacto con nuestro equipo para un servicio empresarial completo para su proyecto. "
         }
     },
@@ -158,19 +158,19 @@
         "context_body": "Un resumen de c&oacute;mo se interactua con {{site}}.",
         "inbound": "Mensajes de la bandeja de entrada",
         "outbound": "Mensajes de la bandeja de salida",
-        "recipients": "Unique Recipients of Targeted Survey",
-        "responders": "Unique Responders to Targeted Survey",
-        "all_targeted": "All Targeted Surveys",
-        "no_targeted": "You don't have any Targeted Survey data to show.",
+        "recipients": "Destinatarios únicos de la encuesta seleccionada",
+        "responders": "Respondedores únicos a la encuesta seleccionada",
+        "all_targeted": "Todas las Encuestas Seleccionadas\n",
+        "no_targeted": "No tiene ningún dato de Encuesta seleccionada para mostrar.",
         "all_sources": "Todas las fuentes de datos",
         "web_mobile": "Web y móvil",
         "email": "correo electrónico",
         "sms": "sms",
         "twitter": "twitter",
-        "all_crowdsourced": "All Crowdsourced Surveys",
-        "no_crowdsourced": "You don't have any Crowdsourced Survey data to show.",
-        "targeted_activity": "Tageted Survey Activity",
-        "crowdsourced_activity": "Crowdsourced Survey Activity"
+        "all_crowdsourced": "Todas las encuestas de Colaborativas",
+        "no_crowdsourced": "No tiene ningún dato de Encuesta Colaborativa para mostrar.",
+        "targeted_activity": "Actividad de encuesta seleccionada",
+        "crowdsourced_activity": "Actividad de encuesta de colaborativa"
     },
     "form": {
         "add_field": "A&ntilde;adir campo",
@@ -282,7 +282,7 @@
         "markdown_desc": "Permite el uso de reducción sintáctica para dar estilo al contenido del campo.",
         "tasks": "Tareas",
         "task_visible_when_published": "Esta función será visible cunado se edite la publicación.",
-        "show_field_description": "Add field description (optional):",
+        "show_field_description": "Agregar campo descripción (opcional):",
         "add_field": "A&ntilde;adir campo",
         "edit_field": "Editar campo",
         "build": "Construir",
@@ -291,7 +291,7 @@
         "hide_author_information": "Ocultar la información del autor",
         "hide_author_information_desc": "Solo las personas con permiso para editar las respuestas podrán ver quién las envió; y solo mientras las editen.",
         "hide_location_information": "Ocultar la información exacta de la localización",
-        "hide_location_information_desc": "Only people with permission to edit responses will be able to see exact locations. Other people will see rounded locations. The location will be accurate to {{precision}}km.",
+        "hide_location_information_desc": "Solo las personas con permiso para editar respuestas podrán ver ubicaciones exactas. Otras personas verán ubicaciones redondeadas. La ubicación será precisa a {{precision}} km.",
         "hide_time_information": "Ocultar la información exacta de la hora",
         "hide_time_information_desc": "Solo las personas con permiso para editar las respuestas podrán ver la hora exacta de envío. Otras personas solo verán la fecha.",
         "share": "Compartir",
@@ -311,7 +311,7 @@
         "who_can_add": "Quién puede agregar a esta encuesta",
         "survey_field": "Campo de encuesta",
         "choose_survey_field": "Elija lo que debería asignarse a cada campo de encuesta",
-        "choose_survey_field_desc": "Each of the survey's fields are listed below. Choose the data from {{datasource_type}} that you'd like to use to populate each of those fields.",
+        "choose_survey_field_desc": "Cada uno de los campos de la encuesta se enumeran a continuación. Elija los datos de la  {{datasource_type}} que desea utilizar para rellenar cada uno de esos campos.",
         "who_can_contribute_to_task": "Quién puede contribuir en los campos de esta función",
         "delete": {
             "desc": "<strong>Si borra este survey</strong>, todos sus reportes ser&aacute;n borrados tambi&eacute;n. Proceda con precauci&oacute;n.",
@@ -502,7 +502,7 @@
         "option_3": "dentro de 50 km",
         "option_4": "dentro de 100 km",
         "option_5": "dentro de 500 km",
-        "restore_defaults": "Restore Defaults",
+        "restore_defaults": "Restaurar los valores predeterminados",
         "apply_filters": "Aplicar",
         "save_to_set": "Guardar en la collecci&oacute;n",
         "search": "Buscar",
@@ -577,9 +577,9 @@
         "delete": "Borrar",
         "edit": "Editar",
         "filters": "Filtros",
-        "forgotyourpassword": "Olvid&oacute; su contrase&ntilde;a?",
-        "resetpassword": "Resetear contrase&ntilde;a",
-        "resetmypassword": "Resetear mi contrase&ntilde;a",
+        "forgotyourpassword": "¿Olvidó su contraseña?",
+        "resetpassword": "Resetear contraseña",
+        "resetmypassword": "Resetear mi contraseña",
         "forms": "Formularios",
         "help": "Ayuda",
         "home": "Home",
@@ -832,10 +832,10 @@
             "add_photo": "Añadir foto",
             "delete_photo": "Borrar foto",
             "replace_image": "Reemplazar imagen",
-            "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"
+            "error_in_upload": "Su imagen es demasiado grande (el tamaño máximo es de 1 MB) o tiene el formato incorrecto (los formatos permitidos son gif, png, jpg y jpeg), por favor compruebe e inténtelo de nuevo!"
         },
         "video": {
-            "enter_a_url": "Enter a video URL from Youtube or Vimeo."
+            "enter_a_url": "Ingrese la URL de un video de Youtube o Vimeo"
         },
         "unstructured": {
             "add_survey": {
@@ -914,7 +914,7 @@
         "name_savedsearch": "Nombre de B&uacute;squeda Guardada",
         "visible_to_collection": "Qui&eacute;n puede ver esta colecci&oacute;n",
         "visible_to_savedsearch": "Qui&eacute;n puede ver esta B&uacute;squeda Guardada",
-        "reset_savedsearch": "Resetear B&uacute;squeda",
+        "reset_savedsearch": "Resetear búsqueda",
         "save_set": "Guardar Colecci&oacute;n",
         "save_savedsearch": "Guardar B&uacute;squeda",
         "update_savedsearch": "Actualizar B&uacute;squeda",
@@ -994,11 +994,11 @@
             "data_sources_desc": "Configurar email, SMS, y canales de medios sociales que ayuden a su despliegue a tener contenido.",
             "import": "Importar",
             "import_desc": "Subir datos de survey para su despliegue desde un fichero CSV.",
-            "user_settings": "Configure HDX API",
-            "user_settings_desc": "Configure your API so that your tagged Ushahidi data can be uploaded to your Humanitarian Data Exchange (HDX) account.",
+            "user_settings": "Configurar la API HDX",
+            "user_settings_desc": "Configure su API para que sus datos Ushahidi etiquetados puedan cargarse en su cuenta de Intercambio de datos humanitarios (HDX).",
             "export": "Exportar datos",
             "export_hxl": "Exportar y etiquetar datos",
-            "export_desc_hxl": "Export your data as a CSV file or assign tags and attributes to your data and upload directly to a Humanitarian Data Exchange (HDX) account or export as a tagged CSV file.",
+            "export_desc_hxl": "Exporte sus datos como un archivo CSV o asigne etiquetas y atributos a sus datos y cárguelos directamente a una cuenta de Humanitarian Data Exchange (HDX) o exporte como un archivo CSV etiquetado.",
             "export_desc": "Exporte todos sus datos como CSV o elija los campos personalizados que desea exportar.",
             "users": "Usuarios",
             "users_desc": "Crear y gestionar la gente que contribuye a su despliegue.",
@@ -1012,15 +1012,15 @@
             "plan_desc": "Su actual plan de despliegue es <strong>{{current_plan}}</strong>."
         },
         "user_settings": {
-            "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
-            "user_settings_desc_2": "Once set up, this will enable you to upload data directly to a Humanitarian Data Exchange (HDX) account.",
-            "user_settings_desc_3": "You can find your API key on your Humanitarian Data Exchange (HDX) profile once you're logged in.",
+            "user_settings_desc_1": "Aquí puede agregar su clave API única para su cuenta de Intercambio de datos humanitarios (HDX).",
+            "user_settings_desc_2": "Una vez configurado, esto le permitirá cargar datos directamente a una cuenta de intercambio de datos humanitarios (HDX).",
+            "user_settings_desc_3": "Puede encontrar su clave API en su perfil de Intercambio de datos humanitarios (HDX) una vez que haya iniciado sesión.",
             "view_guide": "Ver una guía de tu clave API",
-            "hdx_maintainer_id": "HDX Maintainer Id",
+            "hdx_maintainer_id": "ID del mantenedor de HDX",
             "api_key": "Clave API",
             "profile_page": "Encuentra tus Humanitarian Data Exchange (HDX) en la página de perfil",
             "valid_key": "Se requiere una contraseña válida",
-            "valid_user": "A valid maintainer id is required",
+            "valid_user": "Se requiere una identificación de mantenedor válida",
             "api_key_saved": "¡Clave API guardada! Ahora puedes etiquetar sus datos y cargarlos en una cuenta de Humanitarian Data Exchange (HDX).",
             "start_tagging": "Empezar a etiquetar datos"
         },
@@ -1106,7 +1106,7 @@
                 }
             },
             "twitter": {
-                "intro_step_1": "Step 1: Create a new Twitter application: <br />Twitter applications may take a few hours or days to be approved by Twitter.<br />Please be aware of this if you need this data quickly.",
+                "intro_step_1": "Paso 1: crea una nueva aplicación de Twitter:<br />Las aplicaciones de Twitter pueden tardar unas horas o días en ser aprobadas por Twitter.<br />Tenga en cuenta esto si necesita estos datos rápidamente.",
                 "intro_step_1_desc": "Crear una <a href=\"https://apps.twitter.com/app/new\">aplicación de Twitter nueva</a>",
                 "intro_step_2": "Paso 2: Generar una clave de usuario y un secreto",
                 "intro_step_2_desc": "Una vez que haya creado la aplicación, presione en \"Claves e identificadores de acceso\". A continuación, pulse en \"Generar clave de usuario y secreto\". Copie las claves, los identificadores y los secretos en los siguientes campos.",
@@ -1159,7 +1159,7 @@
         "site_timezone": "Zona horaria",
         "site_language": "Idioma",
         "site_private": "Hacer este despliegue privado",
-        "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_private_desc": "Habilitar esta opción hace que sus Encuestas y sus datos solo sean accesibles para usuarios registrados con los privilegios correctos, que deben iniciar sesión para acceder",
         "select_image": "Seleccionar imagen",
         "saved_settings": "Ajustes de despliegue guardados!",
         "saved_map_settings": "Ajustes de mapa guardados!",
@@ -1191,7 +1191,7 @@
         "see_imported_posts": "Vea reportes importados",
         "import_another_csv": "Importar otro archivo CSV",
         "import_complete": "Su importación se ha completado",
-        "complete_info": "The data from your CSV spreadsheet, <em>{{filename}}</em>, was successfully imported.",
+        "complete_info": "Los datos de su hoja de cálculo CSV, <em>{{filename}</em>, se importó correctamente.",
         "import_another": "Importar otro archivo CSV",
         "nearly_complete": "Su importación está casi terminada",
         "finish_info": "Los datos de la hoja de cálculo de su CSV aún se están procesando. Puede dejar esta página o esperar hasta que se complete el proceso. En cualquier caso, nosotros le notificaremos cuando sus datos estén listos.",
@@ -1233,14 +1233,14 @@
         "hxl_attributes": "Atributos HXL",
         "and_choose": "y seleccione cargar en un",
         "HDX": "Intercambio de datos humanitario",
-        "account": "account or download as a HXL 'tagged' CSV file.",
+        "account": "cuenta o descarga HXL 'etiquetado' como un archivo  CSV ",
         "all": "Exportar todos los datos",
         "select_fields": "Seleccione campos",
         "select_fields_title": "Seleccione campos para exportar...",
         "select_fields_desc": "Si no desea exportar todos los datos a la vez, puede seleccionar campos específicos de cada encuesta para exportarlos.",
         "export_selected": "Exportar campos seleccionados",
         "cancel": "Cancelar",
-        "export_progress": "<p>Export in progress... </p><p>You can leave this page if you want. Your export will continue.</p><p> We will let you know when we're done.</p>",
+        "export_progress": "<p>Exportar en progreso ...</p><p>Puedes salir de esta página si quieres. Su exportación continuará.</p><p>Le haremos saber cuando hayamos terminado.",
         "no_fields": "Vaya... necesita seleccionar algún campo antes de exportar.",
         "expires": "<strong>Caduca:</strong> {{expires}}",
         "job": "Exportar CSV {{jobId}}",
@@ -1252,11 +1252,11 @@
         "pending_hdx": "HDS pendiente",
         "exported_to_cdn": "Exportar a CDN",
         "tags_attributes": "Asignar etiquetas y atributos",
-        "hxl_apikey_alert_1": "It looks like you haven't set up your Humanitarian Data Exchange (HDX) API. Without this set up, you can't tag data and upload to a Humanitarian Data Exchange (HDX) account.",
-        "hxl_configure": "Configure HDX API",
+        "hxl_apikey_alert_1": "Parece que no ha configurado su API de intercambio de datos humanitarios (HDX). Sin esta configuración, no puede etiquetar datos y cargarlos en una cuenta de intercambio de datos humanitarios (HDX).",
+        "hxl_configure": "Configurar la API HDX",
         "hxl_apikey_alert_2": "Te aconsejamos encarecidamente que configures esto ahora en",
-        "hxl_apikey_alert_3": "before continuing as you won't be able to upload your data to HDX",
-        "hxl_title": "Assign your HXL tags and attributes, select fields and export or upload",
+        "hxl_apikey_alert_3": "antes de continuar ya que no podrá cargar sus datos a HDX",
+        "hxl_title": "Asigne sus etiquetas y atributos HXL, seleccione campos y exporte o cargue",
         "hxl_desc": "Selecciona campos específicos de una encuesta, asigna una etiqueta por campo y luego elija asignar múltiples atributos. Obtenga una vista previa de su etiqueta y atributos en la vista previa de etiquetas. ",
         "hxl_instructions_1": "A continuación, puedes optar por exportar los campos etiquetados a un archivo CSV o cargarlos en un archivo CSV.",
         "hxl_instructions_2": "Humanitarian Data Exchange (HDX)",
@@ -1266,14 +1266,14 @@
         "hxl_instructions_6": "Visitar",
         "hxl_instructions_7": "asistente de etiquetas hXL",
         "hxl_instructions_8": "para obtener más información sobre cómo elegir las mejores etiquetas y atributos de HXL para tus datos o la opción",
-        "hxl_instructions_9": "HXL 'cheat sheet'",
+        "hxl_instructions_9": "HXL 'hoja de referencia-trucos/cheat sheet'",
         "HXL_tags": "etiquetas HXL",
         "HXL_attributes": "Atributos HXL",
         "tag_preview": "Previsualizar las etiquetas",
         "upload_title": "¿Estas listo para cargar en una cuenta de Humanitarian Data Exchange (HDX)? ",
         "hdx_csv_title": "Estás preparado para exportar a CSV?",
-        "upload_desc": "You selected {{fields}} fields to upload to a Humanitarian Data Exchange (HDX) account. <br /> <br /> You assigned tags and attributes - to check, you can go back. If you are done, you can add details and upload. <br /> <br /> The Humanitarian Data Exchange (HDX) requires a few more details in order to upload to their system. You'll add these next",
-        "hdx_csv_desc": "You selected {{fields}} fields to export to CSV.<br /> <br /> You assigned tags and attributes - to check these are correct, you can go back and check. If you're done, you can export.",
+        "upload_desc": "Seleccionó los campos {{fields}} para cargar en una cuenta de intercambio de datos humanitarios (HDX).<br /><br />Usted asignó etiquetas y atributos: para verificar, puede regresar. Si ha terminado, puede agregar detalles y cargarlos.<br /><br />El Intercambio de datos humanitarios (HDX) requiere algunos detalles más para subir a su sistema. Agregará estos a continuación",
+        "hdx_csv_desc": "Seleccionó {{fields}} campos para exportar a CSV.<br /><br />Usted asignó etiquetas y atributos: para verificar que estos sean correctos, puede regresar y verificar. Si has terminado, puedes exportar.",
         "upload_button": "Añadir detalles al conjunto de datos y subir a HDX",
         "export_button": "Exportar a CSV",
         "go_back": "Ir atrás y revisar",
@@ -1282,25 +1282,25 @@
         "privacy_title": "Configuración de privacidad ",
         "privacy_desc": "Puedes elegir entre compartir su conjunto de datos públicamente o restringir el acceso a otros miembros de la organización propietaria del conjunto de datos.",
         "this_dataset": "El conjunto de datos es:",
-        "private_desc": "<strong>Private</strong> (Only you and other HDX members of your organisation can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
-        "public_desc": "<strong>Public</strong> (Anyone can <strong>search, view/edit</strong> or <strong> download </strong> this dataset)",
+        "private_desc": "<strong>Privado</strong>(Solo usted y otros miembros de HDX de su organización pueden<strong>buscar, ver / editar</strong>o<strong>descargar</strong>este conjunto de datos)",
+        "public_desc": "<strong>Público</strong>(Cualquiera puede<strong>buscar, ver / editar</strong>o<strong>descargar</strong>this dataset)",
         "dataset": "Título y descripción del conjunto de datos",
-        "dataset_desc": "When users search for data on HDX, their search terms will be matched to terms in your title. Avoid using abbreviations in the title which may not be familiar to all users. Also, avoid using words such as current, latest or previous when referring to the time period (e.g Latest 3W) as these terms become misleading as the dataset ages.",
+        "dataset_desc": "Cuando los usuarios busquen datos en HDX, sus términos de búsqueda se compararán con los términos de su título. Evite el uso de abreviaturas en el título que pueden no ser familiares para todos los usuarios. Además, evite el uso de palabras como actual, último o anterior cuando se refiera al período de tiempo (por ejemplo, Últimos 3 semanas), ya que estos términos se vuelven engañosos a medida que el conjunto de datos envejece.",
         "dataset_example": "Ejemplo de título del conjunto de datos <strong>Who is Doing What Where in Afghanistan, Jan-Dec 2015</strong>",
         "dataset_title": "Título del conjunto de datos",
         "metadata_title": "Metadatos",
-        "metadata_desc": "Metadata is additional information about your dataset that will make it easier for others to understand and put your data into context. Datasets on HDX must include a set of metadata fields.",
+        "metadata_desc": "Los metadatos son información adicional sobre el conjunto de datos que facilitará a otros comprender y poner los datos en contexto. Los conjuntos de datos de HDX deben incluir un conjunto de campos de metadatos.",
         "source": "Fuente",
         "organisation": "Organización",
         "select_organisation": "Seleccionar organización",
         "license": "Licencia",
         "add_license": "Añadir licencia",
         "read_more_licenses": "Leer más sobre licencias",
-        "submit_hdx": "Submit to HDX Account",
+        "submit_hdx": "Enviar a la cuenta HDX",
         "uploading_data": "Cargando datos...",
-        "uploading_data_desc": "The data upload to your Humanitarian Data Exchange (HDX) account is in progress... <br /> <br />You can navigate away from this page while this upload happens but please don't close the browser.",
+        "uploading_data_desc": "La carga de datos en su cuenta de Intercambio de Datos Humanitarios (HDX) está en curso...<br /><br />Puede navegar fuera de esta página mientras esta carga sucede, pero por favor no cierre el navegador.",
         "uploading_data_err": "Vaya.... Algo salió mal cuando subiste tus datos, por favor revisa los campos requeridos y tu clave API e inténtalo de nuevo.",
-        "no_fields_selected": "You haven't selected any fields or assigned any hxl tags or attributes. Please select at least one field and assign at least one tag to be able to export to CSV or upload to a Humanitarian Data Exchange (HDX) account.",
+        "no_fields_selected": "No ha seleccionado ningún campo ni asignado ninguna etiqueta o atributo hxl. Seleccione al menos un campo y asigne al menos una etiqueta para poder exportar a CSV o cargarla en una cuenta de Intercambio de datos humanitarios (HDX).",
         "validation": {
             "title": "Se necesita un título",
             "source": "Se necesita fuente",
@@ -1314,14 +1314,14 @@
         "contact": "{{type}}: {{contact}}",
         "add_user": "A&ntilde;adir usuario",
         "edit_user": "Editar Usuario",
-        "update_password": "Actualizar Contrase&ntilde;a",
+        "update_password": "Actualizar contraseña",
         "change_role": "Cambiar Rol",
         "save": "Guardar Usuario",
         "save_add_another": "Guardar & A&ntilde;adir otro",
         "show_all_roles": "Mostrar Todos los Roles",
         "cannot_delete_yourself": "No puede borrar su propio usuario",
         "cannot_change_your_own_role": "No puede cambiar su propio rol",
-        "confirm_password": "Confirmar Contrase&ntilde;a",
+        "confirm_password": "Confirmar contraseña",
         "delete_user": "Borrar usuario",
         "delete_this_user": "Borrar este usuario",
         "delete_user_desc": "<strong>Si borra este usuario</strong>, los reportes creados por este usuario no tendr&aacute;n informaci&oacute;n del autor. No podr&aacute; volver atr&aacute;s. Proceda con precauci&oacute;n.",
@@ -1336,16 +1336,16 @@
         "number_of_users_shown": "N&uacute;mero de usuarios mostrados",
         "per_page": "{{count}} usuarios",
         "password": "Contraseña",
-        "new_password": "Nueva Contrase&ntilde;a",
+        "new_password": "Nueva contraseña",
         "register": "Registrar",
         "role": "Rol:",
         "roles": "Roles",
         "saved_user": "Usuario guardado",
         "deleted_user": "Usuario borrado",
         "search_and_filter": "Buscar y filtrar Usuarios",
-        "passwordreset_instructions": "Introduzca su email para solicitar un reseteo de su contrase&ntilde;a",
-        "passwordreset_confirm_instructions": "Si su email existe en nuetra base de datos, recibir&aacute; un email de recuperaci&oacute;n de contrase&ntilde;a en breve.",
-        "token": "Token de reseteo de Contrase&ntilde;a",
+        "passwordreset_instructions": "Introduzca su correo electrónico para solicitar reseteo de contraseña",
+        "passwordreset_confirm_instructions": "Si su correo existe en nuestra base de datos, en breve recibirá un mensaje de recuperación de contraseña.",
+        "token": "Token de reseteo de contraseña",
         "valid": {
             "full_name": {
                 "required": "El nombre para mostrar es obligatorio",
@@ -1357,15 +1357,15 @@
                 "maxlength": "Esta direcci&oacute;n de email es demasiado larga"
             },
             "password": {
-                "required": "La contrase&ntilde;a es obligatoria",
-                "minlength": "Esta contrase&ntilde;a es demasiado corta",
-                "maxlength": "Esta contrase&ntilde;a es demasiado larga"
+                "required": "La contraseña es obligatoria",
+                "minlength": "Esta contraseña es demasiado corta",
+                "maxlength": "Esta contraseña es demasiado larga"
             }
         }
     },
     "user_profile": {
         "title": "Ajustes de la cuenta",
-        "update_password": "Actualizar contrase&ntilde;a",
+        "update_password": "Actualizar contraseña",
         "update_success": "Su perfil ha sido actualizado satisfactoriamente. Puede que necesite salir y volver a entrar para que los cambios sean efectivos.",
         "button": {
             "save": "Guardar &amp; cerrar",
@@ -1413,8 +1413,8 @@
             "csv_import_success_info": "Los datos de la hoja de cálculo de su CSV, <em>{{filename}}</em>, se han importado con éxito en <a href=\"/views/list\">{{form_name}}</a> la encuesta.",
             "duplicate_fields": "Las columnas deben mapearse a campos únicos de encuestas. Las siguientes columnas tienen más de 1  mapeo : {{duplicates}}",
             "required_fields": "Los campos obligatorios deben tener un valor asignado. Los siguientes campos no han sido asignados: {{required}}",
-            "empty_mapping": "The CSV file you uploaded is empty. Please check your CSV file and try again",
-            "empty_mapping_empty": "The CSV file does not contain column names. Please check your CSV file and try again",
+            "empty_mapping": "El archivo CSV que cargó está vacío. Por favor revise su archivo CSV e intente nuevamente",
+            "empty_mapping_empty": "El archivo CSV no contiene nombres de columna. Por favor revise su archivo CSV e intente nuevamente",
             "no_mappings": "Ning&uacute;n campo tiene mapeos asignados - al menos un campo debe ser mapeado para continuar",
             "csv_import_cancel": "Importaci&oacute;n de CSV cancelada",
             "csv_import_cancel_confirm": "¿Está seguro de que desea cancelar la importación?"
@@ -1432,7 +1432,7 @@
             "save": "Guardar"
         },
         "login": {
-            "failed": "Fallo en el inicio de sesi&oacute;n, revise su email y contrase&ntilde;a."
+            "failed": "Fallo en el inicio de sesión, revise su correo y contraseña."
         },
         "register": {
             "failed": "Hubo errores durante el registro. Revise sus entradas e int&eacute;ntelo de nuevo.",
@@ -1509,10 +1509,10 @@
             "save_attribute_success": "Campo {{name}} a&ntilde;adido",
             "edit_form_success": "Encuesta  {{name}} actualizada",
             "edit_stage_success": " Tarea de encuesta  {{name}} actualizada",
-            "delete_form_confirm": "Are you sure you want to delete this survey and all of its data?",
-            "delete_form_confirm_desc": "This action cannot be undone. Deleting this survey will remove all of its data, including posts. Write the name of the survey: <br><br><strong>{{check_name}}</strong><br><br>in the box below to confirm deletion.",
-            "delete_form_error": "The text you entered does not match the survey-name, please try again",
-            "delete_form_button": "Delete this survey",
+            "delete_form_confirm": "¿Está seguro de que desea eliminar esta encuesta y todos sus datos?",
+            "delete_form_confirm_desc": "Esta acción no se puede deshacer. Al eliminar esta encuesta, se eliminarán todos sus datos, incluidas las publicaciones. Escribe el nombre de la encuesta:<br><br><strong>{{check_name}}</strong><br><br>en el cuadro de abajo para confirmar la eliminación.",
+            "delete_form_error": "El texto que ingresó no coincide con el nombre de la encuesta. Vuelva a intentarlo.",
+            "delete_form_button": "Eliminar esta encuesta",
             "destroy_form_success": "Survey {{name}} borrado",
             "delete_stage_confirm": "¿Seguro de que desea borrar esta tarea?",
             "delete_stage_confirm_desc": "Esta acción no se puede deshacer. Al borrar esta función se eliminarán todos sus campos con todos los datos que contengan.",
@@ -1547,8 +1547,8 @@
             "savedsearch_saved": "{{savesearch}} se ha guardado"
         },
         "passwordreset": {
-            "failed": "Fallo en el reseteo de su contrase&ntilde;a",
-            "success": "Su contrase&ntilde;a ha sido reseteada"
+            "failed": "Fallo en el reseteo de su contraseña",
+            "success": "Su contraseña ha sido reseteada"
         },
         "notification": {
             "add": "Ahora recibir&aacute; notificaciones cuando se a&ntilde;adan reporte a {{set}}",
@@ -1565,7 +1565,7 @@
             "confirmation": "Entendido",
             "cancel_export": "Cancelar exportación",
             "canceled_job": "Se ha cancelado su trabajo de exportación",
-            "upload_complete": "Upload complete. You should now see your tagged data in your HDX account."
+            "upload_complete": "Carga completa. Ahora debería ver sus datos etiquetados en su cuenta HDX."
         }
     },
     "empty": {
