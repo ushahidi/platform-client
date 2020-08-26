@@ -6,7 +6,8 @@ function PostToolbarDirective() {
         restrict: 'E',
         scope: {
             filters: '=',
-            selectedPost: '='
+            selectedPost: '=',
+            stats: '='
         },
         controller: PostToolbarController,
         template: require('./post-toolbar.html')
