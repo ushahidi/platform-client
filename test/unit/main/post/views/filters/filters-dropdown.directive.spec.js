@@ -80,16 +80,33 @@ describe('post filters-dropdown directive', function () {
             isolateScope.saveSavedSearchModal();
             expect(ModalService.openTemplate).toHaveBeenCalledTimes(1);
         });
-        it('should return false when calling disableApplyButton if in data-view', function () {
-            expect(isolateScope.disableApplyButton()).toEqual(false);
-        });
-        it('should return true when calling disableApplyButton if in map-view', function () {
+        it('should return correct button text', function () {
             mockState.$current.includes = {
-                    'posts': true,
-                    'posts.map': true
-                };
-            expect(isolateScope.disableApplyButton()).toEqual(true);
+                'posts': true,
+                'posts.map': true
+            };
+            expect(isolateScope.getButtonText()).toEqual('app.close_and_view');
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.data': true,
+                'posts.map': false
+            };
+            expect(isolateScope.getButtonText()).toEqual('app.apply_filters');
         });
+        it('should return true if user is in map-view', function () {
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.map': true
+            };
+            expect(isolateScope.displayStats()).toEqual(true);
+        });
+        it('should return false if user is not in map-view', function () {
+            mockState.$current.includes = {
+                'posts': true,
+                'posts.map': false
+            };
+            expect(isolateScope.displayStats()).toEqual(false);
+        })
     });
     describe('test children', function () {
         it('should have a filter-post-order-asc-desc directive child', function () {
