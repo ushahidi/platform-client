@@ -41,6 +41,7 @@ function (
     });
 
     $scope.filters = {
+        order: 'asc',
         role: [],
         q: ''
     };
