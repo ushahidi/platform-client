@@ -15,6 +15,16 @@
     <!-- Filters menu -->
     <div class="dropdown-menu init" data-toggle-target="search-filters" dropdown-menu>
         <div class="dropdown-menu-body">
+            <fieldset>
+                <label translate>app.users</label>
+                    <div class="form-field checkbox">
+                        <label><input type="radio" name="order" ng-model="filters.order" value="asc">Ascending</label>
+                    </div>
+                    <div class="form-field checkbox">
+                        <label><input type="radio" name="order" ng-model="filters.order" value="desc">Descending</label>
+                    </div>
+            </fieldset>
+            
             <filter-role model="filters.role"></filter-role>
         </div>
 
