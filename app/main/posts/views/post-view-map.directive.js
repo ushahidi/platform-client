@@ -176,7 +176,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
                 // Moving on to request rest of the posts
                 if (posts.total > limit) {
-                    for (let i = 200; i < posts.total; i = i + limit) {
+                    for (let i = limit; i < posts.total; i = i + limit) {
                         conditions.offset = i;
                         let request = PostEndpoint.geojson(conditions);
                         currentGeoJsonRequests.push(request);
