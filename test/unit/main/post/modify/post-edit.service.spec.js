@@ -56,7 +56,13 @@ describe('Post Edit Service', function () {
             form.title = {$invalid: true};
             form.content = {$invalid: false};
             result = PostEditService.validatePost(post, form, tasks);
+            expect(result).toBe(false);
 
+            form.title = {$invalid: false};
+            form.content = {$invalid: false};
+            form.$error = {videoUrlValidation: []};
+            form.$setValidity = function () { };
+            result = PostEditService.validatePost(post, form, tasks);
             expect(result).toBe(false);
         });
 
@@ -65,6 +71,7 @@ describe('Post Edit Service', function () {
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
+            form.$error = {videoUrlValidation: false};
             var tasks_copy = [];
             tasks_copy.push(tasks[0]);
 
@@ -86,6 +93,7 @@ describe('Post Edit Service', function () {
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
+            form.$error = {videoUrlValidation: false};
 
             var tasks_copy = [];
             tasks_copy.push(tasks[0]);
@@ -103,6 +111,7 @@ describe('Post Edit Service', function () {
             form.tags = {$invalid: false};
             form.title = {$invalid: false};
             form.content = {$invalid: false};
+            form.$error = {videoUrlValidation: false};
             var tasks_copy = [];
             tasks_copy.push(tasks[0]);
             tasks_copy[0].attributes[0].required = true;
@@ -126,6 +135,25 @@ describe('Post Edit Service', function () {
             };
             var result = PostEditService.cleanPostValues(post);
             expect(result.length).toEqual(cleanPost.length);
+        });
+
+        it('should return valid array of strings containing parts of url when url validation passes conditions', function () {
+            var result = PostEditService.validateVideoUrl('https://www.youtube.com/video/1234');
+
+            delete result.index;
+            delete result.input;
+            expect(result).toEqual(['https://www.youtube.com/video/1234', 'https:', 'www.', 'youtube.com', 'be.com', 'video/', '1234', undefined]);
+
+        });
+
+        it('should return null when url validation does not pass conditions', function () {
+            // Test invalid url
+            var result = PostEditService.validateVideoUrl('test_invalid_url');
+            expect(result).toBeNull();
+
+            // Test unsupported site
+            var result = PostEditService.validateVideoUrl('https://www.test.com/video/1234');
+            expect(result).toBeNull();
         });
 
     });
