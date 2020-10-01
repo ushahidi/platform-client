@@ -34,6 +34,9 @@ function (
         },
         update: {
             method: 'PUT'
+        },
+        deleteEntity: {
+            method: 'DELETE'
         }
     });
 

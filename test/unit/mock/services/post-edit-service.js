@@ -6,6 +6,13 @@ module.exports = [function () {
         validatePost: function () {
             return true;
         },
+        validateVideoUrl: function (url) {
+            if (url === 'https://www.youtube.com/video/1234') {
+                return ['https://www.youtube.com/embed/1234', 'https:', 'www.', 'youtube.com', 'be.com', 'embed/', '1234', undefined]
+            } else {
+                return null;
+            }
+        },
         canSavePost: function () {
             return true;
         },

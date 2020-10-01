@@ -7,7 +7,8 @@ function FilterPostsDirective() {
         scope: {
             filters: '=',
             onOpen: '&',
-            onClose: '&'
+            onClose: '&',
+            stats: '='
         },
         replace: true,
         controller: FilterPostsController,
@@ -15,26 +16,22 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$rootScope', '$scope', 'PostFilters', '$state', '$document', '$element'];
-function FilterPostsController($rootScope, $scope, PostFilters, $state, $document, $element) {
+FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element'];
+function FilterPostsController($scope, PostFilters, $state, $document, $element) {
     $scope.searchSavedToggle = false;
     $scope.status = { isopen: false };
     $scope.hideDropdown = hideDropdown;
     $scope.showDropdown = showDropdown;
+    $scope.toggleDropdown = toggleDropdown;
     $scope.removeQueryFilter = removeQueryFilter;
     $scope.applyFilters = applyFilters;
-    PostFilters.reactToFilters = false;
+    PostFilters.reactiveFilters = false;
     activate();
-
-    $rootScope.$on('event:filters:modeContext', function () {
-        $scope.filters = PostFilters.getFilters();
-        activateViewFilters();
-    });
 
     function activate() {
         // Watch all click events on the page
         $document.on('click', handleDocumentClick);
-        activateViewFilters();
+
         $scope.$on('$destroy', () => {
             $document.off('click', handleDocumentClick);
         });
@@ -48,13 +45,10 @@ function FilterPostsController($rootScope, $scope, PostFilters, $state, $documen
         });
     }
 
-    function activateViewFilters () {
-        $scope.filtersInView = angular.copy($scope.filters);
-    }
-
     function applyFilters() {
-        PostFilters.reactToFilters = true;
-        PostFilters.setFilters($scope.filtersInView);
+        if ($state.$current.includes['posts.data']) {
+            PostFilters.reactiveFilters = true;
+        }
         $scope.status.isopen = false;
     }
 
@@ -80,5 +74,15 @@ function FilterPostsController($rootScope, $scope, PostFilters, $state, $documen
 
         // Otherwise close the dropdown
         $scope.$apply(hideDropdown);
+    }
+    function toggleDropdown(event) {
+        switch (event.keyCode) {
+            case 27: $scope.hideDropdown();
+                break;
+            case 13: $scope.hideDropdown();
+                break;
+            default:
+                $scope.showDropdown();
+        }
     }
 }
