@@ -1,3 +1,5 @@
+const { findLastIndex } = require('underscore');
+
 module.exports = PostMetadataService;
 
 PostMetadataService.$inject = [
@@ -43,6 +45,13 @@ function PostMetadataService(
                 );
             } else {
                 return post.contact;
+            }
+        },
+        validateUser: function () {
+            if ($rootScope.hasPermission('Manage Users')) {
+                return true;
+            } else {
+                return false;
             }
         }
     };
