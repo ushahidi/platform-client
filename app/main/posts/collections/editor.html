@@ -7,8 +7,8 @@
     <div class="form-field">
         <label translate>
             set.description
+            <textarea ng-model="cpyCollection.description"></textarea>
         </label>
-        <textarea ng-model="cpyCollection.description"></textarea>
     </div>
 
     <div class="form-field switch" ng-if="featuredEnabled()">
@@ -30,11 +30,12 @@
     </div>
 
     <div class="form-field">
-        <label translate>set.default_viewing_mode</label>
-        <div class="custom-select">
-            <select ng-options="view.name as view.display_name for view in views" ng-model="cpyCollection.view">
-            </select>
-        </div>
+        <label translate>set.default_viewing_mode
+            <div class="custom-select">
+                <select ng-options="view.name as view.display_name for view in views" ng-model="cpyCollection.view">
+                </select>
+            </div>
+        </label>
     </div>
     <!-- Who can see -->
     <role-selector model="cpyCollection" title="'app.who_can_see_this'"></role-selector>
