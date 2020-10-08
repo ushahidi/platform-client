@@ -15,7 +15,10 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
             CollectionEndpoint.query().$promise
         ];
         if (PostMetadataService.validateUser) {
-            requestsFilterEndpoints.push(RoleEndpoint.query().$promise, UserEndpoint.query().$promise)
+            requestsFilterEndpoints.push(
+                RoleEndpoint.query().$promise,
+                UserEndpoint.query().$promise
+            );
             return $q.all(requestsFilterEndpoints).then(function (results) {
                 tags = _.indexBy(results[0], 'id');
                 forms = _.indexBy(results[1], 'id');

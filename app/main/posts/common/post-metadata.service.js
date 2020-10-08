@@ -1,5 +1,3 @@
-const { findLastIndex } = require('underscore');
-
 module.exports = PostMetadataService;
 
 PostMetadataService.$inject = [
