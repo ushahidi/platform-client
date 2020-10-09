@@ -6,13 +6,13 @@
     </div>
 
     <div class="form-field">
-        <label translate>settings.map_default_baselayer</label>
+        <label for="map-settings-base-layer" translate>settings.map_default_baselayer</label>
         <select id="map-settings-base-layer" class="form-control" ng-model="config.default_view.baselayer" ng-change="updateMapPreviewLayer()" ng-options="index as layer.name for (index, layer) in baselayers">
         </select>
     </div>
 
     <div class="form-field">
-       <label class="input-label"
+       <label for="map-settings-latitude" class="input-label"
             ng-class="{'error': map.latitude.$valid}"
             for="map-settings-latitude" translate>settings.map_default_latitude</label>
         <input name="latitude" id="map-settings-latitude" type="number" step="any" ng-min="-90" ng-max="90" required
