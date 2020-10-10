@@ -289,7 +289,7 @@
         "show_field_description" : "Add field description (optional):",
         "add_task" : "Add task",
         "add_field" : "Add field",
-        "edit_field" : "Edit field",
+        "edit_field" : "Edit {{fieldType | lowercase}} field",
         "build" : "Build",
         "configure" : "Configure",
         "require_section" : "Require this task be completed before a post can be visible to the public",
