@@ -1,7 +1,9 @@
 <article ng-class="['postcard', {selected: post.id === selectedPost.post.id}]" >
     <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
     <div class="listing-item-select">
+        <label>
         <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts" ng-click="stopClickPropagation($event)">
+        </label>
     </div>
     <div class="postcard-body" ng-click="clickAction($event)">
       <header class="postcard-header">

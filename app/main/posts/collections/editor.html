@@ -1,14 +1,14 @@
 <div class="modal-body">
     <div class="form-field title">
-        <label translate>set.collection_name</label>
-        <input type="text" ng-model="cpyCollection.name" placeholder="{{'set.name_your_collection'|translate}}">
+        <label for="set_collection_name" translate>set.collection_name</label>
+        <input type="text" id="set_collection_name" ng-model="cpyCollection.name" placeholder="{{'set.name_your_collection'|translate}}">
     </div>
 
     <div class="form-field">
-        <label translate>
+        <label for="set_description" translate>
             set.description
         </label>
-        <textarea ng-model="cpyCollection.description"></textarea>
+        <textarea id="set_description" ng-model="cpyCollection.description"></textarea>
     </div>
 
     <div class="form-field switch" ng-if="featuredEnabled()">

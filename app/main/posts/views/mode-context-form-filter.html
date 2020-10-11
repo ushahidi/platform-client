@@ -4,8 +4,8 @@
         <div class="survey-filter-parent">
             <div class="survey-filter-label">
                 <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-                <label class="checked">
-                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form">
+                <label class="checked" for="checkbox">
+                    <input type="checkbox" id="checkbox" checklist-value="form.id" checklist-model="filters.form">
                     <bdi>{{ ::form.name }}</bdi>
                 </label>
             </div>

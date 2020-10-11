@@ -1,13 +1,13 @@
 <div class="modal-body savedsearch-editor">
 
     <div class="form-field title">
-        <label translate>set.name_savedsearch</label>
-        <input type="text" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name" translate/>
+        <label for="set_name_savedsearch" translate>set.name_savedsearch</label>
+        <input type="text" id="set_name_savedsearch" placeholder="Name your Saved Search..." ng-model="cpySavedSearch.name" translate/>
     </div>
 
     <div class="form-field">
-        <label class="input-label" translate>set.description</label>
-        <textarea ng-model="cpySavedSearch.description"></textarea>
+        <label class="input-label" for="set_description" translate>set.description</label>
+        <textarea ng-model="cpySavedSearch.description" id="set_description"></textarea>
     </div>
 
     <!-- Who can see? -->
@@ -44,9 +44,9 @@
     </div>
 
     <div class="form-field">
-        <label class="input-label" translate="set.default_viewing_mode">Default viewing mode</label>
+        <label class="input-label" for="viewing_mode" translate="set.default_viewing_mode">Default viewing mode</label>
         <div class="custom-select">
-            <select ng-options="view.name as view.display_name for view in views" ng-model="cpySavedSearch.view">
+            <select ng-options="view.name as view.display_name for view in views" id="viewing_mode" ng-model="cpySavedSearch.view">
             </select>
         </div>
     </div>

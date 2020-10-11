@@ -95,7 +95,9 @@
                         <tbody>
                             <tr>
                                 <td class="form-field">
+                                    <label>
                                     <input type="checkbox" ng-model="form.selected" ng-value="1" ng-change="selectAll(form)">
+                                    </label>
                                 </td>
                                 <td>
                                     <em translate="nav.select_all">Select all<em>
@@ -106,12 +108,14 @@
                             </tr>
                             <tr ng-repeat="formAttribute in form.attributes">
                                 <td class="form-field">
+                                    <label>
                                     <input
                                         type="checkbox"
                                         checklist-model="formAttribute.selected"
                                         checklist-value="formAttribute.id"
                                         ng-checked="_.isEmpty(attribute.selected)"
                                     >
+                                    </label>
                                 </td>
                                 <td>
                                     <p ng-click="formAttribute.selected = !formAttribute.selected"><bdi>{{formAttribute.label}}</bdi></p>

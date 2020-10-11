@@ -4,8 +4,8 @@
         'error': attributeLabel.$invalid && attributeLabel.$dirty
     }">
     <form name="attributeLabel">
-      <label translate="app.name">Name</label>
-      <input type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
+      <label for="app_name" translate="app.name">Name</label>
+      <input type="text" id="app_name" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
       <div
                 class="alert error"
                 ng-show="attributeLabel.$invalid && attributeLabel.$dirty"
@@ -25,8 +25,8 @@
 </div>
    <div ng-if="canDisplay()">
        <div class="form-field" ng-if="hasOptions(editAttribute)">
-          <label translate>form.field_options</label>
-          <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
+          <label for="form_field" translate>form.field_options</label>
+          <div class="input-inline"  id="form_field" ng-repeat="(key, option) in editAttribute.options track by $index">
               <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
               <button type="button" class="button-flat button-beta" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)">
                 <svg class="iconic">
@@ -96,12 +96,22 @@
             <label translate="app.default_value">Default value (optional):</label>
             <div class="form-field">
               <div ng-switch="editAttribute.input">
+                  <label>
                   <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
+                  </label>
+                  <label>
                   <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
+                  </label>
+                  <label>
                   <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
+                  </label>
+                  <label>
                   <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
+                </label>
+                <label>
                   <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default">
-              </div>
+                </label>
+                </div>
             </div>
         </div>
    </div>

@@ -62,8 +62,8 @@
                         'error': metadata.title.$invalid && metadata.title.$dirty,
                         'success': !metadata.title.$invalid && metadata.title.$dirty
                     }">
-                    <label class="required" translate="data_export.dataset_title">Title of data set</label>
-                    <input name="title" placeholder="e.g a descriptive title" ng-model="details.dataset_title" ng-required="true" type="text">
+                    <label class="required" for="title_of_data_set" translate="data_export.dataset_title">Title of data set</label>
+                    <input name="title" id="title_of_data_set" placeholder="e.g a descriptive title" ng-model="details.dataset_title" ng-required="true" type="text">
                     <div
                         class="alert error"
                         ng-show="metadata.title.$invalid && metadata.title.$dirty"
@@ -86,7 +86,7 @@
                     'success': !metadata.source.$invalid && metadata.source.$dirty
                 }">
                     <label for="source" class="required" translate="data_export.source">Source</label>
-                    <input name="source" ng-required="true" placeholder="Add the source of the data" ng-model="details.source" type="text">
+                    <input name="source" id="source" ng-required="true" placeholder="Add the source of the data" ng-model="details.source" type="text">
                     <div
                         class="alert error"
                         ng-show="metadata.source.$invalid && metadata.source.$dirty"

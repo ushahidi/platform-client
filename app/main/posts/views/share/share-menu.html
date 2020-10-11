@@ -1,7 +1,7 @@
 <form class="panel-body" name="form" ng-submit="submit()">
     <div class="form-field" ng-show="surveyId">
-        <label translate="app.survey_web_address">Your survey's web address</label>
-        <input type="url" value="{{shareUrl}}" readonly="">
+        <label for="survey" translate="app.survey_web_address">Your survey's web address</label>
+        <input type="url" id="survey" value="{{shareUrl}}" readonly="">
     </div>
     <div class="listing init">
 

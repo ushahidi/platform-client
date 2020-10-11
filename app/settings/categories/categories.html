@@ -41,7 +41,9 @@
                 <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories" ng-class="{ 'warning': isToggled(category) }">
 
                     <div class="listing-item-select" ng-click="toggleCategory(category)">
+                        <label>
                         <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)"></input>
+                        </label>
                     </div>
 
                     <div class="listing-item-primary">
@@ -59,7 +61,9 @@
                     <div id="category-{{child.id}}" class="listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleCategory(child)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
 
                         <div class="listing-item-select">
+                            <label>
                             <input type="checkbox" value="{{child.id}}" ng-checked="isToggled(child)">
+                            </label>
                         </div>
 
                         <div class="listing-item-primary">

@@ -13,11 +13,12 @@
     <div class="searchbar-input">
         <!-- Search input -->
         <div class="form-field">
-            <label class="hidden" translate="toolbar.searchbar.search_entity">Search</label>
+            <label class="hidden" for="search" translate="toolbar.searchbar.search_entity">Search</label>
             <div class="input-with-icon">
                 <input 
                     name="q"
                     type="search"
+                    id="search"
                     autocomplete="off"
                     placeholder="{{ 'toolbar.searchbar.search_entity' | translate }}"
                     ng-model="filters.q"

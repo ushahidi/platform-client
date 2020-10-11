@@ -4,6 +4,7 @@
     <form class="searchbar">
         <div class="searchbar-input init" role="search">
             <div class="form-field tooltip">
+                <label>
                 <input name="{{name}}"
                     type="search"
                     maxlength="250"
@@ -12,6 +13,7 @@
                     ng-focus="showSearchResults()"
                     ng-keydown="handleActiveSearch($event)"
                 />
+            </label>
             </div>
             <div id="searchbar-results" class="searchbar-results dropdown-menu init">
                 <div class="form-field" embed-only=false>
@@ -58,12 +60,12 @@
     </form>
     <p translate>location.click_map</p>
     <div class="form-field">
-      <label>Lat</label>
-      <input type="text" ng-model="manualModel.lat">
+      <label for="lat">Lat</label>
+      <input type="text" id="lat" ng-model="manualModel.lat">
    </div>
    <div class="form-field">
-      <label>Long</label>
-      <input type="text" ng-model="manualModel.lon">
+      <label for="long">Long</label>
+      <input type="text" id="long" ng-model="manualModel.lon">
    </div>
    <button type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
         <svg class="iconic">
