@@ -14,7 +14,7 @@ function FilterTransformersService(_, FormEndpoint, TagEndpoint, RoleEndpoint,
             SavedSearchEndpoint.query().$promise,
             CollectionEndpoint.query().$promise
         ];
-        if (PostMetadataService.validateUser) {
+        if (PostMetadataService.validateUser()) {
             requestsFilterEndpoints.push(
                 RoleEndpoint.query().$promise,
                 UserEndpoint.query().$promise
