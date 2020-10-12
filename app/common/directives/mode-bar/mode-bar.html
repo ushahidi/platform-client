@@ -32,7 +32,7 @@
             </li>
 
             <li>
-                <a class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
+                <a href="" class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
@@ -63,7 +63,7 @@
             </li>
 
             <li ng-show="currentUser">
-                <a ng-click="logout()" data-modal="login">
+                <a href="" ng-click="logout()" data-modal="login">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
                     </svg>
@@ -72,14 +72,14 @@
             </li>
 
             <li ng-show="currentUser">
-                <a ng-click="viewAccountSettings()">
+                <a href="" ng-click="viewAccountSettings()">
                     <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
                     <span class="label">{{currentUser.realname || currentUser.email}}</span>
                 </a>
             </li>
 
             <li ng-show="!currentUser && canRegister">
-                <a ng-click="register()" data-modal="signup">
+                <a href="" ng-click="register()" data-modal="signup">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#person"></use>
                     </svg>
@@ -88,7 +88,7 @@
             </li>
 
             <li ng-hide="currentUser">
-                <a ng-click="login()" data-modal="login">
+                <a href="" ng-click="login()" data-modal="login">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
                     </svg>
@@ -97,7 +97,7 @@
             </li>
 
             <li>
-                <a ng-click="viewCollectionListing()">
+                <a href="" ng-click="viewCollectionListing()">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
                     </svg>
