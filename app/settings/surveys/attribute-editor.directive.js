@@ -76,6 +76,11 @@ function (
             $scope.canDisableCaption = function () {
                 return $scope.editAttribute.type === 'media' && $scope.editAttribute.input === 'upload';
             };
+
+            //Remove default value for location (variation of $scope.canDisplay)
+            $scope.canDisplayDefaultValue = function () {
+                return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags' && $scope.editAttribute.input !== 'location';
+            };
         }
     };
 }];
