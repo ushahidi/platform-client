@@ -1,4 +1,5 @@
 <form class="input-relation">
+	<p><em translate="survey.related_post_info">Please note, the posts to relate to needs to be published, posts that are "Under review" will not appear in the search-results</em></p>
 	<p ng-if="model">{{ selectedPost.title }} ({{ model }}) <button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate></button></p>
     <div class="input-inline">
         <input class="form-control" type="text" placeholder="Search.." ng-model="searchTerm">

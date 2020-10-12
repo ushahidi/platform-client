@@ -21,6 +21,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var requestBlockSize = 5;
         var numberOfChunks = 0;
         var currentGeoJsonRequests = [];
+        $scope.stats = {totalItems: 0, filteredPosts:0, unmapped: 0};
 
         activate();
 
@@ -151,6 +152,13 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function loadPosts(query, offset, currentBlock) {
+            // Getting stats for filter-dropdown
+            let def = PostFilters.getQueryParams(PostFilters.getDefaults());
+                PostEndpoint.geojson(def).$promise.then(res => {
+                    $scope.stats.totalItems = res.features.length;
+                    $scope.stats.unmapped = res.total - res.features.length;
+            });
+
             offset = offset || 0;
             currentBlock = currentBlock || 1;
 
@@ -166,6 +174,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             currentGeoJsonRequests.push(request);
 
             return request.$promise.then(function (posts) {
+                // Set number of posts for filter-dropdown
+                $scope.stats.filteredPosts = posts.total;
 
                 // Set number of chunks
                 if (offset === 0 && posts.total > limit) {
