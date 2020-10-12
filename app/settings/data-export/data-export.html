@@ -113,7 +113,9 @@
                     <p translate>data_export.select_fields_desc</p>
                 </div>
                 <div class="form-field" ng-repeat="form in forms">
-                    <label><bdi>{{form.name}}</bdi></label>
+                    <label>
+                        <bdi>{{form.name}}</bdi>
+                    </label>
                     <div class="form-field checkbox" ng-show="form.attributes">
                         <label>
                             <input
