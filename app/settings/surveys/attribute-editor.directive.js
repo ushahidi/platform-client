@@ -76,6 +76,20 @@ function (
             $scope.canDisableCaption = function () {
                 return $scope.editAttribute.type === 'media' && $scope.editAttribute.input === 'upload';
             };
+
+            $scope.valuesPermissible = function () {
+                if ($scope.editAttribute.options.length < 1) {
+                    return true;
+                }
+                let tmp = [];
+                for (let x of $scope.editAttribute.options) {
+                    if (tmp.indexOf(x) !== -1) {
+                        return false;
+                    }
+                    tmp.push(x);
+                }
+                return true;
+            };
         }
     };
 }];

@@ -26,6 +26,9 @@
    <div ng-if="canDisplay()">
        <div class="form-field" ng-if="hasOptions(editAttribute)">
           <label translate>form.field_options</label>
+          <div class="alert error" role="alert" ng-show="!valuesPermissible()">
+            <p translate>survey.duplicate_option</p>
+          </div>
           <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
               <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
               <button type="button" class="button-flat button-beta" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)">
@@ -106,8 +109,10 @@
         </div>
    </div>
    <div class="form-field">
-      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
-      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+      <button ng-show="!editAttribute.id && valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
+      <button ng-show="editAttribute.id && valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+      <button ng-show="!editAttribute.id && !valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close" disabled>Add &amp; close</button>
+      <button ng-show="editAttribute.id && !valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close" disabled>Update &amp; close</button>
    </div>
 
 </div>
