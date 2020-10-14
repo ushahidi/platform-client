@@ -1,16 +1,12 @@
 <span dropdown>
-    <button
-        dropdown-toggle
-        type="button"
-        class="button-secondary dropdown toggle-content-trigger"
-    >
+    <button dropdown-toggle type="button" role="button" class="button-secondary dropdown toggle-content-trigger">
         <span class={{model}}></span>
     </button>
     <ul class="dropdown-menu init toggle-content list-unstyled" dropdown-menu>
         <li ng-repeat="icon in iconSet" class="inline">
-              <button type="button" class="button-secondary inline" ng-click="setIcon(icon)">
-                  <span class="{{ icon }}"></span>
-              </button>
+            <button type="button" role="button" class="button-secondary inline" ng-click="setIcon(icon)">
+                <span class="{{ icon }}"></span>
+            </button>
         </li>
     </ul>
 </span>
