@@ -266,6 +266,7 @@
         "radio_button": "Radio Button(s)",
         "checkbox": "Checkbox(es)",
         "related_post": "Related Post",
+        "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
         "upload_image": "Image",
         "embed_video": "Embed video",
         "markdown": "Markdown",
