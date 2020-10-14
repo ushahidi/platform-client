@@ -1,27 +1,18 @@
-
-<div
-    class="message"
-    ng-class="{'active': classVisible}"
->
+<div class="message" ng-class="{'active': classVisible}">
 
     <div class='progress-bar' ng-if="loading"><span>Loading...</span></div><br>
 
-    <div 
-        class="message-image"
-        ng-if="icon"
-        ng-class="iconClass"
-    >
+    <div class="message-image" ng-if="icon" ng-class="iconClass">
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ icon }}"></use>
         </svg>
     </div>
 
-    <div
-        class="message-body"
-    >
-		<slider-content></slider-content>
+    <div class="message-body">
+        <slider-content></slider-content>
 
-        <button class="button-flat message-trigger" ng-show="showCloseButton" ng-click="closeButtonClicked()" translate="message.button.dismiss">
+        <button class="button-flat message-trigger" role="button" ng-show="showCloseButton"
+            ng-click="closeButtonClicked()" translate="message.button.dismiss">
             Dismiss
         </button>
     </div>
