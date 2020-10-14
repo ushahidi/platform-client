@@ -12,7 +12,7 @@
     <post-toolbar selected-post="selectedPost.post" filters="filters"></post-toolbar>
     <div id="post-data-view-top" class="timeline-col" ng-class="{'toolbar-active': bulkActionsSelected, 'active' : activeCol === 'timeline' }">
         <div class="load-more"  ng-show="newPostsCount > 0">
-            <button class="button-flat button-gamma full-width" ng-click="addNewestPosts()">
+            <button role="button" class="button-flat button-gamma full-width" ng-click="addNewestPosts()">
                 <span ng-switch on="newPostsCount">
                     <span ng-switch-default translate="post.see_more_plural" translate-values="{ newPostsCount }">See new posts</span>
                     <span ng-switch-when="1" translate="post.see_more_singular" translate-values="{ newPostsCount }">See new post</span>
@@ -25,7 +25,7 @@
           >
               <!-- status bulk actions -->
               <span dropdown ng-if="userHasBulkActionPermissions()">
-                <button class="button-beta init" data-toggle="toggle-content" dropdown-toggle>
+                <button role="button" class="button-beta init" data-toggle="toggle-content" dropdown-toggle>
                   <span class="button-label" translate="app.mark_as">Mark as</span>
                   <svg class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
@@ -48,14 +48,14 @@
               </span>
 
               <collection-toggle-button selected-posts="selectedPosts" posts="posts" on-done="clearSelectedPosts()"></collection-toggle-button>
-              <button type="button" class="button-destructive" ng-click="deletePosts()" ng-if="userHasBulkActionPermissions()">
+              <button role="button" type="button" class="button-destructive" ng-click="deletePosts()" ng-if="userHasBulkActionPermissions()">
                 <svg class="iconic">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                 </svg>
                 <span class="button-label hidden">nav.delete</span>
               </button>
 
-              <button href="" ng-click="closeBulkActions()" class="button-link toolbar-close-button">
+              <button role="button" href="" ng-click="closeBulkActions()" class="button-link toolbar-close-button">
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
                 </svg>
@@ -67,7 +67,7 @@
 
         <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
             <div class="bulk-action-primary" translate="post.posts_total" translate-values="{'posts': posts.length, 'total_nb': totalItems }"></div>
-            <button id="bulk-action" ng-disabled="{{!totalItems}}" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin" translate="post.modify.bulk_actions">Bulk Actions</button>
+            <button role="button" id="bulk-action" ng-disabled="{{!totalItems}}" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin" translate="post.modify.bulk_actions">Bulk Actions</button>
         </div>
             <post-card
                 ng-repeat="post in posts"
@@ -89,7 +89,7 @@
             <div class="listing-item" ng-if="posts.length > 0 || isLoading()">
 
                 <div class="listing-item-primary">
-                    <button ng-disabled="isLoading()" ng-hide="( isLoading() || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                    <button role="button" ng-disabled="isLoading()" ng-hide="( isLoading() || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
                     </button>
                      <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-show="isLoading()"></loading-dots>
                 </div>

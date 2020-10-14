@@ -11,13 +11,13 @@
         <div class="button-group" ng-hide="filtersActive">
             <div ng-if="!editMode()">
                 <post-share filters="filters" button="true"></post-share>
-                <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()"
+                <button ng-if="editEnabled()" role="button" class="button button-alpha" ng-click="setEditMode()"
                     translate>app.edit</button>
             </div>
 
             <div ng-if="editMode()">
-                <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
-                <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha"
+                <button ng-if="hasPermission" role="button" class="button" ng-click="cancel()" translate>app.cancel</button>
+                <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" role="button" class=" button button-alpha"
                     translate>app.save</button>
                 <loading-dots ng-if="isSaving() && !isEmbed()" button-class="'button-alpha'" disabled=true
                     label="'app.saving'"></loading-dots>

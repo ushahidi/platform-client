@@ -16,7 +16,7 @@
         <img ng-src="{{media.dataURI}}" ng-show="media.dataURI">
 
         <div class="form-field">
-          <button class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
+          <button role="button" class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
             </svg>

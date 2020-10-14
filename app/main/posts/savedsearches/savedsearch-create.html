@@ -1,15 +1,15 @@
 <div class="savedsearch-create form-field" ng-show="hasFilters()">
-    <button ng-click="saveSearch()" ng-show="$root.loggedin" class="button-alpha" type="button" translate>
+    <button ng-click="saveSearch()" ng-show="$root.loggedin" class="button-alpha" role="button" type="button" translate>
         set.save_savedsearch
     </button>
-    <button ng-click="saveSearch()" ng-show="isSaving" disabled class="button-beta" type="button">
+    <button ng-click="saveSearch()" ng-show="isSaving" disabled class="button-beta" role="button" type="button">
             <div class="loading">
                 <div class="line"></div>
                 <div class="line"></div>
                 <div class="line"></div>
             </div>
             <span class="button-label" translate="app.saving">Saving</span>
-    <button ng-click="clearFilters()" class="button-link" type="button" translate>
+    <button ng-click="clearFilters()" class="button-link" role="button" type="button" translate>
         set.clear_search
     </button>
 

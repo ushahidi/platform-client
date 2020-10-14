@@ -1,9 +1,9 @@
 <div class="savedsearch-update form-field" ng-show="filtersChanged()">
-    <button ng-click="saveSearch()" ng-show="canEdit && !isSaving" class="button-alpha" type="button" translate>
+    <button ng-click="saveSearch()" ng-show="canEdit && !isSaving" class="button-alpha"  role="button"type="button" translate>
         set.update_savedsearch
     </button>
 
-    <button ng-click="saveSearch()" ng-show="canEdit && isSaving" disabled class="button-beta" type="button">
+    <button ng-click="saveSearch()" ng-show="canEdit && isSaving" disabled class="button-beta" role="button" type="button">
             <div class="loading">
                 <div class="line"></div>
                 <div class="line"></div>
@@ -12,7 +12,7 @@
             <span class="button-label" translate="app.updating">Updating</span>
     </button>
 
-    <button ng-click="resetSearch()" class="button-link" type="button" translate>
+    <button ng-click="resetSearch()" class="button-link" role="button"type="button" translate>
         set.reset_savedsearch
     </button>
 </div>

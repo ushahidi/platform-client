@@ -24,9 +24,9 @@
   <main role="main">
       <div class="toolbar">
           <div class="button-group" ng-show="post.id">
-              <button type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
-              <button type="submit" class="button-alpha"  ng-if="!saving_post">{{save}}</button>
-              <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{saving}}
+              <button role="button" type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
+              <button role="button" type="submit" class="button-alpha"  ng-if="!saving_post">{{save}}</button>
+              <button role="button" type="submit" class="button-alpha"  disabled ng-if="saving_post">{{saving}}
                 <div class="loading">
                     <div class="line"></div>
                     <div class="line"></div>
@@ -36,8 +36,8 @@
           </div>
           <div class="button-group" ng-show="!post.id">
               <post-share button="true" ng-show="!post.id"></post-share>
-              <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
-              <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
+              <button role="button" type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
+              <button role="button" type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
                 <div class="loading">
                     <div class="line"></div>
                     <div class="line"></div>

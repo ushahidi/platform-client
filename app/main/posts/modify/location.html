@@ -15,7 +15,7 @@
             </div>
             <div id="searchbar-results" class="searchbar-results dropdown-menu init">
                 <div class="form-field" embed-only=false>
-                    <button class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
+                    <button role="button" class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
                         <svg class="iconic">
                             <use
                                 xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -65,7 +65,7 @@
       <label>Long</label>
       <input type="text" ng-model="manualModel.lon">
    </div>
-   <button type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
+   <button role="button" type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
         <svg class="iconic">
        <use
                                 xmlns:xlink="http://www.w3.org/1999/xlink"
