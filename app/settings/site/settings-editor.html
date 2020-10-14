@@ -52,7 +52,7 @@
                 <div class="form-sheet">
                     <div class="form-field">
                         <label for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.deployment_name</label>
-                        <input id="name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+                        <input id="site-settings-name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
 
                          <div class="alert error" role="alert" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
                             <svg class="iconic">
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="form-field" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
-                        <label translate>settings.site_email</label>
+                        <label for="site-settings-email" translate>settings.site_email</label>
                         <p class="small" translate>settings.site_email_note</p>
                         <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" name="email" ng-model="site.email">
                         <div ng-repeat="(error, value) in form.email.$error"
@@ -94,8 +94,8 @@
                         </div>
                     </div>
                     <div class="form-field">
-                    <label translate>settings.site_language</label>
-                    <language-switch site="site"></language-switch>
+                    <label for="site-language" translate>settings.site_language</label>
+                    <language-switch id="site-language" site="site"></language-switch>
                     </div>
                     <div class="form-field checkbox" ng-show="isPrivateEnabled">
                          <input id="private" ng-model="site.private" type="checkbox">
@@ -104,9 +104,9 @@
                     </div>
 
                     <div class="form-field">
-                      <label translate="settings.api_key">API Key</label>
+                      <label for="api-key" translate="settings.api_key">API Key</label>
                       <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.</p>
-                      <button type="button" class="button-beta" ng-click="generateApiKey()">
+                      <button id="api-key" type="button" class="button-beta" ng-click="generateApiKey()">
                         <svg class="iconic">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#key"></use>
                         </svg>

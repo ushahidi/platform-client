@@ -41,13 +41,13 @@
             <form>
                 <div class="form-sheet">
                    <div class="form-field">
-                       <label translate>role.name</label>
-                       <input type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
+                       <label for="role-name" translate>role.name</label>
+                       <input id="role-name" type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
                    </div>
 
                     <div class="form-field">
-                        <label translate>role.description</label>
-                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="role.description"></textarea>
+                        <label for="role-description" translate>role.description</label>
+                        <textarea id="role-description" name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="role.description"></textarea>
                     </div>
 
                    <fieldset>
