@@ -45,7 +45,8 @@
                         <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
                         <div ng-repeat="(error, value) in form.full_name.$error"
                             ng-show="form.full_name.$dirty"
-                            class="alert error">
+                            class="alert error"
+                            role="alert">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
@@ -58,7 +59,8 @@
                         <input type="email" placeholder="{{'user_create.email' | translate}}" ng-maxlength="150" ng-model="user.email" name="email" required>
                         <div ng-repeat="(error, value) in form.email.$error"
                             ng-show="form.email.$dirty"
-                            class="alert error">
+                            class="alert error"
+                            role="alert">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
@@ -74,7 +76,8 @@
                         <input type="password" ng-show="passwordShown" placeholder="{{'user.password' | translate}}"  ng-minlength="7" ng-maxlength="72" ng-model="user.password" name="password" ng-required="!user.id">
                         <div ng-repeat="(error, value) in form.password.$error"
                             ng-show="form.password.$dirty"
-                            class="alert error">
+                            class="alert error"
+                            role="alert">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>

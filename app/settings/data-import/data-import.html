@@ -20,7 +20,7 @@
     <main role="main">
 
         <div class="main-col" importer-csv>
-          <div class="alert" translate="feature_limits.view_unavailable" translate-values="{value: 'Bulk Data Import and Export'}" ng-show="!csvEnabled">
+          <div class="alert" role="alert" translate="feature_limits.view_unavailable" translate-values="{value: 'Bulk Data Import and Export'}" ng-show="!csvEnabled">
           </div>
           <form name="upload" ng-show="csvEnabled">
             <div class="form-sheet">
@@ -115,7 +115,7 @@
                                       </label>
 
                                       <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
-                                      <p ng-show="hasRequiredTask" class="alert" data-fieldgroup-target="status-model-mark-published">Your survey, <strong>{{selectedForm.name}}</strong>, includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', while still allowing their status to be marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.</p>
+                                      <p ng-show="hasRequiredTask" class="alert" role="alert" data-fieldgroup-target="status-model-mark-published">Your survey, <strong>{{selectedForm.name}}</strong>, includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', while still allowing their status to be marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.</p>
                                       <!--// END IF //-->
                                   </div>
 
@@ -158,7 +158,7 @@
                                     <p><em translate="data_import.status_explanation">Ushahidi recognizes one of three post statuses: Published, Under review, and Archived. So be sure that each entry in the column you select has one of those three values.</em></p>
 
                                     <!--// IF the chosen survey has tasks that must be completed before its posts can be published //-->
-                                    <p class="alert" data-fieldgroup-target="status-model-mark-published">Your survey, <strong>{{selectedForm.name}}</strong>, includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', even if their status is marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.</p>
+                                    <p class="alert" role="alert" data-fieldgroup-target="status-model-mark-published">Your survey, <strong>{{selectedForm.name}}</strong>, includes tasks that typically must be completed for each post before they can be marked 'published.' During this import, all of your imported posts will have their tasks marked as 'incomplete', even if their status is marked as 'published.' If you edit any of these posts after they've been imported, however, you'll be asked to complete those tasks before re-publishing them.</p>
                                     <!--// END IF //-->
                                 </div>
                               </div>

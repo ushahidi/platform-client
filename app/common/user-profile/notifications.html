@@ -49,12 +49,12 @@
             <p ng-repeat="(error, value) in editContactForm.contact.$error"
                ng-if="contact.type === 'email'"
                ng-show="editContactForm.contact.$dirty"
-               class="alert error"
+               class="alert error" role="alert"
                translate="{{'contact.valid.email.' + error}}"></p>
             <p ng-repeat="(error, value) in editContactForm.contact.$error"
                ng-if="contact.type === 'phone'"
                ng-show="editContactForm.contact.$dirty"
-               class="alert error"
+               class="alert error" role="alert"
                translate="{{'contact.valid.phone.' + error}}"></p>
 
             <input name="contact"
@@ -133,12 +133,12 @@
             <p ng-repeat="(error, value) in addContactForm.contact.$error"
                ng-if="contact.type === 'email'"
                ng-show="addContactForm.contact.$dirty"
-               class="alert error"
+               class="alert error" role="alert"
                translate="{{'contact.valid.email.' + error}}"></p>
             <p ng-repeat="(error, value) in addContactForm.contact.$error"
                ng-if="contact.type === 'phone'"
                ng-show="addContactForm.contact.$dirty"
-               class="alert error"
+               class="alert error" role="alert"
                translate="{{'contact.valid.phone.' + error}}"></p>
             <input name="contact"
                    id="contact"

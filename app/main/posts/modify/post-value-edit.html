@@ -21,6 +21,7 @@
 
             <div
                 class="alert error"
+                role="alert"
                 ng-show="form.title.$dirty"
                 ng-repeat="(error, value) in form.title.$error"
             >
@@ -50,7 +51,7 @@
                 ng-model="post.content" ng-required="true" adaptive-input msd-elastic>
             </textarea>
 
-            <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
+            <div class="alert error"  role="alert" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
                 <svg class="iconic">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
@@ -205,7 +206,7 @@
                         ng-model="post.values[attribute.key][key]"
                         ng-required="attribute.required"
                     ></post-video-input>
-                    <div class="alert error" ng-switch-when="video" ng-show="form.$error.videoUrlValidation && taskIsMarkedCompleted() ">
+                    <div class="alert error" role="alert" ng-switch-when="video" ng-show="form.$error.videoUrlValidation && taskIsMarkedCompleted() ">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
@@ -213,7 +214,7 @@
                     </div>
                 </div>
             </div>
-            <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
+            <div class="alert error" role="alert" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
                 <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
@@ -283,7 +284,7 @@
                         post-value="post.values[attribute.key]"
                     ></post-category-editor>
                 </div>
-                <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
+                <div class="alert error" role="alert" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
                     <svg class="iconic">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>

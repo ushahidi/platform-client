@@ -71,6 +71,7 @@
     </nav>
     <div class="listing-item tasks-tabs tabs-target active">
       <div class="alert"
+          role="alert"
           ng-repeat="task in tasks"
           ng-if="!taskHasValues(task)"
           ng-show="task.id === visibleTask">

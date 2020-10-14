@@ -34,9 +34,9 @@
 
         <div custom-roles class="main-col">
 
-            <div class="alert" ng-show="!rolesEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom roles'}"></div>
+            <div class="alert" role="alert" ng-show="!rolesEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom roles'}"></div>
 
-            <div class="alert" ng-hide="roles.length">
+            <div class="alert" role="alert" ng-hide="roles.length">
                 <p ng-hide="roles.length"><em translate>empty.role</em></p>
             </div>
 

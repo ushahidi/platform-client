@@ -7,7 +7,7 @@
             <input id="name" name="name" type="text" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
             <p ng-repeat="(error, value) in form.name.$error"
                 ng-show="form.name.$dirty"
-                class="alert error"
+                class="alert error" role="alert"
                 translate="{{'settings.valid.name.' + error}}"></p>
         </div>
 

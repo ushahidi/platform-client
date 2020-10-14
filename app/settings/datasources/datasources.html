@@ -21,7 +21,7 @@
 
         <div class="main-col">
 
-            <div class="alert">
+            <div class="alert" role="alert">
                 <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
             </div>
 
@@ -48,11 +48,11 @@
 
                     <div class="listing-item-body" dropdown-menu>
 
-                        <div class="alert error" ng-if="forms[provider.id].$invalid">
+                        <div class="alert error" role="alert" ng-if="forms[provider.id].$invalid">
                             <p translate>settings.data_sources.hint_plugin_needs_configuring</p>
                         </div>
 
-                        <div class="alert" ng-if="!available_providers[provider.id]">
+                        <div class="alert" role="alert" ng-if="!available_providers[provider.id]">
                             <p translate translate-values="{value: '{{provider.name}}'}">
                                 settings.data_sources.unavailable
                             </p>
@@ -191,7 +191,7 @@
                                     </div>
                                 </fieldset>
 
-                                <div class="alert error" ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid">
+                                <div class="alert error" role="alert" ng-if="formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid">
                                     <p translate>settings.generic_field_error</p>
                                 </div>
 

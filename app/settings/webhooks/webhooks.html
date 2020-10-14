@@ -34,10 +34,10 @@
 
         <div custom-webhooks class="main-col">
 
-            <div class="alert" ng-show="!webhooksEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom webhooks'}"></div>
+            <div class="alert" role="alert" ng-show="!webhooksEnabled" translate="feature_limits.view_unavailable" translate-values="{value: 'Custom webhooks'}"></div>
 
             <div ng-show="webhooksEnabled">
-              <div class="alert" ng-hide="webhooks.length">
+              <div class="alert" role="alert" ng-hide="webhooks.length">
                   <p ng-hide="webhooks.length"><em translate>empty.webhook</em></p>
               </div>
 

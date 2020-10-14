@@ -66,6 +66,7 @@
                     <input name="title" placeholder="e.g a descriptive title" ng-model="details.dataset_title" ng-required="true" type="text">
                     <div
                         class="alert error"
+                        role="alert"
                         ng-show="metadata.title.$invalid && metadata.title.$dirty"
                         ng-repeat="(error, value) in metadata.title.$error"
                     >
@@ -89,6 +90,7 @@
                     <input name="source" ng-required="true" placeholder="Add the source of the data" ng-model="details.source" type="text">
                     <div
                         class="alert error"
+                        role="alert"
                         ng-show="metadata.source.$invalid && metadata.source.$dirty"
                         ng-repeat="(error, value) in metadata.source.$error"
                     >
@@ -112,6 +114,7 @@
                     </div>
                     <div
                         class="alert error"
+                        role="alert"
                         ng-show="metadata.organisation.$invalid && metadata.organisation.$dirty"
                         ng-repeat="(error, value) in metadata.organisation.$error"
                     >
@@ -141,6 +144,7 @@
                     </a>
                     <div
                         class="alert error"
+                        role="alert"
                         ng-show="metadata.license.$invalid && metadata.license.$dirty"
                         ng-repeat="(error, value) in metadata.license.$error"
                     >
@@ -153,6 +157,7 @@
 
                 <div
                     class="form-field alert error"
+                    role="alert"
                     ng-show="error"
                 >
                     <svg class="iconic">

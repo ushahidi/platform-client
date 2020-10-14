@@ -53,7 +53,7 @@
                     <input id="hdx_maintainer_id" name="hdx_maintainer_id" ng-required="true" type="text" ng-model="tempMaintainerId" required="required"/>
                 </div>
 
-                <div class="form-field alert error" ng-show="!hxlMaintainerSet && api.hdx_maintainer_id.$invalid && api.hdx_maintainer_id.$dirty">
+                <div class="form-field alert error" role="alert" ng-show="!hxlMaintainerSet && api.hdx_maintainer_id.$invalid && api.hdx_maintainer_id.$dirty">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
@@ -87,7 +87,7 @@
                     <input id="api_key" name="api_key" ng-required="true" type="text" ng-model="tempApiKey" required="required"/>
                 </div>
 
-                <div class="form-field alert error" ng-show="!hxlApiKeySet && api.api_key.$invalid && api.api_key.$dirty && !hxlApiKeySet">
+                <div class="form-field alert error" role="alert" ng-show="!hxlApiKeySet && api.api_key.$invalid && api.api_key.$dirty && !hxlApiKeySet">
                     <svg class="iconic">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
