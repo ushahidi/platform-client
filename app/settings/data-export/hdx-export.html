@@ -11,7 +11,8 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -20,7 +21,7 @@
     <main role="main">
         <div class="progress-bar" ng-show="isLoading()">
             <span>
-            ..
+                ..
             </span>
         </div>
 
@@ -35,49 +36,50 @@
             </div>
             <div class="form-sheet" ng-show="!showProgress">
                 <div class="form-sheet-summary">
-                <h2 class="form-sheet-title">
-                    {{'data_export.hxl_title' | translate}}
-                </h2>
-                <p>{{'data_export.hxl_desc' | translate}}</p>
+                    <h2 class="form-sheet-title">
+                        {{'data_export.hxl_title' | translate}}
+                    </h2>
+                    <p>{{'data_export.hxl_desc' | translate}}</p>
 
-                <p>
-                    {{'data_export.hxl_instructions_1' | translate}}
-                    <a href="https://data.humdata.org/" target="_blank" class="link-blue">
-                        <svg class="iconic">
-                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
-                        </svg>
-                        {{'data_export.hxl_instructions_2' | translate}}
-                    </a>
-                {{'data_export.hxl_instructions_3' | translate}}
-                <a ui-sref="settings.userSettings" class="link-blue">
-                    {{'data_export.hxl_instructions_4' | translate}}
-                </a>
-                {{'data_export.hxl_instructions_5' | translate}}
-                </p>
+                    <p>
+                        {{'data_export.hxl_instructions_1' | translate}}
+                        <a href="https://data.humdata.org/" target="_blank" class="link-blue">
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.hxl_instructions_2' | translate}}
+                        </a>
+                        {{'data_export.hxl_instructions_3' | translate}}
+                        <a ui-sref="settings.userSettings" class="link-blue">
+                            {{'data_export.hxl_instructions_4' | translate}}
+                        </a>
+                        {{'data_export.hxl_instructions_5' | translate}}
+                    </p>
 
-                <p>{{'data_export.hxl_instructions_6' | translate}}
-                    <a href="https://tools.humdata.org/examples/hxl/" target="_blank" class="link-blue">
-                        <svg class="iconic">
-                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
-                        </svg>
-                    {{'data_export.hxl_instructions_7' | translate}}
-                    </a>
-                    {{'data_export.hxl_instructions_8' |translate}}
-                    <a href="http://hxlstandard.org/standard/1_1beta/postcards/" target="_blank" class="link-blue">
-                        <svg class="iconic">
-                            <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
-                        </svg>
-                        {{'data_export.hxl_instructions_9' | translate}}
-                    </a>
-                    .
-                </p>
-            </div>
-            <div class="form-field alert error" id="error" ng-show="fieldError">
-                <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                </svg>
-                {{'data_export.no_fields_selected' | translate}}
-            </div>
+                    <p>{{'data_export.hxl_instructions_6' | translate}}
+                        <a href="https://tools.humdata.org/examples/hxl/" target="_blank" class="link-blue">
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.hxl_instructions_7' | translate}}
+                        </a>
+                        {{'data_export.hxl_instructions_8' |translate}}
+                        <a href="http://hxlstandard.org/standard/1_1beta/postcards/" target="_blank" class="link-blue">
+                            <svg class="iconic">
+                                <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                            </svg>
+                            {{'data_export.hxl_instructions_9' | translate}}
+                        </a>
+                        .
+                    </p>
+                </div>
+                <div class="form-field alert error" id="error" ng-show="fieldError">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning">
+                        </use>
+                    </svg>
+                    {{'data_export.no_fields_selected' | translate}}
+                </div>
                 <fieldset ng-repeat="form in forms" ng-hide="form.targeted_survey === true">
                     <legend>
                         <bdi>{{form.name}}</bdi>
@@ -95,7 +97,8 @@
                         <tbody>
                             <tr>
                                 <td class="form-field">
-                                    <input type="checkbox" ng-model="form.selected" ng-value="1" ng-change="selectAll(form)">
+                                    <input type="checkbox" ng-model="form.selected" ng-value="1"
+                                        ng-change="selectAll(form)">
                                 </td>
                                 <td>
                                     <em translate="nav.select_all">Select all<em>
@@ -106,65 +109,56 @@
                             </tr>
                             <tr ng-repeat="formAttribute in form.attributes">
                                 <td class="form-field">
-                                    <input
-                                        type="checkbox"
-                                        checklist-model="formAttribute.selected"
-                                        checklist-value="formAttribute.id"
-                                        ng-checked="_.isEmpty(attribute.selected)"
-                                    >
+                                    <input type="checkbox" checklist-model="formAttribute.selected"
+                                        checklist-value="formAttribute.id" ng-checked="_.isEmpty(attribute.selected)">
                                 </td>
                                 <td>
-                                    <p ng-click="formAttribute.selected = !formAttribute.selected"><bdi>{{formAttribute.label}}</bdi></p>
+                                    <p ng-click="formAttribute.selected = !formAttribute.selected">
+                                        <bdi>{{formAttribute.label}}</bdi></p>
                                 </td>
                                 <td>
                                     <div class="custom-select">
-                                        <select
-                                            ng-model="formAttribute.selectedTag"
+                                        <select ng-model="formAttribute.selectedTag"
                                             ng-options="tag as tag.tag_name for tag in formAttribute.tags track by tag.id"
-
-                                            ng-change="selectTag(formAttribute)"
-                                        >
+                                            ng-change="selectTag(formAttribute)">
                                             <option value=''>Leave empty</option>
                                         </select>
                                     </div>
                                 </td>
                                 <td class="form-field">
                                     <div class="custom-select" ng-repeat="index in range(formAttribute)">
-                                        <select
-                                            ng-disabled="!formAttribute.selectedTag && !formAttribute.selected"
+                                        <select ng-disabled="!formAttribute.selectedTag && !formAttribute.selected"
                                             ng-model="formAttribute.selectedHxlAttributes[index].attribute"
-                                            ng-change="selectHxlAttribute(formAttribute)"
-                                        >
+                                            ng-change="selectHxlAttribute(formAttribute)">
                                             <option value=''>Leave empty</option>
-                                            <option
-                                                ng-value="hxlAttribute.attribute"
+                                            <option ng-value="hxlAttribute.attribute"
                                                 ng-repeat="hxlAttribute in formAttribute.selectedTag.hxl_attributes"
-                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, index)"
-                                            >
-                                                 {{hxlAttribute.attribute}}
+                                                ng-disabled="hxlAttributeSelected(hxlAttribute, formAttribute, index)">
+                                                {{hxlAttribute.attribute}}
                                             </option>
 
                                         </select>
                                     </div>
-                                    <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl attribute?</a>
+                                    <a ng-click="addAnother(formAttribute)" class="link-blue">Add another hxl
+                                        attribute?</a>
                                 </td>
                                 <td>
-                                    <span ng-repeat="hxl_label in formAttribute.hxl_label"><em>{{hxl_label}} </em></span>
+                                    <span ng-repeat="hxl_label in formAttribute.hxl_label"><em>{{hxl_label}}
+                                        </em></span>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </fieldset>
-                <div class="form-field"  ng-hide="isLoading()">
+                <div class="form-field" ng-hide="isLoading()">
                     <p>{{getSelectedFields().length}} fields selected</p>
                 </div>
                 <div class="form-field button-group">
                     <button class="button-alpha" ng-click="exportData(false)">Export to CSV</button>
                     <a ng-click="exportData(true)" class="button button-alpha">Upload to a hdx account</a>
-                    <a ui-sref="settings.dataExport" class="button">Cancel</a>
-            </div>
+                    <a ui-sref="settings.dataExport" class="button" role="button">Cancel</a>
+                </div>
             </div>
         </div>
     </main>
 </div>
-    

@@ -11,7 +11,8 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -22,205 +23,319 @@
             <div class="form-sheet">
                 <div class="form-field">
                     <h3 class="new">We are revamping our pricing plans.</h3>
-                    <p>In the meantime, you can take advantage of a limited time discount of 90% off Ushahidi Basic for new subscriptions</p>
-                    <em>*COVID19 Update: For the next 90 days, we will be waiving the fee for our basic plan, and offering it at $0.</em>
+                    <p>In the meantime, you can take advantage of a limited time discount of 90% off Ushahidi Basic for
+                        new subscriptions</p>
+                    <em>*COVID19 Update: For the next 90 days, we will be waiving the fee for our basic plan, and
+                        offering it at $0.</em>
                 </div>
             </div>
-        <div class="wrapper">
-            <div class="tiers" role="article">
-                <nav class="tabs-menu init" data-tabs="pricing-tabs">
-                    <ul>
-                        <li id="basic-li" class="active" >
-                            <a href="#" ng-click="switchTab('basic')">
-                                Ushahidi Basic
-                                <span class="tabs-label">Self Service</span>
-                            </a>
-
-                        </li>
-                        <li id="enterprise-single-li" >
-                            <a href="#" ng-click="switchTab('enterprise-single')">
-                                Enterprise
-                                <span class="tabs-label alt">Enterprise</span>
-                            </a>
-
-                        </li>
-                    </ul>
-                </nav>
-
-                <div class="tier pricing-tabs tabs-target active" id="basic">
-                    <span class="tier-label">Self Service</span>
-                    <div class="tier-summary">
-                        <div class="tier-description">
-                            <h2 class="tier-name">Ushahidi Basic</h2>
-                            <p>Collect, monitor, analyze, and respond to real time incidents and engage with stakeholders.</p>
-                        </div>
-                        <div class="tier-highlight">
-                            <strong class="tier-price new">$0<em>/mo</em></strong>
-                            <span>for the next 90 days, then $49.9/mo.</span>
-                        </div>
-                        <a class="button button-alpha" ng-show="tier == 'level_1'" disabled ng-show="tier == 'level_1'">&check; Subscribed</a>
-                        <a href="//{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=level_1" class="button button-alpha" ng-hide="tier == 'level_1'">Sign up</a>
-                    </div>
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">1 Deployment</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">25 admins and/or custom roles</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Unlimited posts</h3>
-                        </div>
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Web, Email, SMS, & Twitter data collection </h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Map, timeline, bar chart, & line chart data visualization</h3>
-                        </div>
-
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Import & Export data</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tier pricing-tabs tabs-target" id="enterprise-single">
-                    <span class="tier-label alt">Enterprise</span>
-                    <div class="tier-summary">
-                        <div class="tier-description">
-                            <h2 class="tier-name">Ushahidi Enterprise</h2>
-                            <p>Ushahidi platform capabilities, technical expertise, ongoing support, and customizations.</p>
-                        </div>
-                    <div class="tier-highlight">
-                        <p>Enterprise plans starts at $5,000.</p>
-                    </div>
-                    <div class="tier-features">
-                        <div class="tier-feature">
-                            <h3 class="tier-heading">Projects include all Basic features and much more, contact us to find out about the full a catalogue of technical services on offer.</h3>
-                        </div>
-                    </div>
-                </div>
-                <a href="https://ushahidi.com/enterprise-partnerships" class="button button-alpha">Contact us</a>
-
-                </div>
-        </div>
-        <section>
             <div class="wrapper">
-                <div class="case-studies-group">
-                    <div class="case-studies-item">
-                        <h2 class="section-heading">Grassroots projects</h2>
-                        <p><em>Apply for a free Basic plan</em></p>
-                        <p>Small non profits and grassroots organizations that are aligned with Ushahidi's mission and can demonstrate a yearly operating budget of less than $250k USD per year are invited to apply for a free Basic plan.</p>
-                        <p>You can still try out Ushahidi platform by signing up for the free Ushahidi Demo version.</p>
-                        <a href="https://ushahidi.com/pricing/apply-for-free" class="button" onclick="ga('send','event','links','select','social impact',1);" target="_blank">Continue</a>
+                <div class="tiers" role="article">
+                    <nav class="tabs-menu init" data-tabs="pricing-tabs">
+                        <ul>
+                            <li id="basic-li" class="active">
+                                <a href="#" ng-click="switchTab('basic')">
+                                    Ushahidi Basic
+                                    <span class="tabs-label">Self Service</span>
+                                </a>
+
+                            </li>
+                            <li id="enterprise-single-li">
+                                <a href="#" ng-click="switchTab('enterprise-single')">
+                                    Enterprise
+                                    <span class="tabs-label alt">Enterprise</span>
+                                </a>
+
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="tier pricing-tabs tabs-target active" id="basic">
+                        <span class="tier-label">Self Service</span>
+                        <div class="tier-summary">
+                            <div class="tier-description">
+                                <h2 class="tier-name">Ushahidi Basic</h2>
+                                <p>Collect, monitor, analyze, and respond to real time incidents and engage with
+                                    stakeholders.</p>
+                            </div>
+                            <div class="tier-highlight">
+                                <strong class="tier-price new">$0<em>/mo</em></strong>
+                                <span>for the next 90 days, then $49.9/mo.</span>
+                            </div>
+                            <a class="button button-alpha" ng-show="tier == 'level_1'" disabled
+                                ng-show="tier == 'level_1'">&check; Subscribed</a>
+                            <a href="//{{ cloudDomain }}/settings/login?subdomain={{ subdomain }}&username={{ username }}&tier=level_1"
+                                class="button button-alpha" ng-hide="tier == 'level_1'">Sign up</a>
+                        </div>
+                        <div class="tier-features">
+                            <div class="tier-feature">
+                                <h3 class="tier-heading">1 Deployment</h3>
+                            </div>
+
+                            <div class="tier-feature">
+                                <h3 class="tier-heading">25 admins and/or custom roles</h3>
+                            </div>
+
+                            <div class="tier-feature">
+                                <h3 class="tier-heading">Unlimited posts</h3>
+                            </div>
+                            <div class="tier-feature">
+                                <h3 class="tier-heading">Web, Email, SMS, & Twitter data collection </h3>
+                            </div>
+
+                            <div class="tier-feature">
+                                <h3 class="tier-heading">Map, timeline, bar chart, & line chart data visualization</h3>
+                            </div>
+
+                            <div class="tier-feature">
+                                <h3 class="tier-heading">Import & Export data</h3>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="case-studies-item">
-                        <h2 class="section-heading">Ushahidi code</h2>
-                        <p><em>Self-host &amp; customize Ushahidi on your own</em></p>
-                        <p>Ushahidi is an open source product, meaning that all the code that runs it is available for all admins to download and modify. If you'd like to download Ushahidi, customize it, and host it on your own servers, it is available on GitHub.</p>
-                        <a href="https://github.com/ushahidi/platform" class="button" onclick="ga('send','event','links','download', 'ushahidi',1);" target="_blank">Continue</a>
-                    </div>
+                    <div class="tier pricing-tabs tabs-target" id="enterprise-single">
+                        <span class="tier-label alt">Enterprise</span>
+                        <div class="tier-summary">
+                            <div class="tier-description">
+                                <h2 class="tier-name">Ushahidi Enterprise</h2>
+                                <p>Ushahidi platform capabilities, technical expertise, ongoing support, and
+                                    customizations.</p>
+                            </div>
+                            <div class="tier-highlight">
+                                <p>Enterprise plans starts at $5,000.</p>
+                            </div>
+                            <div class="tier-features">
+                                <div class="tier-feature">
+                                    <h3 class="tier-heading">Projects include all Basic features and much more, contact
+                                        us to find out about the full a catalogue of technical services on offer.</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://ushahidi.com/enterprise-partnerships" class="button button-alpha">Contact
+                            us</a>
 
-                    <div class="case-studies-item">
-                        <h2 class="section-heading">International Development, Humanitarian, University or Research Organization</h2>
-                        <p><em>On Enterprise a catalogue of technical services is on offer</em></p>
-                        <p>We can assist with the technical set-up, survey design, a variety of targeted trainings, metrics and analysis, programmatic management, ongoing technical support, and custom feature development. We want you to be able to focus on your project goals and impact and let us stress about the technology.</p>
-                        <a href="https://www.ushahidi.com/enterprise-partnerships" class="button" target="_blank">Continue</a>
-                    </div>
-
-                    <div class="case-studies-item">
-                        <h2 class="section-heading">Foundation or Potential Funder</h2>
-                        <p><em>We have loads of ideas for how to improve the Ushahidi platform - so let’s talk!</em></p>
-                        <p>From incorporating machine learning, automation, and new data sources, to making the platform more secure in high-risk situations and reaching last-mile users - we’re constantly working to improve our core services and functionality.</p>
-                        <p>We’re also always seeking core funding for sustainability from organizations who believe in our mission and impact.</p>
-                        <a href="https://www.ushahidi.com/impact-report" class="button" target="_blank">Continue</a>
-                    </div>
-                    <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
-                    <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
-                </div>
-            </div>
-        </section>
-        <section class="section-faq">
-            <h1 class="section-title">Frequently asked questions</h1>
-            <div class="wrapper">
-                <div class="faq-grid">
-                    <div id="5727" class="faq">
-                        <h3>How is Ushahidi funded?</h3>
-                        <p class="small lt-color"></p><p>Ushahidi is a nonprofit, open source, software as a service (SaaS) organization, but we operate as a social enterprise. We are both grant funded and revenue generating.
-                    </p><p>We build and sell a replicable, scalable, and sustainable software platform called Ushahidi. (And a new emergency management check-in product called TenFour) to both grassroots organizations and international development and humanitarian agencies, but also make the code base to the Ushahidi platform available open source.
-                    </p><p></p>
-                    </div>
-                    <div id="5348" class="faq">
-                        <h3>What is a deployment?</h3>
-                        <p class="small lt-color"></p><p>A deployment is an instance of the Ushahidi platform for your particular project.</p><p></p>
-                    </div>
-                    <div id="5349" class="faq">
-                        <h3>What’s an project admin?</h3>
-                        <p class="small lt-color"></p><p>An project admin is someone on your team who will manage and run your deployment by logging into the deployment to view and manage unpublished reports, create custom user roles, and edit deployment settings. You may have multiple admins on you staff to run your deployment.</p><p></p>
-                    </div>
-                    <div id="5350" class="faq">
-                        <h3>What’s a crowdsourced survey?</h3>
-                        <p class="small lt-color"></p><p>A crowdsourced survey is a customizable set of questions available for anyone to answer on the platform that, when completed, creates a post accessible on the timeline and map pages. Multiple crowdsourced surveys with different sets of questions can be configured on the same deployment, allowing you to collect and compare different types of information.</p><p></p>
-                    </div>
-                    <div id="5351" class="faq">
-                        <h3>What’s a targeted survey?</h3>
-                        <p class="small lt-color"></p><p>A targeted survey is set of questions that can be drafted within the Ushahidi platform and sent to a pre populated list of phone numbers. You can therefore send a survey to your beneficiaries, stakeholders, or field staff (who you have the cell phone numbers for) in order to collect and analyze their answers to targeted questions as part of your project. Currently targeted surveys are available on the Ushahidi platform via SMS only.</p><p></p>
-                    </div>
-                    <div id="5352" class="faq">
-                        <h3>What’s a post?</h3>
-                        <p class="small lt-color"></p><p>Posts come in two forms: crowdsourced and targeted. A crowdsourced post is a piece of unstructured or semistructured data from a public author via any enabled data source such as web form, mobile application, email, Twitter, or SMS. A targeted post is a piece of unstructured or semistructured data from a particular author, such as the recipient of a targeted SMS survey.</p><p></p>
-                    </div>
-                    <div id="5353" class="faq">
-                        <h3>Is there a limit to the number of crowdsourced survey responses I can receive?</h3>
-                        <p class="small lt-color"></p><p>There is no limit to the number of people or posts via the Ushahidi Basic self service plan, an Enterprise Partnership, or a Grassroots Social Impact License! There is a limit of 25 posts for the Ushahidi Demo self service plan.</p><p></p>
-                    </div>
-                    <div id="5728" class="faq">
-                        <h3>What’s the Ushahidi mobile app?</h3>
-                        <p class="small lt-color"></p><p>The Ushahidi mobile app is available via iOS or Android. It allows users to search for deployment, add a deployment, respond to a survey, and view other posts on a deployment.</p><p></p>
-                    </div>
-                    <div id="5354" class="faq">
-                        <h3>Does the self service Ushahidi Demo plan have a time limit?</h3>
-                        <p class="small lt-color"></p><p>Yes, the Ushahidi Demo self service plan can be used for 1 month.</p><p></p>
-                    </div>
-                    <div id="5355" class="faq">
-                        <h3>What are data sources: embeddable web form, app, email, Twitter, and SMS?</h3>
-                        <p class="small lt-color"></p><p>Data collection sources are the different channels that can be used to gather crowdsourced reports in a deployment. We currently enable posts to be completed via embeddable web forms, a native Android and iOS app, Twitter, email, and SMS. SMSsync, Twilio, and Nexmo are SMS gateways that can be configured to transfer inbound messages to a deployment. </p><p></p>
-                    </div>
-                    <div id="5723" class="faq">
-                        <h3>Are the costs to send and receive SMS messages included in the price of the Ushahidi platform?</h3>
-                        <p class="small lt-color"></p><p>No, the cost to send and receive SMS messages is not included in the price of the Ushahidi platform. Our team will help you to set up an account with one of our supported SMS gateways and the cost will be paid through them.</p><p></p>
-                    </div>
-                    <div id="5724" class="faq">
-                        <h3>What does “Import and Export data” mean?</h3>
-                        <p class="small lt-color"></p><p>Data can be uploaded to or downloaded from an Ushahidi platform deployment via CSV file. Existing data sets can be uploaded to a deployment in bulk, and data can be downloaded from the deployment either in full or based on a specific filter criteria.</p><p></p>
-                    </div>
-                    <div id="5725" class="faq">
-                        <h3>What are roles and permissions?</h3>
-                        <p class="small lt-color"></p><p>Roles and permissions allow you to assign your registered admins on your team different levels of access to the deployment data and settings. An admin can have permissions to five different controls: Manage Users, Manage Posts, Manage Settings, Bulk Data Import, Edit their own posts. For example, some may be granted view-only rights to unpublished posts, while others may have edit rights, and still others may have the ability to change settings such as data sources or survey questions.</p><p></p>
-                    </div>
-                    <div id="5726" class="faq">
-                        <h3>What are private deployments?</h3>
-                        <p class="small lt-color"></p><p>Private deployments require a registered user to login before accessing any of the deployment data. Therefore your deployment could be made private within you team or organization.</p><p></p>
-                    </div>
-                    <div id="5729" class="faq">
-                        <h3>What are One-time services?</h3>
-                        <p class="small lt-color"></p><p>Ushahidi provides a catalogue of services and expertise available via enterprise partnership in order to support our partners in the use of the Ushahidi platform. One-time services available include platform setup, a variety of virtual or in person trainings, survey configuration support, and others. We want you to focus on your project goals and impact. Our team will worry about the technology.</p><p></p>
-                    </div>
-                    <div id="5730" class="faq">
-                        <h3>What are On-going services?</h3>
-                        <p class="small lt-color"></p><p>Ushahidi provides a catalogue of services and expertise available via enterprise partnership in order to support our partners in the use of the Ushahidi platform. On-going services include platform hosting and maintenance, technical support, and others. We want you to focus on your project goals and impact. Our team will worry about the technology.</p><p></p>
-                    </div>
-                    <div id="5731" class="faq">
-                        <h3>What is Custom feature development?</h3>
-                        <p class="small lt-color"></p><p>Ushahidi can scope out and provide a budget for customizations to the existing Ushahidi platform if desired by Enterprise partners. These customizations can include new features, new data sources, additionally language capabilities, and other requests or features.</p><p></p>
                     </div>
                 </div>
+                <section>
+                    <div class="wrapper">
+                        <div class="case-studies-group">
+                            <div class="case-studies-item">
+                                <h2 class="section-heading">Grassroots projects</h2>
+                                <p><em>Apply for a free Basic plan</em></p>
+                                <p>Small non profits and grassroots organizations that are aligned with Ushahidi's
+                                    mission and can demonstrate a yearly operating budget of less than $250k USD per
+                                    year are invited to apply for a free Basic plan.</p>
+                                <p>You can still try out Ushahidi platform by signing up for the free Ushahidi Demo
+                                    version.</p>
+                                <a href="https://ushahidi.com/pricing/apply-for-free" class="button" role="button"
+                                    onclick="ga('send','event','links','select','social impact',1);"
+                                    target="_blank">Continue</a>
+                            </div>
+
+                            <div class="case-studies-item">
+                                <h2 class="section-heading">Ushahidi code</h2>
+                                <p><em>Self-host &amp; customize Ushahidi on your own</em></p>
+                                <p>Ushahidi is an open source product, meaning that all the code that runs it is
+                                    available for all admins to download and modify. If you'd like to download Ushahidi,
+                                    customize it, and host it on your own servers, it is available on GitHub.</p>
+                                <a href="https://github.com/ushahidi/platform" class="button" role="button"
+                                    onclick="ga('send','event','links','download', 'ushahidi',1);"
+                                    target="_blank">Continue</a>
+                            </div>
+
+                            <div class="case-studies-item">
+                                <h2 class="section-heading">International Development, Humanitarian, University or
+                                    Research Organization</h2>
+                                <p><em>On Enterprise a catalogue of technical services is on offer</em></p>
+                                <p>We can assist with the technical set-up, survey design, a variety of targeted
+                                    trainings, metrics and analysis, programmatic management, ongoing technical support,
+                                    and custom feature development. We want you to be able to focus on your project
+                                    goals and impact and let us stress about the technology.</p>
+                                <a href="https://www.ushahidi.com/enterprise-partnerships" class="button" role="button"
+                                    target="_blank">Continue</a>
+                            </div>
+
+                            <div class="case-studies-item">
+                                <h2 class="section-heading">Foundation or Potential Funder</h2>
+                                <p><em>We have loads of ideas for how to improve the Ushahidi platform - so let’s
+                                        talk!</em></p>
+                                <p>From incorporating machine learning, automation, and new data sources, to making the
+                                    platform more secure in high-risk situations and reaching last-mile users - we’re
+                                    constantly working to improve our core services and functionality.</p>
+                                <p>We’re also always seeking core funding for sustainability from organizations who
+                                    believe in our mission and impact.</p>
+                                <a href="https://www.ushahidi.com/impact-report" class="button" role="button"
+                                    target="_blank">Continue</a>
+                            </div>
+                            <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
+                            <p class="small hide-on-mobile" style="visibility: hidden;">this is a line break hack</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="section-faq">
+                    <h1 class="section-title">Frequently asked questions</h1>
+                    <div class="wrapper">
+                        <div class="faq-grid">
+                            <div id="5727" class="faq">
+                                <h3>How is Ushahidi funded?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Ushahidi is a nonprofit, open source, software as a service (SaaS) organization, but
+                                    we operate as a social enterprise. We are both grant funded and revenue generating.
+                                </p>
+                                <p>We build and sell a replicable, scalable, and sustainable software platform called
+                                    Ushahidi. (And a new emergency management check-in product called TenFour) to both
+                                    grassroots organizations and international development and humanitarian agencies,
+                                    but also make the code base to the Ushahidi platform available open source.
+                                </p>
+                                <p></p>
+                            </div>
+                            <div id="5348" class="faq">
+                                <h3>What is a deployment?</h3>
+                                <p class="small lt-color"></p>
+                                <p>A deployment is an instance of the Ushahidi platform for your particular project.</p>
+                                <p></p>
+                            </div>
+                            <div id="5349" class="faq">
+                                <h3>What’s an project admin?</h3>
+                                <p class="small lt-color"></p>
+                                <p>An project admin is someone on your team who will manage and run your deployment by
+                                    logging into the deployment to view and manage unpublished reports, create custom
+                                    user roles, and edit deployment settings. You may have multiple admins on you staff
+                                    to run your deployment.</p>
+                                <p></p>
+                            </div>
+                            <div id="5350" class="faq">
+                                <h3>What’s a crowdsourced survey?</h3>
+                                <p class="small lt-color"></p>
+                                <p>A crowdsourced survey is a customizable set of questions available for anyone to
+                                    answer on the platform that, when completed, creates a post accessible on the
+                                    timeline and map pages. Multiple crowdsourced surveys with different sets of
+                                    questions can be configured on the same deployment, allowing you to collect and
+                                    compare different types of information.</p>
+                                <p></p>
+                            </div>
+                            <div id="5351" class="faq">
+                                <h3>What’s a targeted survey?</h3>
+                                <p class="small lt-color"></p>
+                                <p>A targeted survey is set of questions that can be drafted within the Ushahidi
+                                    platform and sent to a pre populated list of phone numbers. You can therefore send a
+                                    survey to your beneficiaries, stakeholders, or field staff (who you have the cell
+                                    phone numbers for) in order to collect and analyze their answers to targeted
+                                    questions as part of your project. Currently targeted surveys are available on the
+                                    Ushahidi platform via SMS only.</p>
+                                <p></p>
+                            </div>
+                            <div id="5352" class="faq">
+                                <h3>What’s a post?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Posts come in two forms: crowdsourced and targeted. A crowdsourced post is a piece of
+                                    unstructured or semistructured data from a public author via any enabled data source
+                                    such as web form, mobile application, email, Twitter, or SMS. A targeted post is a
+                                    piece of unstructured or semistructured data from a particular author, such as the
+                                    recipient of a targeted SMS survey.</p>
+                                <p></p>
+                            </div>
+                            <div id="5353" class="faq">
+                                <h3>Is there a limit to the number of crowdsourced survey responses I can receive?</h3>
+                                <p class="small lt-color"></p>
+                                <p>There is no limit to the number of people or posts via the Ushahidi Basic self
+                                    service plan, an Enterprise Partnership, or a Grassroots Social Impact License!
+                                    There is a limit of 25 posts for the Ushahidi Demo self service plan.</p>
+                                <p></p>
+                            </div>
+                            <div id="5728" class="faq">
+                                <h3>What’s the Ushahidi mobile app?</h3>
+                                <p class="small lt-color"></p>
+                                <p>The Ushahidi mobile app is available via iOS or Android. It allows users to search
+                                    for deployment, add a deployment, respond to a survey, and view other posts on a
+                                    deployment.</p>
+                                <p></p>
+                            </div>
+                            <div id="5354" class="faq">
+                                <h3>Does the self service Ushahidi Demo plan have a time limit?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Yes, the Ushahidi Demo self service plan can be used for 1 month.</p>
+                                <p></p>
+                            </div>
+                            <div id="5355" class="faq">
+                                <h3>What are data sources: embeddable web form, app, email, Twitter, and SMS?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Data collection sources are the different channels that can be used to gather
+                                    crowdsourced reports in a deployment. We currently enable posts to be completed via
+                                    embeddable web forms, a native Android and iOS app, Twitter, email, and SMS.
+                                    SMSsync, Twilio, and Nexmo are SMS gateways that can be configured to transfer
+                                    inbound messages to a deployment. </p>
+                                <p></p>
+                            </div>
+                            <div id="5723" class="faq">
+                                <h3>Are the costs to send and receive SMS messages included in the price of the Ushahidi
+                                    platform?</h3>
+                                <p class="small lt-color"></p>
+                                <p>No, the cost to send and receive SMS messages is not included in the price of the
+                                    Ushahidi platform. Our team will help you to set up an account with one of our
+                                    supported SMS gateways and the cost will be paid through them.</p>
+                                <p></p>
+                            </div>
+                            <div id="5724" class="faq">
+                                <h3>What does “Import and Export data” mean?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Data can be uploaded to or downloaded from an Ushahidi platform deployment via CSV
+                                    file. Existing data sets can be uploaded to a deployment in bulk, and data can be
+                                    downloaded from the deployment either in full or based on a specific filter
+                                    criteria.</p>
+                                <p></p>
+                            </div>
+                            <div id="5725" class="faq">
+                                <h3>What are roles and permissions?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Roles and permissions allow you to assign your registered admins on your team
+                                    different levels of access to the deployment data and settings. An admin can have
+                                    permissions to five different controls: Manage Users, Manage Posts, Manage Settings,
+                                    Bulk Data Import, Edit their own posts. For example, some may be granted view-only
+                                    rights to unpublished posts, while others may have edit rights, and still others may
+                                    have the ability to change settings such as data sources or survey questions.</p>
+                                <p></p>
+                            </div>
+                            <div id="5726" class="faq">
+                                <h3>What are private deployments?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Private deployments require a registered user to login before accessing any of the
+                                    deployment data. Therefore your deployment could be made private within you team or
+                                    organization.</p>
+                                <p></p>
+                            </div>
+                            <div id="5729" class="faq">
+                                <h3>What are One-time services?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Ushahidi provides a catalogue of services and expertise available via enterprise
+                                    partnership in order to support our partners in the use of the Ushahidi platform.
+                                    One-time services available include platform setup, a variety of virtual or in
+                                    person trainings, survey configuration support, and others. We want you to focus on
+                                    your project goals and impact. Our team will worry about the technology.</p>
+                                <p></p>
+                            </div>
+                            <div id="5730" class="faq">
+                                <h3>What are On-going services?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Ushahidi provides a catalogue of services and expertise available via enterprise
+                                    partnership in order to support our partners in the use of the Ushahidi platform.
+                                    On-going services include platform hosting and maintenance, technical support, and
+                                    others. We want you to focus on your project goals and impact. Our team will worry
+                                    about the technology.</p>
+                                <p></p>
+                            </div>
+                            <div id="5731" class="faq">
+                                <h3>What is Custom feature development?</h3>
+                                <p class="small lt-color"></p>
+                                <p>Ushahidi can scope out and provide a budget for customizations to the existing
+                                    Ushahidi platform if desired by Enterprise partners. These customizations can
+                                    include new features, new data sources, additionally language capabilities, and
+                                    other requests or features.</p>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
-    </div>
-</main>
+    </main>
 </div>
