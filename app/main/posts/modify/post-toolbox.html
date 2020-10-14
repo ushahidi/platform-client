@@ -1,104 +1,104 @@
 <div class="toolbox" ng-if="post.id">
-  <!-- IF: User has permission to manage post status -->
-  <div class="tool" ng-if="allowedChangeStatus()" dropdown>
-    <fieldset class="custom-fieldset init">
-      <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
-        <span class="legend-label">
-          <span class="custom-fieldset-value">
+    <!-- IF: User has permission to manage post status -->
+    <div class="tool" ng-if="allowedChangeStatus()" dropdown>
+        <fieldset class="custom-fieldset init">
+            <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+                <span class="legend-label">
+                    <span class="custom-fieldset-value">
+                        <svg class="iconic">
+                            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
+                            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="post.status=='draft'"></use>
+                            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+                        </svg>
+                        <span translate="post.published" ng-if="post.status == 'published'">Published</span>
+                        <span translate="post.draft" ng-if="post.status == 'draft'">Under review</span>
+                        <span translate="post.archived" ng-if="post.status == 'archived'">Archived</span>
+
+                    </span>
+                </span>
+                <svg class="iconic chevron">
+                    <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                </svg>
+            </legend>
+            <div class="dropdown-menu init" dropdown-menu>
+                <div class="form-field radio icon-input" name="status" ng-model="post.status"
+                    ng-repeat="status in statuses" ng-class="{'checked' : status == post.status}"
+                    ng-click="changeStatus(status)">
+                    <label for="{{status}}">
+                        <svg class="iconic">
+                            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
+                            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
+                            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
+                        </svg>
+                        <input type="radio" id="{{status}}" />
+                        <span translate="post.published" ng-if="status == 'published'">Published</span>
+                        <span translate="post.draft" ng-if="status == 'draft'">Under review</span>
+                        <span translate="post.archived" ng-if="status == 'archived'">Archived</span>
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <!-- END: IF -->
+
+    <!--// IF: User has permission to change the author & post timestamp //-->
+    <div class="tool" dropdown auto-close="disabled" ng-if="allowedChangeOwner()">
+        <h6 class="tool-heading" translate="post.author">Author</h6>
+
+        <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle ng-click="loadAuthorFormDefaults()">
             <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="post.status=='draft'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
+                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
-            <span translate="post.published" ng-if="post.status == 'published'">Published</span>
-            <span translate="post.draft" ng-if="post.status == 'draft'">Under review</span>
-            <span translate="post.archived" ng-if="post.status == 'archived'">Archived</span>
-
-          </span>
+            <span class="label hidden">Show/hide</span>
         </span>
-        <svg class="iconic chevron">
-          <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-        </svg>
-      </legend>
-      <div class="dropdown-menu init" dropdown-menu>
-        <div class="form-field radio icon-input"
-             name="status"
-             ng-model="post.status"
-             ng-repeat="status in statuses"
-             ng-class="{'checked' : status == post.status}"
-             ng-click="changeStatus(status)"
-             >
-          <label for="{{status}}">
-          <svg class="iconic">
-            <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
-            <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
-          </svg>
-          <input type="radio" id="{{status}}" />
-          <span translate="post.published" ng-if="status == 'published'">Published</span>
-            <span translate="post.draft" ng-if="status == 'draft'">Under review</span>
-            <span translate="post.archived" ng-if="status == 'archived'">Archived</span>
-        </label>
-      </div>
-      </div>
-    </fieldset>
-  </div>
-  <!-- END: IF -->
 
-  <!--// IF: User has permission to change the author & post timestamp //-->
-  <div class="tool" dropdown auto-close="disabled" ng-if="allowedChangeOwner()">
-    <h6 class="tool-heading" translate="post.author">Author</h6>
-
-    <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle ng-click="loadAuthorFormDefaults()">
-      <svg class="iconic">
-        <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-      </svg>
-      <span class="label hidden">Show/hide</span>
-    </span>
-
-    <div class="toggle-content init" dropdown-menu>
-      <div class="listing-item">
-        <div class="listing-item-primary" ng-if="showUserRealname()">
-          <div class="listing-item-image">
-            <img src="//www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
-          </div>
-          <h2 class="listing-item-title">{{ post.user.realname }}</h2>
-          <p class="listing-item-secondary"></p>
+        <div class="toggle-content init" dropdown-menu>
+            <div class="listing-item">
+                <div class="listing-item-primary" ng-if="showUserRealname()">
+                    <div class="listing-item-image">
+                        <img src="//www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40"
+                            class="avatar" alt="user avatar">
+                    </div>
+                    <h2 class="listing-item-title">{{ post.user.realname }}</h2>
+                    <p class="listing-item-secondary"></p>
+                </div>
+                <div class="listing-item-primary" ng-if="showAuthorRealname()">
+                    <h2 class="listing-item-title">{{ post.author_realname }}</h2>
+                    <p class="listing-item-secondary"></p>
+                </div>
+                <div class="listing-item-primary" ng-if="showEditAuthorForm">
+                    <div class="form-field init">
+                        <input type="text" class="adapt-field" ng-model="post.author_realname"
+                            focus="showEditAuthorForm">
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="button-gamma button-flat" data-modal="edit-author" ng-click="editAuthor()"
+                ng-if="showEditAuthorButton" translate="post.change_author">Change author</button>
         </div>
-        <div class="listing-item-primary" ng-if="showAuthorRealname()">
-          <h2 class="listing-item-title">{{ post.author_realname }}</h2>
-          <p class="listing-item-secondary"></p>
-        </div>
-        <div class="listing-item-primary" ng-if="showEditAuthorForm">
-          <div class="form-field init">
-            <input type="text" class="adapt-field" ng-model="post.author_realname" focus="showEditAuthorForm">
-          </div>
-        </div>
-      </div>
-      <button type="button" class="button-gamma button-flat" data-modal="edit-author" ng-click="editAuthor()" ng-if="showEditAuthorButton" translate="post.change_author">Change author</button>
     </div>
-  </div>
 
-  <div class="tool" dropdown auto-close="disabled">
-    <h6 class="tool-heading" translate="post.post_date">Post date</h6>
+    <div class="tool" dropdown auto-close="disabled">
+        <h6 class="tool-heading" translate="post.post_date">Post date</h6>
 
-    <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
-      <svg class="iconic">
-        <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-      </svg>
-      <span class="label hidden">Show/hide</span>
-    </span>
+        <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
+            <svg class="iconic">
+                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden">Show/hide</span>
+        </span>
 
-    <div class="toggle-content init" dropdown-menu>
-      <fieldset>
-        <post-datetime ng-model="post.post_date"></post-datetime>
-        <ul class="metadata">
-            <li><span translate="post.created_at"></span> {{displayCreated}} <span translate-values="{ source : source }" translate="post.source"></span></li>
-            <li ng-if="post.updated"><span translate="post.updated_at"></span> {{displayUpdated}}</li>
-        </ul>
-      </fieldset>
+        <div class="toggle-content init" dropdown-menu>
+            <fieldset>
+                <post-datetime ng-model="post.post_date"></post-datetime>
+                <ul class="metadata">
+                    <li><span translate="post.created_at"></span> {{displayCreated}} <span
+                            translate-values="{ source : source }" translate="post.source"></span></li>
+                    <li ng-if="post.updated"><span translate="post.updated_at"></span> {{displayUpdated}}</li>
+                </ul>
+            </fieldset>
+        </div>
     </div>
-  </div>
 
-  <!-- END: IF -->
+    <!-- END: IF -->
 </div>

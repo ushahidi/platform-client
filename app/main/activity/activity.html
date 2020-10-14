@@ -3,7 +3,8 @@
     <div class="mode-context init" ng-controller="navigation as nav" dropdown>
         <header class="mode-context-header" ng-class="{ 'has-logo' : nav.site.image_header }">
             <h1 class="mode-context-title"><a href="/" ng-bind="nav.site.name"></a></h1>
-            <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo" />
+            <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo"
+                alt="Deployment-logo" />
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
@@ -19,20 +20,24 @@
     </div>
 
     <main role="main">
-        <div class="toolbar" ng-show="isActivityAvailable" >
+        <div class="toolbar" ng-show="isActivityAvailable">
             <form role="search" class="searchbar" name="searchForm" ng-submit="saveFilters()">
 
                 <div class="searchbar-options">
-                    <fieldset class="custom-fieldset init" data-fieldset-type="date-range" dropdown auto-close="disabled" is-open="filtersMenuOpen">
+                    <fieldset class="custom-fieldset init" data-fieldset-type="date-range" dropdown
+                        auto-close="disabled" is-open="filtersMenuOpen">
                         <legend class="dropdown-trigger init" dropdown-toggle>
-                            <span class="legend-label" ng-show="currentInterval !== 'custom'" translate="{{'graph.' + currentInterval }}">Date range</span>
-                            <span class="legend-label"  ng-show="currentInterval == 'custom'"
-                                  translate="graph.custom_display"
-                                  translate-values="{
+                            <span class="legend-label" ng-show="currentInterval !== 'custom'"
+                                translate="{{'graph.' + currentInterval }}">Date range</span>
+                            <span class="legend-label" ng-show="currentInterval == 'custom'"
+                                translate="graph.custom_display" translate-values="{
                                     start: (filters.created_after | date:'shortDate'),
-                                    end: (filters.created_before | date:'shortDate') }"
-                                  translate-compile>Date range</span>
-                            <svg class="iconic chevron"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use></svg>
+                                    end: (filters.created_before | date:'shortDate') }" translate-compile>Date
+                                range</span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
                         </legend>
 
                         <div class="dropdown-menu init" dropdown-menu>
@@ -44,51 +49,66 @@
                             </div>
                             <div class="form-field radio">
                                 <label>
-                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="week">
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval"
+                                        value="week">
                                     <span translate="graph.week">This week</span>
                                 </label>
                             </div>
                             <div class="form-field radio">
                                 <label>
-                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="month">
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval"
+                                        value="month">
                                     <span translate="graph.month">This month</span>
                                 </label>
                             </div>
 
                             <div class="form-field radio">
                                 <label>
-                                    <input ng-model="editableInterval" type="radio" name="editableInterval" value="custom">
+                                    <input ng-model="editableInterval" type="radio" name="editableInterval"
+                                        value="custom">
                                     <span translate="graph.custom">Custom date range</span>
                                 </label>
 
                                 <!-- todo: reuse filter-date -->
                                 <div class="form-fieldgroup">
                                     <div class="form-field date" ng-show="editableInterval == 'custom'">
-                                        <label class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
+                                        <label class="hidden" translate="global_filter.filter_tabs.created_after">Start
+                                            date</label>
                                         <div class="input-with-icon">
                                             <svg class="iconic">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    xlink:href="/img/iconic-sprite.svg#calendar"></use>
                                             </svg>
-                                            <input type="date" pick-a-date="createdAfter" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="createdAfter" />
+                                            <input type="date" pick-a-date="createdAfter"
+                                                pick-a-date-options="dateOptions"
+                                                placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}"
+                                                ng-model="createdAfter" />
                                         </div>
                                         <span class="date-joiner">to</span>
                                     </div>
 
                                     <div class="form-field date" ng-show="editableInterval == 'custom'">
-                                        <label class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
+                                        <label class="hidden" translate="global_filter.filter_tabs.created_before">End
+                                            date</label>
                                         <div class="input-with-icon">
                                             <svg class="iconic">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    xlink:href="/img/iconic-sprite.svg#calendar"></use>
                                             </svg>
-                                            <input type="date" pick-a-date="createdBefore" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="createdBefore">
+                                            <input type="date" pick-a-date="createdBefore"
+                                                pick-a-date-options="dateOptions"
+                                                placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}"
+                                                ng-model="createdBefore">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-field">
-                                <button type="button" class="button-beta" ng-click="cancelChangeFilters()" translate="app.cancel">Cancel</button>
-                                <button type="submit" class="button-alpha" translate="app.apply_filters">Apply filter</button>
+                                <button type="button" class="button-beta" ng-click="cancelChangeFilters()"
+                                    translate="app.cancel">Cancel</button>
+                                <button type="submit" class="button-alpha" translate="app.apply_filters">Apply
+                                    filter</button>
                             </div>
                         </div>
                     </fieldset>
@@ -147,7 +167,8 @@
             <div ng-if="targetedSurveysEnabled && loggedIn" class="listing card init">
                 <div class="listing-item active">
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title" translate="activity.targeted_activity">Tageted Survey Activity</h2>
+                        <h2 class="listing-item-title" translate="activity.targeted_activity">Tageted Survey Activity
+                        </h2>
                     </div>
 
                     <div class="listing-item-body">
@@ -158,7 +179,8 @@
             <div class="listing card init" ng-if="loggedIn">
                 <div class="listing-item active">
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title" translate="activity.crowdsourced_activity">Crowdsourced Survey Activity</h2>
+                        <h2 class="listing-item-title" translate="activity.crowdsourced_activity">Crowdsourced Survey
+                            Activity</h2>
                     </div>
 
                     <div class="listing-item-body">
@@ -166,7 +188,8 @@
                     </div>
                 </div>
             </div>
-        </div> <!--end main column-->
+        </div>
+        <!--end main column-->
 
 
         <aside class="secondary-col" role="complementary">

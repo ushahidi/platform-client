@@ -1,52 +1,56 @@
 <div class="listing card">
-  <h3 class="listing-heading" translate>post.messages.title</h3>
+    <h3 class="listing-heading" translate>post.messages.title</h3>
 
     <div ng-repeat="message in messages track by message.id" class="listing-item">
-      <div class="listing-item-primary">
-        <div class="listing-item-image" ng-if="message.direction == 'outgoing'">
-            <img src="//www.gravatar.com/avatar/{{ message.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
-            <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#arrow-thick-left"></use>
-            </svg>
-        </div>
-      <h2 class="listing-item-title">
+        <div class="listing-item-primary">
+            <div class="listing-item-image" ng-if="message.direction == 'outgoing'">
+                <img src="//www.gravatar.com/avatar/{{ message.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40"
+                    class="avatar" alt="user avatar">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="/img/iconic-sprite.svg#arrow-thick-left"></use>
+                </svg>
+            </div>
+            <h2 class="listing-item-title">
 
-        <span ng-if="message.direction == 'incoming'">{{ getContactDisplay() }}</span>
-        <span ng-if="message.direction == 'outgoing' && message.user.realname">{{ message.user.realname }}</span>
-      </h2>
-      <!--
+                <span ng-if="message.direction == 'incoming'">{{ getContactDisplay() }}</span>
+                <span
+                    ng-if="message.direction == 'outgoing' && message.user.realname">{{ message.user.realname }}</span>
+            </h2>
+            <!--
       <p>{{message.updated || message.created | date:'mediumDate'}} at {{message.updated || message.created | date:'shortTime'}}</p>
       -->
-      <p class="listing-item-secondary">{{message.displayTime}}</p>
-      <p>{{ message.message }}</p>
+            <p class="listing-item-secondary">{{message.displayTime}}</p>
+            <p>{{ message.message }}</p>
+        </div>
     </div>
-  </div>
 
-  <div class="listing-item" ng-show="totalItems > itemsPerPage">
-    <div class="listing-item-primary">
+    <div class="listing-item" ng-show="totalItems > itemsPerPage">
+        <div class="listing-item-primary">
 
-      <nav class="pagination" ng-show="showPagination">
-          <ul uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems" ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
-      </nav>
+            <nav class="pagination" ng-show="showPagination">
+                <ul uib-pagination ng-model="currentPage" items-per-page="itemsPerPage" total-items="totalItems"
+                    ng-change="pageChanged()" max-size="5" boundary-links="false" rotate="false"></ul>
+            </nav>
 
+        </div>
     </div>
-  </div>
 
-  <div class="listing-item">
-    <div class="listing-item-primary">
-      <h2 class="listing-item-title">
-        <a href="" class="button button-flat" ng-click="reply()">
-          <svg class="iconic">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-          </svg>
-          {{ 'post.messages.send' | translate }}
-        </a>
-      </h2>
+    <div class="listing-item">
+        <div class="listing-item-primary">
+            <h2 class="listing-item-title">
+                <a href="" class="button button-flat" ng-click="reply()">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                    </svg>
+                    {{ 'post.messages.send' | translate }}
+                </a>
+            </h2>
+        </div>
     </div>
-  </div>
 
 
-<!--
+    <!--
   <div class="listing-item">
     <div class="listing-item-primary">
 

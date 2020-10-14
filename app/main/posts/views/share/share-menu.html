@@ -8,20 +8,16 @@
         <div class="listing-item">
             <div class="listing-item-primary">
                 <div class="listing-item-image">
-                    <img class="icon" src="/img/facebook.png" alt="">
+                    <img class="icon" src="/img/facebook.png" alt="Facebook icon">
                 </div>
                 <h2 class="listing-item-title">
-                  <div class="fb-share-button"
-                    data-href="{{shareUrl}}"
-                    data-layout="button_count"
-                    data-size="large"
-                    data-mobile-iframe="true">
-                      <a class="fb-xfbml-parse-ignore"
-                        target="_blank"
-                        ng-href="https://www.facebook.com/sharer/sharer.php?u={{shareUrlEncoded}}&amp;src=sdkpreparse">
-                          Facebook
-                      </a>
-                  </div>
+                    <div class="fb-share-button" data-href="{{shareUrl}}" data-layout="button_count" data-size="large"
+                        data-mobile-iframe="true">
+                        <a class="fb-xfbml-parse-ignore" target="_blank"
+                            ng-href="https://www.facebook.com/sharer/sharer.php?u={{shareUrlEncoded}}&amp;src=sdkpreparse">
+                            Facebook
+                        </a>
+                    </div>
                 </h2>
             </div>
         </div>
@@ -29,52 +25,56 @@
         <div class="listing-item">
             <div class="listing-item-primary">
                 <div class="listing-item-image">
-                    <img class="icon" src="/img/twitter.png" alt="">
+                    <img class="icon" src="/img/twitter.png" alt="Twitter icon">
                 </div>
-                <h2 class="listing-item-title"><a target="_blank" ng-href="https://twitter.com/intent/tweet?url={{shareUrlEncoded}}">Twitter</a></h2>
+                <h2 class="listing-item-title"><a target="_blank"
+                        ng-href="https://twitter.com/intent/tweet?url={{shareUrlEncoded}}">Twitter</a></h2>
             </div>
         </div>
 
         <div class="listing-item" dropdown auto-close="disabled">
-          <div dropdown-toggle>
-            <div class="listing-item-secondary">
-                <button type="button" class="button-link listing-item-toggle">
-                    <svg class="iconic">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                    </svg>
-                    <span class="button-label">Configure</span>
-                </button>
-            </div>
-
-            <div class="listing-item-primary">
-                <div class="listing-item-image">
-                  <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#code"></use>
-                  </svg>
+            <div dropdown-toggle>
+                <div class="listing-item-secondary">
+                    <button type="button" class="button-link listing-item-toggle">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                        </svg>
+                        <span class="button-label">Configure</span>
+                    </button>
                 </div>
-                <h2 class="listing-item-title listing-item-toggle">Embed</h2>
+
+                <div class="listing-item-primary">
+                    <div class="listing-item-image">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#code">
+                            </use>
+                        </svg>
+                    </div>
+                    <h2 class="listing-item-title listing-item-toggle">Embed</h2>
+                </div>
             </div>
-          </div>
 
             <div class="listing-item-body" dropdown-menu>
-              <div class="form-field">
-                  <label>HTML</label>
-                  <textarea>&lt;iframe width="560" height="315" src="{{shareUrl}}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea>
-              </div>
-          </div>
-      </div>
+                <div class="form-field">
+                    <label>HTML</label>
+                    <textarea>&lt;iframe width="560" height="315" src="{{shareUrl}}" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</textarea>
+                </div>
+            </div>
+        </div>
 
-      <div class="listing-item" ng-show="isExportable() && hasPermission">
-          <div class="listing-item-primary">
-              <div class="listing-item-image">
-                <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#external-link"></use>
-                </svg>
-              </div>
-              <h2 class="listing-item-title">
-                <post-export filters="filters"></post-export>
-              </h2>
-          </div>
-      </div>
-  </div>
+        <div class="listing-item" ng-show="isExportable() && hasPermission">
+            <div class="listing-item-primary">
+                <div class="listing-item-image">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                            xlink:href="/img/iconic-sprite.svg#external-link"></use>
+                    </svg>
+                </div>
+                <h2 class="listing-item-title">
+                    <post-export filters="filters"></post-export>
+                </h2>
+            </div>
+        </div>
+    </div>
 </form>

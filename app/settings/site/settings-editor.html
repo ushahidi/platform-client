@@ -11,7 +11,8 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -25,17 +26,19 @@
             <div class="toolbar">
                 <div class="button-group">
                     <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                    <button type="submit" ng-click="updateConfig()" class="button-alpha"  ng-if="!saving_config" ng-disabled="form.$invalid || isUnchanged(site) || saving_config">{{save}}</button>
-                    <button type="submit" class="button-alpha"  ng-if="saving_config" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>{{saving}}
-                      <div class="loading">
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"></div>
-                      </div>
+                    <button type="submit" ng-click="updateConfig()" class="button-alpha" ng-if="!saving_config"
+                        ng-disabled="form.$invalid || isUnchanged(site) || saving_config">{{save}}</button>
+                    <button type="submit" class="button-alpha" ng-if="saving_config"
+                        ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>{{saving}}
+                        <div class="loading">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
                     </button>
 
 
-<!--                     <button type="button" ng-click="updateConfig()" class="button-alpha" type="submit" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>
+                    <!--                     <button type="button" ng-click="updateConfig()" class="button-alpha" type="submit" ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>
                         <div class="loading" ng-if="saving_config">
                             <div class="line"></div>
                             <div class="line"></div>
@@ -43,7 +46,8 @@
                         </div>
                         <span ng-hide="saving" translate>app.save</span>
                     </button>
- -->                </div>
+ -->
+                </div>
             </div>
             <!-- end toolbar -->
 
@@ -51,12 +55,18 @@
 
                 <div class="form-sheet">
                     <div class="form-field">
-                        <label for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.deployment_name</label>
-                        <input id="name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+                        <label for="site-settings-name"
+                            ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }"
+                            translate>settings.deployment_name</label>
+                        <input id="name" name="name" type="text"
+                            placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name"
+                            ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
 
-                         <div class="alert error" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
+                        <div class="alert error" ng-repeat="(error, value) in form.name.$error"
+                            ng-show="form.name.$dirty">
                             <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <p>{{'settings.valid.name.' + error  | translate}}</p>
                         </div>
@@ -65,55 +75,65 @@
                     <div class="form-field">
                         <label for="site-settings-description" translate>settings.site_description</label>
 
-                        <textarea id="site-settings-description" name="description" type="text" ng-model="site.description" placeholder="{{'settings.site_description_placeholder' | translate}}" data-min-rows='1' rows='1'></textarea>
+                        <textarea id="site-settings-description" name="description" type="text"
+                            ng-model="site.description"
+                            placeholder="{{'settings.site_description_placeholder' | translate}}" data-min-rows='1'
+                            rows='1'></textarea>
                     </div>
 
                     <div class="form-field">
-                         <label translate>settings.deployment_logo</label>
-                         <figure ng-show="site.image_header">
-                            <img ng-src="{{ site.image_header }}" class="postcard-image deployment-logo" />
-                            <button class="button-flat" ng-click="clearHeader()" translate="settings.delete_logo"></button>
-                         </figure>
+                        <label translate>settings.deployment_logo</label>
+                        <figure ng-show="site.image_header">
+                            <img ng-src="{{ site.image_header }}" class="postcard-image deployment-logo"
+                                alt="Deployment-logo" />
+                            <button class="button-flat" ng-click="clearHeader()"
+                                translate="settings.delete_logo"></button>
+                        </figure>
 
-                         <file-upload container="fileContainer">
-                         </file-upload>
+                        <file-upload container="fileContainer">
+                        </file-upload>
                     </div>
 
                     <div class="form-field" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
                         <label translate>settings.site_email</label>
                         <p class="small" translate>settings.site_email_note</p>
-                        <input id="site-settings-email" type="email" placeholder="name@domain.com" value="brandon@ushahidi.com" name="email" ng-model="site.email">
-                        <div ng-repeat="(error, value) in form.email.$error"
-                            ng-show="form.email.$dirty"
+                        <input id="site-settings-email" type="email" placeholder="name@domain.com"
+                            value="brandon@ushahidi.com" name="email" ng-model="site.email">
+                        <div ng-repeat="(error, value) in form.email.$error" ng-show="form.email.$dirty"
                             class="alert error">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <p translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></p>
                         </div>
                     </div>
                     <div class="form-field">
-                    <label translate>settings.site_language</label>
-                    <language-switch site="site"></language-switch>
+                        <label translate>settings.site_language</label>
+                        <language-switch site="site"></language-switch>
                     </div>
                     <div class="form-field checkbox" ng-show="isPrivateEnabled">
-                         <input id="private" ng-model="site.private" type="checkbox">
-                         <label for="private" translate>settings.site_private</label>
-                         <p translate="settings.site_private_desc">Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access.</p>
+                        <input id="private" ng-model="site.private" type="checkbox">
+                        <label for="private" translate>settings.site_private</label>
+                        <p translate="settings.site_private_desc">Enabling this option makes your deployment and it’s
+                            data only accessible to registered users with the correct privileges, who must sign in for
+                            access.</p>
                     </div>
 
                     <div class="form-field">
-                      <label translate="settings.api_key">API Key</label>
-                      <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.</p>
-                      <button type="button" class="button-beta" ng-click="generateApiKey()">
-                        <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#key"></use>
-                        </svg>
-                        <span class="button-label hidden-when-small">
-                          Generate API Key
-                        </span>
-                      </button>
-                      <span id="api_key" class="bug">{{api_key.api_key}}</span>
+                        <label translate="settings.api_key">API Key</label>
+                        <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to
+                            allow third party systems to interact with your Ushahidi deployment.</p>
+                        <button type="button" class="button-beta" ng-click="generateApiKey()">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#key">
+                                </use>
+                            </svg>
+                            <span class="button-label hidden-when-small">
+                                Generate API Key
+                            </span>
+                        </button>
+                        <span id="api_key" class="bug">{{api_key.api_key}}</span>
 
                     </div>
 
@@ -133,7 +153,8 @@
 
                         <button class="button-destructive">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#trash"></use>
                             </svg>
                             <span class="button-label" translate>settings.deployment_delete</span>
                         </button>
