@@ -1,32 +1,20 @@
 <div class="form-field inline" ng-class="{'hidden': !showInput}">
     <label class="hidden" translate="category.editor.name">Category name</label>
-        <input
-            type="text"
-            placeholder="{{'category.editor.name' | translate}}"
-            style="width: 240px;"
-            ng-model="categoryName"
-        />
-        <button
-            type="button"
-            class="button-alpha button-flat"
-            ng-disabled="categoryName.length === 0"
-            ng-click="saveCategory($event);"
-        >
-            <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#check"></use>
-            </svg>
+    <input type="text" placeholder="{{'category.editor.name' | translate}}" style="width: 240px;"
+        ng-model="categoryName" />
+    <button type="button" role="button" class="button-alpha button-flat" ng-disabled="categoryName.length === 0"
+        ng-click="saveCategory($event);">
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#check"></use>
+        </svg>
         <span class="hidden" translate="app.add">Add</span>
-        </button>
-        <button
-            type="button"
-            class="button-beta button-flat"
-            ng-click="showInputToggle()"
-        >
-            <svg class="iconic">
-                <use xlink:href="/img/iconic-sprite.svg#trash"></use>
-            </svg>
-            <span class="hidden" translate="category.delete">Delete</span>
-        </button>
+    </button>
+    <button type="button" role="button" class="button-beta button-flat" ng-click="showInputToggle()">
+        <svg class="iconic">
+            <use xlink:href="/img/iconic-sprite.svg#trash"></use>
+        </svg>
+        <span class="hidden" translate="category.delete">Delete</span>
+    </button>
 </div>
 
 <div class="form-field init" ng-click="showInputToggle()" ng-if="userCanAddCategory && !showInput">

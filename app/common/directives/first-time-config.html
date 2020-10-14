@@ -3,19 +3,20 @@
         <h1 translate>settings.customize_your_new_deployment</h1>
 
         <div ng-hide="hasName">
-            <label class="input-label" for="site-settings-name" ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }" translate>settings.site_name</label>
-            <input id="name" name="name" type="text" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
-            <p ng-repeat="(error, value) in form.name.$error"
-                ng-show="form.name.$dirty"
-                class="alert error"
+            <label class="input-label" for="site-settings-name"
+                ng-class="{ 'success': !form.name.$invalid && form.name.$dirty, 'error' : form.name.$invalid && form.name.$dirty }"
+                translate>settings.site_name</label>
+            <input id="name" name="name" type="text" ng-model="site.name"
+                ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
+            <p ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" class="alert error"
                 translate="{{'settings.valid.name.' + error}}"></p>
         </div>
 
         <div class="divider white"></div>
 
         <label class="input-label" for="site-settings-description" translate>settings.site_description</label>
-        <textarea id="site-settings-description" type="text"
-            ng-model="site.description" placeholder="{{'settings.site_description_placeholder' | translate}}"></textarea>
+        <textarea id="site-settings-description" type="text" ng-model="site.description"
+            placeholder="{{'settings.site_description_placeholder' | translate}}"></textarea>
 
         <div class="divider white"></div>
 
@@ -33,13 +34,18 @@
 
         <label class="input-label" for="appearance-header-image" translate>settings.appearance_header_image</label>
         <p class="small" translate>settings.appearance_header_image_instructions</p>
-       <file-upload container="fileContainer">
+        <file-upload container="fileContainer">
         </file-upload>
 
         <div class="divider white"></div>
 
-        <button class="save" ng-click="updateConfig()" ng-disabled="form.$invalid || isUnchanged(site) || saving_config">
-            <div class="loading" ng-show="saving_config"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+        <button class="save" role="button" ng-click="updateConfig()"
+            ng-disabled="form.$invalid || isUnchanged(site) || saving_config">
+            <div class="loading" ng-show="saving_config">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
             <span translate>settings.continue</span>
         </button>
         <a class="cta" ng-click="skip()" ng-show="hasName" translate>settings.skip</a>
