@@ -17,7 +17,7 @@ function (
     ConfigEndpoint,
     CollectionsService,
     $window,
-    $state,
+    $state
 ) {
     return {
         restrict: 'E',
