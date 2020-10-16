@@ -55,12 +55,12 @@
 
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ user.realname }}">
+                            <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ user.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="user avatar">
                         </div>
 
                         <h2 class="listing-item-title"><a ui-sref="settings.users.edit({id: user.id})">{{user.realname}}</a></h2>
-                        <p class="listing-item-secondary" 
-                            translate-values="{role: roles[user.role].display_name}" 
+                        <p class="listing-item-secondary"
+                            translate-values="{role: roles[user.role].display_name}"
                             translate="user.role_display">
                             Role: role_name
                         </p>
@@ -68,7 +68,7 @@
                             translate-values="{
                                 type: contact.type,
                                 contact: contact.contact
-                            }" 
+                            }"
                             translate="user.contact">
                             Contact_Type: contact
                         </p>
