@@ -1,7 +1,4 @@
-- name: "Test"
-  service: test
-  command: gulp test
-
+# run 'jet run test gulp test' for tests
 
 - name: "Build client"
   service: build
@@ -18,23 +15,3 @@
     service: deploy
     command: CI_NAME=codeship ush-deployment-director.sh
 
-# Publish images to docker hub
-- name: "Docker Hub upload"
-  type: parallel
-  steps:
-  - tag: master
-    name: "Upload latest tag"
-    service: dockerimg
-    type: push
-    image_name: ushahidi/platform-client
-    image_tag: latest
-    registry: https://index.docker.io/v1/
-    dockercfg_service: dockercfggen
-  - tag: '^v(\d+\.)+\d+'
-    name: "Upload release tag"
-    service: dockerimg
-    type: push
-    image_name: ushahidi/platform-client
-    image_tag: "{{.Branch}}"
-    registry: https://index.docker.io/v1/
-    dockercfg_service: dockercfggen
