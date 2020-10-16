@@ -226,7 +226,8 @@
             <label ng-class="{
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
                 'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-                'required': attribute.required}">
+                'required': attribute.required
+            }">
                 <svg ng-show="attribute.response_private" class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                 </svg>
