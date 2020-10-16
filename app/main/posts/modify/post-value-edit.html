@@ -11,7 +11,7 @@
                 'success': !form.title.$invalid && form.title.$dirty
             }"
         >
-             <label>
+             <label for="title">
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
@@ -41,7 +41,7 @@
             }"
             adaptive-form
         >
-            <label>
+            <label for="content">
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
@@ -226,8 +226,7 @@
             <label ng-class="{
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
                 'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-                'required': attribute.required
-            }">
+                'required': attribute.required}">
                 <svg ng-show="attribute.response_private" class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                 </svg>
