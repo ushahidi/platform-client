@@ -92,19 +92,18 @@
            <label class="tgl-btn" for="switchprivateresponse"></label>
         </div>
        </div>
-       <div class="form-field switch" ng-if="canDisplay()">
-            <label translate="app.default_value">Default value (optional):</label>
-            <div class="form-field">
-              <div ng-switch="editAttribute.input">
-                  <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
-                  <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
-                  <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
-                  <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
-                  <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default">
-              </div>
-            </div>
+       <div class="form-field switch" ng-if="canDisplayDefaultValue()">
+          <label ng-if="canDisplayDefaultValue()" translate="app.default_value">Default value (optional):</label>
+          <div class="form-field">
+             <div ng-switch="editAttribute.input">
+                <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
+                <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
+                <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
+                <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
+                <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default">
+             </div>
+          </div>
         </div>
-   </div>
    <div class="form-field">
       <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
       <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
