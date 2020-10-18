@@ -7,7 +7,9 @@
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#magnifying-glass"></use>
                 </svg>
                 <form ng-submit="searchCollections(collectionQuery)">
-                    <input name="collectionQuery" ng-model="collectionQuery" type="search" placeholder="{{ 'set.find_a_collection' | translate}}">
+                    <label>
+                       <input name="collectionQuery" ng-model="collectionQuery" type="search" placeholder="{{ 'set.find_a_collection' | translate}}">
+                    </label>
                 </form>
             </div>
         </div>
