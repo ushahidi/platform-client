@@ -9,7 +9,7 @@
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
@@ -21,7 +21,7 @@
         <div class="toolbar">
             <div class="fab">
                 <a ui-sref="settings.users.create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedUsers.length}">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
                     <span class="hidden" translate>user.add_user</span>
@@ -32,7 +32,7 @@
 
             <div class="button-group" ng-show="todo">
                 <button type="button">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#external-link"></use>
                     </svg>
                     <span class="button-label" translate>nav.export</span>
@@ -94,7 +94,7 @@
                         </div>
                     </fieldset>
                     <button type="button" class="button-destructive" ng-disabled="!selectedUsers.length" ng-click="deleteUsers()">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>
                         <span class="button-label hidden">nav.delete</span>

@@ -10,7 +10,7 @@
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
@@ -22,7 +22,7 @@
         <div class="toolbar">
             <div class="fab">
                 <a ui-sref="settings.categories.create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedCategories.length}">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
                     <span class="hidden" translate>category.add_category</span>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="listing-item-secondary">
                         <button class="button-beta button-flat" ng-click="deleteCategory(category)">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                             </svg>
                             <span class="hidden">Delete</span>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="listing-item-secondary">
                             <button class="button-beta button-flat" ng-click="deleteCategory(child)">
-                                <svg class="iconic">
+                                <svg class="iconic" role="img">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                 </svg>
                                 <span class="hidden">Delete</span>
@@ -78,7 +78,7 @@
 
                 <listing-toolbar entities="allCategories" selected-set="selectedCategories">
                     <button type="button" class="button-destructive" ng-disabled="!selectedCategories.length" ng-click="deleteCategories()">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>
                         <span class="button-label hidden">nav.delete</span>

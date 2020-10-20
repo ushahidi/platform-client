@@ -6,7 +6,7 @@
         <ul class="deployment-menu">
             <li ui-sref-active="{ 'active' : 'posts.map' }">
                 <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" class="view-map">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#map-marker"></use>
                     </svg>
                     <translate>views.map</translate>
@@ -15,7 +15,7 @@
 
             <li ui-sref-active="active">
                 <a ui-sref="posts.data" ui-sref-opts="{reload:true}" class="view-data">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
                     </svg>
                     <translate>views.data</translate>
@@ -24,7 +24,7 @@
 
             <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active" data-message="customize">
                 <a ui-sref="activity">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pulse"></use>
                     </svg>
                     <translate>views.activity</translate>
@@ -33,7 +33,7 @@
 
             <li>
                 <a class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
                     <translate>nav.more</translate>
@@ -41,7 +41,7 @@
                 <ul>
                     <li data-message="customize" ng-show="hasManageSettingsPermission()" ui-sref-active="active">
                         <a ui-sref="settings.list">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                             </svg>
                             <translate>nav.settings</translate>
@@ -64,7 +64,7 @@
 
             <li ng-show="currentUser">
                 <a ng-click="logout()" data-modal="login">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
                     </svg>
                     <span class="label" translate="nav.logout">Log out</span>
@@ -80,7 +80,7 @@
 
             <li ng-show="!currentUser && canRegister">
                 <a ng-click="register()" data-modal="signup">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#person"></use>
                     </svg>
                     <translate translate="nav.register">Sign up</translate>
@@ -89,7 +89,7 @@
 
             <li ng-hide="currentUser">
                 <a ng-click="login()" data-modal="login">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
                     </svg>
                     <translate translate="nav.login">Log in</translate>
@@ -98,7 +98,7 @@
 
             <li>
                 <a ng-click="viewCollectionListing()">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
                     </svg>
                     <span class="label" translate>nav.collections</span>
