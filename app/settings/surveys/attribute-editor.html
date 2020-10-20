@@ -109,10 +109,8 @@
         </div>
    </div>
    <div class="form-field">
-      <button ng-show="!editAttribute.id && valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
-      <button ng-show="editAttribute.id && valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
-      <button ng-show="!editAttribute.id && !valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close" disabled>Add &amp; close</button>
-      <button ng-show="editAttribute.id && !valuesPermissible()" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close" disabled>Update &amp; close</button>
+      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
+      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
    </div>
 
 </div>

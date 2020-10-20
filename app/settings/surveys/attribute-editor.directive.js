@@ -51,7 +51,7 @@ function (
 
             $scope.save = function (editAttribute, activeTask) {
                 editAttribute.instructions = $scope.editor.getMarkdown();
-                if (!$scope.attributeLabel.$invalid) {
+                if ($scope.valuesPermissible() && !$scope.attributeLabel.$invalid) {
                     $scope.editAttribute.label = $scope.label;
                     $scope.addNewAttribute(editAttribute, activeTask);
                 }
