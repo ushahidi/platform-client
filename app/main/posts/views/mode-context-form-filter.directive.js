@@ -55,11 +55,11 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     $scope.currentFocusInLabel = null;
 
     $scope.isChildFocused = function(form) {
-        return $scope.currentFocusInLabel === form.name;
+        return $scope.currentFocusInLabel === form.id;
     }
 
     $scope.setParentFocusIn = function (form) {
-        $scope.currentFocusInLabel = form.name;
+        $scope.currentFocusInLabel = form.id;
     };
 
     $scope.setParentFocusOut = function (form) {
