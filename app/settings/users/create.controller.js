@@ -30,20 +30,20 @@ function (
         $rootScope.$emit('setPageTitle', title);
     });
 
-    $scope.isValid = true;
+    $scope.displayError = false;
     $scope.passwordShown = true;
     $scope.user = { role: 'user' }; // @todo don't hardcode default role
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
-    $scope.saving_user = false;
+    $scope.savingUser = false;
+
     $scope.saveUser = function (user) {
-        $scope.saving_user = true;
+        $scope.savingUser = true;
         if ($scope.form.$valid) {
-            $scope.isValid = true;
             UserEndpoint.saveCache(user).$promise.then(function (response) {
                 if (response.id) {
                     Notify.notify('notify.user.save_success', {name: user.realname});
-                    $scope.saving_user = false;
+                    $scope.savingUser = false;
                     $scope.userSavedUser = true;
                     $scope.user.id = response.id;
                     // in favor of $route.reload();
@@ -68,11 +68,11 @@ function (
                 } else {
                     Notify.errors(_.pluck(validationErrors, 'message'));
                 }
-                $scope.saving_user = false;
+                $scope.savingUser = false;
             });
         } else {
-            $scope.isValid = false;
-            $scope.saving_user = false;
+            $scope.displayError = true;
+            $scope.savingUser = false;
         }
     };
 
