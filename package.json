@@ -20,7 +20,8 @@
     "protractor": "protractor test/protractor-conf.js",
     "eslint": "gulp eslint",
     "eslintfix": "gulp eslintfix",
-    "verify": "gulp verify"
+    "verify": "gulp verify",
+    "languages": "gulp languages"
   },
   "pre-commit": [
     "eslint"
@@ -45,7 +46,7 @@
     "dotenv": "^8.2.0",
     "eslint": "^6.7.1",
     "fancy-log": "^1.3.3",
-    "file-loader": "^6.0.0",
+    "file-loader": "^5.0.2",
     "fs-walk": "0.0.2",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
@@ -88,12 +89,13 @@
     "svg-url-loader": "^3.0.3",
     "transifex": "^1.6.6",
     "uglifyjs-webpack-plugin": "^2.2.0",
-    "url-loader": "^4.0.0",
+    "url-loader": "^3.0.0",
     "webpack": "^4.41.4",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
+    "@toast-ui/editor": "2.0.1",
     "@uirouter/angularjs": "^1.0.10",
     "URIjs": "^1.14.1",
     "angular": "^1.5.6",
@@ -111,6 +113,7 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-ui-bootstrap": "^2.5.0",
     "checklist-model": "~0.11.0",
+    "cross-fetch": "^3.0.4",
     "d3": "^3.5.17",
     "leaflet.locatecontrol": "^0.71.1",
     "leaflet": "^1.6.0",
@@ -126,9 +129,8 @@
     "raven-js": "^3.26.3",
     "socket.io-client": "2.0.3",
     "sortablejs": "1.10.0",
-    "tui-editor": "^1.4.7",
     "underscore": "^1.7.0",
-    "ushahidi-platform-pattern-library": "^4.4.1"
+    "ushahidi-platform-pattern-library": "^4.4.3"
   },
   "engines": {
     "node": ">=10.0"

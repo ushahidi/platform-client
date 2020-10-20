@@ -5,17 +5,25 @@ describe('filters-posts directive', function () {
         PostFilters,
         element,
         isolateScope,
-        $compile;
+        $compile,
+        mockState = {
+            '$current': {
+                name: 'posts.data',
+                includes: {
+                    'posts': true,
+                    'posts.data': true
+                }
+            }
+        };
+;
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
         testApp
         .directive('filterPosts', require('app/main/posts/views/filters/filter-posts.directive'))
         .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
-        .service('$state', () => {
-            return {
-                go : () => {}
-            };
+        .service('$state', function () {
+            return mockState;
         })
         ;
         angular.mock.module('testApp');
@@ -69,6 +77,27 @@ describe('filters-posts directive', function () {
         it('should clear PostFilters when calling clearFilters', function () {
             isolateScope.removeQueryFilter();
             expect(isolateScope.filters.q).toEqual('');
+        });
+        it('should close dropdown when pressing escape', function () {
+            spyOn(isolateScope, 'hideDropdown').and.callThrough();
+            let event = {keyCode: 13};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.hideDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(false);
+        });
+        it('should close dropdown when pressing enter', function () {
+            spyOn(isolateScope, 'hideDropdown').and.callThrough();
+            let event = {keyCode: 27};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.hideDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(false);
+        });
+        it('should open dropdown when pressing any key except enter and escape', function () {
+            spyOn(isolateScope, 'showDropdown').and.callThrough();
+            let event = {keyCode: 22};
+            isolateScope.toggleDropdown(event);
+            expect(isolateScope.showDropdown).toHaveBeenCalled();
+            expect(isolateScope.status.isopen).toEqual(true);
         });
     });
 });

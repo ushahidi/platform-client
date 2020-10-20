@@ -1,0 +1,90 @@
+name: Test & Ship
+
+on:
+- push
+- pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      matrix:
+        node_version: [ 8.x, 10.x , 12.x ]
+        include:
+        - node_version: 8.x
+          run_lint_tests: "True"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: Get npm cache directory
+      id: npm-cache
+      run: |
+        echo "::set-output name=dir::$(npm config get cache)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: |
+        set -e;
+
+        npm install -g gulp;
+        npm install;
+
+    - name: Run lint tests
+      if: ${{ matrix.run_lint_tests }}
+      run: |
+        TEST_SUITE="lint" test/test.sh
+    
+    - name: Run tests
+      run: |
+        TEST_SUITE="unit" test/test.sh ;
+
+        #
+        # gulp send-stats-to-coveralls ;
+
+  ship:
+    needs: [ test ]
+    if: github.event_name == 'push'   # not on PRs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+
+    - name: Get ECR password
+      id: get-ecr-password
+      run: echo "::set-output name=password::$(aws ecr get-login-password)"
+
+    - name: Build and push to Amazon ECR
+      uses: docker/build-push-action@v1
+      with:
+        registry: 513259414768.dkr.ecr.eu-west-1.amazonaws.com
+        repository: platform-client
+        username: AWS
+        password: ${{ steps.get-ecr-password.outputs.password }}
+        always_pull: true
+        tag_with_sha: true
+        tag_with_ref: true
+
+    - name: Logout from Amazon ECR
+      if: always()
+      run: docker logout ${{ steps.login-ecr.outputs.registry }}

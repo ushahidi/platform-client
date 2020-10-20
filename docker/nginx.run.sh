@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" == "noop" ]; then
+if [ "$1" = "noop" ]; then
   # do nothing operator
   sleep infinity
   exit 0;

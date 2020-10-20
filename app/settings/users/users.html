@@ -48,7 +48,7 @@
                     <p ng-hide="users.length"><em translate>empty.user</em></p>
                 </div>
 
-                <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'realname'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
+                <div id="user-{{user.id}}" class="listing-item" ng-repeat="user in users | orderBy:'sortalph'" ng-class="{ 'warning': isToggled(user) }" ng-click="toggleUser(user)">
                     <div class="listing-item-select">
                         <input type="checkbox" value="{{user.id}}" ng-checked="isToggled(user)">
                     </div>

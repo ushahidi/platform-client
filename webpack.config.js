@@ -58,10 +58,7 @@ module.exports = {
       {
         test: /\.png/,
         use: {
-          loader: 'url-loader?limit=10000',
-          options: {
-            esModule:false
-          }
+          loader: 'url-loader?limit=10000'
         }
       },
       {
