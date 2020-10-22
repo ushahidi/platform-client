@@ -43,13 +43,13 @@
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
         <div class="form-field survey">
           <!--  TODO: add placeholder text-->
-            <label for="survey_name" translate>survey.survey_name</label>
-            <input type="text" id="survey_name" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
+            <label for="survey-name" translate>survey.survey_name</label>
+            <input type="text" id="survey-name" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
 
         </div>
 
           <div class="form-field survey">
-            <label for="app_description" translate>app.description</label>
+            <label for="app-description" translate>app.description</label>
             <textarea id="app-description" placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
         </div>
 
@@ -231,13 +231,13 @@
       <!-- Task sections -->
       <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length">
         <div class="form-field title section-title">
-            <label class="hidden" for="survey_task_name" translate="survey.task_name">Section name</label>
-            <input type="text" id="survey_task_name" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
+            <label class="hidden" for="survey-task-name" translate="survey.task_name">Section name</label>
+            <input type="text" id="survey-task-name" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
 
-            <label class="hidden" for="section_description" translate="survey.task_description">Section description</label>
+            <label class="hidden" for="section-description" translate="survey.task_description">Section description</label>
             <textarea
               name="description"
-              id="section_description"
+              id="section-description"
               placeholder="{{ 'survey.describe_this_task' | translate }}"
               rows="1"
               ng-model="task.description"

@@ -1,24 +1,24 @@
 <fieldset>
     <label translate>global_filter.date_range</label>
     <div class="form-field date">
-        <label class="hidden" for="start_date" translate="global_filter.filter_tabs.created_after">Start date</label>
+        <label class="hidden" for="start-date" translate="global_filter.filter_tabs.created_after">Start date</label>
         <div class="input-with-icon">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
             </svg>
-            <input type="date" id="start_date" pick-a-date="dateAfter" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="dateAfterModel" />
+            <input type="date" id="start-date" pick-a-date="dateAfter" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="dateAfterModel" />
         </div>
     </div>
             <span class="date-joiner">to</span>
 
 
     <div class="form-field date">
-        <label class="hidden" for="end_date" translate="global_filter.filter_tabs.created_before">End date</label>
+        <label class="hidden" for="end-date" translate="global_filter.filter_tabs.created_before">End date</label>
         <div class="input-with-icon">
             <svg class="iconic">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
             </svg>
-        <input type="date" id="end_date" pick-a-date="dateBefore" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="dateBeforeModel">
+        <input type="date" id="end-date" pick-a-date="dateBefore" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="dateBeforeModel">
     </div>
 </div>
 

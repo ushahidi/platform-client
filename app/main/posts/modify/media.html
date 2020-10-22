@@ -35,8 +35,9 @@
       <div ng-hide="!mediaHasCaption">
         <figure>
           <p class="small" translate>post.media.add_caption</p>
-          <label>
+          <label for="caption">
           <input
+            id="caption"
             type="text"
             placeholder="{{ 'post.media.add_caption' | translate }}"
             ng-model="media.caption">

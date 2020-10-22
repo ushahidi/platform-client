@@ -45,7 +45,9 @@
             </span>
             {{ current_precision }}km
         </p>
+        <label for="map-settings-obfuscation">
         <input id="map-settings-obfuscation" type="number" min="{{minObfuscation}}" ng-change="updatePrecision()" max="{{maxObfuscation}}" required class="form-control" ng-model="config.location_precision" ng-pattern="onlyNumbers" ng-change="updateMapPreview()" />
+         </label>
     </div>
     <div class="form-field checkbox">
         <input type="checkbox" ng-model="config.clustering" id="map-settings-clustering">
