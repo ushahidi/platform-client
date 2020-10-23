@@ -71,3 +71,8 @@
         box-shadow: none;
     }
 }
+
+// Move New survey button for RTL languages to the left 
+.rtl-namespace .rtl-button-fix {
+    float: left !important;
+}
