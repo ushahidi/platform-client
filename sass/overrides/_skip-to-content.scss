@@ -1,0 +1,18 @@
+.skip-to-content {
+    position: absolute;
+    top: -20px;
+    z-index: 0;
+    overflow: hidden;
+
+    &:focus,
+    &:active {
+        top: 0px;
+        font-size: 20px;
+        text-decoration: underline;
+        padding: 6px;
+        border-radius: 0px 0px 5px 5px;
+        background: #fff;
+        z-index: 4444;
+        width: 150px;
+    }
+}
