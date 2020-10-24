@@ -2,12 +2,12 @@
     <label translate>global_filter.date_range</label>
     <div class="form-field date">
         <label for="filter-startDate" class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
-        <div class="input-with-icon">
-            <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
-            </svg>
-            <input id="filter-startDate" type="date" pick-a-date="dateAfter" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="dateAfterModel" /> 
-        </div>
+            <div class="input-with-icon">
+                <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                </svg>
+                <input id="filter-start-date"  aria-labelledby="filter-startDate" type="date" pick-a-date="dateAfter" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="dateAfterModel" /> 
+            </div>
     </div>
             <span class="date-joiner">to</span>
 
@@ -16,11 +16,10 @@
         <label for="filter-endDate" class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
         <div class="input-with-icon">
             <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
             </svg>
-            <input id="filter-endDate" type="date" pick-a-date="dateBefore" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="dateBeforeModel">
-              
-    </div>
+            <input id="filter-end-date"  aria-labelledby="filter-endDate" type="date" pick-a-date="dateBefore" pick-a-date-options="options" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="dateBeforeModel">  
+        </div>
 </div>
 
 
