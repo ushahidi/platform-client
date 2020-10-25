@@ -1176,6 +1176,8 @@
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
         "site_private_desc" : "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration" : "Disable user sign up?",
+        "site_disable_registration_desc" : "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image" : "Select image",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",
