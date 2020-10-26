@@ -44,15 +44,13 @@
             <div class="form-sheet">
               <!-- Title -->
               <div class="form-field">
-                <label translate>category.editor.name
-                  <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
-                </label>
+                <label for="category-name" translate>category.editor.name</label>
+                <input id="category-name" type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
               </div>
               <!-- Description -->
               <div class="form-field">
-                <label translate>category.editor.description
-                  <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
-                </label>
+                <label for="category-description" translate>category.editor.description</label>
+                <textarea id="category-description" name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
               </div>
               <!-- Parent/child-relations -->
               <fieldset
