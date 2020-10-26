@@ -43,33 +43,33 @@
             <form name="form">
                 <div class="form-sheet">
                    <div class="form-field">
-                       <label translate>webhook.name</label>
-                       <input type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
+                       <label for="name" translate>webhook.name</label>
+                       <input id="name" type="text" placeholder="{{'webhook.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="webhook.name" required>
                    </div>
 
                    <div class="form-field">
-                       <label translate>webhook.shared_secret</label>
-                       <textarea name="description" data-min-rows='1' rows='1' ng-model="webhook.shared_secret" required></textarea>
+                       <label for="shared-secret" translate>webhook.shared_secret</label>
+                       <textarea id="shared-secret" name="description" data-min-rows='1' rows='1' ng-model="webhook.shared_secret" required></textarea>
                    </div>
 
                    <div class="form-field">
-                       <label translate>webhook.url</label>
-                       <input type="text" placeholder="{{'webhook.url' | translate}}" ng-model="webhook.url" required>
+                       <label for="url" translate>webhook.url</label>
+                       <input id="url" type="text" placeholder="{{'webhook.url' | translate}}" ng-model="webhook.url" required>
                    </div>
 
                    <div class="form-field">
-                       <label translate>webhook.event_type</label>
+                       <label for="event-type" translate>webhook.event_type</label>
                        <div class="custom-select">
-                         <select ng-model="webhook.event_type" required>
+                         <select id="event-type" ng-model="webhook.event_type" required>
                              <option ng-repeat="type in event_types" value="{{type}}">{{type}}</option>
                          </select>
                       </div>
                    </div>
 
                    <div class="form-field">
-                       <label translate>webhook.entity_type</label>
+                       <label for="entity-type" translate>webhook.entity_type</label>
                        <div class="custom-select">
-                         <select ng-model="webhook.entity_type" required>
+                         <select id="entity-type" ng-model="webhook.entity_type" required>
                              <option ng-repeat="type in entity_types" value="{{type}}">{{type}}</option>
                          </select>
                       </div>
