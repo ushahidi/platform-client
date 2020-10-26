@@ -77,9 +77,61 @@ function (
                 return $scope.editAttribute.type === 'media' && $scope.editAttribute.input === 'upload';
             };
 
-             //Remove default value for location & related posts (variation of $scope.canDisplay)
-             $scope.canDisplayDefaultValue = function () {
+            $scope.canDisplayDefaultValue = function () {
                 return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags' && $scope.editAttribute.input !== 'location' && $scope.editAttribute.input !== 'relation';
+            };
+
+            $scope.errorMsgs = {
+                'num': 'Number(s) only',
+                'video': 'Enter valid video link',
+                'others': 'hidden'
+            };
+
+            $scope.inputType = [
+                $scope.editAttribute.input === 'number',
+                $scope.editAttribute.input === 'video'
+            ]
+
+            $scope.errorMessage = function () {
+
+                if ($scope.inputType[0]) {
+                    $scope.errorMsg = $scope.errorMsgs.num;
+                }
+
+                if ($scope.inputType[1]) {
+                    $scope.errorMsg = $scope.errorMsgs.video;
+                }
+
+                if (!$scope.errorMsg) {
+                    $scope.errorMsg = $scope.errorMsgs.others;
+                }
+
+                return $scope.errorMsg;
+            };
+
+            $scope.canDisplayError = function () {
+
+                if ($scope.inputType[0] && isNaN($scope.editAttribute.default) && $scope.editAttribute.default.length >= 1) {
+                   return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                }
+
+                if ($scope.inputType[1] && $scope.editAttribute.default.length >= 1) {
+                    if (
+                        ($scope.editAttribute.default.length === 1 && $scope.editAttribute.default.indexOf('h') !== 0) ||
+                        ($scope.editAttribute.default.length === 2 && $scope.editAttribute.default.indexOf('ht') !== 0) ||
+                        ($scope.editAttribute.default.length === 3 && $scope.editAttribute.default.indexOf('htt') !== 0) ||
+                        ($scope.editAttribute.default.length === 4 && $scope.editAttribute.default.indexOf('http') !== 0) ||
+                        ($scope.editAttribute.default.length === 5 && !$scope.editAttribute.default.match(/http:|https/)) ||
+                        ($scope.editAttribute.default.length === 6 && !$scope.editAttribute.default.match(/http:\/|https:/)) ||
+                        ($scope.editAttribute.default.length === 7 && !$scope.editAttribute.default.match(/http:\/\/|https:\//)) ||
+                        ($scope.editAttribute.default.length >= 8 && !$scope.editAttribute.default.match(/http:\/\/|https:\/\//))
+                    ) {
+                        return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                    }
+                }
+
+                return angular.element(document.querySelector('#displayError')).addClass('hidden') && angular.element(document.querySelector('#form-field')).removeClass('error');
+
             };
         }
     };
