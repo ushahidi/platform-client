@@ -82,6 +82,8 @@ function PostViewDataController(
     $scope.activeCol = $state.params.activeCol;
     $scope.deselectPost = deselectPost;
     $scope.removePostThatDoesntMatchFilters = removePostThatDoesntMatchFilters;
+    $scope.deselectActivePost = deselectActivePost;
+
 
     var stopInterval;
     /**
@@ -313,8 +315,13 @@ function PostViewDataController(
 
     function showPost(post, fromWhere) {
         return confirmEditingExit().then(function () {
-            $scope.selectedPost.post = post;
-            $state.go('posts.data.detail', {postId: post.id});
+            if ($scope.selectedPost.post === post) {
+                deselectPost();
+                $state.go('posts.data');
+            } else {
+                $scope.selectedPost.post = post;
+                $state.go('posts.data.detail', { postId: post.id });
+            }
         }, function () {
         });
     }
