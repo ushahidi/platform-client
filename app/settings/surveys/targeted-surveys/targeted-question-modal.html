@@ -1,9 +1,9 @@
 <div class="modal-body">
     <div class="form-field" ng-class="{'error': error || questionError, 'success': !error && !questionError}">
-        <label  class="required" translate="survey.targeted_survey.question_text"></label>
+        <label for="question" class="required" translate="survey.targeted_survey.question_text"></label>
         <p translate="survey.targeted_survey.question_description"></p>
 
-        <textarea placeholder="Sample question: Hi there! How are you feeling today? Your response is free." ng-model="editQuestion.question" required ng-change="removeError()"></textarea>
+        <textarea id="question" placeholder="Sample question: Hi there! How are you feeling today? Your response is free." ng-model="editQuestion.question" required ng-change="removeError()"></textarea>
 
         <span class="right" translate="survey.targeted_survey.char_remains" translate-values="{remaining: charactersRemaining()}"></span>
         </div>
