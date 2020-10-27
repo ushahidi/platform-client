@@ -82,8 +82,6 @@ function PostViewDataController(
     $scope.activeCol = $state.params.activeCol;
     $scope.deselectPost = deselectPost;
     $scope.removePostThatDoesntMatchFilters = removePostThatDoesntMatchFilters;
-    $scope.deselectActivePost = deselectActivePost;
-
 
     var stopInterval;
     /**
