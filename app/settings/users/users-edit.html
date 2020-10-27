@@ -69,7 +69,7 @@
                     <div class="form-field init required" ng-class="{ 'error': form.password.$invalid && (form.password.$dirty || displayError) }">
                         <label translate>user.password</label>
 
-                        <a class="button button-flat" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
+                        <a class="button button-flat" role="button" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
 
                         <input type="password" ng-show="passwordShown" placeholder="{{'user.password' | translate}}"  ng-minlength="7" ng-maxlength="72" ng-model="user.password" name="password" ng-required="!user.id">
                         <div ng-repeat="(error, value) in form.password.$error"
