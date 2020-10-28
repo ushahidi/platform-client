@@ -1,5 +1,5 @@
 var webpack = require('webpack');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 var OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var path    = require('path');
 var config  = require('./webpack.config');
@@ -15,13 +15,14 @@ config.output = {
 
 config.optimization.minimize = true;
 config.optimization.minimizer = [
-  new UglifyJsPlugin({
+  new TerserPlugin({
     cache: true,
     parallel: true,
     sourceMap: true,
-    uglifyOptions: {
-      mangle: true,
-      except: ['$super', '$', 'exports', 'require', 'angular']
+    terserOptions: {
+      mangle: {
+        reserved: ['$super', '$', 'exports', 'require', 'angular']
+      }
     }
   }),
   new OptimizeCSSAssetsPlugin({})]
