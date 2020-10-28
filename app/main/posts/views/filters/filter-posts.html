@@ -15,7 +15,7 @@
         <div class="form-field">
             <label class="hidden" translate="toolbar.searchbar.search_entity">Search</label>
             <div class="input-with-icon">
-                <input 
+                <input
                     name="q"
                     type="search"
                     autocomplete="off"
@@ -39,9 +39,9 @@
 
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
-        <a type="button" class="searchbar-options-filter button">
+        <button class="searchbar-options-filter button">
             <sort-and-filter-counter></sort-and-filter-counter>
-        </a>
+        </button>
     </div>
 
     <filters-dropdown stats="stats" uib-dropdown-menu class="dropdown-menu" dropdown-status="status" filters="filters"></filters-dropdown>
