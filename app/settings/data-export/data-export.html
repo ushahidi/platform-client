@@ -89,7 +89,7 @@
                     <div class="form-field">
                         <button class="button-alpha" translate ng-click="exportAll()" ng-disabled="showProgress">data_export.all</button>
                         <button class="button"  ng-click="selectFields()" translate ng-disabled="showProgress">data_export.select_fields</button>
-                        <a ui-sref="settings.hdx" class="button" ng-show="hxlEnabled" ng-disabled="showProgress || !hxlApiKey" translate>data_export.tags_attributes</a>
+                        <a ui-sref="settings.hdx" class="button" role="button" ng-show="hxlEnabled" ng-disabled="showProgress || !hxlApiKey" translate>data_export.tags_attributes</a>
                     </div>
                 </div>
                 <div id="history-export" class="survey-details tabs-target">

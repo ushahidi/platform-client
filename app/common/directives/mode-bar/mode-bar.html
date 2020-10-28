@@ -39,7 +39,7 @@
                     <translate>nav.more</translate>
                 </a>
                 <ul>
-                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ui-sref-active="active">
+                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{active: $state.includes('settings')}">
                         <a ui-sref="settings.list">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>

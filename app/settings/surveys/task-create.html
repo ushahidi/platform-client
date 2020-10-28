@@ -1,7 +1,7 @@
 <div>
   <div class="form-field title">
-     <label translate="survey.task_name">task name</label>
-     <input type="text" placeholder="{{ 'survey.name_this_task' | translate }}" ng-model="newTask.label">
+     <label translate="survey.task_name" for="task_name">task name</label>
+     <input type="text" id="task_name" placeholder="{{ 'survey.name_this_task' | translate }}" ng-model="newTask.label">
   </div>
   <div class="form-field">
       <label for="task_description" translate="survey.task_description">
@@ -11,7 +11,7 @@
 
   </div>
   <div class="form-field switch">
-     <label translate="survey.require_section">Require this section be completed before a post can be visible to the public</label>
+     <label for="require-toggle" translate="survey.require_section">Require this section be completed before a post can be visible to the public</label>
      <div class="toggle-switch">
         <input class="tgl" id="require-toggle" type="checkbox" ng-model="newTask.required">
         <label class="tgl-btn" for="require-toggle"></label>
