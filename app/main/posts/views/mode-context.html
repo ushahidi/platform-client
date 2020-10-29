@@ -4,12 +4,12 @@
         <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo" />
     </header>
 
-    <span class="mode-context-trigger" dropdown-toggle>
+    <button class="mode-context-trigger" dropdown-toggle>
         <svg class="iconic">
             <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden" translate>app.show_more_less</span>
-    </span>
+    </button>
 
     <div class="mode-context-body">
         <p markdown-to-html="nav.site.description"></p>
