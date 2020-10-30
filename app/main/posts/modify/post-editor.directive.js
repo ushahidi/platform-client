@@ -157,7 +157,8 @@ function PostEditorController(
                             $scope.post.values[attr.key] = [null];
                         }
                     }  else if (attr.input === 'number') {
-                        $scope.post.values[attr.key] = [parseInt(attr.default)];
+                        // Using parseFloat to handle decimals too.
+                        $scope.post.values[attr.key] = (attr.type === 'int') ? [parseInt(attr.default)] : [parseFloat(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         // If there is a default value for this input type, parse it.
                         // If there isn't, display today's date if it is a required field,
