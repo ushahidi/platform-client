@@ -44,6 +44,13 @@ function PostMetadataService(
             } else {
                 return post.contact;
             }
+        },
+        validateUser: function () {
+            if ($rootScope.hasPermission('Manage Users')) {
+                return true;
+            } else {
+                return false;
+            }
         }
     };
 
