@@ -26,6 +26,9 @@
    <div ng-if="canDisplay()">
        <div class="form-field" ng-if="hasOptions(editAttribute)">
           <label translate>form.field_options</label>
+          <div class="alert error" role="alert" ng-show="!valuesPermissible()">
+            <p translate>survey.duplicate_option</p>
+          </div>
           <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
               <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
               <button type="button" class="button-flat button-beta" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)">
