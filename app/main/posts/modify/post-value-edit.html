@@ -11,7 +11,7 @@
                 'success': !form.title.$invalid && form.title.$dirty
             }"
         >
-             <label>
+             <label for="title">
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
@@ -41,7 +41,7 @@
             }"
             adaptive-form
         >
-            <label>
+            <label for="content">
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">

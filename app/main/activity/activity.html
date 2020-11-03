@@ -64,23 +64,23 @@
                                 <!-- todo: reuse filter-date -->
                                 <div class="form-fieldgroup">
                                     <div class="form-field date" ng-show="editableInterval == 'custom'">
-                                        <label class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
+                                        <label for="date" class="hidden" translate="global_filter.filter_tabs.created_after">Start date</label>
                                         <div class="input-with-icon">
                                             <svg class="iconic">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                                             </svg>
-                                            <input type="date" pick-a-date="createdAfter" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="createdAfter" />
+                                            <input id="date" type="date" pick-a-date="createdAfter" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}" ng-model="createdAfter" />
                                         </div>
                                         <span class="date-joiner">to</span>
                                     </div>
 
                                     <div class="form-field date" ng-show="editableInterval == 'custom'">
-                                        <label class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
+                                        <label for="date" class="hidden" translate="global_filter.filter_tabs.created_before">End date</label>
                                         <div class="input-with-icon">
                                             <svg class="iconic">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                                             </svg>
-                                            <input type="date" pick-a-date="createdBefore" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="createdBefore">
+                                            <input id="date" type="date" pick-a-date="createdBefore" pick-a-date-options="dateOptions" placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}" ng-model="createdBefore">
                                         </div>
                                     </div>
                                 </div>
