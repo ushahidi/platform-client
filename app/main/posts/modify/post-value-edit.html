@@ -221,7 +221,10 @@
             </div>
         </div>
         <!-- Container for fieldset structured elements -->
-        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0">
+        <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+            <p translate>post.duplicate_option</p>
+        </div>
+        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0"> 
             <!-- Attribute Label -->
             <label ng-class="{
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
@@ -258,7 +261,7 @@
                 </div>
                 <!-- type: checkbox -->
                 <div ng-switch-when="checkbox">
-                    <div class="form-field checkbox" ng-repeat="option in attribute.options">
+                    <div class="form-field checkbox" ng-repeat="option in attribute.options | unique ">
                     <label>
                         <input
                             type="checkbox"
@@ -291,5 +294,6 @@
                 </div>
             </div>
         </fieldset>
+
     </div>
 </div>

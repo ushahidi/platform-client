@@ -163,7 +163,14 @@ function devServer() {
     serve({
         port: process.env.PORT || 3000,
         open: false,
-        server: {baseDir: root},
+        server: {
+            baseDir: root,
+            routes: {
+                // add locales folder under the route
+                // that the app expects them in
+                '/locales': 'app/common/locales'
+            }
+        },
         middleware: [
             historyApiFallback(),
             webpackDevMiddleware(compiler, {
