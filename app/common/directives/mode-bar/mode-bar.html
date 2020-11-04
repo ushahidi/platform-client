@@ -39,7 +39,7 @@
                     <translate>nav.more</translate>
                 </a>
                 <ul>
-                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ui-sref-active="active">
+                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{active: $state.includes('settings')}">
                         <a ui-sref="settings.list">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
@@ -73,8 +73,8 @@
 
             <li ng-show="currentUser">
                 <a ng-click="viewAccountSettings()">
-                    <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
-                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
+                    <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="account_settings"/>
+                    <span class="label" translate="nav.account_settings">Account Settings</span>
                 </a>
             </li>
 
