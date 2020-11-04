@@ -159,15 +159,7 @@ function PostEditorController(
                     }  else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
-                        // If there is a default value for this input type, parse it.
-                        // If there isn't, display today's date if it is a required field,
-                        // otherwise pass in a bogus string, which gives an empty date.
-                        if (attr.default) {
-                            $scope.post.values[attr.key] = [new Date(attr.default)];
-                        }
-                        else {
-                            $scope.post.values[attr.key] = (attr.required) ? [new Date()] : [new Date('')];
-                        }
+                        $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
                     } else {
                         $scope.post.values[attr.key] = [attr.default];
                     }
