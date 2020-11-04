@@ -26,8 +26,8 @@
             <div class="toolbar">
                 <div class="button-group">
                     <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                    <button class="button-alpha" type="button" ng-click="saveUser(user)" type="submit" ng-disabled="form.$invalid" ng-if="!saving_user">{{save}}</button>
-                    <button type="submit" class="button-alpha"  disabled ng-if="saving_user">{{saving}}
+                    <button class="button-alpha" type="button" ng-click="saveUser(user)" type="submit" ng-if="!savingUser">{{save}}</button>
+                    <button type="submit" class="button-alpha"  disabled ng-if="savingUser">{{saving}}
                         <div class="loading">
                             <div class="line"></div>
                             <div class="line"></div>
@@ -40,11 +40,11 @@
 
             <form name="form">
                 <div class="form-sheet">
-                    <div class="form-field init required" ng-class="{ 'error': form.full_name.$invalid && form.full_name.$dirty }">
+                    <div class="form-field init required" ng-class="{ 'error': form.full_name.$invalid && (form.full_name.$dirty || displayError) }">
                         <label translate>user.full_name</label>
                         <input type="text" placeholder="{{'user_create.full_name' | translate}}" ng-maxlength="150" ng-model="user.realname" name="full_name" required>
                         <div ng-repeat="(error, value) in form.full_name.$error"
-                            ng-show="form.full_name.$dirty"
+                            ng-show="form.full_name.$invalid && (form.full_name.$dirty || displayError)"
                             class="alert error">
                             <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="form-field init required" ng-class="{ 'error': form.email.$invalid && form.email.$dirty }">
+                    <div class="form-field init required" ng-class="{ 'error': form.email.$invalid && (form.email.$dirty || displayError) }">
                         <label translate>user.email</label>
                         <input type="email" placeholder="{{'user_create.email' | translate}}" ng-maxlength="150" ng-model="user.email" name="email" required>
                         <div ng-repeat="(error, value) in form.email.$error"
@@ -66,10 +66,10 @@
                         </div>
                     </div>
 
-                    <div class="form-field init required" ng-class="{ 'error': form.password.$invalid && form.password.$dirty }">
+                    <div class="form-field init required" ng-class="{ 'error': form.password.$invalid && (form.password.$dirty || displayError) }">
                         <label translate>user.password</label>
 
-                        <a class="button button-flat" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
+                        <a class="button button-flat" role="button" ng-show="!passwordShown" ng-click="showPassword()" translate>user.update_password</a>
 
                         <input type="password" ng-show="passwordShown" placeholder="{{'user.password' | translate}}"  ng-minlength="7" ng-maxlength="72" ng-model="user.password" name="password" ng-required="!user.id">
                         <div ng-repeat="(error, value) in form.password.$error"

@@ -4,8 +4,8 @@
         'error': attributeLabel.$invalid && attributeLabel.$dirty
     }">
     <form name="attributeLabel">
-      <label translate="app.name">Name</label>
-      <input type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
+      <label translate="app.name" for="attribute_name">Name</label>
+      <input id="attribute_name" type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
       <div
                 class="alert error"
                 ng-show="attributeLabel.$invalid && attributeLabel.$dirty"
@@ -26,6 +26,9 @@
    <div ng-if="canDisplay()">
        <div class="form-field" ng-if="hasOptions(editAttribute)">
           <label translate>form.field_options</label>
+          <div class="alert error" role="alert" ng-show="!valuesPermissible()">
+            <p translate>survey.duplicate_option</p>
+          </div>
           <div class="input-inline" ng-repeat="(key, option) in editAttribute.options track by $index">
               <input type="text" placeholder="{{ 'form.field_option_placeholder'|translate }}" ng-model="editAttribute.options[key]">
               <button type="button" class="button-flat button-beta" ng-if="editAttribute.options.length > 1" ng-click="removeOption(editAttribute, key)">
@@ -60,7 +63,7 @@
             </ul>
         </div>
         <div class="form-field switch" ng-show="onlyOptional() && editAttribute.input !== 'tags'">
-          <label translate="survey.required">Require this field be completed</label>
+          <label translate="survey.required" for="switchnewattribute">Require this field be completed</label>
           <div class="toggle-switch">
              <input class="tgl" id="switchnewattribute" type="checkbox" ng-model="editAttribute.required">
              <label class="tgl-btn" for="switchnewattribute"></label>
@@ -69,7 +72,7 @@
 
        <!-- start: media upload toggle to make caption an optional field-->
        <div class="form-field switch" ng-show="canDisableCaption()">
-         <label translate="survey.collect_image_caption">Disable Caption field</label>
+         <label for="switch-hascaption" translate="survey.collect_image_caption">Disable Caption field</label>
          <p data-fieldgroup-target="field-caption-disabled-warning" class="init active" translate="survey.disable_caption_field_explanation" ng-show="!editAttribute.config.hasCaption">
            This will disable all captions for this field, but it won't delete them from the database. You will be able to re-enable them later.
          </p>
@@ -80,7 +83,7 @@
        </div>
        <!-- end: media upload toggle to make caption an optional field-->
        <div class="form-field switch" ng-show="canMakePrivate()">
-        <label translate="survey.make_response_private">Make responses private</label>
+        <label for="switchprivateresponse" translate="survey.make_response_private">Make responses private</label>
         <p data-fieldgroup-target="field-private-message-3" class="init active" translate="survey.response_private_desc" ng-show="editAttribute.response_private">
           <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>

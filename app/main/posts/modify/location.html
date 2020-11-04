@@ -58,12 +58,12 @@
     </form>
     <p translate>location.click_map</p>
     <div class="form-field">
-      <label>Lat</label>
-      <input type="text" ng-model="manualModel.lat">
+      <label for="lat">Lat</label>
+      <input id="lat" type="text" ng-model="manualModel.lat">
    </div>
    <div class="form-field">
-      <label>Long</label>
-      <input type="text" ng-model="manualModel.lon">
+      <label for="long">Long</label>
+      <input id="long" type="text" ng-model="manualModel.lon">
    </div>
    <button type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
         <svg class="iconic" role="img">
