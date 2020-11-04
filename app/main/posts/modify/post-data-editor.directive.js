@@ -261,11 +261,7 @@ function PostDataEditorController(
                     }  else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
-                        if (attr.default) {
-                            $scope.post.values[attr.key] = [moment(new Date(attr.default)).toDate()];
-                        } else {
-                            $scope.post.values[attr.key] = (attr.required) ? [moment(new Date()).toDate()] : [null];
-                        }
+                        $scope.post.values[attr.key] = (attr.required) ? [moment(new Date()).toDate()] : [null];
                     }
                 } else if (attr.input === 'number') {
                     // Number input requires a number
