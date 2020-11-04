@@ -221,9 +221,7 @@
             </div>
         </div>
         <!-- Container for fieldset structured elements -->
-        <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
-            <p translate>post.duplicate_option</p>
-        </div>
+        
         <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0"> 
             <!-- Attribute Label -->
             <label ng-class="{
