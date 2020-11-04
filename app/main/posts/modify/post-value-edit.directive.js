@@ -108,7 +108,7 @@ function PostValueEditController(
     }
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        if (attr.options.length < 1) {
+        if (!attr.options || attr.options.length < 1) {
             return false;
         }
         let tmp = [];

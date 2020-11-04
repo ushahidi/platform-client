@@ -1,20 +1,14 @@
 
 <form>
     <div class="form-field file">
-      <file-upload id="{{name}}" validation="'image'" validation=true container="media" model="mediaId">
+      <file-upload  show-replace="showReplace" crop="crop" show-add="showAdd" id="{{name}}" validation="'image'" container="media" model="mediaId">
       </file-upload>
 
-      <label for="{{name}}" class="button button-gamma" ng-show="showAdd()">
-          <svg class="iconic">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-          </svg>
-          <span class="button-label" translate="post.media.add_photo"></span>
-      </label>
+
+    <!-- image uploader ends -->
+
 
       <figure ng-show="showReplace()">
-        <img ng-src="{{media.original_file_url}}" ng-show="media.id && !media.dataURI">
-        <img ng-src="{{media.dataURI}}" ng-show="media.dataURI">
-
         <div class="form-field">
           <button class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
             <svg class="iconic">
@@ -22,16 +16,9 @@
             </svg>
              <span class="hidden" translate="post.media.delete_photo"></span>
           </button>
-
-          <file-upload id="{{name}}" validation="'image'" container="media" model="mediaId"></file-upload>
-            <label for="{{name}}" class="button button-gamma">
-              <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#image"></use>
-              </svg>
-              <span class="button-label" translate="post.media.replace_image"></span>
-            </label>
         </div>
       </figure>
+
       <div ng-hide="!mediaHasCaption">
         <figure>
           <p class="small" translate>post.media.add_caption</p>
@@ -42,4 +29,33 @@
         </figure>
       </div>
     </div>
+
+    <style>
+    .cropArea {
+        background: #E4E4E4;
+        overflow: hidden;
+        width:500px;
+        height:350px;
+    }
+    form .progress {
+        line-height: 15px;
+    }
+    .progress {
+        display: inline-block;
+        width: 100px;
+        border: 3px groove #CCC;
+    }
+    .progress div {
+        font-size: smaller;
+        background: orange;
+        width: 0;
+    }
+    .preview {
+        background: #E4E4E4;
+        overflow: hidden;
+        max-width:500px;
+        max-height:350px;
+        background-position: center;
+    }
+    </style>
 </form>
