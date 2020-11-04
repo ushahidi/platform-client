@@ -263,6 +263,8 @@ function PostDataEditorController(
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         $scope.post.values[attr.key] = (attr.required) ? [moment(new Date()).toDate()] : [null];
                     }
+                } else if (attr.input === 'date' || attr.input === 'datetime') {
+                    $scope.post.values[attr.key][0] = moment($scope.post.values[attr.key][0]).toDate();
                 } else if (attr.input === 'number') {
                     // Number input requires a number
                     if ($scope.post.values[attr.key][0]) {
