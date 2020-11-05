@@ -51,7 +51,7 @@ function (
 
             $scope.save = function (editAttribute, activeTask) {
                 editAttribute.instructions = $scope.editor.getMarkdown();
-                if (!$scope.attributeLabel.$invalid) {
+                if ($scope.valuesPermissible() && !$scope.attributeLabel.$invalid) {
                     $scope.editAttribute.label = $scope.label;
                     $scope.addNewAttribute(editAttribute, activeTask);
                 }
@@ -214,7 +214,20 @@ function (
                 }
 
                 return angular.element(document.querySelector('#displayError')).addClass('hidden') && angular.element(document.querySelector('#form-field')).removeClass('error');
-
+            };
+          
+            $scope.valuesPermissible = function () {
+                if ($scope.editAttribute.options.length < 1) {
+                    return true;
+                }
+                let tmp = [];
+                for (let x of $scope.editAttribute.options) {
+                    if (tmp.indexOf(x) !== -1) {
+                        return false;
+                    }
+                    tmp.push(x);
+                }
+                return true;
             };
         }
     };
