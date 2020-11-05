@@ -6,6 +6,7 @@ module.exports = [
     '$translate',
     'MediaEndpoint',
     'Notify',
+    'Upload',
 function (
     $q,
     $http,
@@ -13,7 +14,8 @@ function (
     Util,
     $translate,
     MediaEndpoint,
-    Notify
+    Notify,
+    Upload
 ) {
     var MediaEditService = {
         saveMedia: function (medias, post) {
@@ -74,6 +76,7 @@ function (
             return deferred.promise;
         },
         uploadFile: function (media) {
+            const u = Upload.$http;
             var deferred = $q.defer();
             // Delete current file
             this.deleteMedia(media.id).then(function () {
@@ -84,11 +87,11 @@ function (
                 if (media.caption) {
                     formData.append('caption', media.caption);
                 }
-
-                $http.post(
-                    Util.apiUrl('/media'),
-                    formData,
+                Upload.upload(
                     {
+                        url: Util.apiUrl('/media'),
+                        file: media.file,
+                        data: formData,
                         headers: {
                             'Content-Type': undefined
                         }
@@ -102,6 +105,23 @@ function (
                     // we continue to save the post
                     deferred.resolve({});
                 });
+                // $http.post(
+                //     Util.apiUrl('/media'),
+                //     formData,
+                //     {
+                //         headers: {
+                //             'Content-Type': undefined
+                //         }
+                //     }
+                // ).then(function (response) {
+                //     media.id = response.data.id;
+                //     deferred.resolve(media);
+                // }, function (error) {
+                //     Notify.apiErrors(error);
+                //     // We warn the user about image errors but
+                //     // we continue to save the post
+                //     deferred.resolve({});
+                // });
             }, function (error) {
                 Notify.apiErrors(error);
                 // We warn the user about image errors but

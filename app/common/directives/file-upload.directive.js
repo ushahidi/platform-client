@@ -9,7 +9,8 @@ function FileUpload() {
             container: '=',
             model: '=',
             validation: '=',
-            showAdd: '&'
+            showAdd: '&',
+            showReplace: '&'
         },
         controller: [
             '$scope', '$attrs', 'Notify', 'Upload',
@@ -31,15 +32,7 @@ function FileUpload() {
                             // $scope.$apply();
                         })
                     })
-                    if (validateFile($scope.container.file)) {
-                        // $scope.container.file = $event.target.files[0];
-                        // var reader = new FileReader();
-                        // reader.onload = function () {
-                        //     var dataURL = reader.result;
-                        //     $scope.container.dataURI = dataURL;
-                        // };
-                        // reader.readAsDataURL($event.target.files[0]);
-                    } else {
+                    if (!validateFile($scope.container.file)) {
                         Notify.error('post.media.error_in_upload');
                     }
                 };

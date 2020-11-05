@@ -1,18 +1,12 @@
 <!--<input name="file" type="file" custom-on-change='uploadFile' ng-required="{{ required }}" />-->
 
 <div>Crop Image and Upload
-<button ng-show="showAdd()" class="button button-gamma" ngf-select   ngf-resize="{quality: .8, centerCrop: true}" ng-model="picFile" accept="image/*">
+<button class="button button-gamma" ngf-select   ngf-resize="{quality: .8, centerCrop: true}" ng-model="picFile" accept="image/*">
     <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
     </svg>
-    <span class="button-label" translate="post.media.add_photo"></span>
-</button>
-
-<button ng-show="showReplace()" class="button button-gamma" ngf-select   ngf-resize="{quality: .8, centerCrop: true}" ng-model="picFile" accept="image/*">
-    <svg class="iconic">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-    </svg>
-    <span class="button-label" translate="post.media.add_photo"></span>
+    <span class="button-label"  ng-show="showAdd()" translate="post.media.add_photo"></span>
+    <span class="button-label"  ng-show="showReplace()" translate="post.media.replace_image"></span>
 </button>
 
 <div ng-if="crop" ngf-drop ng-model="picFile" ngf-pattern="image/*"
