@@ -18,11 +18,9 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
-require('angular-image-compress/angular-image-compress');
 require('ng-file-upload');
-require('ng-img-crop/compile/minified/ng-img-crop');
-require('ng-img-crop/compile/minified/ng-img-crop.css');
-
+require('ui-cropper/compile/minified/ui-cropper');
+require('ui-cropper/compile/minified/ui-cropper.css');
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
@@ -88,9 +86,8 @@ angular.module('app',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
         'ngtweet',
-        'ngImageCompress',
         'ngFileUpload',
-        'ngImgCrop'
+        'uiCropper'
     ])
 
     .constant('CONST', {

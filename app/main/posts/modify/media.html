@@ -3,12 +3,8 @@
     <div class="form-field file">
       <file-upload  show-replace="showReplace" crop="crop" show-add="showAdd" id="{{name}}" validation="'image'" container="media" model="mediaId">
       </file-upload>
-
-
-    <!-- image uploader ends -->
-
-
       <figure ng-show="showReplace()">
+        <img ng-src="{{media.original_file_url}}" ng-show="media.id && !media.dataURI">
         <div class="form-field">
           <button class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
             <svg class="iconic">

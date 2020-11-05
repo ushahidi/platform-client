@@ -17,13 +17,22 @@ function FileUpload() {
             function (
                 $scope, $attrs, Notify, Upload
             ) {
+                $scope.crop = false;
+                $scope.croppedDataUrl = '';
                 $scope.required = typeof $attrs.required !== 'undefined';
-
-                $scope.uploadFile = function (picFile, dataurl) {
+                $scope.toggleCrop = function() {
+                    $scope.crop = !$scope.crop;
+                }
+                $scope.uploadFile = function (picFile, croppedDataUrl) {
+                    if (croppedDataUrl) {
+                        picFile = Upload.dataUrltoBlob(croppedDataUrl, picFile.name, picFile.origSize);
+                        console.log(picFile);
+                    }
                     Upload.resize(picFile, {quality: 0.7}).then(function (resizedFile) {
                         $scope.container.file = resizedFile;
                         Upload.base64DataUrl(resizedFile).then(function (dataURL) {
                             $scope.container.dataURI = dataURL;
+                            console.log(dataURL);
                             $scope.container.changed = true;
                             $scope.container.deleted = false;
                             $scope.model = 'changed';

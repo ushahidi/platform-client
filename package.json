@@ -103,7 +103,6 @@
     "angular-datepicker": "alongubkin/angular-datepicker.git",
     "angular-elastic": "^2.5.1",
     "angular-filter": "^0.5.4",
-    "angular-image-compress": "^0.1.5",
     "angular-lazy-bootstrap": "github:ushahidi/angular-lazy-bootstrap",
     "angular-linkify": "^2.0.0",
     "angular-local-storage": "^0.5.0",
@@ -124,7 +123,6 @@
     "moment": "2.19.3",
     "moment-timezone": "^0.5.4",
     "ng-file-upload": "^12.2.13",
-    "ng-img-crop": "^0.2.0",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "ngtweet": "^1.0.0",
@@ -132,6 +130,7 @@
     "raven-js": "^3.26.3",
     "socket.io-client": "2.0.3",
     "sortablejs": "1.10.0",
+    "ui-cropper": "^1.0.9",
     "underscore": "^1.7.0",
     "ushahidi-platform-pattern-library": "^4.4.3"
   },

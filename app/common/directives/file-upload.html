@@ -1,37 +1,27 @@
-<!--<input name="file" type="file" custom-on-change='uploadFile' ng-required="{{ required }}" />-->
-
 <div>Crop Image and Upload
-<button class="button button-gamma" ngf-select   ngf-resize="{quality: .8, centerCrop: true}" ng-model="picFile" accept="image/*">
+<button class="button button-gamma" ngf-select ngf-change="uploadFile(picFile, croppedDataUrl)"  ngf-resize="{quality: .8}" ng-model="picFile" accept="image/*">
     <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
     </svg>
-    <span class="button-label"  ng-show="showAdd()" translate="post.media.add_photo"></span>
-    <span class="button-label"  ng-show="showReplace()" translate="post.media.replace_image"></span>
+    <span class="button-label" ng-show="showAdd()" translate="post.media.add_photo"></span>
+    <span class="button-label" ng-show="showReplace()" translate="post.media.replace_image"></span>
 </button>
 
-<div ng-if="crop" ngf-drop ng-model="picFile" ngf-pattern="image/*"
-     class="cropArea">
-    <img-crop area-type="square" image="picFile  | ngfDataUrl"
+<div ng-if="crop == true" ngf-drop ng-model="picFile" ngf-pattern="image/*"  class="cropArea">
+    <ui-cropper on-change="uploadFile(picFile, $dataURI)"
+                area-type="square"
+                image="picFile  | ngfDataUrl"
               result-image="croppedDataUrl"
               ng-init="croppedDataUrl=''">
-    </img-crop>
-</div>
-<div ng-if="crop">
-    <img ng-src="{{croppedDataUrl}}"/>
+    </ui-cropper>
 </div>
 
 <div>
-    <img ng-if="!crop" class="preview" ngf-src="picFile"
+    <img ng-if="crop == false" class="preview" ngf-src="picFile"
          ngf-background="file"
          ngf-resize="{quality: 0.7}"
          ngf-no-object-url="true" />
 </div>
-<button ng-click="crop=!crop">Crop</button>
-<button ng-click="uploadFile(picFile, croppedDataUrl)">Submit</button>
-
-<span class="progress" ng-show="progress >= 0">
-        <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-    </span>
-<span ng-show="result">Upload Successful</span>
+<button ng-if="picFile | ngfDataUrl" ng-click="toggleCrop()">Crop</button>
 <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
 </div>
