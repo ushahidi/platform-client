@@ -76,22 +76,17 @@ function (
             return deferred.promise;
         },
         uploadFile: function (media) {
-            const u = Upload.$http;
             var deferred = $q.defer();
             // Delete current file
             this.deleteMedia(media.id).then(function () {
-                var formData = new FormData();
-
-                formData.append('file', media.file);
-
-                if (media.caption) {
-                    formData.append('caption', media.caption);
-                }
                 Upload.upload(
                     {
                         url: Util.apiUrl('/media'),
                         file: media.file,
-                        data: formData,
+                        data: {
+                            caption: media.caption,
+                            file: media.file
+                        },
                         headers: {
                             'Content-Type': undefined
                         }
@@ -105,23 +100,6 @@ function (
                     // we continue to save the post
                     deferred.resolve({});
                 });
-                // $http.post(
-                //     Util.apiUrl('/media'),
-                //     formData,
-                //     {
-                //         headers: {
-                //             'Content-Type': undefined
-                //         }
-                //     }
-                // ).then(function (response) {
-                //     media.id = response.data.id;
-                //     deferred.resolve(media);
-                // }, function (error) {
-                //     Notify.apiErrors(error);
-                //     // We warn the user about image errors but
-                //     // we continue to save the post
-                //     deferred.resolve({});
-                // });
             }, function (error) {
                 Notify.apiErrors(error);
                 // We warn the user about image errors but
