@@ -9,8 +9,8 @@ function FileUpload() {
             container: '=',
             model: '=',
             validation: '=',
-            showAdd: '&',
-            showReplace: '&'
+            showAddPhoto: '=',
+            showReplacePhoto: '='
         },
         controller: [
             '$scope', '$attrs', 'Notify', 'Upload',
@@ -26,13 +26,11 @@ function FileUpload() {
                 $scope.uploadFile = function (picFile, croppedDataUrl) {
                     if (croppedDataUrl) {
                         picFile = Upload.dataUrltoBlob(croppedDataUrl, picFile.name, picFile.origSize);
-                        console.log(picFile);
                     }
                     Upload.resize(picFile, {quality: 0.7}).then(function (resizedFile) {
                         $scope.container.file = resizedFile;
                         Upload.base64DataUrl(resizedFile).then(function (dataURL) {
                             $scope.container.dataURI = dataURL;
-                            console.log(dataURL);
                             $scope.container.changed = true;
                             $scope.container.deleted = false;
                             $scope.model = 'changed';
@@ -40,10 +38,11 @@ function FileUpload() {
                             // I think this makes sense if changes are being reflected back already?
                             // $scope.$apply();
                         })
+                    }).then(function() {
+                        if (!validateFile($scope.container.file)) {
+                            Notify.error('post.media.error_in_upload');
+                        }
                     })
-                    if (!validateFile($scope.container.file)) {
-                        Notify.error('post.media.error_in_upload');
-                    }
                 };
 
                 function validateFile(container) {

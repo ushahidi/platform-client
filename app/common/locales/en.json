@@ -847,6 +847,7 @@
             "add_caption" : "Add caption",
             "upload" : "Upload",
             "add_photo": "Add photo",
+            "crop_and_upload": "Crop photo and upload",
             "delete_photo": "Delete photo",
             "replace_image": "Replace image",
             "error_in_upload": "Your image is too large (maximum size is 1MB) or has the wrong format (allowed formats are gif, png, jpg and jpeg), please check and try again!"

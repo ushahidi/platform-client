@@ -91,18 +91,17 @@ function (
                 }
             }
 
-            function showAdd() {
+            function showAdd(args = '') {
                 return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
             }
 
-            function showReplace() {
+            function showReplace(args = '') {
                 return $scope.media.dataURI || ($scope.media.id && !$scope.media.deleted);
             }
 
             function showDelete() {
                 return $scope.media.id || ($scope.media.changed && !$scope.media.deleted);
             }
-
             function deleteMedia(mediaId) {
                 // Mark for deletion
                 $scope.media = {id: mediaId, changed: true, deleted: true};

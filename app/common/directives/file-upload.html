@@ -1,10 +1,12 @@
-<div>Crop Image and Upload
+<div>
+
+<label translate="post.media.crop_and_upload">Crop Image and Upload</label>
 <button class="button button-gamma" ngf-select ngf-change="uploadFile(picFile, croppedDataUrl)"  ngf-resize="{quality: .8}" ng-model="picFile" accept="image/*">
     <svg class="iconic">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
     </svg>
-    <span class="button-label" ng-show="showAdd()" translate="post.media.add_photo"></span>
-    <span class="button-label" ng-show="showReplace()" translate="post.media.replace_image"></span>
+    <span class="button-label" ng-show="showAddPhoto()" translate="post.media.add_photo"></span>
+    <span class="button-label" ng-show="showReplacePhoto()" translate="post.media.replace_image"></span>
 </button>
 
 <div ng-if="crop == true" ngf-drop ng-model="picFile" ngf-pattern="image/*"  class="cropArea">

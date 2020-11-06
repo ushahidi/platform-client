@@ -1,7 +1,7 @@
 
 <form class="media-file-upload">
     <div class="form-field file">
-      <file-upload  show-replace="showReplace" crop="crop" show-add="showAdd" id="{{name}}" validation="'image'" container="media" model="mediaId">
+      <file-upload  show-replace-photo="showReplace" crop="crop" show-add-photo="showAdd" id="{{name}}" validation="'image'" container="media" model="mediaId">
       </file-upload>
       <figure ng-show="showReplace()">
         <img ng-src="{{media.original_file_url}}" ng-show="media.id && !media.dataURI">
