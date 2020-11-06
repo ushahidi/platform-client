@@ -96,16 +96,26 @@
         </div>
        </div>
        <div class="form-field switch" ng-if="canDisplayDefaultValue()">
-          <label ng-if="canDisplayDefaultValue()" translate="app.default_value">Default value (optional):</label>
           <div id="form-field" class="form-field">
             <div ng-switch="editAttribute.input" ng-if="errorMessage()">
-                <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
-                <input ng-switch-when="video" type="text" placeholder="Video url link" ng-model="editAttribute.default" ng-change="canDisplayError()">
-                <input ng-switch-when="date" type="text" placeholder="2020-05-29" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
-                <input ng-switch-when="datetime" type="text" placeholder="2020-05-29 04:15 pm" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
-                <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
-                <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
-                <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="video-defaultvalue" ng-if="displayVideoLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="video" id="video-defaultvalue" type="text" placeholder="Video url link" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="date-defaultvalue" ng-if="displayDateLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="date" id="date-defaultvalue" type="text" placeholder="2020-05-29" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="datetime-defaultvalue" ng-if="displayDateTimeLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="datetime" id="datetime-defaultvalue" type="text" placeholder="2020-05-29 04:15 pm" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="int-defaultvalue" ng-if="displayIntLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="int" id="int-defaultvalue" type="number" step="1" ng-model="editAttribute.default">
+
+                <label for="decimal-defaultvalue" ng-if="displayDecimalLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="decimal" id="decimal-defaultvalue" type="number" ng-model="editAttribute.default">
+
+                <label for="defaultvalue" ng-if="displayDefaultLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-default id="defaultvalue" type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default" ng-change="canDisplayError()">
             </div>
           </div>
           <div

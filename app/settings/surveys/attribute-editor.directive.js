@@ -81,6 +81,30 @@ function (
                 return $scope.editAttribute.input !== 'upload' && $scope.editAttribute.type !== 'title' && $scope.editAttribute.type !== 'description' && $scope.editAttribute.input !== 'tags' && $scope.editAttribute.input !== 'location' && $scope.editAttribute.input !== 'relation';
             };
 
+            $scope.displayVideoLabel = function () {
+                return $scope.editAttribute.input === 'video';
+            };
+
+            $scope.displayDateLabel = function () {
+                return $scope.editAttribute.input === 'date';
+            };
+
+            $scope.displayDateTimeLabel = function () {
+                return $scope.editAttribute.input === 'datetime';
+            };
+
+            $scope.displayIntLabel = function () {
+                return $scope.editAttribute.type === 'int';
+            };
+
+            $scope.displayDecimalLabel = function () {
+                return $scope.editAttribute.type === 'decimal';
+            };
+
+            $scope.displayDefaultLabel = function () {
+                return $scope.editAttribute.input !== 'video' && $scope.editAttribute.type !== 'int' && $scope.editAttribute.type !== 'decimal' && $scope.editAttribute.input !== 'date' && $scope.editAttribute.input !== 'datetime' && $scope.editAttribute.input !== 'location' && $scope.editAttribute.input !== 'relation';
+            };
+
             $scope.errorMsgs = {
                 'num': 'Number(s) only',
                 'video': 'Enter valid video link',
@@ -215,7 +239,7 @@ function (
 
                 return angular.element(document.querySelector('#displayError')).addClass('hidden') && angular.element(document.querySelector('#form-field')).removeClass('error');
             };
-          
+
             $scope.valuesPermissible = function () {
                 if ($scope.editAttribute.options.length < 1) {
                     return true;
