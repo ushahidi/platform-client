@@ -97,8 +97,9 @@
           <div id="form-field" class="form-field">
             <div ng-switch="editAttribute.input" ng-if="errorMessage()">
                 <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editAttribute.default">
-                <input ng-switch-when="video" type="text" placeholder="Video url link" ng-model="editAttribute.default"  ng-change="canDisplayError()">
-                <input ng-switch-when="date" type="text" date-time="editAttribute.default" ng-model="editAttribute.default">
+                <input ng-switch-when="video" type="text" placeholder="Video url link" ng-model="editAttribute.default" ng-change="canDisplayError()">
+                <input ng-switch-when="date" type="text" placeholder="2020-05-29" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
+                <input ng-switch-when="datetime" type="text" placeholder="2020-05-29 04:15 pm" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
                 <input ng-switch-when="int" type="number" step="1" ng-model="editAttribute.default">
                 <input ng-switch-when="decimal" type="number" ng-model="editAttribute.default">
                 <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default" ng-change="canDisplayError()">

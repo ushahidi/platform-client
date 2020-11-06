@@ -84,12 +84,16 @@ function (
             $scope.errorMsgs = {
                 'num': 'Number(s) only',
                 'video': 'Enter valid video link',
+                'date': 'Enter valid date format',
+                'dateTime': 'Enter valid date & time format',
                 'others': 'hidden'
             };
 
             $scope.inputType = [
                 $scope.editAttribute.input === 'number',
-                $scope.editAttribute.input === 'video'
+                $scope.editAttribute.input === 'video',
+                $scope.editAttribute.input === 'date',
+                $scope.editAttribute.input === 'datetime'
             ]
 
             $scope.errorMessage = function () {
@@ -102,6 +106,14 @@ function (
                     $scope.errorMsg = $scope.errorMsgs.video;
                 }
 
+                if ($scope.inputType[2]) {
+                    $scope.errorMsg = $scope.errorMsgs.date;
+                }
+
+                if ($scope.inputType[3]) {
+                    $scope.errorMsg = $scope.errorMsgs.dateTime;
+                }
+
                 if (!$scope.errorMsg) {
                     $scope.errorMsg = $scope.errorMsgs.others;
                 }
@@ -111,22 +123,93 @@ function (
 
             $scope.canDisplayError = function () {
 
-                if ($scope.inputType[0] && isNaN($scope.editAttribute.default) && $scope.editAttribute.default.length >= 1) {
-                   return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                let length = $scope.editAttribute.default.length;
+
+                if ($scope.inputType[0] && isNaN($scope.editAttribute.default) && length >= 1) {
+                    return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
                 }
 
-                if ($scope.inputType[1] && $scope.editAttribute.default.length >= 1) {
-                    if (
-                        ($scope.editAttribute.default.length === 1 && $scope.editAttribute.default.indexOf('h') !== 0) ||
-                        ($scope.editAttribute.default.length === 2 && $scope.editAttribute.default.indexOf('ht') !== 0) ||
-                        ($scope.editAttribute.default.length === 3 && $scope.editAttribute.default.indexOf('htt') !== 0) ||
-                        ($scope.editAttribute.default.length === 4 && $scope.editAttribute.default.indexOf('http') !== 0) ||
-                        ($scope.editAttribute.default.length === 5 && !$scope.editAttribute.default.match(/http:|https/)) ||
-                        ($scope.editAttribute.default.length === 6 && !$scope.editAttribute.default.match(/http:\/|https:/)) ||
-                        ($scope.editAttribute.default.length === 7 && !$scope.editAttribute.default.match(/http:\/\/|https:\//)) ||
-                        ($scope.editAttribute.default.length >= 8 && !$scope.editAttribute.default.match(/http:\/\/|https:\/\//))
-                    ) {
+                if ($scope.inputType[1] && length >= 1) {
+
+                   let urlSupported = [
+                    'https://www.youtube.com/watch',
+                    'https://youtube.googleapis.com/v/',
+                    'https://youtu.be/',
+                    'https://vimeo.com/',
+                    'https://player.vimeo.com/video/',
+
+                    'http://www.youtube.com/watch',
+                    'http://youtube.googleapis.com/v/',
+                    'http://youtu.be/',
+                    'http://vimeo.com/',
+                    'http://player.vimeo.com/video/',
+
+                    '//player.vimeo.com/video/'
+                   ]
+
+                   let userUrl = $scope.editAttribute.default.substr(0, length);
+
+                   if (
+                    userUrl.match(urlSupported[0].substr(0, length)) ||
+                    userUrl.match(urlSupported[1].substr(0, length)) ||
+                    userUrl.match(urlSupported[2].substr(0, length)) ||
+                    userUrl.match(urlSupported[3].substr(0, length)) ||
+                    userUrl.match(urlSupported[4].substr(0, length)) ||
+                    userUrl.match(urlSupported[5].substr(0, length)) ||
+                    userUrl.match(urlSupported[6].substr(0, length)) ||
+                    userUrl.match(urlSupported[7].substr(0, length)) ||
+                    userUrl.match(urlSupported[8].substr(0, length)) ||
+                    userUrl.match(urlSupported[9].substr(0, length)) ||
+                    userUrl.match(urlSupported[10].substr(0, length))
+                   ) {
+                        return angular.element(document.querySelector('#displayError')).addClass('hidden') && angular.element(document.querySelector('#form-field')).removeClass('error');
+                   } else {
                         return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                   }
+                }
+
+                if ($scope.inputType[2]) {
+
+                    for (let i = 0; i <= length - 1; i += 1) {
+
+                        if ((i >= 0 && i <= 3 || i >= 5 && i <= 6 || i >= 8 && i <= 9) && isNaN($scope.editAttribute.default.charAt(i))) {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                        if ((i === 4 || i === 7) && $scope.editAttribute.default.charAt(i) !== '-') {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                    }
+                }
+
+                if ($scope.inputType[3]) {
+
+                    for (let i = 0; i <= length - 1; i += 1) {
+
+                        if ((i >= 0 && i <= 3 || i >= 5 && i <= 6 || i >= 8 && i <= 9 || i >= 11 && i <= 12 || i >= 14 && i <= 15) && isNaN($scope.editAttribute.default.charAt(i))) {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                        if ((i === 4 || i === 7) && $scope.editAttribute.default.charAt(i) !== '-') {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                        if ((i === 10 || i === 16) && $scope.editAttribute.default.charAt(i) !== ' ') {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                        if (i === 13 && $scope.editAttribute.default.charAt(i) !== ':') {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                        if (i === 17 && !$scope.editAttribute.default.charAt(i).match(/a|p/)) {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
+
+                        if (i === 18 && $scope.editAttribute.default.charAt(i) !== 'm') {
+                            return angular.element(document.querySelector('#displayError')).removeClass('hidden') && angular.element(document.querySelector('#form-field')).addClass('error');
+                        }
                     }
                 }
 
