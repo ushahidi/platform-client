@@ -91,11 +91,11 @@ function (
                 }
             }
 
-            function showAdd(args = '') {
+            function showAdd() {
                 return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
             }
 
-            function showReplace(args = '') {
+            function showReplace() {
                 return $scope.media.dataURI || ($scope.media.id && !$scope.media.deleted);
             }
 

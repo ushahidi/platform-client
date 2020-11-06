@@ -1,5 +1,4 @@
 module.exports = FileUpload;
-// import Upload from 'ng-file-upload';
 function FileUpload() {
     return {
         restrict: 'E',
