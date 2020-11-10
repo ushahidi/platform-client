@@ -1,4 +1,5 @@
 module.exports = FileUpload;
+
 function FileUpload() {
     return {
         restrict: 'E',
@@ -7,41 +8,30 @@ function FileUpload() {
         scope: {
             container: '=',
             model: '=',
-            validation: '=',
-            showAddPhoto: '=',
-            showReplacePhoto: '='
+            validation: '='
         },
         controller: [
-            '$scope', '$attrs', 'Notify', 'Upload',
+            '$scope', '$attrs', 'Notify',
             function (
-                $scope, $attrs, Notify, Upload
+                $scope, $attrs, Notify
             ) {
-                $scope.crop = false;
-                $scope.croppedDataUrl = '';
                 $scope.required = typeof $attrs.required !== 'undefined';
-                $scope.toggleCrop = function() {
-                    $scope.crop = !$scope.crop;
-                }
-                $scope.uploadFile = function (picFile, croppedDataUrl) {
-                    if (croppedDataUrl) {
-                        picFile = Upload.dataUrltoBlob(croppedDataUrl, picFile.name, picFile.origSize);
-                    }
-                    Upload.resize(picFile, {quality: 0.7}).then(function (resizedFile) {
-                        $scope.container.file = resizedFile;
-                        Upload.base64DataUrl(resizedFile).then(function (dataURL) {
+                $scope.uploadFile = function ($event) {
+                    if (validateFile($event.target.files[0])) {
+                        $scope.container.file = $event.target.files[0];
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            var dataURL = reader.result;
                             $scope.container.dataURI = dataURL;
                             $scope.container.changed = true;
                             $scope.container.deleted = false;
                             $scope.model = 'changed';
-                            // When I add the scope.apply it says digest already in progress.
-                            // I think this makes sense if changes are being reflected back already?
-                            // $scope.$apply();
-                        })
-                    }).then(function() {
-                        if (!validateFile($scope.container.file)) {
-                            Notify.error('post.media.error_in_upload');
-                        }
-                    })
+                            $scope.$apply();
+                        };
+                        reader.readAsDataURL($event.target.files[0]);
+                    } else {
+                        Notify.error('post.media.error_in_upload');
+                    }
                 };
 
                 function validateFile(container) {

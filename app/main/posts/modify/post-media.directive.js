@@ -33,7 +33,6 @@ function (
             $scope.showReplace = showReplace;
             $scope.showDelete = showDelete;
             $scope.deleteMedia = deleteMedia;
-            $scope.crop = false;
             activate();
 
             function activate() {
