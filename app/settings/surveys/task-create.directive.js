@@ -22,6 +22,7 @@ function (
             $scope.closeModal = function () {
                 ModalService.close();
             };
+            document.getElementById('task_name').focus();
         }
     };
 }];

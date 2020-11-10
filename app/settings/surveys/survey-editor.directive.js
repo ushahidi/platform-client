@@ -120,7 +120,7 @@ function SurveyEditorController(
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
             $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
         });
-
+        document.getElementById('survey_name').focus();
         if ($scope.surveyId) {
             loadFormData();
         } else {

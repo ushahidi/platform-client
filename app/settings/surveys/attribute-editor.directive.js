@@ -48,7 +48,7 @@ function (
             };
 
             initiateEditor();
-
+            document.getElementById('attribute_name').focus();
             $scope.save = function (editAttribute, activeTask) {
                 editAttribute.instructions = $scope.editor.getMarkdown();
                 if ($scope.valuesPermissible() && !$scope.attributeLabel.$invalid) {

@@ -32,7 +32,7 @@ function (
 
     $scope.tempApiKey = '';
     $scope.tempMaintainerId = '';
-
+    document.getElementById('hdx_maintainer_id').focus();
     $scope.hdxSettings = {
         'hdx_api_key': {
             id: null,
