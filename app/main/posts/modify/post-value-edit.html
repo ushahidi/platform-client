@@ -112,15 +112,21 @@
                         ></post-datetime>
                     </div>
                     <!-- type: select -->
-                    <select
-                        ng-switch-when="select"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        >
-                        <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
-                    </select>
+                    <div ng-switch-when="select">
+                        <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                            <p translate>post.duplicate_option</p>
+                        </div>
+                        <div class="form-field select">
+                            <select
+                                id="values[{{attribute.key}}][{{key}}]"
+                                name="values_{{attribute.id}}"
+                                ng-model="post.values[attribute.key][key]"
+                                ng-required="attribute.required"
+                                >
+                                <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
+                            </select>
+                        </div>
+                    </div>
                     <!-- type: number -->
                     <input
                         ng-switch-when="number"
@@ -221,9 +227,7 @@
             </div>
         </div>
         <!-- Container for fieldset structured elements -->
-        <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
-            <p translate>post.duplicate_option</p>
-        </div>
+        
         <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0"> 
             <!-- Attribute Label -->
             <label ng-class="{
@@ -244,6 +248,10 @@
             <div ng-switch="attribute.input">
                 <!-- type: radio -->
                 <div ng-switch-when="radio">
+                     <!-- Container for fieldset structured elements -->
+                     <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
                     <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
                     <div class="form-field radio" ng-repeat="option in attribute.options">
                         <label>
@@ -261,6 +269,10 @@
                 </div>
                 <!-- type: checkbox -->
                 <div ng-switch-when="checkbox">
+                    <!-- Container for fieldset structured elements -->
+                    <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
                     <div class="form-field checkbox" ng-repeat="option in attribute.options | unique ">
                     <label>
                         <input
