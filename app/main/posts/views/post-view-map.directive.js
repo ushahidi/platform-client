@@ -144,11 +144,37 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function getStats () {
             // Getting stats for filter-dropdown
-            let def = PostFilters.getQueryParams(PostFilters.getDefaults());
-            PostEndpoint.geojson(def).$promise.then(res => {
-                $scope.stats.totalItems = res.features.length;
-                $scope.stats.unmapped = res.total - res.features.length;
+            getPostStats(PostFilters.getDefaults()).$promise.then(function (result) {
+                $scope.stats.totalItems = result.totals[0].values.reduce(
+                    function (a,b) {
+                        return a.total + b.total
+                    }
+                );
+
+                $scope.stats.unmapped = result.unmapped;
             });
+        }
+
+        function getPostStats(filters) {
+            var query = PostFilters.getQueryParams(filters);
+            var queryParams = _.extend({}, query, {
+                include_unmapped: true,
+                status: 'all'
+            });
+
+            // we don't want a group_by or filter
+            if (queryParams.form) {
+                delete queryParams.form;
+            }
+            if (queryParams.group_by) {
+                delete queryParams.group_by;
+            }
+
+            // deleting source, we want stats for all datasources to keep the datasource-bucket-stats unaffected by data-source-filters
+            if (queryParams.source) {
+                delete queryParams.source;
+            }
+            return PostEndpoint.stats(queryParams);
         }
 
         function loadPosts(query) {
