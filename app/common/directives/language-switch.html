@@ -2,7 +2,7 @@
 	    <div class="custom-select">
 	        <select
                 ng-model="site.language"
-                ng-options="lang.code as lang.name for lang in languages"
+                ng-options="lang.code as lang.nativeName || lang.name for lang in languages"
                 ng-change="changeLanguage(site.language)"
             >
                 <option value="" translate="app.select_language">Select language</option>

@@ -74,6 +74,11 @@ function saveTranslationList(languages, locales_dir) {
     // Replace language code underscores with hyphens
     languages = languages.map((language) => {
         language.code = language.code.replace('_', '-');
+        let rawLangData = fs.readFileSync(locales_dir + language.code + '.json');
+        let langData = JSON.parse(rawLangData);
+        if (langData.languages !== undefined && langData.languages[language.code] !== undefined) {
+            language.nativeName = langData.languages[language.code];
+        }
         return language;
     });
 
