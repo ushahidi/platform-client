@@ -149,7 +149,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     function (a,b) {
                         return a.total + b.total
                     }
-                );
+                ) - result.unmapped;
 
                 $scope.stats.unmapped = result.unmapped;
             });
