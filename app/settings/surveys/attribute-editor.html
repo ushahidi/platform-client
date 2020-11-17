@@ -1,115 +1,119 @@
- <div class="modal-body">
+<div class="modal-body">
   <div class="form-field required"
-    ng-class="{
-        'error': fieldLabel.$invalid && fieldLabel.$dirty
-    }">
+       ng-class="{
+      'error': fieldLabel.$invalid && fieldLabel.$dirty
+  }">
     <form name="fieldLabel">
-      <label translate="app.name">Name</label>
-      <input type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
+      <label translate="app.name" >
+        Name
+        <input type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}">
+      </label>
       <div
-                class="alert error"
-                ng-show="fieldLabel.$invalid && fieldLabel.$dirty"
-            >
-                <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                </svg>
-                <span translate="{{'post.valid.label.required'}}"></span>
-            </div>
+          class="alert error"
+          ng-show="fieldLabel.$invalid && fieldLabel.$dirty"
+      >
+        <svg class="iconic">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+        </svg>
+        <span translate="{{'post.valid.label.required'}}"></span>
+      </div>
     </form>
-   </div>
-   <div class="form-field switch">
+  </div>
+  <div class="form-field switch">
     <label translate="survey.show_field_description">Add field description (optional):</label>
     <div class="form-field">
-        <div id="editSection"></div>
+      <div id="editSection"></div>
     </div>
-</div>
-   <div>
-       <div class="form-field" ng-if="hasOptions(editField)">
-          <label translate>form.field_options</label>
-          <div class="input-inline" ng-repeat="(key, option) in editField.options track by $index">
-              <input type="text" placeholder="{{ 'form.field_option_placeholder'| translate }}" ng-model="editField.options[key]">
-              <button type="button" class="button-flat button-beta" ng-if="editField.options.length > 1" ng-click="removeOption(editField, key)">
-                <svg class="iconic">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                </svg>
-                <span class="button-label hidden">Remove</span>
-              </button>
-          </div>
-          <button type="button" class="button-secondary alt" ng-click="addOption(editField)"><i class="fa fa-plus"></i> <span translate>form.field_add_option</span></button>
-       </div>
-   </div>
-   <!-- editing/adding categories -->
-    <div class="form-field" ng-if="editField.input ==='tags'">
-        <label translate="category.which_categories">Which categories should be available</label>
-        <category-selector
-            available="availableCategories"
-            selected="editField.options"
-            enable-parents="true"
-            active-language="{language: languages.active}"
-            display-warning="true"
-        ></category-selector>
-    </div>
-    <!-- End of editing/adding categories -->
-        <div class="form-field" ng-if="editField.input === 'relation'">
-            <label translate>survey.field_allowed_relation_survey</label>
-            <div name="visible-to">
-               <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
-                   <label>
-                       <input type="checkbox" checklist-model="editField.config.input.form" checklist-value="relationForm.id" />
-                        {{relationForm.name}}
-                   </label>
-                  </div>
-              </div>
-        </div>
-        <div class="form-field switch" ng-show="onlyOptional(editField) && editField.input !== 'tags'">
-          <label translate="survey.required">Require this field be completed</label>
-          <div class="toggle-switch">
-             <input class="tgl" id="switchnewfield" type="checkbox" ng-model="editField.required">
-             <label class="tgl-btn" for="switchnewfield"></label>
-          </div>
-       </div>
-
-       <!-- start: media upload toggle to make caption an optional field-->
-       <div class="form-field switch" ng-show="canDisableCaption()">
-         <label translate="survey.collect_image_caption">Disable Caption field</label>
-         <p data-fieldgroup-target="field-caption-disabled-warning" class="init active" translate="survey.disable_caption_field_explanation" ng-show="!editField.config.hasCaption">
-           This will disable all captions for this field, but it won't delete them from the database. You will be able to re-enable them later.
-         </p>
-           <div class="toggle-switch">
-           <input class="tgl" id="switch-hascaption" type="checkbox" ng-model="editField.config.hasCaption">
-           <label class="tgl-btn" for="switch-hascaption"></label>
-         </div>
-       </div>
-       <!-- end: media upload toggle to make caption an optional field-->
-       <div class="form-field switch" ng-show="canMakePrivate()">
-        <label translate="survey.make_response_private">Make responses private</label>
-        <p data-fieldgroup-target="field-private-message-3" class="init active" translate="survey.response_private_desc" ng-show="editField.response_private">
+  </div>
+  <div>
+    <div class="form-field" ng-if="hasOptions(editField)">
+      <label translate>form.field_options</label>
+      <div class="alert error" role="alert" ng-show="!valuesPermissible()">
+        <p translate>survey.duplicate_option</p>
+      </div>
+      <div class="input-inline" ng-repeat="(key, option) in editField.options track by $index">
+        <input type="text" placeholder="{{ 'form.field_option_placeholder'| translate }}" ng-model="editField.options[key]">
+        <button type="button" class="button-flat button-beta" ng-if="editField.options.length > 1" ng-click="removeOption(editField, key)">
           <svg class="iconic">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
           </svg>
-            {{'survey.only_edit' | translate}}
-        </p>
-        <div class="toggle-switch">
-           <input class="tgl" id="switchprivateresponse" type="checkbox" ng-model="editField.response_private">
-           <label class="tgl-btn" for="switchprivateresponse"></label>
-        </div>
-       </div>
-       <div class="form-field switch" ng-if="canDisplay()">
-            <label translate="app.default_value">Default value (optional):</label>
-            <div class="form-field">
-              <div ng-switch="editField.input">
-                  <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editField.default">
-                  <input ng-switch-when="date" type="text" date-time="editField.default" ng-model="editField.default">
-                  <input ng-switch-when="int" type="number" step="1" ng-model="editField.default">
-                  <input ng-switch-when="decimal" type="number" ng-model="editField.default">
-                  <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editField.default">
-              </div>
-            </div>
-        </div>
-   </div>
-   <div class="form-field">
-      <button ng-show="!editField.id" type="button" class="button-alpha modal-trigger" ng-click="save(editField, activeTask)" translate="app.add_and_close">Add &amp; close</button>
-      <button ng-show="editField.id" type="button" class="button-alpha modal-trigger" ng-click="save(editField, activeTask)" translate="app.update_and_close">Update &amp; close</button>
-   </div>
+          <span class="button-label hidden">Remove</span>
+        </button>
+      </div>
+      <button type="button" class="button-secondary alt" ng-click="addOption(editField)"><i class="fa fa-plus"></i> <span translate>form.field_add_option</span></button>
+    </div>
+  </div>
+  <!-- editing/adding categories -->
+  <div class="form-field" ng-if="editField.input ==='tags'">
+    <label translate="category.which_categories">Which categories should be available</label>
+    <category-selector
+        available="availableCategories"
+        selected="editField.options"
+        enable-parents="true"
+        active-language="{language: languages.active}"
+        display-warning="true"
+    ></category-selector>
+  </div>
+  <!-- End of editing/adding categories -->
+  <div class="form-field" ng-if="editField.input === 'relation'">
+    <label translate>survey.field_allowed_relation_survey</label>
+    <div name="visible-to">
+      <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
+        <label>
+          <input type="checkbox" checklist-model="editField.config.input.form" checklist-value="relationForm.id" />
+          {{relationForm.name}}
+        </label>
+      </div>
+    </div>
+  </div>
 
+  <div class="form-field switch" ng-show="onlyOptional(editField) && editField.input !== 'tags'">
+    <label translate="survey.required" for="switchnewfield">Require this field be completed</label>
+    <div class="toggle-switch">
+      <input class="tgl" id="switchnewfield" type="checkbox" ng-model="editField.required">
+      <label class="tgl-btn" for="switchnewfield"></label>
+    </div>
+  </div>
+  <!-- start: media upload toggle to make caption an optional field-->
+  <div class="form-field switch" ng-show="canDisableCaption()">
+    <label for="switch-hascaption" translate="survey.collect_image_caption">Disable Caption field</label>
+    <p data-fieldgroup-target="field-caption-disabled-warning" class="init active" translate="survey.disable_caption_field_explanation" ng-show="!editField.config.hasCaption">
+      This will disable all captions for this field, but it won't delete them from the database. You will be able to re-enable them later.
+    </p>
+    <div class="toggle-switch">
+      <input class="tgl" id="switch-hascaption" type="checkbox" ng-model="editField.config.hasCaption">
+      <label class="tgl-btn" for="switch-hascaption"></label>
+    </div>
+  </div>
+  <!-- end: media upload toggle to make caption an optional field-->
+  <div class="form-field switch" ng-show="canMakePrivate()">
+    <label for="switchprivateresponse" translate="survey.make_response_private">Make responses private</label>
+    <p data-fieldgroup-target="field-private-message-3" class="init active" translate="survey.response_private_desc" ng-show="editField.response_private">
+      <svg class="iconic" role="img">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+      </svg>
+      {{'survey.only_edit' | translate}}
+    </p>
+    <div class="toggle-switch">
+      <input class="tgl" id="switchprivateresponse" type="checkbox" ng-model="editField.response_private">
+      <label class="tgl-btn" for="switchprivateresponse"></label>
+    </div>
+  </div>
+  <div class="form-field switch" ng-if="canDisplay()">
+    <label translate="app.default_value">Default value (optional):</label>
+    <div class="form-field">
+      <div ng-switch="editField.input">
+        <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editField.default">
+        <input ng-switch-when="date" type="text" date-time="editField.default" ng-model="editField.default">
+        <input ng-switch-when="int" type="number" step="1" ng-model="editField.default">
+        <input ng-switch-when="decimal" type="number" ng-model="editField.default">
+        <input ng-switch-default type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editField.default">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-field">
+  <button ng-show="!editField.id" type="button" class="button-alpha modal-trigger" ng-click="save(editField, activeTask)" translate="app.add_and_close">Add &amp; close</button>
+  <button ng-show="editField.id" type="button" class="button-alpha modal-trigger" ng-click="save(editField, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+</div>
 </div>

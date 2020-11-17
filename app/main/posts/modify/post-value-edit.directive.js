@@ -20,11 +20,13 @@ function PostValueEdit() {
 }
 
 PostValueEditController.$inject = [
+    '$rootScope',
     '$scope',
     '_'
 ];
 
 function PostValueEditController(
+    $rootScope,
     $scope,
     _
 ) {
@@ -43,6 +45,8 @@ function PostValueEditController(
 
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
+    $scope.isAdmin = $rootScope.isAdmin;
+    $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
 
@@ -75,5 +79,41 @@ function PostValueEditController(
     }
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
+    }
+    // Can more values be added for this attribute?
+    function canAddValue(attr) {
+        return (
+            // Attribute allows unlimited values
+            attr.cardinality === 0 ||
+            // Less values than cardinality allows
+            $scope.post.values[attr.key].length < attr.cardinality
+        );
+    }
+    // Can this values be removed?
+    function canRemoveValue(attr, key) {
+        return $scope.post.values[attr.key].length > 1;
+    }
+    // Add a new value
+    function addValue(attr) {
+        $scope.post.values[attr.key].push(null);
+    }
+    // Remove a value
+    function removeValue(attr, key) {
+        $scope.post.values[attr.key].splice(key, 1);
+    }
+
+    // Is duplicate present in options attribute?
+    function duplicatePresent(attr) {
+        if (attr.options && attr.options.length < 1) {
+            return false;
+        }
+        let tmp = [];
+        for (let x of attr.options) {
+            if (tmp.indexOf(x) !== -1) {
+                return true;
+            }
+            tmp.push(x);
+        }
+        return false;
     }
 }

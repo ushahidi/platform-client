@@ -56,11 +56,11 @@ function (
                     editField.translations = {};
                 }
                 editField.instructions = $scope.editor.getMarkdown();
-                if ($scope.fieldLabel.$invalid) {
-                    Notify.error('survey.fields.validation.required');
-                } else {
+                if (!$scope.fieldLabel.$invalid && $scope.valuesPermissible()) {
                     editField.label = $scope.label;
                     $scope.addNewField(editField, activeTask);
+                } else {
+                    Notify.error('survey.fields.validation.required');
                 }
             };
 
@@ -82,6 +82,20 @@ function (
 
             $scope.canDisableCaption = function () {
                 return $scope.editField.type === 'media' && $scope.editField.input === 'upload';
+            };
+
+            $scope.valuesPermissible = function () {
+                if ($scope.editField.options.length < 1) {
+                    return true;
+                }
+                let tmp = [];
+                for (let x of $scope.editField.options) {
+                    if (tmp.indexOf(x) !== -1) {
+                        return false;
+                    }
+                    tmp.push(x);
+                }
+                return true;
             };
         }
     };
