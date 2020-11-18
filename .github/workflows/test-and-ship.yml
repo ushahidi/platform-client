@@ -35,6 +35,10 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
+    - name: List dependencies
+      run: |
+        npm ls || true;
+
     - name: Install dependencies
       run: |
         set -e;
