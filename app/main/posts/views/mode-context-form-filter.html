@@ -1,11 +1,11 @@
 <form class="survey-filter">
-
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
         <div class="survey-filter-parent">
-            <div class="survey-filter-label">
+            <div class="survey-filter-label" ng-class="{'child-focused': isChildFocused(form)}">
                 <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
                 <label class="checked">
-                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form">
+                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-focus="setParentFocusIn(form)"
+                    ng-blur="setParentFocusOut(form)">
                     <bdi>{{ ::form.name }}</bdi>
                 </label>
             </div>

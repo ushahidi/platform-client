@@ -15,7 +15,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
-        var map, markers;
+        var map, markers, posts;
         var geoJsonLayers = [];
         var currentGeoJsonRequests = [];
         $scope.stats = {totalItems: 0, filteredPosts:0, unmapped: 0};
@@ -39,17 +39,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
-            });
-            var posts = loadPosts();
-
-            // When data is loaded
-            $q.all({
-                map: createMap,
-                posts: posts
             }).then(function (data) {
-                return data;
+               posts = loadPosts();
+            }).then(function (data) {
+                watchFilters();
             })
-            .then(watchFilters);
 
             // Change state on mode change
             $scope.$watch(() => {
@@ -169,7 +163,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             let getFirstPostChunk = PostEndpoint.geojson(conditions);
             currentGeoJsonRequests.push(getFirstPostChunk);
-            getFirstPostChunk.$promise.then(function (posts) {
+            return getFirstPostChunk.$promise.then(function (posts) {
                 // Adding the first 200 posts to map here and getting the totals
                 $scope.stats.filteredPosts = posts.total;
                 addPostsToMap(posts)

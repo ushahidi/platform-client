@@ -52,6 +52,20 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
         });
     }
 
+    $scope.currentFocusInLabel = null;
+
+    $scope.isChildFocused = function(form) {
+        return $scope.currentFocusInLabel === form.id;
+    }
+
+    $scope.setParentFocusIn = function (form) {
+        $scope.currentFocusInLabel = form.id;
+    };
+
+    $scope.setParentFocusOut = function (form) {
+        $scope.currentFocusInLabel = null;
+    };
+
     function getPostStats(filters) {
         var query = PostFilters.getQueryParams(filters);
         var queryParams = _.extend({}, query, {
