@@ -42,6 +42,10 @@ jobs:
         npm install -g gulp;
         npm install;
 
+    - name: List installed dependencies
+      run: |
+        npm ls || true;
+
     - name: Run lint tests
       if: ${{ matrix.run_lint_tests }}
       run: |

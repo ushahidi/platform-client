@@ -2,11 +2,11 @@
     <div 
         class="survey-filter-checkbox init"
         ng-class="{checked: (filters.source.indexOf(provider.label.toLowerCase()) !== -1)}"
-        ng-repeat="provider in providers"
+        ng-repeat="provider in providers track by provider.label"
         dropdown
     >
         <div class="survey-filter-parent">
-            <div class="survey-filter-label">
+            <div class="survey-filter-label" ng-class="{'child-focused': isChildFocused(provider)}">
                 <span class="post-band" ng-style="{backgroundColor: '#00aced'}"></span>
                 <label>
                     <input 
@@ -14,6 +14,8 @@
                         ng-checked="filters.source.indexOf(provider.label.toLowerCase()) !== -1"
                         translate
                         ng-click="toggleFilters(provider.label.toLowerCase())"
+                        ng-focus="setParentFocusIn(provider)"
+                        ng-blur="setParentFocusOut(provider)"
                     />
                     {{provider.label}}
                 </label>
