@@ -35,7 +35,8 @@
     <filter-date date-after-model="filters.date_after" date-before-model="filters.date_before"></filter-date>
     <filter-location center-point-model="filters.center_point" within-km-model="filters.within_km"></filter-location>
     <!-- end: filter options -->
+    <div class="form-field filter-actions">
+        <button type="button" class="button-beta" ng-click="clearFilters()" translate>global_filter.restore_defaults</button>
+        <button type="submit" class="button-alpha" translate>{{getButtonText()}}</button>
+    </div>
 </div>
-<div class="form-field filter-actions">
-    <button type="button" class="button-beta" ng-click="clearFilters()" translate>global_filter.restore_defaults</button>
-    <button type="submit" class="button-alpha" translate>{{getButtonText()}}</button></div>
