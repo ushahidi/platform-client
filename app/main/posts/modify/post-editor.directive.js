@@ -157,7 +157,8 @@ function PostEditorController(
                             $scope.post.values[attr.key] = [null];
                         }
                     }  else if (attr.input === 'number') {
-                        $scope.post.values[attr.key] = [parseInt(attr.default)];
+                        // Using parseFloat to handle decimals too.
+                        $scope.post.values[attr.key] = (attr.type === 'int') ? [parseInt(attr.default)] : [parseFloat(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
                     } else {
