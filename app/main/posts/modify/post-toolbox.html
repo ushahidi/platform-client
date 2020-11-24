@@ -5,7 +5,7 @@
       <legend class="dropdown-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
         <span class="legend-label">
           <span class="custom-fieldset-value">
-            <svg class="iconic">
+            <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="post.status=='published'"></use>
             <use xlink:href="/img/iconic-sprite.svg#document" ng-if="post.status=='draft'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="post.status=='archived'"></use>
@@ -29,7 +29,7 @@
              ng-click="changeStatus(status)"
              >
           <label for="{{status}}">
-          <svg class="iconic">
+          <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
             <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
@@ -50,7 +50,7 @@
     <h6 class="tool-heading" translate="post.author">Author</h6>
 
     <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle ng-click="loadAuthorFormDefaults()">
-      <svg class="iconic">
+      <svg class="iconic" role="img">
         <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
       </svg>
       <span class="label hidden">Show/hide</span>
@@ -83,7 +83,7 @@
     <h6 class="tool-heading" translate="post.post_date">Post date</h6>
 
     <span class="tool-trigger init" data-toggle="dropdown-menu" dropdown-toggle>
-      <svg class="iconic">
+      <svg class="iconic" role="img">
         <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
       </svg>
       <span class="label hidden">Show/hide</span>
