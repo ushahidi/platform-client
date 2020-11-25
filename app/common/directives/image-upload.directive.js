@@ -24,9 +24,12 @@ function ImageUpload() {
                 }
                 $scope.uploadFile = function (picFile, croppedDataUrl) {
                     if (croppedDataUrl) {
-                        picFile = Upload.dataUrltoBlob(croppedDataUrl, picFile.name, picFile.origSize);
+                        picFile = Upload.dataUrltoBlob(croppedDataUrl, picFile.name, picFile.size);
                     }
-                    Upload.resize(picFile, {quality: 0.7}).then(function (resizedFile) {
+
+                    const resizeQuality = 0.7;
+                    Upload.resize(picFile, { quality: resizeQuality })
+                    .then(function (resizedFile) {
                         $scope.container.file = resizedFile;
                         Upload.base64DataUrl(resizedFile).then(function (dataURL) {
                             $scope.container.dataURI = dataURL;
