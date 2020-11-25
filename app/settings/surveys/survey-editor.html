@@ -13,7 +13,7 @@
       </header>
 
       <span class="mode-context-trigger" dropdown-toggle>
-          <svg class="iconic">
+          <svg class="iconic" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
           </svg>
           <span class="label hidden" translate>app.show_more_less</span>
@@ -43,14 +43,14 @@
         <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
         <div class="form-field survey">
           <!--  TODO: add placeholder text-->
-            <label translate>survey.survey_name</label>
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
+            <label for="survey_name" translate>survey.survey_name</label>
+            <input type="text" id="survey_name" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
 
         </div>
 
           <div class="form-field survey">
-            <label translate>app.description</label>
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
+            <label for="survey_description" translate>app.description</label>
+            <textarea id="survey_description" placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
         </div>
 
         <nav class="tabs-menu init" data-tabs="survey-details">
@@ -81,13 +81,13 @@
               <div class="listing-item-select">
                   <div class="buttons-updown">
                      <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
-                         <svg class="iconic">
+                         <svg class="iconic" role="img">
                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                          </svg>
                          <span class="label hidden">Move up</span>
                      </button>
                      <button type="button" class="button-beta" ng-disabled="isLastAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeDown(survey.tasks[0], attribute)">
-                         <svg class="iconic">
+                         <svg class="iconic" role="img">
                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                          </svg>
                          <span class="label hidden">Move down</span>
@@ -96,7 +96,7 @@
               </div>
               <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
                   <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, survey.tasks[0])">
-                      <svg class="iconic">
+                      <svg class="iconic" role="img">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                       </svg>
                       <span class="hidden">Delete</span>
@@ -106,14 +106,14 @@
               <div class="listing-item-primary" ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
                   <div class="listing-item-image">
                   <!-- TODO: Set icon based on type -->
-                      <svg class="iconic">
+                      <svg class="iconic" role="img">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
                       </svg>
                   </div>
                   <h2 class="listing-item-title">
                       {{attribute.label}}
                     <span class="listing-item-image tooltip" ng-show="attribute.response_private">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                         </svg>
                         <span class="bug" translate="survey.response_private_desc">Only people with permission to edit responses can see responses to this field</span>
@@ -124,8 +124,8 @@
             <div class="listing-item">
                 <div class="listing-item-primary">
                     <h2 class="listing-item-title">
-                        <a ng-click="openAttributeModal(survey.tasks[0])" class="button button-beta" data-modal="add-field">
-                            <svg class="iconic">
+                        <a ng-click="openAttributeModal(survey.tasks[0])" class="button button-beta" role="button" data-modal="add-field">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                             </svg>
                            <span translate="survey.add_field">Add field</span>
@@ -138,7 +138,7 @@
         <div id="survey-configure-post" class="survey-details tabs-target">
           <!--// Require review //-->
           <div class="form-field switch">
-            <label translate="survey.require_review">Require posts be reviewed before they're published</label>
+            <label for="post-review" translate="survey.require_review">Require posts be reviewed before they're published</label>
             <p data-fieldgroup-target="require-review-message" ng-show="survey.require_approval" translate="survey.require_review_desc">New responses to this survey will be put "under review," and therefore not immediately visible to the public. Users with permission to review the response can review and "publish" them, which would then make them visible to everyone.</p>
             <div class="toggle-switch">
                 <input class="tgl" id="post-review" type="checkbox" ng-model="survey.require_approval">
@@ -147,7 +147,7 @@
           </div>
           <!--// Hide Author Information //-->
           <div class="form-field switch" ng-show="anonymiseReportersEnabled">
-              <label translate="survey.hide_author_information">Hide author information</label>
+              <label for="hide-author" translate="survey.hide_author_information">Hide author information</label>
               <p ng-show="survey.hide_author" data-fieldgroup-target="hide-author-message" translate="survey.hide_author_information_desc">Only people with permission to edit responses will be able to see who submitted them; and only when editing them.</p>
               <div class="toggle-switch">
                   <input class="tgl init" id="hide-author" type="checkbox" data-fieldgroup-toggle="hide-author-message" ng-model="survey.hide_author">
@@ -156,7 +156,7 @@
           </div>
 
           <div class="form-field switch" ng-show="anonymiseReportersEnabled">
-              <label translate="survey.hide_location_information">Hide location information</label>
+              <label for="hide-location" translate="survey.hide_location_information">Hide location information</label>
               <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate-values="{ precision: location_precision}" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
               <div class="toggle-switch">
                   <input class="tgl init" id="hide-location" type="checkbox" data-fieldgroup-toggle="hide-location-message" ng-model="survey.hide_location">
@@ -165,7 +165,7 @@
           </div>
 
           <div class="form-field switch" ng-show="anonymiseReportersEnabled">
-              <label translate="survey.hide_time_information">Hide exact time information</label>
+              <label for="hide-time" translate="survey.hide_time_information">Hide exact time information</label>
               <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
               <div class="toggle-switch">
                   <input class="tgl init" id="hide-time" type="checkbox" data-fieldgroup-toggle="hide-time-message" ng-model="survey.hide_time">
@@ -178,7 +178,7 @@
             <legend translate="survey.who_can_add">Who can add to this survey</legend>
             <div class="form-field radio icon-input" ng-class="{ 'checked': survey.everyone_can_create }">
               <label for="survey-add_everyone">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                   <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                 </svg>
                 <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="survey.everyone_can_create">
@@ -188,7 +188,7 @@
 
             <div class="form-field radio icon-input"  ng-class="{ 'checked': !survey.everyone_can_create }">
               <label for="survey-add_roles">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                   <use xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
                 <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.everyone_can_create">
@@ -231,26 +231,27 @@
       <!-- Task sections -->
       <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length">
         <div class="form-field title section-title">
-            <label class="hidden" translate="survey.task_name">Section name</label>
-            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
+            <label for="section_name" class="hidden" translate="survey.task_name">Section name</label>
+            <input id="section_name" type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
 
-            <label class="hidden" translate="survey.task_description">Section description</label>
+            <label for="section_description" class="hidden" translate="survey.task_description">Section description</label>
             <textarea
               name="description"
               placeholder="{{ 'survey.describe_this_task' | translate }}"
               rows="1"
+              id="section_description"
               ng-model="task.description"
               ></textarea>
 
             <!-- <p class="alert">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
                 The fields in this section can only be completed and viewed by select people. <a>Change settings</a>
             </p> -->
             <div class="section-title-actions" dropdown>
                 <button class="button-beta button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
                     <span class="hidden" translate="app.more">More</span>
@@ -259,7 +260,7 @@
                 <ul class="dropdown-menu init" dropdown-menu>
                     <li>
                         <a href="" data-modal="delete-post" ng-click="duplicateSection(task)">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
                         </svg>
                         <span class="label" translate="survey.duplicate_task">Duplicate task</span>
@@ -267,7 +268,7 @@
                     </li>
                     <li>
                         <a href="" data-modal="delete-post" ng-click="deleteTask(task)">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>
                         <span class="label" translate="survey.delete_task">Delete task</span>
@@ -298,13 +299,13 @@
                   <div class="listing-item-select">
                       <div class="buttons-updown">
                          <button type="button" class="button-beta" ng-disabled="isFirstAttribute(task, attribute)" ng-click="moveAttributeUp(task, attribute)">
-                             <svg class="iconic">
+                             <svg class="iconic" role="img">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                              </svg>
                              <span class="label hidden">Move up</span>
                          </button>
                          <button type="button" class="button-beta" ng-disabled="isLastAttribute(task, attribute)" ng-click="moveAttributeDown(task, attribute)">
-                             <svg class="iconic">
+                             <svg class="iconic" role="img">
                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                              </svg>
                              <span class="label hidden">Move down</span>
@@ -314,7 +315,7 @@
 
                   <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
                       <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, task)">
-                          <svg class="iconic">
+                          <svg class="iconic" role="img">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                           </svg>
                           <span class="hidden">Delete</span>
@@ -323,14 +324,14 @@
 
                   <div class="listing-item-primary" ng-click="openAttributeEditModal(task, attribute)">
                       <div class="listing-item-image">
-                          <svg class="iconic">
+                          <svg class="iconic" role="img">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
                           </svg>
                       </div>
                       <h2 class="listing-item-title">
                           {{attribute.label}}
                         <span class="listing-item-image tooltip" ng-show="attribute.response_private">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                             </svg>
                             <span class="bug" translate="survey.response_private_desc">Only people with permission to edit responses can see responses to this field</span>
@@ -341,8 +342,8 @@
               <div class="listing-item">
                   <div class="listing-item-primary">
                       <h2 class="listing-item-title">
-                          <a ng-click="openAttributeModal(task)" class="button button-beta" data-modal="add-field">
-                              <svg class="iconic">
+                          <a ng-click="openAttributeModal(task)" class="button button-beta" role="button" data-modal="add-field">
+                              <svg class="iconic" role="img">
                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                               </svg>
                              <span translate="survey.add_field">Add field</span>
@@ -355,7 +356,7 @@
 
         <div ng-attr-id="{{ 'section-configure-' + task.id }}" class="section-1-details tabs-target">
           <div class="form-field switch">
-            <label translate="survey.required">Required</label>
+            <label translate="survey.required" for="task-required-{{task.id}}">Required</label>
             <p data-fieldgroup-target="require-review-message" ng-show="task.required" translate="survey.required_desc">Require this section be completed before a post can be visible to the public.</p>
             <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-required-' + task.id }}">
                 <input class="tgl" ng-attr-id="{{ 'task-required-' + task.id }}" type="checkbox" ng-model="task.required">
@@ -363,7 +364,7 @@
             </div>
         </div>
         <div class="form-field switch checked">
-            <label translate="survey.internal_use_task">Task is only for internal use</label>
+            <label translate="survey.internal_use_task" for="internal_only-{{task.id}}">Task is only for internal use</label>
             <!-- todo show list of roles with correct permission for clarity in message below-->
             <p data-fieldgroup-target="internal_only-message" class="active" ng-show="task.task_is_internal_only" translate="survey.internal_use_task_desc">This task will only be visible to User who have Manage Post permission.</p>
             <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
@@ -372,7 +373,7 @@
             </div>
         </div>
         <div class="form-field switch checked">
-            <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
+            <label translate="survey.show_this_task_to" for="show_section-{{task.id}}">Show this task to everyone when published</label>
             <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
             <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
                 <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
@@ -385,7 +386,7 @@
             <legend translate="survey.who_can_contribute_to_section">Who can contribute to fields in this section</legend>
             <div class="form-field radio icon-input" ng-class="{ 'checked': task.everyone_can_contribute }">
               <label for="survey-add_everyone">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                   <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                 </svg>
                 <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="task.everyone_can_contribute">
@@ -395,7 +396,7 @@
 
             <div class="form-field radio icon-input"  ng-class="{ 'checked': !task.everyone_can_contribute }">
               <label for="survey-add_roles">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                   <use xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
                 <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="task.everyone_can_contribute">
@@ -418,7 +419,7 @@
       <div class="listing-item">
           <div class="listing-item-primary">
               <button ng-click="openTaskModal()" class="button-gamma init" data-toggle="field-type">
-                  <svg class="iconic">
+                  <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                   </svg>
                   <span class="button-label" translate="survey.add_task">Add task</span>

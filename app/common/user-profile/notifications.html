@@ -8,7 +8,7 @@
          ng-class="{'active': contact.active}">
       <div class="listing-item-secondary">
         <button type="button" class="button-link" ng-click="toggleActive(contact)">
-          <svg class="iconic">
+          <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
           </svg>
           <span class="button-label" translate>contact.configure</span>
@@ -94,7 +94,7 @@
           <a class="button button-flat"
              ng-click="toggleActive(contact)"
              translate>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
               <use xlink:href="/img/iconic-sprite.svg#plus"></use>
             </svg>
             contact.button.add
@@ -174,7 +174,7 @@
          class="listing-item">
       <div class="listing-item-secondary">
         <button type="button" class="button-link" ng-click="deleteNotification(notification)">
-          <svg class="iconic">
+          <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#circle-x"></use>
           </svg>
           <span class="button-label" translate>notification.button.delete</span>
@@ -183,7 +183,7 @@
 
       <div class="listing-item-primary">
         <div class="listing-item-image">
-          <svg class="iconic">
+          <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#star"></use>
           </svg>
         </div>
@@ -196,7 +196,7 @@
 
     <div class="modal-actions">
       <div class="form-field">
-        <button type="button" class="button-link" ng-click="cancel()" translate>user_profile.button.cancel</button>
+        <button type="button" class="button-beta" ng-click="cancel()" translate>user_profile.button.cancel</button>
         <button type="button" class="button-alpha"
                 ng-disabled="!canAdd() && !canUpdate()"
                 ng-click="saveContacts()">

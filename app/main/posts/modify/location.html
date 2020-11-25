@@ -16,7 +16,7 @@
             <div id="searchbar-results" class="searchbar-results dropdown-menu init">
                 <div class="form-field" embed-only=false>
                     <button class="button-beta button-plain" ng-click="chooseCurrentLocation()" ng-if="showCurrentPositionControl" >
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use
                                 xmlns:xlink="http://www.w3.org/1999/xlink"
                                 xlink:href="/img/iconic-sprite.svg#location">
@@ -29,7 +29,7 @@
                     <h6 class="tool-heading" translate>location.search_results</h6>
                     <dl ng-repeat="result in searchResults" ng-if="!processing && searchResults.length > 0">
                         <dt class="list-item" ng-click="chooseLocation(result)">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
                                     xlink:href="/img/iconic-sprite.svg#map-marker">
@@ -58,15 +58,15 @@
     </form>
     <p translate>location.click_map</p>
     <div class="form-field">
-      <label>Lat</label>
-      <input type="text" ng-model="manualModel.lat">
+      <label for="lat">Lat</label>
+      <input id="lat" type="text" ng-model="manualModel.lat">
    </div>
    <div class="form-field">
-      <label>Long</label>
-      <input type="text" ng-model="manualModel.lon">
+      <label for="long">Long</label>
+      <input id="long" type="text" ng-model="manualModel.lon">
    </div>
    <button type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
-        <svg class="iconic">
+        <svg class="iconic" role="img">
        <use
                                 xmlns:xlink="http://www.w3.org/1999/xlink"
                                 xlink:href="/img/iconic-sprite.svg#location">

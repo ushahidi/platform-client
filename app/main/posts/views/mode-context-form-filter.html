@@ -1,25 +1,25 @@
 <form class="survey-filter">
-
     <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
         <div class="survey-filter-parent">
-            <div class="survey-filter-label">
+            <div class="survey-filter-label" ng-class="{'child-focused': isChildFocused(form)}">
                 <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
                 <label class="checked">
-                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form">
+                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-focus="setParentFocusIn(form)"
+                    ng-blur="setParentFocusOut(form)">
                     <bdi>{{ ::form.name }}</bdi>
                 </label>
             </div>
              <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
                 <!-- todo! show count -->
                 {{ form.post_count }}
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                 </svg>
             </span>
             <ul class="dropdown-menu init" dropdown-menu>
                 <li ng-show="canAddToSurvey(form)">
                     <a ui-sref="postCreate({id: form.id })">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                         </svg>
                         <span class="label" translate="post.add_to_form" translate-values="{ form: form.name }">Add to</span>
@@ -31,7 +31,7 @@
                 <div class="divider"></div>
                 <li ng-show="hasManageSettingsPermission()">
                     <a ui-sref="settings.surveys.id({id: form.id, action: 'edit'})">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                         </svg>
                         <span class="label" translate="nav.survey_settings">Survey settings</span>
@@ -51,7 +51,7 @@
 </div>
 <div class="form-field" ng-show="hasManageSettingsPermission()">
     <a ui-sref="settings.surveys.create" class="button button-link">
-        <svg class="iconic">
+        <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#plus"></use>
         </svg>
         <span class="button-label" translate="app.create_new_survey">Create new survey</span>

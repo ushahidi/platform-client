@@ -15,11 +15,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
-        var map, markers;
+        var map, markers, posts;
         var geoJsonLayers = [];
-        var limit = 200;
-        var requestBlockSize = 5;
-        var numberOfChunks = 0;
         var currentGeoJsonRequests = [];
         $scope.stats = {totalItems: 0, filteredPosts:0, unmapped: 0};
 
@@ -31,28 +28,22 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 $scope.title = title;
                 $scope.$emit('setPageTitle', title);
             });
-
+            //Grabbing stats for filters-dropdown
+            getStats();
             // Grab initial filters
             //$scope.filters = PostFilters.getFilters();
 
-            var posts = loadPosts();
 
             // Start loading data
             var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
             var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
-            });
-            // When data is loaded
-            $q.all({
-                map: createMap,
-                posts: posts
+            }).then(function (data) {
+               posts = loadPosts();
+            }).then(function (data) {
+                watchFilters();
             })
-                .then(function (data) {
-                    addPostsToMap(data.posts);
-                    return data;
-                })
-                .then(watchFilters);
 
             // Change state on mode change
             $scope.$watch(() => {
@@ -135,6 +126,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     cancelCurrentRequests();
                     clearData();
                     reloadMapPosts();
+                    getStats();
                 }
             }, true);
         }
@@ -147,54 +139,73 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function reloadMapPosts(query) {
-            var test = loadPosts(query);
-            test.then(addPostsToMap);
+            loadPosts(query)
         }
 
-        function loadPosts(query, offset, currentBlock) {
+        function getStats () {
             // Getting stats for filter-dropdown
-            let def = PostFilters.getQueryParams(PostFilters.getDefaults());
-                PostEndpoint.geojson(def).$promise.then(res => {
-                    $scope.stats.totalItems = res.features.length;
-                    $scope.stats.unmapped = res.total - res.features.length;
+            getPostStats(PostFilters.getDefaults()).$promise.then(function (result) {
+                $scope.stats.totalItems = result.totals[0].values.reduce(
+                    function (a,b) {
+                        return a.total + b.total
+                    }
+                ) - result.unmapped;
+
+                $scope.stats.unmapped = result.unmapped;
+            });
+        }
+
+        function getPostStats(filters) {
+            var query = PostFilters.getQueryParams(filters);
+            var queryParams = _.extend({}, query, {
+                include_unmapped: true,
+                status: 'all'
             });
 
-            offset = offset || 0;
-            currentBlock = currentBlock || 1;
+            // we don't want a group_by or filter
+            if (queryParams.form) {
+                delete queryParams.form;
+            }
+            if (queryParams.group_by) {
+                delete queryParams.group_by;
+            }
 
+            // deleting source, we want stats for all datasources to keep the datasource-bucket-stats unaffected by data-source-filters
+            if (queryParams.source) {
+                delete queryParams.source;
+            }
+            return PostEndpoint.stats(queryParams);
+        }
+
+        function loadPosts(query) {
+            let offset = 0;
+            let limit = 200;
             query = query || PostFilters.getQueryParams($scope.filters);
-
-            var conditions = _.extend(query, {
+            let conditions = _.extend(query, {
                 limit: limit,
                 offset: offset,
                 has_location: 'mapped'
             });
 
-            var request = PostEndpoint.geojson(conditions);
-            currentGeoJsonRequests.push(request);
-
-            return request.$promise.then(function (posts) {
-                // Set number of posts for filter-dropdown
+            let getFirstPostChunk = PostEndpoint.geojson(conditions);
+            currentGeoJsonRequests.push(getFirstPostChunk);
+            return getFirstPostChunk.$promise.then(function (posts) {
+                // Adding the first 200 posts to map here and getting the totals
                 $scope.stats.filteredPosts = posts.total;
+                addPostsToMap(posts)
 
-                // Set number of chunks
-                if (offset === 0 && posts.total > limit) {
-                    numberOfChunks = Math.floor((posts.total - limit) / limit);
-                    numberOfChunks += ((posts.total - limit) % limit) > 0 ? 1 : 0;
-                }
+                // Moving on to request rest of the posts
+                if (posts.total > limit) {
+                    for (let i = limit; i < posts.total; i = i + limit) {
+                        conditions.offset = i;
+                        let request = PostEndpoint.geojson(conditions);
+                        currentGeoJsonRequests.push(request);
+                        request.$promise.then(result => {
+                            addPostsToMap(result)
+                        });
 
-                // Retrieve blocks of chunks
-                // At the end of a block request the next block of chunks
-                if (numberOfChunks > 0 && currentBlock === 1) {
-                    var block = numberOfChunks > requestBlockSize ? requestBlockSize : numberOfChunks;
-                    numberOfChunks -= requestBlockSize;
-                    while (block > 0) {
-                        block -= 1;
-                        offset += limit;
-                        loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
-                return posts;
             });
         }
 

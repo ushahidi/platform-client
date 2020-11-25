@@ -19,11 +19,13 @@ function PostValueEdit() {
 }
 
 PostValueEditController.$inject = [
+    '$rootScope',
     '$scope',
     '_'
 ];
 
 function PostValueEditController(
+    $rootScope,
     $scope,
     _
 ) {
@@ -46,6 +48,8 @@ function PostValueEditController(
     $scope.removeValue = removeValue;
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
+    $scope.isAdmin = $rootScope.isAdmin;
+    $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
 
@@ -100,5 +104,20 @@ function PostValueEditController(
     // Remove a value
     function removeValue(attr, key) {
         $scope.post.values[attr.key].splice(key, 1);
+    }
+
+    // Is duplicate present in options attribute?
+    function duplicatePresent(attr) {
+        if (attr.options && attr.options.length < 1) {
+            return false;
+        }
+        let tmp = [];
+        for (let x of attr.options) {
+            if (tmp.indexOf(x) !== -1) {
+                return true;
+            }
+            tmp.push(x);
+        }
+        return false;
     }
 }

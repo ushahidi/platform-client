@@ -1,11 +1,11 @@
 <div class="mode-context init" ng-controller="navigation as nav" dropdown auto-close="disabled" filter-by-survey-dropdown is-open="filtersMenuOpen">
     <header class="mode-context-header" ng-class="{ 'has-logo' : nav.site.image_header }">
         <h1 class="mode-context-title"><a href="/" ng-bind="nav.site.name"></a></h1>
-        <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo" />
+        <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo" alt="Deployment-logo"/>
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
-        <svg class="iconic">
+        <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden" translate>app.show_more_less</span>
