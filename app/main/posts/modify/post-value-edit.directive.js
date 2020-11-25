@@ -50,7 +50,6 @@ function PostValueEditController(
 
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.duplicatePresent = duplicatePresent;
-
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
 
@@ -106,9 +105,10 @@ function PostValueEditController(
     function removeValue(attr, key) {
         $scope.post.values[attr.key].splice(key, 1);
     }
+
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        if (!attr.options || attr.options.length < 1) {
+        if (attr.options && attr.options.length < 1) {
             return false;
         }
         let tmp = [];

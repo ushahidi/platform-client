@@ -3,11 +3,12 @@
     <div class="form-field file">
       <image-upload show-replace-photo="showReplace" show-add-photo="showAdd" id="{{name}}" validation="'image'" container="media" model="mediaId">
       </image-upload>
+
       <figure ng-show="showReplace()">
         <img ng-src="{{media.original_file_url}}" ng-show="media.id && !media.dataURI">
         <div class="form-field">
           <button class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
-            <svg class="iconic">
+            <svg class="iconic" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
             </svg>
              <span class="hidden" translate="post.media.delete_photo"></span>

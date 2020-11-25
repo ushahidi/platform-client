@@ -647,7 +647,7 @@
         "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
         "search_results": "Results:",
         "by" : "by",
-        "duplicate_option" : "There's a problem with the checkbox configuration in the survey because of duplicates, please fix it.",
+        "duplicate_option" : "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
         "just_you" : "Just you",
