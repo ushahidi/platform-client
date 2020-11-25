@@ -4,7 +4,7 @@
             <li><a href="/">{{nav.site.name}}</a></li>
         </ol>
         <h1 class="mode-context-title">
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#star"></use>
             </svg>
             {{savedSearch.name}}
@@ -12,7 +12,7 @@
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
-        <svg class="iconic">
+        <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden" translate>app.show_more_less</span>
@@ -26,13 +26,13 @@
         <ul class="metadata">
             <li>
                 <span class="status-indicator public tooltip" ng-if="!savedSearch.role">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
                     <span class="bug" translate="saved_search.visible_to_public">This saved search is visible to the public</span>
                 </span>
                 <span class="status-indicator yellow tooltip" ng-if="savedSearch.role">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
                     <span class="bug" translate="saved_search.visible_to_roles" translate-values="{ roles: savedSearch.role.join(', ') }">This saved search is visible to ...</span>
@@ -48,14 +48,14 @@
         <!--// IF: User has permission to edit the Saved Search //-->
         <div class="form-field" ng-if="canEdit" dropdown>
             <button type="button" data-modal="edit-savedSearch" ng-click="editSavedSearch()">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
                 </svg>
                 <span class="button-label" translate>app.edit</span>
             </button>
 
             <button type="button" data-toggle="dropdown-menu" class="init" dropdown-toggle>
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                 </svg>
                 <span class="button-label hidden" translate>app.more</span>
@@ -63,7 +63,7 @@
             <ul class="dropdown-menu init" dropdown-menu>
                 <li ng-if="showNotificationLink">
                     <a ng-click="saveNotification(savedSearch)">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                         </svg>
                         <span class="label" ng-click="saveNotification(savedSearch)" translate="app.get_notifications">Get notifications</span>
@@ -71,7 +71,7 @@
                 </li>
                 <li ng-if="!showNotificationLink">
                     <a ng-click="removeNotification(savedSearch)">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                         </svg>
                         <span class="label" translate="app.turn_off_notifications">Turn off notifications</span>
@@ -79,7 +79,7 @@
                 </li>
                 <li>
                     <a ng-click="deleteSavedSearch()">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>
                         <span class="label" translate="app.delete"></span>
@@ -93,7 +93,7 @@
         <div class="form-field" ng-if="!canEdit && $root.loggedin">
             <!-- // IF: User is not yet getting notifications about this Saved Search //-->
             <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(savedSearch)">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                 </svg>
                 <span class="button-label" translate="app.get_notifications">Get notifications</span>
@@ -102,7 +102,7 @@
             <!--// ELSE //-->
 
             <button type="button" ng-if="!showNotificationLink" class="button-flat">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                 </svg>
                 <span class="button-label" translate="app.turn_off_notifications">Turn off notifications</span>
@@ -113,7 +113,7 @@
         <div class="form-field">
             <!-- mode context is only available in the map so we are always sending you back to it in the return to all posts feature -->
             <a ng-click="clearFilters()" type="button" class="button-link">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#arrow-left"></use>
                 </svg>
                 <span class="button-label" translate="app.return_to_all_posts">Return to all posts</span>

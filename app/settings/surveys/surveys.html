@@ -11,7 +11,7 @@
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
@@ -42,7 +42,7 @@
                     <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
                     <div class="listing-item-secondary" dropdown>
                       <button class="button-beta button-flat" data-toggle="dropdown-menu" dropdown-toggle>
-                          <svg class="iconic">
+                          <svg class="iconic" role="img">
                               <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                           </svg>
                           <span class="hidden">More</span>
@@ -50,7 +50,7 @@
                       <ul class="dropdown-menu init" dropdown-menu>
                           <li>
                               <a href="/settings/surveys/duplicate/{{form.id}}">
-                                  <svg class="iconic">
+                                  <svg class="iconic" role="img">
                                       <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
                                   </svg>
                                   <span class="label" translate="survey.duplicate_survey">Duplicate</span>
@@ -58,7 +58,7 @@
                           </li>
                           <li>
                               <a ng-click="deleteSurvey(form)">
-                                  <svg class="iconic">
+                                  <svg class="iconic" role="img">
                                       <use xlink:href="/img/iconic-sprite.svg#trash"></use>
                                   </svg>
                                   <span class="label" translate="survey.delete">Delete</span>
