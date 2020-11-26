@@ -33,7 +33,6 @@ function (
             $scope.showReplace = showReplace;
             $scope.showDelete = showDelete;
             $scope.deleteMedia = deleteMedia;
-
             activate();
 
             function activate() {
@@ -72,7 +71,6 @@ function (
                     ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
-
             }
 
             function handleMediaIdChange(id) {
@@ -103,7 +101,6 @@ function (
             function showDelete() {
                 return $scope.media.id || ($scope.media.changed && !$scope.media.deleted);
             }
-
             function deleteMedia(mediaId) {
                 // Mark for deletion
                 $scope.media = {id: mediaId, changed: true, deleted: true};

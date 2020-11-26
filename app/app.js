@@ -18,7 +18,9 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
-
+require('ng-file-upload');
+require('ui-cropper/compile/minified/ui-cropper');
+require('ui-cropper/compile/minified/ui-cropper.css');
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
@@ -83,7 +85,9 @@ angular.module('app',
         'ushahidi.main',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
-        'ngtweet'
+        'ngtweet',
+        'ngFileUpload',
+        'uiCropper'
     ])
 
     .constant('CONST', {

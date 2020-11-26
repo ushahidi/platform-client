@@ -6,6 +6,7 @@ module.exports = [
     '$translate',
     'MediaEndpoint',
     'Notify',
+    'Upload',
 function (
     $q,
     $http,
@@ -13,7 +14,8 @@ function (
     Util,
     $translate,
     MediaEndpoint,
-    Notify
+    Notify,
+    Upload
 ) {
     var MediaEditService = {
         saveMedia: function (medias, post) {
@@ -77,18 +79,14 @@ function (
             var deferred = $q.defer();
             // Delete current file
             this.deleteMedia(media.id).then(function () {
-                var formData = new FormData();
-
-                formData.append('file', media.file);
-
-                if (media.caption) {
-                    formData.append('caption', media.caption);
-                }
-
-                $http.post(
-                    Util.apiUrl('/media'),
-                    formData,
+                Upload.upload(
                     {
+                        url: Util.apiUrl('/media'),
+                        file: media.file,
+                        data: {
+                            caption: media.caption,
+                            file: media.file
+                        },
                         headers: {
                             'Content-Type': undefined
                         }

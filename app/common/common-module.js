@@ -101,6 +101,7 @@ angular.module('ushahidi.common', [
 .directive('focus', require('./directives/focus.js'))
 .directive('modeBar', require('./directives/mode-bar/mode-bar.directive.js'))
 .directive('fileUpload', require('./directives/file-upload.directive.js'))
+.directive('imageUpload', require('./directives/image-upload.directive.js'))
 .directive('roleSelector', require('./directives/role-selector.directive.js'))
 .directive('addCategory', require('./directives/add-category.directive.js'))
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
