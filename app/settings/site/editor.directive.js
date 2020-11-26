@@ -52,6 +52,7 @@ function (
 
             Features.loadFeatures().then(function () {
                 $scope.isPrivateEnabled = Features.isFeatureEnabled('private');
+                $scope.isDisableRegistrationEnabled = Features.isFeatureEnabled('disable_registration');
             });
 
             // Get API Key
