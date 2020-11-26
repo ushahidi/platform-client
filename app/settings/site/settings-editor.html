@@ -10,7 +10,7 @@
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
@@ -55,7 +55,7 @@
                         <input id="site-settings-name" name="name" type="text" placeholder="{{'settings.deployment_name' | translate}}" ng-model="site.name" ng-class="{'error': form.name.$invalid && form.name.$dirty}" required>
 
                          <div class="alert error" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <p>{{'settings.valid.name.' + error  | translate}}</p>
@@ -71,7 +71,7 @@
                     <div class="form-field">
                          <label translate>settings.deployment_logo</label>
                          <figure ng-show="site.image_header">
-                            <img ng-src="{{ site.image_header }}" class="postcard-image deployment-logo" />
+                            <img ng-src="{{ site.image_header }}" class="postcard-image deployment-logo" alt="Deployment-logo"/>
                             <button class="button-flat" ng-click="clearHeader()" translate="settings.delete_logo"></button>
                          </figure>
 
@@ -86,7 +86,7 @@
                         <div ng-repeat="(error, value) in form.email.$error"
                             ng-show="form.email.$dirty"
                             class="alert error">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                             <p translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></p>
@@ -114,7 +114,7 @@
                       <label for="api-key" translate="settings.api_key">API Key</label>
                       <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.</p>
                       <button id="api-key" type="button" class="button-beta" ng-click="generateApiKey()">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#key"></use>
                         </svg>
                         <span class="button-label hidden-when-small">
@@ -140,7 +140,7 @@
                         <p translate>settings.deployment_delete_info</p>
 
                         <button class="button-destructive">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                             </svg>
                             <span class="button-label" translate>settings.deployment_delete</span>
