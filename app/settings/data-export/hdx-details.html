@@ -10,7 +10,7 @@
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
         <span class="label hidden" translate>app.show_more_less</span>
@@ -69,7 +69,7 @@
                         ng-show="metadata.title.$invalid && metadata.title.$dirty"
                         ng-repeat="(error, value) in metadata.title.$error"
                     >
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
                         <p translate="{{'data_export.validation.title'}}"></p>
@@ -92,7 +92,7 @@
                         ng-show="metadata.source.$invalid && metadata.source.$dirty"
                         ng-repeat="(error, value) in metadata.source.$error"
                     >
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
                         <p translate="{{'data_export.validation.source.' + error}}"></p>
@@ -115,7 +115,7 @@
                         ng-show="metadata.organisation.$invalid && metadata.organisation.$dirty"
                         ng-repeat="(error, value) in metadata.organisation.$error"
                     >
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
                         <p translate="{{'data_export.validation.organisation'}}"></p>
@@ -134,7 +134,7 @@
                         </select>
                     </div>
                     <a href="#" class="link-blue">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xlink:href="/img/iconic-sprite.svg#external-link"></use>
                         </svg>
                         {{'data_export.read_more_licenses' | translate}}
@@ -144,7 +144,7 @@
                         ng-show="metadata.license.$invalid && metadata.license.$dirty"
                         ng-repeat="(error, value) in metadata.license.$error"
                     >
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
                         <p translate="{{'data_export.validation.license'}}"></p>
@@ -155,7 +155,7 @@
                     class="form-field alert error"
                     ng-show="error"
                 >
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
                     <p translate="data_export.validation.all_fields">Please fill in all required fields</p>

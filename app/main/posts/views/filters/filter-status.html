@@ -4,13 +4,13 @@
     <div class="form-field checkbox icon-input" ng-repeat="(index, status) in statuses">
 
       <label>
-        <svg class="iconic" ng-if="status == 'published'">
+        <svg class="iconic" role="img" ng-if="status == 'published'">
           <use xlink:href="/img/iconic-sprite.svg#globe"></use>
         </svg>
-        <svg class="iconic" ng-if="status == 'draft'">
+        <svg class="iconic" role="img" ng-if="status == 'draft'">
           <use xlink:href="/img/iconic-sprite.svg#document"></use>
         </svg>
-        <svg class="iconic" ng-if="status == 'archived'">
+        <svg class="iconic" role="img" ng-if="status == 'archived'">
           <use xlink:href="/img/iconic-sprite.svg#box"></use>
         </svg>
 
