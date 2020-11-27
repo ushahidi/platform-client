@@ -7,6 +7,7 @@ module.exports = [
     'ConfigEndpoint',
     'CollectionsService',
     '$window',
+    '$state',
 function (
     Features,
     Authentication,
@@ -15,7 +16,8 @@ function (
     $rootScope,
     ConfigEndpoint,
     CollectionsService,
-    $window
+    $window,
+    $state
 ) {
     return {
         restrict: 'E',
@@ -28,7 +30,7 @@ function (
             $scope.moreActive = false;
             $scope.isActivityAvailable = false;
             $scope.canRegister = false;
-
+            $scope.$state = $state;
             $scope.hasManageSettingsPermission = $rootScope.hasManageSettingsPermission;
             $scope.showMore = showMore;
             $scope.viewCollectionListing = CollectionsService.showCollectionList;
@@ -49,7 +51,7 @@ function (
                 });
 
                 ConfigEndpoint.get({id: 'site'}, function (site) {
-                    $scope.canRegister = !site.private;
+                    $scope.canRegister = !site.private && !site.disable_registration;
                 });
             }
 

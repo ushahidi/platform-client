@@ -58,7 +58,11 @@ module.exports = {
       {
         test: /\.png/,
         use: {
-          loader: 'url-loader?limit=10000'
+          // loader: 'url-loader?limit=10000'
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+          },
         }
       },
       {
@@ -82,7 +86,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'manifest.json'
+              name: 'manifest.json',
+              esModule: false
             }
           }
         ]
@@ -95,7 +100,11 @@ module.exports = {
       }
     },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin(
+        {
+          filename: '[name].[contenthash].css'
+        }
+    ),
      // Skip locales
      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
      new webpack.DefinePlugin({

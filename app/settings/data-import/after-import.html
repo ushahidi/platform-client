@@ -10,7 +10,7 @@
        </header>
 
        <span class="mode-context-trigger" dropdown-toggle>
-           <svg class="iconic">
+           <svg class="iconic" role="img">
                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
            </svg>
            <span class="label hidden" translate>app.show_more_less</span>
@@ -33,7 +33,7 @@
               </div>
 
               <div class="form-field">
-                  <a href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another">Import another CSV file</a>
+                  <a href="/settings/data-import" class="button button-gamma button-flat" role="button" translate="data_import.import_another">Import another CSV file</a>
               </div>
           </div>
 
@@ -44,8 +44,8 @@
               </div>
 
               <div class="form-field">
-                  <a ng-href="/collections/{{collectionId}}" class="button button-alpha" translate="data_import.see_imported_posts">See imported posts</a>
-                  <a href="/settings/data-import" class="button button-gamma button-flat" translate="data_import.import_another_csv">Import another CSV file</a>
+                  <a ng-href="/collections/{{collectionId}}" class="button button-alpha" role="button" translate="data_import.see_imported_posts">See imported posts</a>
+                  <a href="/settings/data-import" class="button button-gamma button-flat" role="button" translate="data_import.import_another_csv">Import another CSV file</a>
               </div>
          </div>
 
