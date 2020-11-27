@@ -15,7 +15,7 @@
             <div ng-repeat="(error, value) in form.full_name.$error"
                 ng-show="form.full_name.$dirty"
                 class="alert error">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <p translate="{{'user.valid.full_name.' + error}}" translate-default="{{error}}"></p>

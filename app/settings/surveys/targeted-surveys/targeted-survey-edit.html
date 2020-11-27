@@ -11,7 +11,7 @@
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
-        <svg class="iconic">
+        <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden">Show more/less</span>
@@ -69,7 +69,7 @@
                                     ng-show="targetedSurvey.stepOne.name.$dirty"
                                     ng-repeat="(error, value) in targetedSurvey.stepOne.name.$error"
                                 >
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                                     </svg>
                                     <p translate="{{'notify.form.validation.name.' + error}}"></p>
@@ -85,7 +85,7 @@
                                     ng-show="targetedSurvey.stepOne.description.$dirty"
                                     ng-repeat="(error, value) in targetedSurvey.stepOne.description.$error"
                                 >
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                                     </svg>
                                     <p translate="{{'notify.form.validation.description.' + error}}"></p>
@@ -197,7 +197,7 @@
                                 <ul id="listWithHandle" class="sortble-list">
                                     <li class="sortable-list-item" ng-repeat="question in survey.attributes" data={{question.label}} ng-hide="question.type === 'title' || question.type === 'description'">
                                         <span class="list-handle">
-                                            <svg class="iconic">
+                                            <svg class="iconic" role="img">
                                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-four-up"></use>
                                             </svg>
                                         </span>
