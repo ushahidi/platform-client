@@ -289,7 +289,7 @@
         "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Add field description (optional):",
         "add_task" : "Add task",
-        "add_field" : "Add field",
+        "add_field" : "Add {{fieldType | lowercase}} field",
         "edit_field" : "Edit {{fieldType | lowercase}} field",
         "build" : "Build",
         "configure" : "Configure",

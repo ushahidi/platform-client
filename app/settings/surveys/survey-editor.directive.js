@@ -473,7 +473,7 @@ function SurveyEditorController(
         }
         $scope.editAttribute = attribute;
         var fieldType = getFieldType(attribute) ? getFieldType(attribute) : attribute.label;
-        var title = attribute.id ? $translate.instant('survey.edit_field', {fieldType: fieldType}) : 'survey.add_field';
+        var title = attribute.id ? $translate.instant('survey.edit_field', {fieldType}) : $translate.instant('survey.add_field', {fieldType});
         title = title.replace('&amp;', '&');
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
