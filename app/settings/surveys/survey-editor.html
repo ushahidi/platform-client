@@ -12,8 +12,8 @@
             <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted.create"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
         </header>
 
-        <span class="mode-context-trigger" dropdown-toggle>
-          <svg class="iconic">
+       <span class="mode-context-trigger" dropdown-toggle>
+          <svg class="iconic" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
           </svg>
           <span class="label hidden" translate>app.show_more_less</span>
@@ -85,21 +85,20 @@
                         </li>
                     </ul>
                 </nav>
-
-                <div id="survey-build-post" class="survey-details tabs-target" >
+               <div id="survey-build-post" class="survey-details tabs-target" >
                     <div class="listing init" style="margin-left: 4px;">
                         <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
                         <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
                             <div class="listing-item-select">
                                 <div class="buttons-updown">
                                     <button type="button" class="button-beta" ng-disabled="isFirstField(survey.tasks[0], field)" ng-click="moveFieldUp(survey.tasks[0], field)">
-                                        <svg class="iconic">
+                                        <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                                         </svg>
                                         <span class="label hidden">Move up</span>
                                     </button>
                                     <button type="button" class="button-beta" ng-disabled="isLastField(survey.tasks[0], field)" ng-click="moveFieldDown(survey.tasks[0], field)">
-                                        <svg class="iconic">
+                                        <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                                         </svg>
                                         <span class="label hidden">Move down</span>
@@ -108,7 +107,7 @@
                             </div>
                             <div class="listing-item-secondary" ng-show="onlyOptional(field)">
                                 <button class="button-beta button-flat" ng-click="deleteField(field, survey.tasks[0])">
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                     </svg>
                                     <span class="hidden">Delete</span>
@@ -118,7 +117,7 @@
                             <div class="listing-item-primary" ng-click="openFieldEditModal(survey.tasks[0], field)">
                                 <div class="listing-item-image">
                                     <!-- TODO: Set icon based on type -->
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
                                     </svg>
                                 </div>
@@ -138,7 +137,7 @@
                             <div class="listing-item-primary">
                                 <h2 class="listing-item-title">
                                     <a ng-click="openFieldModal(survey.tasks[0])" class="button button-beta" data-modal="add-field" role="button">
-                                        <svg class="iconic">
+                                        <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                                         </svg>
                                         <span translate="survey.add_field">Add field</span>
@@ -191,7 +190,7 @@
                         <legend translate="survey.who_can_add">Who can add to this survey</legend>
                         <div class="form-field radio icon-input" ng-class="{ 'checked': survey.everyone_can_create }">
                             <label for="survey-add_everyone">
-                                <svg class="iconic">
+                                <svg class="iconic" role="img">
                                     <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                                 </svg>
                                 <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="survey.everyone_can_create">
@@ -201,7 +200,7 @@
 
                         <div class="form-field radio icon-input"  ng-class="{ 'checked': !survey.everyone_can_create }">
                             <label for="survey-add_roles">
-                                <svg class="iconic">
+                                <svg class="iconic" role="img">
                                     <use xlink:href="/img/iconic-sprite.svg#people"></use>
                                 </svg>
                                 <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.everyone_can_create">
@@ -249,7 +248,6 @@
                     <!-- <fieldset data-fieldset-type="color">
                         <legend><span class="swatch" style="background-color: #A51A1A;"></span>Survey color</legend>
                         <p>Your survey's color will be used for map markers, and the left border of the survey and its responses.</p>
-
                         <div class="form-field">
                             <label class="hidden">Hex value</label>
                             <div class="minicolors minicolors-theme-default minicolors-position-bottom minicolors-position-left minicolors-inline"><input type="text" data-input-type="color" value="#A51A1A" class="minicolors-input" size="7"><div class="minicolors-panel minicolors-slider-hue minicolors-with-swatches"><div class="minicolors-slider minicolors-sprite"><div class="minicolors-picker" style="top: 150px;"></div></div><div class="minicolors-opacity-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-grid minicolors-sprite" style="background-color: rgb(255, 0, 0);"><div class="minicolors-grid-inner"></div><div class="minicolors-picker" style="top: 52px; left: 127px;"><div></div></div></div><ul class="minicolors-swatches"><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(165, 26, 26);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(230, 147, 39);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(34, 116, 180);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(91, 170, 0);"></span></li></ul></div></div>
@@ -276,7 +274,7 @@
                     ></textarea>
                     <div class="section-title-actions" dropdown>
                         <button class="button-beta button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                             </svg>
                             <span class="hidden" translate="app.more">More</span>
@@ -285,7 +283,7 @@
                         <ul class="dropdown-menu init" dropdown-menu>
                             <li>
                                 <a href="" data-modal="delete-post" ng-click="duplicateSection(task)">
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
                                     </svg>
                                     <span class="label" translate="survey.duplicate_task">Duplicate task</span>
@@ -293,7 +291,7 @@
                             </li>
                             <li>
                                 <a href="" data-modal="delete-post" ng-click="deleteTask(task)">
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                     </svg>
                                     <span class="label" translate="survey.delete_task">Delete task</span>
@@ -317,20 +315,19 @@
                         </li>
                     </ul>
                 </nav>
-
                 <div ng-attr-id="{{ 'section-build-' + task.id }}" class="section-1-details tabs-target active">
                     <div class="listing init">
                         <div class="listing-item" ng-repeat="field in task.fields track by $index">
                             <div class="listing-item-select">
                                 <div class="buttons-updown">
                                     <button type="button" class="button-beta" ng-disabled="isFirstField(task, field)" ng-click="moveFieldUp(task, field)">
-                                        <svg class="iconic">
+                                        <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
                                         </svg>
                                         <span class="label hidden">Move up</span>
                                     </button>
                                     <button type="button" class="button-beta" ng-disabled="isLastField(task, field)" ng-click="moveFieldDown(task, field)">
-                                        <svg class="iconic">
+                                       <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                                         </svg>
                                         <span class="label hidden">Move down</span>
@@ -340,7 +337,7 @@
 
                             <div class="listing-item-secondary" ng-show="onlyOptional(field)">
                                 <button class="button-beta button-flat" ng-click="deleteField(field, task)">
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                     </svg>
                                     <span class="hidden">Delete</span>
@@ -349,14 +346,14 @@
 
                             <div class="listing-item-primary" ng-click="openFieldEditModal(task, field)">
                                 <div class="listing-item-image">
-                                    <svg class="iconic">
+                                    <svg class="iconic" role="img">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
                                     </svg>
                                 </div>
                                 <h2 class="listing-item-title">
                                     {{field.label}}
                                     <span class="listing-item-image tooltip" ng-show="field.response_private">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                             </svg>
                             <span class="bug" translate="survey.response_private_desc">Only people with permission to edit responses can see responses to this field</span>
@@ -378,7 +375,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div ng-attr-id="{{ 'section-configure-' + task.id }}" class="section-1-details tabs-target">
                     <div class="form-field switch">
                         <label translate="survey.required" for="task-required-{{task.id}}">Required</label>
@@ -402,7 +398,6 @@
                         <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
                         <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
                             <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
-
                             <label class="tgl-btn" for="{{ 'show_section-' + task.id }}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
                         </div>
                     </div>
@@ -410,10 +405,9 @@
             </section>
             <!-- Add nw section/task -->
             <div class="listing-item" ng-show="languages.default === languages.active">
-
                 <div class="listing-item-primary">
                     <button ng-click="openTaskModal()" class="button-gamma init" data-toggle="field-type">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                         </svg>
                         <span class="button-label" translate="survey.add_task">Add task</span>

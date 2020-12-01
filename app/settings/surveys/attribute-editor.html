@@ -12,7 +12,7 @@
           class="alert error"
           ng-show="fieldLabel.$invalid && fieldLabel.$dirty"
       >
-        <svg class="iconic">
+        <svg class="iconic" role="img">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
         </svg>
         <span translate="{{'post.valid.label.required'}}"></span>
@@ -34,7 +34,7 @@
       <div class="input-inline" ng-repeat="(key, option) in editField.options track by $index">
         <input type="text" placeholder="{{ 'form.field_option_placeholder'| translate }}" ng-model="editField.options[key]">
         <button type="button" class="button-flat button-beta" ng-if="editField.options.length > 1" ng-click="removeOption(editField, key)">
-          <svg class="iconic">
+          <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
           </svg>
           <span class="button-label hidden">Remove</span>

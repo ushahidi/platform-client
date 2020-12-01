@@ -223,10 +223,13 @@ function PostDataEditorController(
                             attr.value.value = parseInt(attr.default);
                         }
                     }
+
                     if (attr.input === 'date' || attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
                         if (attr.value.value) {
+                            // Prev OSS fix (added comment on merge):
+                            // $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
                             attr.value.value = moment(attr.value.value).toDate();
                         } else {
                             attr.value.value = attr.default ? new Date(attr.default) : new Date();

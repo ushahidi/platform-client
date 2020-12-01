@@ -23,7 +23,7 @@
                 ng-show="form.title.$dirty"
                 ng-repeat="(error, value) in form.title.$error"
             >
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.title.' + error}}"></span>
@@ -50,7 +50,7 @@
             </textarea>
 
             <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.content.' + error}}"></span>
@@ -88,7 +88,7 @@
                 <div ng-switch-when="date" >
                     <!-- Date icon -->
                     <div class="input-with-icon">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                         </svg>
                         <input
@@ -222,7 +222,7 @@
                 </div>
             </div>
             <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
@@ -293,7 +293,7 @@
                     ></post-category-editor>
                 </div>
                 <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
                     <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
