@@ -61,9 +61,6 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
                     return parseFloat(entry);
                 });
             }
-            if ($scope.attribute.input === 'tags') {
-                $scope.value = $scope.formatTags($scope.value);
-            }
 
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {
