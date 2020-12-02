@@ -6,11 +6,12 @@
             <li><a href="/" ng-controller="navigation as nav"><bdi>{{nav.site.name}}</bdi></a></li>
         </ol>
 
-        <h1 class="mode-context-title"><bdi>{{post.form.name}}</bdi></h1>
+        <h1 class="mode-context-title"><bdi linkify>{{post.form.name}}</bdi></h1>
+
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
-        <svg class="iconic">
+        <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden" translate="app.show_more_less">Show more/less</span>
@@ -103,7 +104,19 @@
             </div>
           </div> -->
           <ush-logo></ush-logo>
+          <div class="toolbar-secondary">
+            <div class="button-group" ng-show="!post.id">
+                <post-share button="true" ng-show="!post.id"></post-share>
+                <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
+                <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
+                    <div class="loading">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
       </div> <!-- END main column -->
-
   </main>
 </form>

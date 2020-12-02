@@ -2,7 +2,7 @@
 <div class="mode-context init" embed-only="true" ng-controller="navigation as nav" dropdown>
     <header class="mode-context-header" ng-class="{ 'has-logo' : nav.site.image_header }">
       <h1 class="mode-context-title"><a href="/" ng-bind="nav.site.name"></a></h1>
-      <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo" />
+      <img ng-if="nav.site.image_header" ng-src="{{ nav.site.image_header }}" class="deployment-logo" alt="Deployment-logo"/>
     </header>
 </div>
 <main role="main">
@@ -27,14 +27,14 @@
               <span dropdown ng-if="userHasBulkActionPermissions()">
                 <button class="button-beta init" data-toggle="toggle-content" dropdown-toggle>
                   <span class="button-label" translate="app.mark_as">Mark as</span>
-                  <svg class="iconic">
+                  <svg class="iconic" role="img">
                     <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                   </svg>
                 </button>
                 <ul class="dropdown-menu toggle-content init" dropdown-menu unpositioned="true">
                   <li ng-repeat="status in statuses">
                     <a ng-click="changeStatus(status)">
-                      <svg class="iconic">
+                      <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
                         <use xlink:href="/img/iconic-sprite.svg#document" ng-if="status=='draft'"></use>
                         <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
@@ -49,21 +49,21 @@
 
               <collection-toggle-button selected-posts="selectedPosts" posts="posts" on-done="clearSelectedPosts()"></collection-toggle-button>
               <button type="button" class="button-destructive" ng-click="deletePosts()" ng-if="userHasBulkActionPermissions()">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                 </svg>
                 <span class="button-label hidden">nav.delete</span>
               </button>
 
               <button href="" ng-click="closeBulkActions()" class="button-link toolbar-close-button">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
                 </svg>
                 <span class="hidden">Close</span>
             </button>
 
         </listing-toolbar>
-        <div class="listing timeline init">
+        <div class="listing timeline init" id="main-content">
 
         <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
             <div class="bulk-action-primary" translate="post.posts_total" translate-values="{'posts': posts.length, 'total_nb': totalItems }"></div>

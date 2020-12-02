@@ -11,7 +11,7 @@
                 'success': !form.title.$invalid && form.title.$dirty
             }"
         >
-             <label>
+             <label for="title">
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
@@ -24,7 +24,7 @@
                 ng-show="form.title.$dirty"
                 ng-repeat="(error, value) in form.title.$error"
             >
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.title.' + error}}"></span>
@@ -41,7 +41,7 @@
             }"
             adaptive-form
         >
-            <label>
+            <label for="content">
                 <bdi>{{attribute.label}}</bdi>
             </label>
             <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
@@ -51,7 +51,7 @@
             </textarea>
 
             <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.content.' + error}}"></span>
@@ -88,7 +88,7 @@
                     <div ng-switch-when="date" >
                         <!-- Date icon -->
                         <div class="input-with-icon">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
                             </svg>
                             <input
@@ -112,15 +112,21 @@
                         ></post-datetime>
                     </div>
                     <!-- type: select -->
-                    <select
-                        ng-switch-when="select"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        >
-                        <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
-                    </select>
+                    <div ng-switch-when="select">
+                        <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                            <p translate>post.duplicate_option</p>
+                        </div>
+                        <div class="form-field select">
+                            <select
+                                id="values[{{attribute.key}}][{{key}}]"
+                                name="values_{{attribute.id}}"
+                                ng-model="post.values[attribute.key][key]"
+                                ng-required="attribute.required"
+                                >
+                                <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
+                            </select>
+                        </div>
+                    </div>
                     <!-- type: number -->
                     <input
                         ng-switch-when="number"
@@ -206,7 +212,7 @@
                         ng-required="attribute.required"
                     ></post-video-input>
                     <div class="alert error" ng-switch-when="video" ng-show="form.$error.videoUrlValidation && taskIsMarkedCompleted() ">
-                        <svg class="iconic">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
                         <span translate="{{'post.video.enter_a_url'}}"></span>
@@ -214,14 +220,15 @@
                 </div>
             </div>
             <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
             </div>
         </div>
         <!-- Container for fieldset structured elements -->
-        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0">
+        
+        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0"> 
             <!-- Attribute Label -->
             <label ng-class="{
                 'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
@@ -241,6 +248,10 @@
             <div ng-switch="attribute.input">
                 <!-- type: radio -->
                 <div ng-switch-when="radio">
+                     <!-- Container for fieldset structured elements -->
+                     <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
                     <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
                     <div class="form-field radio" ng-repeat="option in attribute.options">
                         <label>
@@ -258,7 +269,11 @@
                 </div>
                 <!-- type: checkbox -->
                 <div ng-switch-when="checkbox">
-                    <div class="form-field checkbox" ng-repeat="option in attribute.options">
+                    <!-- Container for fieldset structured elements -->
+                    <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
+                    <div class="form-field checkbox" ng-repeat="option in attribute.options | unique ">
                     <label>
                         <input
                             type="checkbox"
@@ -284,12 +299,13 @@
                     ></post-category-editor>
                 </div>
                 <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
                     <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
                 </div>
             </div>
         </fieldset>
+
     </div>
 </div>

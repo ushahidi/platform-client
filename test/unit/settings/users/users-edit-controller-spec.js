@@ -44,6 +44,9 @@ describe('setting users edit controller', function () {
         $rootScope.hasManageSettingsPermission = function () {
             return true;
         };
+        $scope.setValid = function(valid) {
+            $scope.form = {$valid: valid};
+        }
     }));
 
 
@@ -69,7 +72,7 @@ describe('setting users edit controller', function () {
 
     it('should save users upon request', function () {
         spyOn(Notify, 'notify');
-
+        $scope.setValid(true);
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();
@@ -79,13 +82,37 @@ describe('setting users edit controller', function () {
     });
 
     it('should fail to save a user', function () {
-        spyOn(Notify, 'errors');
-
+        spyOn(Notify, 'notify');
+        $scope.setValid(false);
         $scope.saveUser('fail');
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.errors).toHaveBeenCalled();
+        expect($scope.isValid).toBe(false);
+        expect($scope.saving_user).toBe(false);
+        expect(Notify.notify).not.toHaveBeenCalled();
     });
+    it('should save users after an error is fixed', function () {
+        spyOn(Notify, 'notify');
+        // Saving with errors
+        $scope.setValid(false);
+        $scope.saveUser('fail');
+        $rootScope.$digest();
+        $rootScope.$apply();
 
+        expect($scope.isValid).toBe(false);
+        expect($scope.saving_user).toBe(false);
+        expect(Notify.notify).not.toHaveBeenCalled();
+
+        // Saving with corrected values
+        $scope.setValid(true);
+        $scope.saveUser({id: 'pass'});
+        $rootScope.$digest();
+        $rootScope.$apply();
+
+        expect(Notify.notify).toHaveBeenCalled();
+        expect($scope.userSavedUser).toBe(true);
+        expect($scope.isValid).toBe(true);
+        expect($scope.saving_user).toBe(false);
+    });
 });
