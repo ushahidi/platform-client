@@ -491,11 +491,62 @@ function SurveyEditorController(
         if (!field.form_stage_id) {
             ModalService.close();
         }
+
         $scope.editField = field;
-        var title = field.id ? 'survey.edit_field' : 'survey.add_field';
+        let fieldType = getFieldType(field) ? getFieldType(field) : field.label;
+        let title = field.id ? $translate.instant('survey.edit_field', {fieldType: fieldType}) : $translate.instant('survey.add_field', {fieldType: fieldType});
+        title = title.replace('&amp;', '&');
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
+    function getFieldType(attribute) {
+        var fieldTypes = {
+            'text': {
+                'varchar': $translate.instant('survey.short_text')
+            },
+            'textarea': {
+                'text': $translate.instant('survey.long_text')
+            },
+            'number': {
+                'decimal': $translate.instant('survey.number_decimal'),
+                'int': $translate.instant('survey.number_integer')
+            },
+            'location': {
+                'point': $translate.instant('survey.location')
+            },
+            'date': {
+                'datetime': $translate.instant('survey.date')
+            },
+            'datetime': {
+                'datetime': $translate.instant('survey.datetime')
+            },
+            'select': {
+                'varchar': $translate.instant('survey.select')
+            },
+            'radio': {
+                'varchar': $translate.instant('survey.radio_button')
+            },
+            'checkbox': {
+                'varchar': $translate.instant('survey.checkbox')
+            },
+            'relation' : {
+                'relation': $translate.instant('survey.related_post')
+            },
+            'upload' : {
+                'media': $translate.instant('survey.upload_image')
+            },
+            'video' : {
+                'varchar': $translate.instant('survey.embed_video')
+            },
+            'markdown' : {
+                'markdown': 'Markdown'
+            },
+            'tags' : {
+                'tags': $translate.instant('survey.categories')
+            }
+        }
+        return fieldTypes[attribute.input] ? fieldTypes[attribute.input][attribute.type] : null;
+    }
     function addNewField(field, task) {
         ModalService.close();
         // Set active task as form_stage_id

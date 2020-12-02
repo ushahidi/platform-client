@@ -85,7 +85,10 @@ function (
             };
 
             $scope.valuesPermissible = function () {
-                if ($scope.editField.options.length < 1) {
+                if (
+                    $scope.editField.options &&
+                    $scope.editField.options.length < 1
+                ) {
                     return true;
                 }
                 let tmp = [];
