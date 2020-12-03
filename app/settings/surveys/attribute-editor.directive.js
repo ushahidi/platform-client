@@ -85,18 +85,15 @@ function (
             };
 
             $scope.valuesPermissible = function () {
-                if (
-                    $scope.editField.options &&
-                    $scope.editField.options.length < 1
-                ) {
-                    return true;
-                }
-                let tmp = [];
-                for (let x of $scope.editField.options) {
-                    if (tmp.indexOf(x) !== -1) {
-                        return false;
+                if ($scope.editField.options && $scope.editField.options.length > 1) {
+                    let tmp = [];
+                    for (let x of $scope.editField.options) {
+                        if (tmp.indexOf(x) !== -1) {
+                            return false;
+                        }
+                        tmp.push(x);
                     }
-                    tmp.push(x);
+                    return true;
                 }
                 return true;
             };
