@@ -4,9 +4,8 @@
       'error': fieldLabel.$invalid && fieldLabel.$dirty
   }">
     <form name="fieldLabel">
-      <label>{{'app.name'|translate}}
-        <input aria-label="app.name" type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}" />
-      </label>
+      <label for="field-name">{{'app.name'|translate}}</label>
+      <input id="field-name" aria-label="app.name" type="text" ng-model="label" ng-required="true" placeholder="{{ 'form.field_name_placeholder' | translate}}" />
       <div
           class="alert error"
           ng-show="fieldLabel.$invalid && fieldLabel.$dirty"
