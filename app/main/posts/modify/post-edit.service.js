@@ -82,6 +82,10 @@ function (
             if (!form.content || form.content.$invalid) {
                 return false;
             }
+            //built in html input verification for decimals
+            if (form.$error.step) {
+                return false;
+            }
             // Validate post-translations
             _.each(post.enabled_languages.available, language=>{
                 if (!post.translations[language] || !post.translations[language].title) {
@@ -89,6 +93,7 @@ function (
                     form.translatedTitle.$setDirty();
                 }
             })
+
 
             if (form.$error.videoUrlValidation) {
                 form.$setValidity('videoUrlValidation', true);

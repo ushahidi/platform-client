@@ -57,9 +57,7 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
             // The below fix is to remove trailing decimals
             // from the value fetched from the database.
             if ($scope.attribute.type === 'decimal') {
-                $scope.value = $scope.value.map(function (entry) {
-                    return parseFloat(entry);
-                });
+                $scope.attribute.value.value = parseFloat($scope.attribute.value.value);
             }
 
             if ($scope.attribute.type === 'datetime') {

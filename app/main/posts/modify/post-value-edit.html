@@ -135,6 +135,7 @@
                     id="values{{attribute.id}}"
                     name="values_{{attribute.id}}"
                     type="number"
+                    step="{{attribute.type === 'int' ? 1 : any}}"
                     ng-model="attribute.value.value"
                     ng-required="attribute.required"
                 >

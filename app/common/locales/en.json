@@ -823,6 +823,7 @@
             "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
             "validation_fail" : "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other" : "There was an error validating the data. Fields failing validation will display an error.",
             "title" : {
                 "required" : "A title is required",
                 "minlength" : "Title is too short",
@@ -841,7 +842,8 @@
                 "required" : "\"{{label}}\" is required",
                 "parse" : "\"{{label}}\" could not be parsed",
                 "date" : "\"{{label}}\" must be a date",
-                "number" : "\"{{label}}\" must be a number"
+                "number" : "\"{{label}}\" must be a number",
+                "step" : "\"{{label}}\" must be an integer"
             },
             "author_name" : {
                 "maxlength": "Name is too long"

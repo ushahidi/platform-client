@@ -149,6 +149,8 @@ function PostEditorController(
         if (!$scope.canSavePost()) {
             if ($scope.postForm.$error.required) {
                 Notify.error('post.valid.validation_fail');
+            } else if ($scope.postForm.$error.step) {
+                Notify.error('post.valid.validation_fail_other');
             }
             $scope.saving_post = false;
             return;
