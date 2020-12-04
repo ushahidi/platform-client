@@ -35,7 +35,7 @@
         <div class="form-field framed">
 
           <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
-          <p>{{survey.description}}</p>  
+          <p>{{survey.description}}</p>
         </div>
         <p translate="translations.add_translation">Add your translation below:</p>
         <!-- TODO: add ng-model for translation -->
@@ -49,7 +49,17 @@
             <div class="listing-item-primary" ng-click="openField(field)">
                 <h2 class="listing-item-title">
                   {{field.translations[activeLanguage].label || field.label}}
+
                 </h2>
+                <div
+                    class="alert error"
+                    ng-show="field.translations[activeLanguage]._$ushDuplicateErrorMessage === true"
+                >
+                  <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                  </svg>
+                  <span translate="survey.duplicate_option"></span>
+                </div>
             </div>
           </div>
         </div>
@@ -90,13 +100,22 @@
               <h2 class="listing-item-title">
                 {{field.translations[activeLanguage].label || field.label}}
               </h2>
+              <div
+                  class="alert error"
+                  ng-show="field.translations[activeLanguage]._$ushDuplicateErrorMessage === true"
+              >
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="survey.duplicate_option"></span>
+              </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-     
+
 
 
 

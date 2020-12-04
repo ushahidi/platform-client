@@ -5,7 +5,7 @@
             <div class="form-field framed">
                 <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
                 <p>{{translateField.label}}</p>
-               
+
             </div>
             <p translate="translations.add_translation">Add your translation below:</p>
             <input type="text" ng-model="translateField.translations[activeLanguage].label" ng-required="true" placeholder="{{'translations.edit_placeholder' | translate }}">
@@ -16,7 +16,7 @@
         <div class="form-field framed">
            <label translate="translations.translate_field_desc">Translate field description:</label>
             <em>Text in default language ({{('languages.' + defaultLanguage) | translate}}):</em>
-            <p>{{translateField.instructions}}</p> 
+            <p>{{translateField.instructions}}</p>
         </div>
         <p translate="translations.add_translation">Add your translation below:</p>
         <div class="form-field">
@@ -35,11 +35,14 @@
 
         <div>
             <p translate="translations.add_translation">Add your translation below:</p>
-               <ol>
-                    <li ng-repeat="(key, option) in translateField.options track by $index" key={{key}}>
-                        <input class="input-inline" type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="translateField.translations[activeLanguage].options[key]">
-                    </li>
-                </ol> 
+             <ol>
+                  <li ng-repeat="(key, option) in translateField.options track by $index" key={{key}}>
+                      <input class="input-inline" type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="translateField.translations[activeLanguage].options[key]">
+                  </li>
+              </ol>
+              <div class="alert error" role="alert" ng-show="translateField.translations[activeLanguage]._$ushDuplicateErrorMessage === true">
+                <p translate>survey.duplicate_option</p>
+              </div>
         </div>
     </div>
     <div class="form-field alert" ng-if="translateField.input === 'tags'">

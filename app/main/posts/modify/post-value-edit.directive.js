@@ -22,13 +22,15 @@ function PostValueEdit() {
 PostValueEditController.$inject = [
     '$rootScope',
     '$scope',
-    '_'
+    '_',
+    'UshahidiSdk'
 ];
 
 function PostValueEditController(
     $rootScope,
     $scope,
-    _
+    _,
+    UshahidiSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -104,16 +106,6 @@ function PostValueEditController(
 
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        if (attr.options && attr.options.length < 1) {
-            return false;
-        }
-        let tmp = [];
-        for (let x of attr.options) {
-            if (tmp.indexOf(x) !== -1) {
-                return true;
-            }
-            tmp.push(x);
-        }
-        return false;
+        return !UshahidiSdk.Surveys.validateUniqueOptions(attr.options);
     }
 }

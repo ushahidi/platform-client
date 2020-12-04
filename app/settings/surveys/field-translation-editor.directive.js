@@ -1,5 +1,5 @@
-module.exports = ['$rootScope', 'Editor', 'ModalService',
-function FieldTranslationEditor($rootScope, Editor, ModalService) {
+module.exports = ['$rootScope', 'Editor', 'ModalService', 'UshahidiSdk', '$translate',
+function FieldTranslationEditor($rootScope, Editor, ModalService, UshahidiSdk, $translate) {
     return {
         restrict: 'E',
         template: require('./field-translation-editor.html'),
@@ -37,8 +37,18 @@ function FieldTranslationEditor($rootScope, Editor, ModalService) {
         initiateEditor();
 
         function save() {
+            $scope.translateField.translations[$scope.activeLanguage]._$ushDuplicateErrorMessage = false;
+            $scope.canSave = true;
+            if ($scope.translateField.input === 'checkbox' || $scope.translateField.input === 'radio') {
+                $scope.canSave = UshahidiSdk.Surveys.validateUniqueOptions(Object.values($scope.translateField.translations[$scope.activeLanguage].options));
+            }
             $scope.translateField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
-            ModalService.close();
+            if ($scope.canSave) {
+                ModalService.close();
+            } else {
+                $scope.translateField.translations[$scope.activeLanguage]._$ushDuplicateErrorMessage = true;
+                $rootScope.$broadcast('event:surveys:translationMissing');
+            }
         }
     }
 }

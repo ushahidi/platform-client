@@ -30,7 +30,8 @@ SurveyEditorController.$inject = [
     'Features',
     'SurveysSdk',
     'TranslationService',
-    'CategoriesSdk'];
+    'CategoriesSdk',
+    'UshahidiSdk'];
 function SurveyEditorController(
     $rootScope,
     $scope,
@@ -48,7 +49,8 @@ function SurveyEditorController(
     Features,
     SurveysSdk,
     TranslationService,
-    CategoriesSdk
+    CategoriesSdk,
+    UshahidiSdk
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -618,7 +620,7 @@ function SurveyEditorController(
         // Set saving to true to disable user actions
         $scope.saving_survey = true;
         // check there is translations for survey-names in all languages
-        if (validateSurveyTranslations()) {
+        if (validateSurveyTranslations() && validateAttributeOptionTranslations()) {
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
@@ -640,8 +642,21 @@ function SurveyEditorController(
     } else {
         $scope.saving_survey = false;
         $rootScope.$broadcast('event:surveys:translationMissing');
-        Notify.error(`You need to add translations for all names, check that you have translated the survey-names for all added languages`);
+        Notify.error(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
+         Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language).`);
     }
+    }
+    function validateAttributeOptionTranslations() {
+        return _.every($scope.survey.enabled_languages.available, language => {
+            return $scope.survey.tasks.every((t) =>  {
+                return t.fields.every(f => {
+                    if (f.input === 'checkbox' || f.input === 'radio') {
+                        return UshahidiSdk.Surveys.validateUniqueOptions(Object.values(f.translations[language].options));
+                    }
+                    return true;
+                });
+            });
+        });
     }
     function validateSurveyTranslations() {
         return _.every($scope.survey.enabled_languages.available, language => {

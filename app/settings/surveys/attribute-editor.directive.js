@@ -4,12 +4,14 @@ module.exports = [
     '_',
     'Editor',
     'Notify',
+    'UshahidiSdk',
 function (
     $rootScope,
     ModalService,
     _,
     Editor,
-    Notify
+    Notify,
+    UshahidiSdk
     ) {
     return {
         restrict: 'E',
@@ -83,19 +85,12 @@ function (
             $scope.canDisableCaption = function () {
                 return $scope.editField.type === 'media' && $scope.editField.input === 'upload';
             };
-
+            $scope.validateDuplicate = function () {
+                return UshahidiSdk.Surveys.validateUniqueOptions($scope.editField.options);
+            }
             $scope.valuesPermissible = function () {
-                if ($scope.editField.options && $scope.editField.options.length > 1) {
-                    let tmp = [];
-                    for (let x of $scope.editField.options) {
-                        if (tmp.indexOf(x) !== -1) {
-                            return false;
-                        }
-                        tmp.push(x);
-                    }
-                    return true;
-                }
-                return true;
+                return UshahidiSdk.Surveys.validateUniqueOptions($scope.editField.options)
+                        || UshahidiSdk.Surveys.validateNonEmptyOptions($scope.editField.options);
             };
         }
     };

@@ -26,7 +26,7 @@
   <div>
     <div class="form-field" ng-if="hasOptions(editField)">
       <label translate>form.field_options</label>
-      <div class="alert error" role="alert" ng-show="!valuesPermissible()">
+      <div class="alert error" role="alert" ng-show="!validateDuplicate()">
         <p translate>survey.duplicate_option</p>
       </div>
       <div class="input-inline" ng-repeat="(key, option) in editField.options track by $index">
