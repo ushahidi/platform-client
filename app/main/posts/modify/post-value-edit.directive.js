@@ -106,6 +106,6 @@ function PostValueEditController(
 
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        return !UshahidiSdk.Surveys.validateUniqueOptions(attr.options);
+        return !UshahidiSdk.Surveys.areOptionsUnique(attr.options);
     }
 }

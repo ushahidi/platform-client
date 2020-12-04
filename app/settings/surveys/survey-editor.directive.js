@@ -650,8 +650,13 @@ function SurveyEditorController(
         return _.every($scope.survey.enabled_languages.available, language => {
             return $scope.survey.tasks.every((t) =>  {
                 return t.fields.every(f => {
-                    if (f.input === 'checkbox' || f.input === 'radio') {
-                        return UshahidiSdk.Surveys.validateUniqueOptions(Object.values(f.translations[language].options));
+                    if (
+                        UshahidiSdk.Surveys.fieldHasTranslations(f, language)
+                        && UshahidiSdk.Surveys.fieldCanHaveOptions(f)
+                    ) {
+                        return UshahidiSdk.Surveys.areOptionsUnique(
+                            Object.values(f.translations[language].options)
+                        );
                     }
                     return true;
                 });

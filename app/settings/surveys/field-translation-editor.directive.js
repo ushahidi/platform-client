@@ -39,8 +39,12 @@ function FieldTranslationEditor($rootScope, Editor, ModalService, UshahidiSdk, $
         function save() {
             $scope.translateField.translations[$scope.activeLanguage]._$ushDuplicateErrorMessage = false;
             $scope.canSave = true;
-            if ($scope.translateField.input === 'checkbox' || $scope.translateField.input === 'radio') {
-                $scope.canSave = UshahidiSdk.Surveys.validateUniqueOptions(Object.values($scope.translateField.translations[$scope.activeLanguage].options));
+
+            if (
+                UshahidiSdk.Surveys.fieldHasTranslations($scope.translateField, $scope.activeLanguage)
+                && UshahidiSdk.Surveys.fieldCanHaveOptions($scope.translateField)
+            ) {
+                $scope.canSave = UshahidiSdk.Surveys.areOptionsUnique(Object.values($scope.translateField.translations[$scope.activeLanguage].options));
             }
             $scope.translateField.translations[$scope.activeLanguage].instructions = $scope.translateEditor.getMarkdown();
             if ($scope.canSave) {

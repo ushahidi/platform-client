@@ -86,11 +86,17 @@ function (
                 return $scope.editField.type === 'media' && $scope.editField.input === 'upload';
             };
             $scope.validateDuplicate = function () {
-                return UshahidiSdk.Surveys.validateUniqueOptions($scope.editField.options);
+                if (UshahidiSdk.Surveys.fieldCanHaveOptions($scope.editField)) {
+                    return UshahidiSdk.Surveys.areOptionsUnique($scope.editField.options);
+                }
+                return true;
             }
             $scope.valuesPermissible = function () {
-                return UshahidiSdk.Surveys.validateUniqueOptions($scope.editField.options)
-                        || UshahidiSdk.Surveys.validateNonEmptyOptions($scope.editField.options);
+                if (UshahidiSdk.Surveys.fieldCanHaveOptions($scope.editField)) {
+                    return UshahidiSdk.Surveys.areOptionsUnique($scope.editField.options)
+                        || !UshahidiSdk.Surveys.hasEmptyOptions($scope.editField.options);
+                }
+                return true;
             };
         }
     };
