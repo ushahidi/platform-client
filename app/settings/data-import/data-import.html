@@ -10,7 +10,7 @@
        </header>
 
        <span class="mode-context-trigger" dropdown-toggle>
-           <svg class="iconic">
+           <svg class="iconic" role="img">
                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
            </svg>
            <span class="label hidden" translate>app.show_more_less</span>
@@ -35,7 +35,7 @@
                         <h2 class="stepper-heading">
                             <span class="stepper-badge" ng-show="!stepOneComplete">1</span>
                             <span class="stepper-badge" ng-show="stepOneComplete">
-                                <svg class="iconic">
+                                <svg class="iconic" role="img">
                                     <use xlink:href="/img/iconic-sprite.svg#check"></use>
                                 </svg>
                             </span>
@@ -107,7 +107,7 @@
                                   <legend class="hidden">Post status</legend>
                                     <div class="form-field radio icon-input" ng-class="{'checked' : isStatusSelected('published')}">
                                       <label for="status-published" ng-click="setStatus('published')">
-                                          <svg class="iconic">
+                                          <svg class="iconic" role="img">
                                               <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                                           </svg>
                                           <input type="radio" name="status" id="status-published" checked data-fieldgroup-toggle="status-model-mark-published" />
@@ -121,7 +121,7 @@
 
                                   <div class="form-field radio icon-input" ng-class="{'checked' : isStatusSelected('draft')}">
                                       <label for="status-review" ng-click="setStatus('draft')">
-                                          <svg class="iconic">
+                                          <svg class="iconic" role="img">
                                               <use xlink:href="/img/iconic-sprite.svg#document"></use>
                                           </svg>
                                           <input type="radio" name="status" id="status-review" />
@@ -131,7 +131,7 @@
 
                                   <div class="form-field radio icon-input" ng-class="{'checked' : isStatusSelected('archived')}">
                                       <label for="status-archive" ng-click="setStatus('archived')">
-                                          <svg class="iconic">
+                                          <svg class="iconic" role="img">
                                               <use xlink:href="/img/iconic-sprite.svg#box"></use>
                                           </svg>
                                           <input type="radio" name="status" id="status-archive"/>

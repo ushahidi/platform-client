@@ -51,7 +51,7 @@ function (
                 });
 
                 ConfigEndpoint.get({id: 'site'}, function (site) {
-                    $scope.canRegister = !site.private;
+                    $scope.canRegister = !site.private && !site.disable_registration;
                 });
             }
 

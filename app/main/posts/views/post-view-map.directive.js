@@ -15,7 +15,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
     };
 
     function PostViewMapLink($scope, element, attrs, controller) {
-        var map, markers;
+        var map, markers, posts;
         var geoJsonLayers = [];
         var currentGeoJsonRequests = [];
         $scope.stats = {totalItems: 0, filteredPosts:0, unmapped: 0};
@@ -39,17 +39,11 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
-            });
-            var posts = loadPosts();
-
-            // When data is loaded
-            $q.all({
-                map: createMap,
-                posts: posts
             }).then(function (data) {
-                return data;
+               posts = loadPosts();
+            }).then(function (data) {
+                watchFilters();
             })
-            .then(watchFilters);
 
             // Change state on mode change
             $scope.$watch(() => {
@@ -150,11 +144,37 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         function getStats () {
             // Getting stats for filter-dropdown
-            let def = PostFilters.getQueryParams(PostFilters.getDefaults());
-            PostEndpoint.geojson(def).$promise.then(res => {
-                $scope.stats.totalItems = res.features.length;
-                $scope.stats.unmapped = res.total - res.features.length;
+            getPostStats(PostFilters.getDefaults()).$promise.then(function (result) {
+                $scope.stats.totalItems = result.totals[0].values.reduce(
+                    function (a,b) {
+                        return a.total + b.total
+                    }
+                ) - result.unmapped;
+
+                $scope.stats.unmapped = result.unmapped;
             });
+        }
+
+        function getPostStats(filters) {
+            var query = PostFilters.getQueryParams(filters);
+            var queryParams = _.extend({}, query, {
+                include_unmapped: true,
+                status: 'all'
+            });
+
+            // we don't want a group_by or filter
+            if (queryParams.form) {
+                delete queryParams.form;
+            }
+            if (queryParams.group_by) {
+                delete queryParams.group_by;
+            }
+
+            // deleting source, we want stats for all datasources to keep the datasource-bucket-stats unaffected by data-source-filters
+            if (queryParams.source) {
+                delete queryParams.source;
+            }
+            return PostEndpoint.stats(queryParams);
         }
 
         function loadPosts(query) {
@@ -169,7 +189,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             let getFirstPostChunk = PostEndpoint.geojson(conditions);
             currentGeoJsonRequests.push(getFirstPostChunk);
-            getFirstPostChunk.$promise.then(function (posts) {
+            return getFirstPostChunk.$promise.then(function (posts) {
                 // Adding the first 200 posts to map here and getting the totals
                 $scope.stats.filteredPosts = posts.total;
                 addPostsToMap(posts)

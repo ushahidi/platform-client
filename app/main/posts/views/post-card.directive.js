@@ -47,6 +47,9 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
                     // But ignore the action
                     return;
                 }
+                if (evt && evt.key && (evt.key !== ' ' && evt.key !== 'Enter' && evt.key !== 'Spacebar')) {
+                  return;
+                }
 
                 $scope.externalClickAction($scope.post);
             }
