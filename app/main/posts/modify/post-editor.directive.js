@@ -125,8 +125,10 @@ function PostEditorController(
                         // ensure that dates are preserved in UTC
                         if (attr.value.value) {
                             attr.value.value = moment(attr.value.value).toDate();
+                        } else if (attr.default) {
+                            attr.value.value = new Date(attr.default);
                         } else {
-                            attr.value.value = attr.default ? new Date(attr.default) : new Date();
+                            attr.value.value = attr.required ? moment(new Date()).toDate() : null;
                         }
                     }
                 });
