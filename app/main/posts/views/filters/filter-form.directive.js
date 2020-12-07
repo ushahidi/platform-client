@@ -1,7 +1,7 @@
 module.exports = FormSelectDirective;
 
-FormSelectDirective.$inject = ['$rootScope', 'SurveysSdk'];
-function FormSelectDirective($rootScope, SurveysSdk) {
+FormSelectDirective.$inject = ['$rootScope', 'SurveysSdk', 'TranslationService'];
+function FormSelectDirective($rootScope, SurveysSdk, TranslationService) {
     return {
         restrict: 'E',
         replace: true,
@@ -41,11 +41,15 @@ function FormSelectDirective($rootScope, SurveysSdk) {
                 scope.$apply();
             });
 
-            // getUserLanguage();
-
             scope.$watch('selectedForms', saveValueToView, true);
             scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
+        }
+
+        function getUserLanguage () {
+            TranslationService.getLanguage().then(language => {
+                scope.userLanguage = language;
+            });
         }
 
         function renderModelValue() {
