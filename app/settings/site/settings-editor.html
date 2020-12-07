@@ -92,14 +92,22 @@
                             <p translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></p>
                         </div>
                     </div>
+
                     <div class="form-field">
                     <label for="site-language" translate>settings.site_language</label>
                     <language-switch id="site-language" site="site"></language-switch>
                     </div>
+
                     <div class="form-field checkbox" ng-show="isPrivateEnabled">
                          <input id="private" ng-model="site.private" type="checkbox">
                          <label for="private" translate>settings.site_private</label>
                          <p translate="settings.site_private_desc">Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access.</p>
+                    </div>
+
+                    <div class="form-field checkbox" ng-show="isDisableRegistrationEnabled">
+                         <input id="disable_registration" ng-model="site.disable_registration" type="checkbox">
+                         <label for="disable_registration" translate>settings.site_disable_registration</label>
+                         <p translate="settings.site_disable_registration_desc">settings.site_disable_registration_desc</p>
                     </div>
 
                     <div class="form-field">

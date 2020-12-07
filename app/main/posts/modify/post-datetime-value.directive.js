@@ -21,8 +21,9 @@ module.exports = ['moment', '_', function (moment, _) {
 
             // Render ngModel viewValue into scope
             function render() {
-                $scope.model = moment(ngModel.$viewValue).toDate();
-            }
+                if (ngModel.$viewValue !== null) {
+                    $scope.model = moment(ngModel.$viewValue).toDate();
+                }            }
 
             // Save model value
             // Only runs when modal closes, this avoids overwriting the time

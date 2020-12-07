@@ -1,0 +1,124 @@
+<!-- survey-name and descriptions + fields -->
+<section class="form-sheet" translate-language="{{activeLanguage}}">
+    <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
+    <div class="form-field survey required">
+        <label translate required>survey.survey_name</label>
+        <div class="form-field framed">
+          <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
+          <p>{{survey.name}}</p>
+        </div>
+        <p translate="translations.add_translation">Add your translation below:</p>
+
+        <form name="form.translation">
+          <input
+            name="name"
+            type="text"
+            placeholder="{{'translations.edit_placeholder' | translate }}"
+            ng-model="survey.translations[activeLanguage].name"
+            class="form-field"
+            required
+          >
+          <div
+                class="alert error"
+                ng-show="form.translation.$dirty && !survey.translations[activeLanguage].name"
+            >
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="translations.survey_name_required">Translation for survey-name is required</span>
+            </div>
+          </form>
+    </div>
+
+      <div class="form-field survey">
+        <label translate>app.description</label>
+        <div class="form-field framed">
+
+          <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
+          <p>{{survey.description}}</p>
+        </div>
+        <p translate="translations.add_translation">Add your translation below:</p>
+        <!-- TODO: add ng-model for translation -->
+        <textarea placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="survey.translations[activeLanguage].description"></textarea>
+    </div>
+
+    <div class="survey-details" >
+        <div class="listing init" style="margin-left: 4px;">
+          <h2 class="listing-heading" translate="translations.field_add_translation">Fields (click to add translation):</h2>
+          <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
+            <div class="listing-item-primary" ng-click="openField(field)">
+                <h2 class="listing-item-title">
+                  {{field.translations[activeLanguage].label || field.label}}
+
+                </h2>
+                <div
+                    class="alert error"
+                    ng-show="field.translations[activeLanguage]._$ushDuplicateErrorMessage === true"
+                >
+                  <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                  </svg>
+                  <span translate="survey.duplicate_option"></span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+  <!-- Tasks -->
+<section class="form-sheet" translate-language="{{activeLanguage}}" ng-show="survey.tasks.length > 1">
+  <div class="listing init">
+    <div class="form-field survey">
+      <h2 translate="app.tasks">Tasks</h2>
+    </div>
+  </div>
+  <div class="listing-item" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length">
+    <div class="form-field survey">
+        <label translate="form.step_name">Task name</label>
+        <div class="form-field framed">
+          <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
+          <p>{{task.label}}</p>
+          </div>
+        <p translate="translations.add_translation">Add your translation below:</p>
+        <input type="text" placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="task.translations[activeLanguage].label">
+    </div>
+
+      <div class="form-field survey">
+        <label translate="survey.task_description">Task description</label>
+        <div class="form-field framed">
+          <em translate="translations.edit_default_text"></em><em> ({{('languages.' + defaultLanguage) | translate}}):</em>
+            <p>{{task.description}}</p>
+        </div>
+        <p translate="translations.add_translation">Add your translation below:</p>
+        <textarea placeholder="{{'translations.edit_placeholder' | translate }}" ng-model="task.translations[activeLanguage].description"></textarea>
+    </div>
+    <div class="survey-details" >
+      <div class="listing init" style="margin-left: 4px;">
+        <h2 class="listing-heading" translate="translations.field_add_translation">Fields (click to add translation):</h2>
+        <div class="listing-item" ng-repeat="field in task.fields track by $index">
+          <div class="listing-item-primary" ng-click="openField(field)">
+              <h2 class="listing-item-title">
+                {{field.translations[activeLanguage].label || field.label}}
+              </h2>
+              <div
+                  class="alert error"
+                  ng-show="field.translations[activeLanguage]._$ushDuplicateErrorMessage === true"
+              >
+                <svg class="iconic">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                </svg>
+                <span translate="survey.duplicate_option"></span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+

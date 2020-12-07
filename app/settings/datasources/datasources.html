@@ -28,7 +28,8 @@
             <div class="listing card">
 
                 <!-- TODO: fix active class toggle -->
-                <div class="listing-item active" ng-repeat="provider in providers.results | orderBy:'name'" is-open="panelVisible[provider.id]"  dropdown auto-close="disabled" ng-if="available_providers[provider.id]">
+                
+                    <div class="listing-item active" ng-repeat="provider in providers.results | orderBy:'name'" is-open="panelVisible[provider.id]"  dropdown auto-close="disabled" ng-if="available_providers[provider.id]">
 
                     <div class="listing-item-secondary">
                         <button type="button" class="button-beta button-flat listing-item-toggle" dropdown-toggle>

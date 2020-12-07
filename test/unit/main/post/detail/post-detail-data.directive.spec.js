@@ -58,7 +58,8 @@ describe('Post detail directive', function () {
                 id: 1
             },
             status: 'draft',
-            completed_stages: ['1', '2', '3']
+            completed_stages: ['1', '2', '3'],
+            post_content:[{id:1}]
         };
 
         $scope.moment = moment;
@@ -66,7 +67,6 @@ describe('Post detail directive', function () {
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
-        // $rootScope.$apply();
 
 
     }));
@@ -102,7 +102,6 @@ describe('Post detail directive', function () {
 
     it('should fail to publish a post to a given role', function () {
         spyOn(Notify, 'apiErrors');
-
         isolateScope.post.id = 'fail';
         isolateScope.publishPostTo(isolateScope.post);
         expect(Notify.apiErrors).toHaveBeenCalled();
@@ -112,11 +111,8 @@ describe('Post detail directive', function () {
         spyOn(Notify, 'errorsPretranslated');
 
         isolateScope.post.id = 'pass';
-        isolateScope.tasks = [{
-            required: true
-        }];
         isolateScope.post.completed_stages = [];
-
+        isolateScope.post.post_content[0].required = true
         isolateScope.publishPostTo(isolateScope.post);
         expect(Notify.errorsPretranslated).toHaveBeenCalled();
     });

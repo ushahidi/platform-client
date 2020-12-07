@@ -1,6 +1,6 @@
 
 <div class="postcard-field" ng-style="{'visibility': hideMap ? 'hidden' : 'visible'}" ng-hide="emptyGeoJSON">
-    <h2 class="form-label" translate>post.location</h2>
+    <h2 class="form-label">{{label}}</h2>
     <div id="post-map" class="map"></div>
     <p ng-repeat="feature in features track by $index">{{ feature.geometry.coordinates[1] }}, {{ feature.geometry.coordinates[0] }}</p>
 </div>

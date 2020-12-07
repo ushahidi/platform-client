@@ -7,12 +7,13 @@ function (
         return angular.extend({}, {
             // id: 0,
             title: '',
-            content: '',
+            description: '',
             locale: CONST.DEFAULT_LOCALE,
-            values: {},
+            post_content: [],
             completed_stages: [],
             published_to: [],
-            post_date: new Date()
+            post_date: new Date(),
+            enabled_languages: {}
         }, data);
     };
 }];

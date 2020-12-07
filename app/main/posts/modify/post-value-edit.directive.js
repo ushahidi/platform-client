@@ -11,7 +11,8 @@ function PostValueEdit() {
             attribute: '=',
             postField: '=',
             medias: '=',
-            categories: '='
+            categories: '=',
+            activeSurveyLanguage:'='
         },
         controller: PostValueEditController,
         template: require('./post-value-edit.html')
@@ -21,13 +22,15 @@ function PostValueEdit() {
 PostValueEditController.$inject = [
     '$rootScope',
     '$scope',
-    '_'
+    '_',
+    'UshahidiSdk'
 ];
 
 function PostValueEditController(
     $rootScope,
     $scope,
-    _
+    _,
+    UshahidiSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -42,10 +45,6 @@ function PostValueEditController(
 
     $scope.dateFormat = { format: 'yyyy-mm-dd' };
 
-    $scope.canAddValue = canAddValue;
-    $scope.canRemoveValue = canRemoveValue;
-    $scope.addValue = addValue;
-    $scope.removeValue = removeValue;
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
     $scope.isAdmin = $rootScope.isAdmin;
@@ -83,7 +82,6 @@ function PostValueEditController(
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
     }
-
     // Can more values be added for this attribute?
     function canAddValue(attr) {
         return (
@@ -108,16 +106,6 @@ function PostValueEditController(
 
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        if (attr.options && attr.options.length < 1) {
-            return false;
-        }
-        let tmp = [];
-        for (let x of attr.options) {
-            if (tmp.indexOf(x) !== -1) {
-                return true;
-            }
-            tmp.push(x);
-        }
-        return false;
+        return !UshahidiSdk.Surveys.areOptionsUnique(attr.options);
     }
 }

@@ -91,9 +91,9 @@ function (
                  * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
                  * Nothing happens if there no postId except for not having a selectedPost.
                   */
-                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
+                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
                     if ($transition$.params().postId) {
-                        return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                        return PostsSdk.getPosts($transition$.params().postId)
                     }
                 }]
             },
@@ -239,8 +239,8 @@ function (
             },
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
-                    return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
+                    return PostsSdk.getPosts($transition$.params().postId);
                 }]
             }
         }
@@ -255,8 +255,8 @@ function (
             },
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostEndpoint', function ($transition$, PostEndpoint) {
-                    return PostEndpoint.get({ id: $transition$.params().postId }).$promise;
+                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
+                    return PostsSdk.getPosts($transition$.params().postId);
                 }]
             }
         }

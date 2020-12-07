@@ -25,7 +25,7 @@
         </div>
         <!-- end toolbar -->
 
-        <div class="main-col">
+        <div class="full-col">
             <div class="listing card">
               <article class="listing-item">
                   <div class="listing-item-primary">
@@ -72,6 +72,7 @@
                             <a ui-sref="settings.surveys.targeted.published({id: form.id})" ng-show="form.targeted_survey && targetedSurveysEnabled">{{form.name}}</a>
 
                         <p class="listing-item-secondary" markdown-to-html="form.description"></p>
+                        <p class="listing-item-languages" ng-show="form.enabled_languages" >{{getLanguages(form.enabled_languages)}}</p>
                     </div>
                 </div>
 
