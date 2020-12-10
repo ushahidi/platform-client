@@ -87,6 +87,20 @@ function FilterByDatasourceController($scope, $rootScope, ConfigEndpoint, _, $lo
         $scope.providers = _.sortBy($scope.providers, 'label');
     }
 
+    $scope.currentFocusInLabel = null;
+
+    $scope.isChildFocused = function(provider) {
+        return $scope.currentFocusInLabel === provider.label;
+    }
+
+    $scope.setParentFocusIn = function (provider) {
+        $scope.currentFocusInLabel = provider.label;
+    };
+
+    $scope.setParentFocusOut = function (provider) {
+        $scope.currentFocusInLabel = null;
+    };
+
     function getTotals(source) {
         var stats = _.findWhere($scope.postStats, {type: source.toLowerCase()});
         if (stats && stats.total) {

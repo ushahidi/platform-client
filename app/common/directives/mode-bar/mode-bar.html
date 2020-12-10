@@ -6,7 +6,7 @@
         <ul class="deployment-menu">
             <li ui-sref-active="{ 'active' : 'posts.map' }">
                 <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" class="view-map">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#map-marker"></use>
                     </svg>
                     <translate>views.map</translate>
@@ -15,7 +15,7 @@
 
             <li ui-sref-active="active">
                 <a ui-sref="posts.data" ui-sref-opts="{reload:true}" class="view-data">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
                     </svg>
                     <translate>views.data</translate>
@@ -24,7 +24,7 @@
 
             <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active" data-message="customize">
                 <a ui-sref="activity">
-                    <svg class="iconic">
+                    <svg class="iconic" role="img">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pulse"></use>
                     </svg>
                     <translate>views.activity</translate>
@@ -32,16 +32,16 @@
             </li>
 
             <li>
-                <a class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
-                    <svg class="iconic">
+                <button class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
+                    <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
                     <translate>nav.more</translate>
-                </a>
+                </button>
                 <ul>
-                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ui-sref-active="active">
+                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{active: $state.includes('settings')}">
                         <a ui-sref="settings.list">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                             </svg>
                             <translate>nav.settings</translate>
@@ -56,54 +56,55 @@
         <!-- user account menu -->
 
             <li>
-                <a href="" ng-click="viewSupportLinks()">
-                    <ng-include src="'common/directives/mode-bar/ushahidi-logo.html'"></ng-include>
-                    <span class="label" translate>app.support</span>
-                </a>
-            </li>
-
-            <li ng-show="currentUser">
-                <a ng-click="logout()" data-modal="login">
-                    <svg class="iconic">
-                        <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
-                    </svg>
-                    <span class="label" translate="nav.logout">Log out</span>
-                </a>
-            </li>
-
-            <li ng-show="currentUser">
-                <a ng-click="viewAccountSettings()">
-                    <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="{{ currentUser.realname }}"/>
-                    <span class="label">{{currentUser.realname || currentUser.email}}</span>
-                </a>
-            </li>
-
-            <li ng-show="!currentUser && canRegister">
-                <a ng-click="register()" data-modal="signup">
-                    <svg class="iconic">
-                        <use xlink:href="/img/iconic-sprite.svg#person"></use>
-                    </svg>
-                    <translate translate="nav.register">Sign up</translate>
-                </a>
-            </li>
-
-            <li ng-hide="currentUser">
-                <a ng-click="login()" data-modal="login">
-                    <svg class="iconic">
-                        <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
-                    </svg>
-                    <translate translate="nav.login">Log in</translate>
-                </a>
-            </li>
-
-            <li>
-                <a ng-click="viewCollectionListing()">
+                <button ng-click="viewCollectionListing()">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
                     </svg>
                     <span class="label" translate>nav.collections</span>
-                </a>
+                </button>
             </li>
+
+            <li ng-hide="currentUser">
+                <button ng-click="login()" data-modal="login">
+                    <svg class="iconic" role="img">
+                        <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
+                    </svg>
+                    <translate translate="nav.login">Log in</translate>
+                </button>
+            </li>
+
+            <li ng-show="currentUser">
+                <button ng-click="viewAccountSettings()">
+                    <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="account_settings"/>
+                    <span class="label" translate="nav.account_settings">Account Settings</span>
+                </button>
+            </li>
+
+            <li ng-show="!currentUser && canRegister">
+                <button ng-click="register()" data-modal="signup">
+                    <svg class="iconic" role="img">
+                        <use xlink:href="/img/iconic-sprite.svg#person"></use>
+                    </svg>
+                    <translate translate="nav.register">Sign up</translate>
+                </button>
+            </li>
+
+            <li ng-show="currentUser">
+                <button ng-click="logout()" data-modal="login">
+                    <svg class="iconic" role="img">
+                        <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
+                    </svg>
+                    <span class="label" translate="nav.logout">Log out</span>
+                </button>
+            </li>
+
+            <li>
+                <button ng-click="viewSupportLinks()">
+                    <ng-include src="'common/directives/mode-bar/ushahidi-logo.html'"></ng-include>
+                    <span class="label" translate>app.support</span>
+                </button>
+            </li>
+
         <!-- user account menu -->
         </ul>
 

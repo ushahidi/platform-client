@@ -27,7 +27,7 @@ function PostVideoValueController(
 
     function activate() {
         if ($scope.videoUrl && $scope.videoUrl.length > 0) {
-            $scope.videoUrl = $sce.trustAsResourceUrl($scope.videoUrl[0]);
+            $scope.videoUrl = $sce.trustAsResourceUrl($scope.videoUrl);
         }
     }
 }

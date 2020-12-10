@@ -181,6 +181,7 @@
         "add_field_instructions_placeholder": "Explain this field...",
         "add_post_type": "Add Survey",
         "add_step": "Add Task",
+        "add_language": "Add language",
         "added_form_stage_attribute": "Saved field",
         "field_allowed_relation_post_type": "Allowed surveys",
         "choose_order_message": "Choose and order the fields that you would like to include in this survey",
@@ -222,6 +223,7 @@
         "save_post_type": "Save Survey",
         "save_post_step": "Save Task",
         "saved_form": "Survey saved.",
+        "select_language": "Select languages",
         "step_delete": "Delete",
         "step_name": "Task Name",
         "step_rename": "Rename",
@@ -237,6 +239,7 @@
         "internal_use_task" : "Task is only for internal use",
         "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "duplicate_task" : "Duplicate task",
+        "duplicate_option" : "Duplicate option is present",
         "show_this_task_to" : "Show this task to everyone when published",
         "show_this_task_to_desc" : "When a survey response is published, data from this task will be displayed.",
         "survey_name" : "Survey name",
@@ -288,8 +291,8 @@
         "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Add field description (optional):",
         "add_task" : "Add task",
-        "add_field" : "Add field",
-        "edit_field" : "Edit field",
+        "add_field" : "Add {{fieldType | lowercase}} field",
+        "edit_field" : "Edit {{fieldType | lowercase}} field",
         "build" : "Build",
         "configure" : "Configure",
         "require_section" : "Require this task be completed before a post can be visible to the public",
@@ -313,6 +316,7 @@
         "response_private_desc" : "Only people with permission to edit responses can see responses to this field",
         "require_task_desc" : "Require this task be completed before a post can be visible to the public",
         "survey_permissions": "Survey permissions",
+        "only_edit":"Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "Who can add to this survey",
         "survey_field": "Survey field",
         "choose_survey_field": "Choose what should be assigned to each survey field",
@@ -341,6 +345,11 @@
                 "desc" : "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
                 "delete" : "Delete task",
                 "delete_this" : "Delete this task"
+            }
+        },
+        "fields" : {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -640,12 +649,15 @@
         "see_more_singular" : "See {{newPostsCount}} new post",
         "add_to_form" : "Add to {{form}}",
         "posts" : "Posts",
+        "post_title":"Post title",
+        "post_desc":"Post description",
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
         "posts_total": " {{posts}} of {{total_nb}} posts",
         "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
         "search_results": "Results:",
         "by" : "by",
+        "duplicate_option" : "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
         "just_you" : "Just you",
@@ -810,7 +822,8 @@
         "valid" : {
             "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
-            "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
+            "validation_fail" : "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other" : "There was an error validating the data. Fields failing validation will display an error.",
             "title" : {
                 "required" : "A title is required",
                 "minlength" : "Title is too short",
@@ -829,7 +842,8 @@
                 "required" : "\"{{label}}\" is required",
                 "parse" : "\"{{label}}\" could not be parsed",
                 "date" : "\"{{label}}\" must be a date",
-                "number" : "\"{{label}}\" must be a number"
+                "number" : "\"{{label}}\" must be a number",
+                "step" : "\"{{label}}\" must be an integer"
             },
             "author_name" : {
                 "maxlength": "Name is too long"
@@ -946,6 +960,7 @@
         "delete_category_desc" : "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
         "show_categories" : "Show available categories",
         "child_permissions" : "Permissions for this category are managed by the parent category.",
+        "which_categories": "Which categories should be available",
         "select_all" : "Select All",
         "choose_roles" : "Choose Roles",
         "create_tag" : "Create Category",
@@ -1176,6 +1191,8 @@
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
         "site_private_desc" : "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration" : "Disable user sign up?",
+        "site_disable_registration_desc" : "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image" : "Select image",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",
@@ -1537,6 +1554,7 @@
             "delete_attribute_confirm" : "Are you sure you want to delete this field?",
             "delete_attribute_confirm_desc" : "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
             "destroy_attribute_success" : "Field {{name}} deleted",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "A survey-name is needed",
@@ -1653,6 +1671,30 @@
         "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
         "agree": "I agree to Ushahidi's Terms of Service.",
         "accept_and_continue": "Accept and Continue"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text":"Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required":"Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "Acoli",
@@ -1780,6 +1822,7 @@
         "en-CH": "English (Switzerland)",
         "en-GB": "English (United Kingdom)",
         "en-US": "English (United States)",
+        "en-EN": "English",
         "myv": "Erzya",
         "eo": "Esperanto",
         "et": "Estonian",

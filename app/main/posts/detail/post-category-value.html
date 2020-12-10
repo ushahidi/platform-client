@@ -1,0 +1,8 @@
+<p>
+    <svg class="iconic" style="margin-right:4px;">
+        <use xlink:href="/img/iconic-sprite.svg#tag"></use>
+    </svg>
+      <bdi ng-repeat="category in categories track by $index">
+        {{category.translations[activeLanguage].tag || category.tag}}<span ng-if="$index < (categories.length -1)">, </span>
+      </bdi>
+    </p>

@@ -1,27 +1,37 @@
 <form class="input-relation">
 	<p><em translate="survey.related_post_info">Please note, the posts to relate to needs to be published, posts that are "Under review" will not appear in the search-results</em></p>
-	<p ng-if="model">{{ selectedPost.title }} ({{ model }}) <button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate></button></p>
-    <div class="input-inline">
-        <input class="form-control" type="text" placeholder="Search.." ng-model="searchTerm">
-        <button type="button" ng-click="search($event)">
-						<div class="loading" ng-if="searching">
-								<div class="line"></div>
-								<div class="line"></div>
-								<div class="line"></div>
-						 </div>
-						<span class="button-label" translate="nav.search" ng-if="!searching">Search</span>
-						<span class="button-label" translate="app.searching" ng-if="searching">Searching</span>
-				</button>
-    </div>
-		<div class="alert error" ng-if="noResults">
-				<svg class="iconic">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+	<p ng-if="model">{{ selectedPost.title }} ({{ model }})
+		<button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate>
+			<svg class="iconic" role="img">
+				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+			</svg>
+		</button>
+	</p>
+	<div class="input-inline">
+		<input class="form-control" type="text" placeholder="Search..." ng-model="searchTerm">
+		<button type="button" ng-click="search($event)">
+			<div class="loading" ng-if="searching">
+				<div class="line"></div>
+				<div class="line"></div>
+				<div class="line"></div>
+			</div>
+			<span class="button-label" translate="nav.search" ng-if="!searching">Search</span>
+			<span class="button-label" translate="app.searching" ng-if="searching">Searching</span>
+		</button>
+	</div>
+	<div class="alert error" ng-if="noResults">
+		<svg class="iconic" role="img">
+			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+		</svg>
+		<p translate="post.no_search_results">Your search didn't match any posts</p>
+	</div>
+	<ul>
+		<li ng-repeat="post in results">
+			<button type="button" class="button-beta" ng-click="selectPost(post)" translate>
+				<svg class="iconic" role="img">
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#check"></use>
 				</svg>
-				<p translate="post.no_search_results">Your search didn't match any posts</p>
-		</div>
-    <ul>
-    	<li ng-repeat="post in results">
-    		<button type="button" class="button-secondary icon-only check" ng-click="selectPost(post)" translate></button> {{ post.id }} : {{ post.title }}
-    	</li>
-    </ul>
+			</button> {{ post.id + ' : ' + post.title }}
+		</li>
+	</ul>
 </form>

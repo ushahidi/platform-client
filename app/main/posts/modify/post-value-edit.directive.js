@@ -11,7 +11,8 @@ function PostValueEdit() {
             attribute: '=',
             postField: '=',
             medias: '=',
-            categories: '='
+            categories: '=',
+            activeSurveyLanguage:'='
         },
         controller: PostValueEditController,
         template: require('./post-value-edit.html')
@@ -19,13 +20,17 @@ function PostValueEdit() {
 }
 
 PostValueEditController.$inject = [
+    '$rootScope',
     '$scope',
-    '_'
+    '_',
+    'UshahidiSdk'
 ];
 
 function PostValueEditController(
+    $rootScope,
     $scope,
-    _
+    _,
+    UshahidiSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -40,12 +45,10 @@ function PostValueEditController(
 
     $scope.dateFormat = { format: 'yyyy-mm-dd' };
 
-    $scope.canAddValue = canAddValue;
-    $scope.canRemoveValue = canRemoveValue;
-    $scope.addValue = addValue;
-    $scope.removeValue = removeValue;
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
+    $scope.isAdmin = $rootScope.isAdmin;
+    $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
 
@@ -79,7 +82,6 @@ function PostValueEditController(
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
     }
-
     // Can more values be added for this attribute?
     function canAddValue(attr) {
         return (
@@ -100,5 +102,10 @@ function PostValueEditController(
     // Remove a value
     function removeValue(attr, key) {
         $scope.post.values[attr.key].splice(key, 1);
+    }
+
+    // Is duplicate present in options attribute?
+    function duplicatePresent(attr) {
+        return !UshahidiSdk.Surveys.areOptionsUnique(attr.options);
     }
 }

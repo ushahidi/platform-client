@@ -1,5 +1,6 @@
 <div>
     <!-- Container for form-field structured elements -->
+
     <div ng-if="attribute.type === 'description' || attribute.type === 'title'">
         <!-- Split between Title Desc and other values -->
         <div
@@ -11,21 +12,19 @@
                 'success': !form.title.$invalid && form.title.$dirty
             }"
         >
-             <label>
-                <bdi>{{attribute.label}}</bdi>
+            <label for="title">
+                <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
             </label>
-            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
-            </p>
-            <input id="title"
-                name="title" type="text" ng-model="post.title" ng-required="true" ng-minlength=2 ng-maxlength=150 adaptive-input>
-
+            <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions"></p>
+            <input id="title" name="title" type="text" ng-model="post.title" ng-required="true" ng-minlength=2 ng-maxlength=150 adaptive-input>
             <div
                 class="alert error"
                 ng-show="form.title.$dirty"
                 ng-repeat="(error, value) in form.title.$error"
             >
-                <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                <svg class="iconic" role="img">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.title.' + error}}"></span>
             </div>
@@ -41,251 +40,262 @@
             }"
             adaptive-form
         >
-            <label>
-                <bdi>{{attribute.label}}</bdi>
+            <label for="content">
+                <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
             </label>
-            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions">
-            </p>
+            <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions">            </p>
             <textarea id="content" name="content" data-min-rows="1" rows="1"
-                ng-model="post.content" ng-required="true" adaptive-input msd-elastic>
+                      ng-model="post.content" ng-required="true" adaptive-input msd-elastic>
             </textarea>
 
             <div class="alert error" ng-show="form.content.$dirty" ng-repeat="(error, value) in form.content.$error">
-                <svg class="iconic">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                <svg class="iconic" role="img">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.content.' + error}}"></span>
             </div>
         </div>
     </div>
+
     <div ng-if="attribute.type !== 'description' && attribute.type !== 'title'">
         <div
             ng-if="!isFieldSetStructure(attribute)"
             class="form-field init"
             adaptive-form
             ng-class="{
-                'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-                'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
+                'error': form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
+                'success': ! form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
                 'required': attribute.required,
                 'date' : isDate(attribute) || isDateTime(attribute),
                 'location' : attribute.input === 'location'
             }"
         >
             <!-- Attribute Label -->
-            <label for="values[{{attribute.key}}][0]">
+            <label for="values_{{attribute.id}}">
                 <svg ng-show="attribute.response_private" class="iconic">
                     <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                 </svg>
-                <bdi>{{attribute.label}}</bdi>
+                <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
             </label>
             <!-- Attribute Instructions -->
-            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions"></p>
+            <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions">            </p>
             <!-- attributes which use the form-field structure -->
-            <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
-                <div ng-switch="attribute.input">
-                    <!-- Standard fields -->
-                    <!-- type: date -->
-                    <div ng-switch-when="date" >
-                        <!-- Date icon -->
-                        <div class="input-with-icon">
-                            <svg class="iconic">
+            <div ng-switch="attribute.input">
+                <!-- Standard fields -->
+                <!-- type: date -->
+                <div ng-switch-when="date" >
+                    <!-- Date icon -->
+                    <div class="input-with-icon">
+                        <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
-                            </svg>
-                            <input
-                                type="date"
-                                pick-a-date="date"
-                                pick-a-date-options="dateFormat"
-
-                                name="values_{{attribute.id}}"
-                                ng-model="post.values[attribute.key][key]"
-                                ng-required="attribute.required"
-                            />
-                        </div>
-                    </div>
-                    <!-- type: datetime -->
-                    <div ng-switch-when="datetime" class="input-with-icon">
-                        <post-datetime
-                            id="values[{{attribute.key}}][{{key}}]"
-                            name="values_{{attribute.id}}"
-                            ng-model="post.values[attribute.key][key]"
-                            ng-required="attribute.required"
-                        ></post-datetime>
-                    </div>
-                    <!-- type: select -->
-                    <select
-                        ng-switch-when="select"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        >
-                        <option ng-repeat="opt in attribute.options" value="{{opt}}"><bdi>{{opt}}</bdi></option>
-                    </select>
-                    <!-- type: number -->
-                    <input
-                        ng-switch-when="number"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        type="number"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        >
-                    <!-- type: text -->
-                    <input
-                        ng-switch-when="text"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        type="text"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        adaptive-input
-                        >
-                    <!-- type: textarea -->
-                    <textarea
-                        ng-switch-when="textarea"
-                        data-min-rows="1"
-                        rows="1"
-                        class="adapt-field"
-                        style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        adaptive-input
-                        msd-elastic>
-                    </textarea>
-
-                    <!-- Non standard fields -->
-                    <!-- type: textarea -->
-                    <textarea
-                        ng-switch-when="markdown"
-                        data-min-rows="1"
-                        rows="1"
-                        class="adapt-field"
-                        style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        adaptive-input
-                        msd-elastic>
-                    </textarea>
-                    <!-- type: relation -->
-                    <post-relation
-                        attribute="attribute"
-                        key="key"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        ng-switch-when="relation"></post-relation>
-                    <!-- type: location -->
-                    <post-location
-                        attribute="attribute"
-                        key="key"
-                        id="values[{{attribute.key}}][{{key}}]"
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                        ng-switch-when="location"></post-location>
-                    <!-- type: upload -->
-                    <post-media
-                        ng-switch-when="upload"
-                        name="values_{{attribute.id}}"
-                        media-has-caption="attribute.config.hasCaption"
-                        media="medias[attribute.key]"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                    ></post-media>
-                    <!-- type: upload -->
-                    <post-video-input
-                        ng-switch-when="video"
-                        name="values_{{attribute.id}}"
-                        video-url="post.values[attribute.key][key]"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                    ></post-video-input>
-                    <div class="alert error" ng-switch-when="video" ng-show="form.$error.videoUrlValidation && taskIsMarkedCompleted() ">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                         </svg>
-                        <span translate="{{'post.video.enter_a_url'}}"></span>
+                        <input
+                            type="date"
+                            pick-a-date="date"
+                            pick-a-date-options="dateFormat"
+                            name="values_{{attribute.id}}"
+                            ng-model="attribute.value.value"
+                            ng-required="attribute.required"
+                        />
                     </div>
+                </div>
+                <!-- type: datetime -->
+                <div ng-switch-when="datetime" class="input-with-icon">
+                    <post-datetime
+                        id="values{{attribute.id}}"
+                        name="values_{{attribute.id}}"
+                        ng-model="attribute.value.value"
+                        ng-required="attribute.required"
+                    ></post-datetime>
+                </div>
+                <!-- type: select -->
+                <div ng-switch-when="select">
+                    <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
+                    <div class="form-field select">
+                        <select
+                            id="values{{attribute.id}}"
+                            name="values_{{attribute.id}}"
+                            ng-model="attribute.value.value"
+                            ng-required="attribute.required"
+                        >
+                            <option ng-repeat="option in attribute.options track by $index" value="{{option}}">
+                                <bdi>{{attribute.translations[activeSurveyLanguage].options[$index] || option}}</bdi>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- type: number -->
+                <input
+                    ng-switch-when="number"
+                    id="values{{attribute.id}}"
+                    name="values_{{attribute.id}}"
+                    type="number"
+                    step="{{attribute.type === 'int' ? 1 : any}}"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                >
+                <!-- type: text -->
+
+                <input
+                    ng-switch-when="text"
+                    id="values{{attribute.id}}"
+                    name="values_{{attribute.id}}"
+                    type="text"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                    adaptive-input
+                >
+                <!-- type: textarea -->
+                <textarea
+                    ng-switch-when="textarea"
+                    data-min-rows="1"
+                    rows="1"
+                    class="adapt-field"
+                    style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                    id="values{{attribute.id}}"
+                    name="values_{{attribute.id}}"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                    adaptive-input
+                    msd-elastic>
+                    </textarea>
+
+                <!-- Non standard fields -->
+                <!-- type: textarea -->
+                <textarea
+                    ng-switch-when="markdown"
+                    data-min-rows="1"
+                    rows="1"
+                    class="adapt-field"
+                    style="overflow-x: hidden; word-wrap: break-word; height: 55px;"
+                    id="values{{attribute.id}}"
+                    name="values_{{attribute.id}}"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                    adaptive-input
+                    msd-elastic>
+                    </textarea>
+                <!-- type: relation -->
+                <post-relation
+                    attribute="attribute"
+                    key="id"
+                    id="values{{attribute.id}}"
+                    name="values_{{attribute.id}}"
+                    model="attribute.value.value"
+                    ng-required="attribute.required"
+                    ng-switch-when="relation"></post-relation>
+                <!-- type: location -->
+                <post-location
+                    attribute="attribute"
+                    key="key"
+                    id="values{{attribute.id}}"
+                    name="values_{{attribute.id}}"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                    ng-switch-when="location"></post-location>
+                <!-- type: upload -->
+                <post-media
+                    ng-switch-when="upload"
+                    name="values_{{attribute.id}}"
+                    media-has-caption="attribute.config.hasCaption"
+                    media="medias[attribute.id]"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                ></post-media>
+                <!-- type: upload -->
+                <post-video-input
+                    ng-switch-when="video"
+                    name="values_{{attribute.id}}"
+                    video-url="attribute.value.value"
+                    ng-model="attribute.value.value"
+                    ng-required="attribute.required"
+                ></post-video-input>
+                <div class="alert error" ng-switch-when="video" ng-show="form.$error.videoUrlValidation && taskIsMarkedCompleted() ">
+                    <svg class="iconic">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                    </svg>
+                    <span translate="{{'post.video.enter_a_url'}}"></span>
                 </div>
             </div>
             <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                 </svg>
                 <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
             </div>
         </div>
-        <!-- Container for fieldset structured elements -->
-        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options.length > 0">
+        <fieldset ng-if="isFieldSetStructure(attribute) && attribute.options && attribute.options.length > 0">
             <!-- Attribute Label -->
             <label ng-class="{
-                'error': form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-                'success': ! form['values_' + attribute.key].$invalid && form['values_' + attribute.key].$dirty,
-                'required': attribute.required
-            }">
-                <svg ng-show="attribute.response_private" class="iconic">
+                    'error': form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
+                    'success': ! form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
+                    'required': attribute.required
+                }">
+                <svg ng-show="attribute.response_private" class="iconic" role="img">
                     <use xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                 </svg>
-                <bdi>{{attribute.label}}<bdi>
-                
+                <bdi>{{attribute.translations[activeSurveyLanguage].label || attribute.label}}</bdi>
             </label>
             <!-- Attribute Instructions -->
-            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions"></p>
-
+            <p markdown-to-html="attribute.translations[activeSurveyLanguage].instructions" ng-if="attribute.translations[activeSurveyLanguage].instructions">
+            <p markdown-to-html="attribute.instructions" ng-if="attribute.instructions && !attribute.translations[activeSurveyLanguage].instructions"></p>
             <!-- attributes which use the form-field structure -->
             <div ng-switch="attribute.input">
                 <!-- type: radio -->
                 <div ng-switch-when="radio">
-                    <div ng-repeat="(key, value) in post.values[attribute.key] track by key">
-                    <div class="form-field radio" ng-repeat="option in attribute.options">
+                    <!-- Container for fieldset structured elements -->
+                    <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
+                    <div class="form-field radio" ng-repeat="(index,option) in attribute.options track by index">
                         <label>
                             <input
                                 name="values_{{attribute.id}}"
                                 type="radio"
-                                ng-model="post.values[attribute.key][key]"
+                                ng-model="attribute.value.value"
                                 ng-required="attribute.required"
                                 value="{{option}}"
                             >
-                            <bdi>{{option}}</bdi>
+                            <bdi>{{attribute.translations[activeSurveyLanguage].options[index] || option}}</bdi>
                         </label>
-                    </div>
                     </div>
                 </div>
                 <!-- type: checkbox -->
                 <div ng-switch-when="checkbox">
-                    <div class="form-field checkbox" ng-repeat="option in attribute.options">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checklist-model="post.values[attribute.key]"
-                            ng-required="attribute.required"
-                            name="values_{{attribute.id}}_{{option}}"
-                            checklist-value="option"
-                            value="option"
-                        >
-                            <bdi>{{option}}</bdi>
-                    </label>
+                    <div class="form-field checkbox" ng-repeat="(index, option) in attribute.options track by index">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checklist-model="attribute.value.value"
+                                ng-required="attribute.required"
+                                name="values_{{attribute.id}}_{{option}}"
+                                checklist-value="option"
+                                value="option"
+                            >
+                            <bdi>{{attribute.translations[activeSurveyLanguage].options[index] || option}}</bdi>
+                        </label>
                     </div>
                 </div>
                 <!-- type: categories -->
                 <div ng-switch-when="tags">
                     <post-category-editor
                         available="attribute.options"
-                        selected="post.values[attribute.key]"
+                        selected="attribute.value"
                         form="form"
-                        form-id="post.form.id"
+                        survey="post.form"
                         attribute="attribute"
-                        post-value="post.values[attribute.key]"
+                        post-value="attribute.value.value"
+                        active-survey-language="activeSurveyLanguage"
                     ></post-category-editor>
                 </div>
                 <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
-                    <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                    <svg class="iconic" role="img">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
                     <span translate="{{'post.valid.values.' + error}}" translate-values="{ label : attribute.label }"></span>
                 </div>

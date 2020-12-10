@@ -2,7 +2,8 @@
     <li ng-repeat="form in forms" ng-show="!form.targeted_survey">
         <a ng-click="handleClick(form)">
             <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-            <bdi>{{form.name}}</bdi>
+            <bdi ng-if="form.translations[userLanguage].name ">{{form.translations[userLanguage].name}}</bdi>
+            <bdi ng-if="!form.translations[userLanguage].name">{{form.name}}</bdi>
         </a>
     </li>
 </ul>

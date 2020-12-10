@@ -7,10 +7,11 @@ function PostVerticalTabs() {
         scope: {
             form: '=',
             post: '=',
-            stages: '=',
-            attributes: '=',
+            tasks: '=',
             visibleStage: '=',
-            medias: '='
+            medias: '=',
+            activeSurveyLanguage:'='
+
         },
         template: require('./post-tabs.html'),
         controller: PostVerticalTabsController
@@ -19,18 +20,10 @@ function PostVerticalTabs() {
 
 PostVerticalTabsController.$inject = [
     '$scope',
-    'FormEndpoint',
-    'FormStageEndpoint',
-    'FormAttributeEndpoint',
-    'PostEditService',
     '_'
 ];
 function PostVerticalTabsController(
     $scope,
-    FormEndpoint,
-    FormStageEndpoint,
-    FormAttributeEndpoint,
-    PostEditService,
     _
 ) {
     $scope.setVisibleStage = setVisibleStage;

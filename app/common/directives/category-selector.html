@@ -1,4 +1,4 @@
-<div class="form-fieldgroup checkbox" ng-if="categories.length > 0" overflow-toggle has-overflow="categories.length > 2">
+<div class="form-fieldgroup checkbox">
     <div class="form-field checkbox">
         <label>
             <input
@@ -9,10 +9,10 @@
             <em><span translate="category.select_all"></span></em>
         </label>
     </div>
-    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
+    <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-if="category.parent_id === null">
         <label>
             <input
-                ng-show="category.children.length === 0 || enableParents === true"
+                ng-show="!category.children || category.children.length === 0 || enableParents === true"
                 type="checkbox"
                 checklist-value="category.id"
                 ng-disabled="disabledCategories[category.id]"
@@ -28,7 +28,7 @@
                     value="category.id"
                     checklist-model="selectedParents"
             >
-            <bdi>{{ ::category.tag }}</bdi>
+            <bdi>{{category.translations[activeLanguage].tag || category.tag}}</bdi>
         </label>
         <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
             <label>
@@ -40,14 +40,16 @@
                     ng-selected="selected.indexOf(category.id) >-1"
                     checklist-change="changeCategories()"
                 >
-                <bdi>{{ ::child.tag }}</bdi>
+                <bdi>{{child.translations[activeLanguage].tag || child.tag}}</bdi>
         </label>
         </div>
     </div>
-    <span class="form-field-toggle">
-        <svg class="iconic">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-        </svg>
-        <span translate="nav.more">More</span>
-    </span>
-  </div>
+    <div ng-if="categoryTranslationUnavailable.length > 0 && displayWarning" class="alert">
+        <span ng-if="categoryTranslationUnavailable.length === 1">Please note: The following category is not available in {{'languages.' + activeLanguage.language | translate}}. Its default-language will be displayed instead:</span>
+        <span ng-if="categoryTranslationUnavailable.length > 1">Please note: The following categories are not available in {{'languages.' + activeLanguage.language | translate}}. Their default-languages will be displayed instead:</span>
+        <ul>
+            <li ng-repeat="category in categoryTranslationUnavailable">{{category.tag}} (Default language: {{'languages.' + category.enabled_languages.default | translate }})</li>
+        </ul>
+        To add translations to categories, head over to <a href="/settings/categories" class="link-blue" target="_blank">Category Settings</a></p>
+    </div>
+</div>

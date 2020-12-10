@@ -4,7 +4,7 @@ module.exports = [
     '$rootScope',
     '$location',
     '$q',
-    'TagEndpoint',
+    'CategoriesSdk',
     'Notify',
     '_',
 function (
@@ -13,7 +13,7 @@ function (
     $rootScope,
     $location,
     $q,
-    TagEndpoint,
+    CategoriesSdk,
     Notify,
     _
 ) {
@@ -32,25 +32,19 @@ function (
 
 
     $scope.refreshView = function () {
-        TagEndpoint.queryFresh().$promise.then(function (tags) {
-            $scope.allCategories = tags;
-            $scope.categories = _.map(_.where(tags, { parent_id: null }), function (tag) {
-                if (tag && tag.children) {
-                    tag.children = _.map(tag.children, function (child) {
-                        return _.findWhere(tags, {id: parseInt(child.id)});
-                    });
-                }
-                return tag;
-            });
+        CategoriesSdk.getCategories().then(function (categories) {
+            $scope.allCategories = categories;
+            $scope.categories = _.map(_.where(categories, { parent_id: null }));
+            $scope.$apply();
         });
         $scope.selectedCategories = [];
     };
     $scope.refreshView();
 
-    $scope.deleteCategory = function (tag) {
+    $scope.deleteCategory = function (category) {
         Notify.confirmDelete('notify.category.destroy_confirm', 'notify.category.destroy_confirm_desc').then(function () {
-            TagEndpoint.delete(tag).$promise.then(function () {
-                Notify.notify('notify.category.destroy_success', { name: tag.tag });
+            CategoriesSdk.deleteCategory(category.id).then(function () {
+                Notify.notify('notify.category.destroy_success', { name: category.tag });
                 $scope.refreshView();
             }, handleResponseErrors);
         });
@@ -59,8 +53,8 @@ function (
     $scope.deleteCategories = function () {
         Notify.confirmDelete('notify.category.bulk_destroy_confirm', 'notify.category.bulk_destroy_confirm_desc', { count: $scope.selectedCategories.length }).then(function () {
             var calls = [];
-            angular.forEach($scope.selectedCategories, function (tagId) {
-                calls.push(TagEndpoint.delete({id: tagId }).$promise);
+            angular.forEach($scope.selectedCategories, function (categoryId) {
+                calls.push(CategoriesSdk.deleteCategory(categoryId));
             });
             $q.all(calls).then(function () {
                 Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
@@ -69,8 +63,8 @@ function (
         });
     };
 
-    $scope.isToggled = function (tag) {
-        return $scope.selectedCategories.indexOf(tag.id) > -1;
+    $scope.isToggled = function (category) {
+        return $scope.selectedCategories.indexOf(category.id) > -1;
     };
 
     $scope.toggleCategory = function (tag) {
@@ -86,4 +80,16 @@ function (
         Notify.apiErrors(errorResponse);
     }
 
+    $scope.getLanguages = function (enabled_languages) {
+        let languages = [enabled_languages.default, ...enabled_languages.available];
+        languages = _.without(languages, '');
+        if (languages.length > 0) {
+            let languageString = languages.length > 1 ? $translate.instant('translations.languages') : $translate.instant('translations.language');
+            _.each(languages,(language, index) => {
+                let divider = index !== 0 ? ',' : ':';
+                languageString = `${languageString + divider} ${$translate.instant(`languages.${language}`)}`;
+        });
+            return languageString;
+        }
+    }
 }];

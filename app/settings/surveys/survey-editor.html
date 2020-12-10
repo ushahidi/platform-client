@@ -1,430 +1,420 @@
-<div>
-  <!-- mode-context needs to be in each template -->
-  <div class="mode-context init" dropdown>
-      <header class="mode-context-header">
-          <ol class="breadcrumbs">
-              <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
-              <li><a href="/settings" translate>app.settings</a></li>
-              <li><a href="/settings/surveys" translate>app.surveys</a></li>
-          </ol>
-          <h1 ng-show="survey.id" class="mode-context-title" translate>app.edit_survey</h1>
-          <h1 ng-show="!survey.id" class="mode-context-title" translate>app.add_survey</h1>
-          <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted.create"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
-      </header>
+<div translate-language="{{languages.default}}">
+    <!-- mode-context needs to be in each template -->
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/surveys" translate>app.surveys</a></li>
+            </ol>
+            <h1 ng-show="survey.id" class="mode-context-title" translate>app.edit_survey</h1>
+            <h1 ng-show="!survey.id" class="mode-context-title" translate>app.add_survey</h1>
+            <a ng-show="targetedSurveysEnabled" ui-sref="settings.surveys.targeted.create"><span translate="settings.send_targeted">Send a targeted survey via SMS</span> ></a>
+        </header>
 
-      <span class="mode-context-trigger" dropdown-toggle>
-          <svg class="iconic">
+       <span class="mode-context-trigger" dropdown-toggle>
+          <svg class="iconic" role="img">
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
           </svg>
           <span class="label hidden" translate>app.show_more_less</span>
       </span>
-  </div>
-
-  <main role="main">
-    <!-- toolbar -->
-    <div class="toolbar">
-        <div class="button-group">
-            <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-            <button type="submit" class="button-alpha"  ng-if="!saving_survey" ng-click="saveSurvey()">{{save}}</button>
-            <button type="submit" class="button-alpha"  disabled ng-if="saving_survey">{{saving}}
-              <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-              </div>
-          </button>
-        </div>
     </div>
-    <!-- end toolbar -->
 
-    <div class="full-col">
-      <section class="form-sheet">
-        <!-- TODO: get form colour here -->
-        <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
-        <div class="form-field survey">
-          <!--  TODO: add placeholder text-->
-            <label translate>survey.survey_name</label>
-            <input type="text" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name">
-
+    <main role="main">
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="button-group">
+                <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                <button type="submit" class="button-alpha"  ng-if="!saving_survey" ng-click="saveSurvey()">{{save}}</button>
+                <button type="submit" class="button-alpha"  disabled ng-if="saving_survey">{{saving}}
+                    <div class="loading">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </button>
+            </div>
         </div>
+        <!-- end toolbar -->
 
-          <div class="form-field survey">
-            <label translate>app.description</label>
-            <textarea placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description">Posts about streets that need resurfacing, repairs, or the removal of a hazard.</textarea>
-        </div>
+        <div class="full-col">
+            <translations-switch languages="languages" remove-language="removeLanguage(index, language)"></translations-switch>
+            <section class="form-sheet" ng-show="languages.default === languages.active">
+                <!-- TODO: get form colour here -->
+                <span class="post-band" ng-style="{backgroundColor: survey.color}"></span>
+                <div class="form-field survey required">
+                    <!--  TODO: add placeholder text-->
+                    <form name="surveyName">
+                        <label for="survey_name" translate required>survey.survey_name</label>
+                        <!-- Use once api handles translations  -->
+                        <input type="text" id="survey_name" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name" required>
+                        <div
+                            class="alert error"
+                            ng-show="surveyName.$invalid && surveyName.$dirty"
+                        >
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <span translate="form.survey_name_required">Survey-name is required</span>
+                        </div>
+                    </form>
+                </div>
 
-        <nav class="tabs-menu init" data-tabs="survey-details">
-            <ul>
-                <li id="survey-build-post-li">
-                  <a ng-click="switchTab('post', 'survey-build')" translate="survey.build">
-                    Build
-                  </a>
-                </li>
-                <li id="survey-configure-post-li">
-                  <a ng-click="switchTab('post', 'survey-configure')" translate="survey.configure">
-                    Configure
-                  </a>
-                </li>
-                <li id="survey-share-post-li">
-                  <a ng-click="switchTab('post', 'survey-share')" ng-show="survey.id" translate="survey.share">
-                    Share
-                  </a>
-                </li>
-            </ul>
-        </nav>
+                <div class="form-field survey">
+                    <label for="survey_description" translate>app.description</label>
+                    <!-- Use once api handles translations  -->
+                    <textarea id="survey_description" placeholder="{{ 'survey.describe_your_survey' | translate }}" ng-model="survey.description"></textarea>
+                </div>
 
-        <div id="survey-build-post" class="survey-details tabs-target" >
-          <div class="listing init" style="margin-left: 4px;">
-            <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
+                <nav class="tabs-menu init" data-tabs="survey-details">
+                    <ul>
+                        <li id="survey-build-post-li">
+                            <a ng-click="switchTab('post', 'survey-build')" translate="survey.build">
+                                Build
+                            </a>
+                        </li>
+                        <li id="survey-configure-post-li">
+                            <a ng-click="switchTab('post', 'survey-configure')" translate="survey.configure">
+                                Configure
+                            </a>
+                        </li>
+                        <li id="survey-share-post-li">
+                            <a ng-click="switchTab('post', 'survey-share')" ng-show="survey.id" translate="survey.share">
+                                Share
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+               <div id="survey-build-post" class="survey-details tabs-target" >
+                    <div class="listing init" style="margin-left: 4px;">
+                        <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
+                        <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
+                            <div class="listing-item-select">
+                                <div class="buttons-updown">
+                                    <button type="button" class="button-beta" ng-disabled="isFirstField(survey.tasks[0], field)" ng-click="moveFieldUp(survey.tasks[0], field)">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
+                                        </svg>
+                                        <span class="label hidden">Move up</span>
+                                    </button>
+                                    <button type="button" class="button-beta" ng-disabled="isLastField(survey.tasks[0], field)" ng-click="moveFieldDown(survey.tasks[0], field)">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                                        </svg>
+                                        <span class="label hidden">Move down</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="listing-item-secondary" ng-show="onlyOptional(field)">
+                                <button class="button-beta button-flat" ng-click="deleteField(field, survey.tasks[0])">
+                                    <svg class="iconic" role="img">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                    </svg>
+                                    <span class="hidden">Delete</span>
+                                </button>
+                            </div>
 
-            <div class="listing-item" ng-repeat="attribute in survey.tasks[0].attributes track by $index">
-              <div class="listing-item-select">
-                  <div class="buttons-updown">
-                     <button type="button" class="button-beta" ng-disabled="isFirstAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeUp(survey.tasks[0], attribute)">
-                         <svg class="iconic">
-                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
-                         </svg>
-                         <span class="label hidden">Move up</span>
-                     </button>
-                     <button type="button" class="button-beta" ng-disabled="isLastAttribute(survey.tasks[0], attribute)" ng-click="moveAttributeDown(survey.tasks[0], attribute)">
-                         <svg class="iconic">
-                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                         </svg>
-                         <span class="label hidden">Move down</span>
-                     </button>
-                 </div>
-              </div>
-              <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
-                  <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, survey.tasks[0])">
-                      <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                      </svg>
-                      <span class="hidden">Delete</span>
-                  </button>
-              </div>
-
-              <div class="listing-item-primary" ng-click="openAttributeEditModal(survey.tasks[0], attribute)">
-                  <div class="listing-item-image">
-                  <!-- TODO: Set icon based on type -->
-                      <svg class="iconic">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
-                      </svg>
-                  </div>
-                  <h2 class="listing-item-title">
-                      {{attribute.label}}
-                    <span class="listing-item-image tooltip" ng-show="attribute.response_private">
+                            <div class="listing-item-primary" ng-click="openFieldEditModal(survey.tasks[0], field)">
+                                <div class="listing-item-image">
+                                    <!-- TODO: Set icon based on type -->
+                                    <svg class="iconic" role="img">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
+                                    </svg>
+                                </div>
+                                <h2 class="listing-item-title">
+                                    <!-- Use once api handles translations -->
+                                    {{field.label}}
+                                    <span class="listing-item-image tooltip" ng-show="field.response_private">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                         </svg>
                         <span class="bug" translate="survey.response_private_desc">Only people with permission to edit responses can see responses to this field</span>
                     </span>
-                  </h2>
-              </div>
-            </div>
-            <div class="listing-item">
-                <div class="listing-item-primary">
-                    <h2 class="listing-item-title">
-                        <a ng-click="openAttributeModal(survey.tasks[0])" class="button button-beta" data-modal="add-field">
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="listing-item">
+                            <div class="listing-item-primary">
+                                <h2 class="listing-item-title">
+                                    <a ng-click="openFieldModal(survey.tasks[0])" class="button button-beta" data-modal="add-field" role="button">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                                        </svg>
+                                        <span translate="survey.add_field">Add field</span>
+                                    </a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="survey-configure-post" class="survey-details tabs-target">
+                    <!--// Require review //-->
+                    <div class="form-field switch">
+                        <label for="post-review" translate="survey.require_review">Require posts be reviewed before they're published</label>
+                        <p data-fieldgroup-target="require-review-message" ng-show="survey.require_approval" translate="survey.require_review_desc">New responses to this survey will be put "under review," and therefore not immediately visible to the public. Users with permission to review the response can review and "publish" them, which would then make them visible to everyone.</p>
+                        <div class="toggle-switch">
+                            <input class="tgl" id="post-review" type="checkbox" ng-model="survey.require_approval">
+                            <label class="tgl-btn" for="post-review"></label>
+                        </div>
+                    </div>
+                    <!--// Hide Author Information //-->
+                    <div class="form-field switch" ng-show="anonymiseReportersEnabled">
+                        <label for="hide-author" translate="survey.hide_author_information">Hide author information</label>
+                        <p ng-show="survey.hide_author" data-fieldgroup-target="hide-author-message" translate="survey.hide_author_information_desc">Only people with permission to edit responses will be able to see who submitted them; and only when editing them.</p>
+                        <div class="toggle-switch">
+                            <input class="tgl init" id="hide-author" type="checkbox" data-fieldgroup-toggle="hide-author-message" ng-model="survey.hide_author">
+                            <label class="tgl-btn" for="hide-author"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-field switch" ng-show="anonymiseReportersEnabled">
+                        <label for="hide-location" translate="survey.hide_location_information">Hide location information</label>
+                        <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate-values="{ precision: location_precision}" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
+                        <div class="toggle-switch">
+                            <input class="tgl init" id="hide-location" type="checkbox" data-fieldgroup-toggle="hide-location-message" ng-model="survey.hide_location">
+                            <label class="tgl-btn" for="hide-location"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-field switch" ng-show="anonymiseReportersEnabled">
+                        <label for="hide-time" translate="survey.hide_time_information">Hide exact time information</label>
+                        <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
+                        <div class="toggle-switch">
+                            <input class="tgl init" id="hide-time" type="checkbox" data-fieldgroup-toggle="hide-time-message" ng-model="survey.hide_time">
+                            <label class="tgl-btn" for="hide-time"></label>
+                        </div>
+                    </div>
+
+                    <!--// Who can add //-->
+                    <fieldset>
+                        <legend translate="survey.who_can_add">Who can add to this survey</legend>
+                        <div class="form-field radio icon-input" ng-class="{ 'checked': survey.everyone_can_create }">
+                            <label for="survey-add_everyone">
+                                <svg class="iconic" role="img">
+                                    <use xlink:href="/img/iconic-sprite.svg#globe"></use>
+                                </svg>
+                                <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="survey.everyone_can_create">
+                                <span class="label" translate="nav.everyone">Everyone</span>
+                            </label>
+                        </div>
+
+                        <div class="form-field radio icon-input"  ng-class="{ 'checked': !survey.everyone_can_create }">
+                            <label for="survey-add_roles">
+                                <svg class="iconic" role="img">
+                                    <use xlink:href="/img/iconic-sprite.svg#people"></use>
+                                </svg>
+                                <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.everyone_can_create">
+                                <span translate="app.specific_roles">Specific roles...</span>
+                            </label>
+
+                            <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.everyone_can_create]">
+                                <div class="form-field checkbox" ng-repeat="role in roles">
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            checklist-model="roles_allowed"
+                                            ng-disabled="role.name === 'admin'"
+                                            ng-checked="role.name === 'admin'"
+                                            checklist-value="role.id"
+                                        >
+                                        {{role.display_name | translate}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <color-picker color-container="survey"></color-picker>
+
+                    <div class="form-field">
+                        <label translate="translations.survey_select_default">Select default language for this survey</label>
+                        <p class="alert" translate="translations.default_lang_info"></p>
+                        <div class="custom-select">
+                            <select
+                                ng-model="selectedLanguage"
+                                ng-options="lang.code as lang.name for lang in languagesToSelect"
+                                ng-value="lang.code"
+                                ng-change="selectLanguage(selectedLanguage)"
+                            >
+                            </select>
+                        </div>
+                        <div ng-show="showLangError" class="alert error">
                             <svg class="iconic">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
-                           <span translate="survey.add_field">Add field</span>
-                        </a>
-                    </h2>
+                            <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
+                        </div>
+                    </div>
+                    <!-- <fieldset data-fieldset-type="color">
+                        <legend><span class="swatch" style="background-color: #A51A1A;"></span>Survey color</legend>
+                        <p>Your survey's color will be used for map markers, and the left border of the survey and its responses.</p>
+                        <div class="form-field">
+                            <label class="hidden">Hex value</label>
+                            <div class="minicolors minicolors-theme-default minicolors-position-bottom minicolors-position-left minicolors-inline"><input type="text" data-input-type="color" value="#A51A1A" class="minicolors-input" size="7"><div class="minicolors-panel minicolors-slider-hue minicolors-with-swatches"><div class="minicolors-slider minicolors-sprite"><div class="minicolors-picker" style="top: 150px;"></div></div><div class="minicolors-opacity-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-grid minicolors-sprite" style="background-color: rgb(255, 0, 0);"><div class="minicolors-grid-inner"></div><div class="minicolors-picker" style="top: 52px; left: 127px;"><div></div></div></div><ul class="minicolors-swatches"><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(165, 26, 26);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(230, 147, 39);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(34, 116, 180);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(91, 170, 0);"></span></li></ul></div></div>
+                        </div>
+                    </fieldset> -->
                 </div>
-            </div>
-          </div>
-        </div>
-        <div id="survey-configure-post" class="survey-details tabs-target">
-          <!--// Require review //-->
-          <div class="form-field switch">
-            <label translate="survey.require_review">Require posts be reviewed before they're published</label>
-            <p data-fieldgroup-target="require-review-message" ng-show="survey.require_approval" translate="survey.require_review_desc">New responses to this survey will be put "under review," and therefore not immediately visible to the public. Users with permission to review the response can review and "publish" them, which would then make them visible to everyone.</p>
-            <div class="toggle-switch">
-                <input class="tgl" id="post-review" type="checkbox" ng-model="survey.require_approval">
-                <label class="tgl-btn" for="post-review"></label>
-            </div>
-          </div>
-          <!--// Hide Author Information //-->
-          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
-              <label translate="survey.hide_author_information">Hide author information</label>
-              <p ng-show="survey.hide_author" data-fieldgroup-target="hide-author-message" translate="survey.hide_author_information_desc">Only people with permission to edit responses will be able to see who submitted them; and only when editing them.</p>
-              <div class="toggle-switch">
-                  <input class="tgl init" id="hide-author" type="checkbox" data-fieldgroup-toggle="hide-author-message" ng-model="survey.hide_author">
-                  <label class="tgl-btn" for="hide-author"></label>
-              </div>
-          </div>
-
-          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
-              <label translate="survey.hide_location_information">Hide location information</label>
-              <p ng-show="survey.hide_location" data-fieldgroup-target="hide-location-message" translate-values="{ precision: location_precision}" translate="survey.hide_location_information_desc">Only people with permission to edit responses will be able to see location info; and only when editing them.</p>
-              <div class="toggle-switch">
-                  <input class="tgl init" id="hide-location" type="checkbox" data-fieldgroup-toggle="hide-location-message" ng-model="survey.hide_location">
-                  <label class="tgl-btn" for="hide-location"></label>
-              </div>
-          </div>
-
-          <div class="form-field switch" ng-show="anonymiseReportersEnabled">
-              <label translate="survey.hide_time_information">Hide exact time information</label>
-              <p ng-show="survey.hide_time" data-fieldgroup-target="hide-time-message" translate="survey.hide_time_information_desc">Only people with permission to edit responses will be able to see exact respon time; and only when editing them.</p>
-              <div class="toggle-switch">
-                  <input class="tgl init" id="hide-time" type="checkbox" data-fieldgroup-toggle="hide-time-message" ng-model="survey.hide_time">
-                  <label class="tgl-btn" for="hide-time"></label>
-              </div>
-          </div>
-
-          <!--// Who can add //-->
-          <fieldset>
-            <legend translate="survey.who_can_add">Who can add to this survey</legend>
-            <div class="form-field radio icon-input" ng-class="{ 'checked': survey.everyone_can_create }">
-              <label for="survey-add_everyone">
-                <svg class="iconic">
-                  <use xlink:href="/img/iconic-sprite.svg#globe"></use>
-                </svg>
-                <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="survey.everyone_can_create">
-                <span class="label" translate="nav.everyone">Everyone</span>
-              </label>
-            </div>
-
-            <div class="form-field radio icon-input"  ng-class="{ 'checked': !survey.everyone_can_create }">
-              <label for="survey-add_roles">
-                <svg class="iconic">
-                  <use xlink:href="/img/iconic-sprite.svg#people"></use>
-                </svg>
-                <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="survey.everyone_can_create">
-                <span translate="app.specific_roles">Specific roles...</span>
-              </label>
-
-              <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[survey.everyone_can_create]">
-                <div class="form-field checkbox" ng-repeat="role in roles">
-                  <label>
-                    <input
-                        type="checkbox"
-                        checklist-model="roles_allowed"
-                        ng-disabled="role.name === 'admin'"
-                        ng-checked="role.name === 'admin'"
-                        checklist-value="role.id"
-                    >
-                    {{role.display_name | translate}}
-                  </label>
+                <!-- Share Tab Options -->
+                <div id="survey-share-post" class="survey-details tabs-target" ng-show="survey.id">
+                    <share-menu survey-id="surveyId"></share-menu>
                 </div>
-              </div>
-            </div>
-          </fieldset>
+            </section>
+            <!-- Task sections -->
+            <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length" ng-show="languages.default === languages.active">
+                <div class="form-field title section-title">
+                    <label for="section_name" class="hidden" translate="survey.task_name">Section name</label>
+                    <input id="section_name" type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
+                    <label for="section_description" class="hidden" translate="survey.task_description">Section description</label>
+                    <textarea
+                        name="description"
+                        placeholder="{{ 'survey.describe_this_task' | translate }}"
+                        rows="1"
+                        id="section_description"
+                        ng-model="task.description"
+                    ></textarea>
+                    <div class="section-title-actions" dropdown>
+                        <button class="button-beta button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
+                            <svg class="iconic" role="img">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
+                            </svg>
+                            <span class="hidden" translate="app.more">More</span>
+                        </button>
 
-          <color-picker color-container="survey"></color-picker>
-          <!-- <fieldset data-fieldset-type="color">
-              <legend><span class="swatch" style="background-color: #A51A1A;"></span>Survey color</legend>
-              <p>Your survey's color will be used for map markers, and the left border of the survey and its responses.</p>
+                        <ul class="dropdown-menu init" dropdown-menu>
+                            <li>
+                                <a href="" data-modal="delete-post" ng-click="duplicateSection(task)">
+                                    <svg class="iconic" role="img">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
+                                    </svg>
+                                    <span class="label" translate="survey.duplicate_task">Duplicate task</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" data-modal="delete-post" ng-click="deleteTask(task)">
+                                    <svg class="iconic" role="img">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                    </svg>
+                                    <span class="label" translate="survey.delete_task">Delete task</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-              <div class="form-field">
-                  <label class="hidden">Hex value</label>
-                  <div class="minicolors minicolors-theme-default minicolors-position-bottom minicolors-position-left minicolors-inline"><input type="text" data-input-type="color" value="#A51A1A" class="minicolors-input" size="7"><div class="minicolors-panel minicolors-slider-hue minicolors-with-swatches"><div class="minicolors-slider minicolors-sprite"><div class="minicolors-picker" style="top: 150px;"></div></div><div class="minicolors-opacity-slider minicolors-sprite"><div class="minicolors-picker"></div></div><div class="minicolors-grid minicolors-sprite" style="background-color: rgb(255, 0, 0);"><div class="minicolors-grid-inner"></div><div class="minicolors-picker" style="top: 52px; left: 127px;"><div></div></div></div><ul class="minicolors-swatches"><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(165, 26, 26);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(230, 147, 39);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(34, 116, 180);"></span></li><li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" style="background-color: rgb(91, 170, 0);"></span></li></ul></div></div>
-              </div>
-          </fieldset> -->
-        </div>
-        <!-- Share Tab Options -->
-        <div id="survey-share-post" class="survey-details tabs-target" ng-show="survey.id">
-          <share-menu survey-id="surveyId"></share-menu>
-        </div>
-      </section>
-      <!-- Task sections -->
-      <section class="form-sheet" ng-repeat="task in survey.tasks | limitTo: 1 - survey.tasks.length">
-        <div class="form-field title section-title">
-            <label class="hidden" translate="survey.task_name">Section name</label>
-            <input type="text" placeholder="{{ 'survey.untitled_task' | translate }}" ng-change="changeTaskLabel(task)" ng-model="task.label">
+                <nav class="tabs-menu init" data-tabs="section-1-details">
+                    <ul>
+                        <li class="active" ng-attr-id="{{ 'section-build-' + task.id + '-li'}}">
+                            <a ng-click="switchTab(task.id, 'section-build')" translate="survey.build">
+                                Build
+                            </a>
+                        </li>
+                        <li ng-attr-id="{{ 'section-configure-' + task.id + '-li'}}">
+                            <a ng-click="switchTab(task.id, 'section-configure')" translate="survey.configure">
+                                Configure
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div ng-attr-id="{{ 'section-build-' + task.id }}" class="section-1-details tabs-target active">
+                    <div class="listing init">
+                        <div class="listing-item" ng-repeat="field in task.fields track by $index">
+                            <div class="listing-item-select">
+                                <div class="buttons-updown">
+                                    <button type="button" class="button-beta" ng-disabled="isFirstField(task, field)" ng-click="moveFieldUp(task, field)">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
+                                        </svg>
+                                        <span class="label hidden">Move up</span>
+                                    </button>
+                                    <button type="button" class="button-beta" ng-disabled="isLastField(task, field)" ng-click="moveFieldDown(task, field)">
+                                       <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                                        </svg>
+                                        <span class="label hidden">Move down</span>
+                                    </button>
+                                </div>
+                            </div>
 
-            <label class="hidden" translate="survey.task_description">Section description</label>
-            <textarea
-              name="description"
-              placeholder="{{ 'survey.describe_this_task' | translate }}"
-              rows="1"
-              ng-model="task.description"
-              ></textarea>
+                            <div class="listing-item-secondary" ng-show="onlyOptional(field)">
+                                <button class="button-beta button-flat" ng-click="deleteField(field, task)">
+                                    <svg class="iconic" role="img">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                    </svg>
+                                    <span class="hidden">Delete</span>
+                                </button>
+                            </div>
 
-            <!-- <p class="alert">
-                <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
-                </svg>
-                The fields in this section can only be completed and viewed by select people. <a>Change settings</a>
-            </p> -->
-            <div class="section-title-actions" dropdown>
-                <button class="button-beta button-flat init" data-toggle="dropdown-menu" dropdown-toggle>
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
-                    </svg>
-                    <span class="hidden" translate="app.more">More</span>
-                </button>
-
-                <ul class="dropdown-menu init" dropdown-menu>
-                    <li>
-                        <a href="" data-modal="delete-post" ng-click="duplicateSection(task)">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
-                        </svg>
-                        <span class="label" translate="survey.duplicate_task">Duplicate task</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" data-modal="delete-post" ng-click="deleteTask(task)">
-                        <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                        </svg>
-                        <span class="label" translate="survey.delete_task">Delete task</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <nav class="tabs-menu init" data-tabs="section-1-details">
-            <ul>
-                <li class="active" ng-attr-id="{{ 'section-build-' + task.id + '-li'}}">
-                  <a ng-click="switchTab(task.id, 'section-build')" translate="survey.build">
-                    Build
-                  </a>
-                </li>
-                <li ng-attr-id="{{ 'section-configure-' + task.id + '-li'}}">
-                  <a ng-click="switchTab(task.id, 'section-configure')" translate="survey.configure">
-                    Configure
-                  </a>
-                </li>
-            </ul>
-        </nav>
-
-        <div ng-attr-id="{{ 'section-build-' + task.id }}" class="section-1-details tabs-target active">
-            <div class="listing init">
-              <div class="listing-item" ng-repeat="attribute in task.attributes track by $index">
-                  <div class="listing-item-select">
-                      <div class="buttons-updown">
-                         <button type="button" class="button-beta" ng-disabled="isFirstAttribute(task, attribute)" ng-click="moveAttributeUp(task, attribute)">
-                             <svg class="iconic">
-                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-top"></use>
-                             </svg>
-                             <span class="label hidden">Move up</span>
-                         </button>
-                         <button type="button" class="button-beta" ng-disabled="isLastAttribute(task, attribute)" ng-click="moveAttributeDown(task, attribute)">
-                             <svg class="iconic">
-                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                             </svg>
-                             <span class="label hidden">Move down</span>
-                         </button>
-                     </div>
-                  </div>
-
-                  <div class="listing-item-secondary" ng-show="onlyOptional(attribute)">
-                      <button class="button-beta button-flat" ng-click="deleteAttribute(attribute, task)">
-                          <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                          </svg>
-                          <span class="hidden">Delete</span>
-                      </button>
-                  </div>
-
-                  <div class="listing-item-primary" ng-click="openAttributeEditModal(task, attribute)">
-                      <div class="listing-item-image">
-                          <svg class="iconic">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
-                          </svg>
-                      </div>
-                      <h2 class="listing-item-title">
-                          {{attribute.label}}
-                        <span class="listing-item-image tooltip" ng-show="attribute.response_private">
-                            <svg class="iconic">
+                            <div class="listing-item-primary" ng-click="openFieldEditModal(task, field)">
+                                <div class="listing-item-image">
+                                    <svg class="iconic" role="img">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ic_short_text_24px"></use>
+                                    </svg>
+                                </div>
+                                <h2 class="listing-item-title">
+                                    {{field.label}}
+                                    <span class="listing-item-image tooltip" ng-show="field.response_private">
+                            <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
                             </svg>
                             <span class="bug" translate="survey.response_private_desc">Only people with permission to edit responses can see responses to this field</span>
                         </span>
-                      </h2>
-                  </div>
-              </div>
-              <div class="listing-item">
-                  <div class="listing-item-primary">
-                      <h2 class="listing-item-title">
-                          <a ng-click="openAttributeModal(task)" class="button button-beta" data-modal="add-field">
-                              <svg class="iconic">
-                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-                              </svg>
-                             <span translate="survey.add_field">Add field</span>
-                          </a>
-                      </h2>
-                  </div>
-              </div>
-            </div>
-        </div>
-
-        <div ng-attr-id="{{ 'section-configure-' + task.id }}" class="section-1-details tabs-target">
-          <div class="form-field switch">
-            <label translate="survey.required">Required</label>
-            <p data-fieldgroup-target="require-review-message" ng-show="task.required" translate="survey.required_desc">Require this section be completed before a post can be visible to the public.</p>
-            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-required-' + task.id }}">
-                <input class="tgl" ng-attr-id="{{ 'task-required-' + task.id }}" type="checkbox" ng-model="task.required">
-                <label class="tgl-btn" for="task-required-{{task.id}}" ng-attr-id="{{ 'task-required-label-' + task.id }}"></label>
-            </div>
-        </div>
-        <div class="form-field switch checked">
-            <label translate="survey.internal_use_task">Task is only for internal use</label>
-            <!-- todo show list of roles with correct permission for clarity in message below-->
-            <p data-fieldgroup-target="internal_only-message" class="active" ng-show="task.task_is_internal_only" translate="survey.internal_use_task_desc">This task will only be visible to User who have Manage Post permission.</p>
-            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
-                <input class="tgl init" ng-attr-id="{{ 'internal_only-' + task.id }}" type="checkbox" data-fieldgroup-toggle="internal_only-message" ng-model="task.task_is_internal_only">
-                <label class="tgl-btn" for="internal_only-{{task.id}}" ng-attr-id="{{ 'internal_only-label-' + task.id }}"></label>
-            </div>
-        </div>
-        <div class="form-field switch checked">
-            <label translate="survey.show_this_task_to">Show this task to everyone when published</label>
-            <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
-            <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
-                <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
-
-                <label class="tgl-btn" for="show_section-{{task.id}}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
-            </div>
-        </div>
-
-          <!-- <fieldset>
-            <legend translate="survey.who_can_contribute_to_section">Who can contribute to fields in this section</legend>
-            <div class="form-field radio icon-input" ng-class="{ 'checked': task.everyone_can_contribute }">
-              <label for="survey-add_everyone">
-                <svg class="iconic">
-                  <use xlink:href="/img/iconic-sprite.svg#globe"></use>
-                </svg>
-                <input name="survey-add" id="survey-add_everyone" ng-value="true" checked="" type="radio" ng-model="task.everyone_can_contribute">
-                <span class="label" translate="nav.everyone">Everyone</span>
-              </label>
-            </div>
-
-            <div class="form-field radio icon-input"  ng-class="{ 'checked': !task.everyone_can_contribute }">
-              <label for="survey-add_roles">
-                <svg class="iconic">
-                  <use xlink:href="/img/iconic-sprite.svg#people"></use>
-                </svg>
-                <input class="init" name="survey-add" id="survey-add_roles" ng-value="false" ng-modaldata-fieldgroup-toggle="survey-add_roles" type="radio" ng-model="task.everyone_can_contribute">
-                <span translate="app.specific_roles">Specific roles...</span>
-              </label>
-
-              <div class="form-fieldgroup init" data-fieldgroup-target="survey-add_roles" ng-class="{true:'', false:'active'}[task.everyone_can_contribute]">
-                <div class="form-field checkbox" ng-repeat="role in roles">
-                  <label>
-                    <input type="checkbox" checklist-model="section_roles_allowed" checklist-value="role.id">
-                    {{role.display_name}}
-                  </label>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="listing-item">
+                            <div class="listing-item-primary">
+                                <h2 class="listing-item-title">
+                                    <a ng-click="openFieldModal(task)" class="button button-beta" data-modal="add-field" role="button">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                                        </svg>
+                                        <span translate="survey.add_field">Add field</span>
+                                    </a>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div ng-attr-id="{{ 'section-configure-' + task.id }}" class="section-1-details tabs-target">
+                    <div class="form-field switch">
+                        <label translate="survey.required" for="task-required-{{task.id}}">Required</label>
+                        <p data-fieldgroup-target="require-review-message" ng-show="task.required" translate="survey.required_desc">Require this section be completed before a post can be visible to the public.</p>
+                        <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-required-' + task.id }}">
+                            <input class="tgl" ng-attr-id="{{ 'task-required-' + task.id }}" type="checkbox" ng-model="task.required">
+                            <label class="tgl-btn" for="task-required-{{task.id}}" ng-attr-id="{{ 'task-required-label-' + task.id }}"></label>
+                        </div>
+                    </div>
+                    <div class="form-field switch checked">
+                        <label translate="survey.internal_use_task" for="internal_only-{{task.id}}">Task is only for internal use</label>
+                        <!-- todo show list of roles with correct permission for clarity in message below-->
+                        <p data-fieldgroup-target="internal_only-message" class="active" ng-show="task.task_is_internal_only" translate="survey.internal_use_task_desc">This task will only be visible to User who have Manage Post permission.</p>
+                        <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
+                            <input class="tgl init" ng-attr-id="{{ 'internal_only-' + task.id }}" type="checkbox" data-fieldgroup-toggle="internal_only-message" ng-model="task.task_is_internal_only">
+                            <label class="tgl-btn" for="{{ 'internal_only-' + task.id }}" ng-attr-id="{{ 'internal_only-label-' + task.id }}"></label>
+                        </div>
+                    </div>
+                    <div class="form-field switch checked">
+                        <label translate="survey.show_this_task_to" for="show_section-{{task.id}}">Show this task to everyone when published</label>
+                        <p data-fieldgroup-target="show_section-message" class="active" ng-show="task.show_when_published" translate="survey.show_this_task_to_desc">When a survey response is published, data from this section will be displayed.</p>
+                        <div class="toggle-switch" ng-attr-id="{{ 'toggle-switch-show-' + task.id }}">
+                            <input class="tgl init" ng-attr-id="{{ 'show_section-' + task.id }}" type="checkbox" data-fieldgroup-toggle="show_section-message" ng-model="task.show_when_published">
+                            <label class="tgl-btn" for="{{ 'show_section-' + task.id }}" ng-attr-id="{{ 'show_section-label-' + task.id }}"></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Add nw section/task -->
+            <div class="listing-item" ng-show="languages.default === languages.active">
+                <div class="listing-item-primary">
+                    <button ng-click="openTaskModal()" class="button-gamma init" data-toggle="field-type">
+                        <svg class="iconic" role="img">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                        </svg>
+                        <span class="button-label" translate="survey.add_task">Add task</span>
+                    </button>
+                </div>
             </div>
-          </fieldset> -->
+            <survey-translation-editor ng-show="languages.active !== languages.default" active-language="languages.active" default-language="languages.default" survey="survey"></survey-translation-editor>
         </div>
-      </section>
-      <!-- Add nw section/task -->
-      <div class="listing-item">
-          <div class="listing-item-primary">
-              <button ng-click="openTaskModal()" class="button-gamma init" data-toggle="field-type">
-                  <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
-                  </svg>
-                  <span class="button-label" translate="survey.add_task">Add task</span>
-              </button>
-          </div>
-      </div>
-    </div>
-  </main>
+    </main>
 </div>
