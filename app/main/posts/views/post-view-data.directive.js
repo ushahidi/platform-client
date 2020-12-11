@@ -75,7 +75,7 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: $scope.post.data ? $scope.post.data.result : $scope.post, next: {}};
+    $scope.selectedPost = {post: $scope.post && $scope.post.data ? $scope.post.data.result : $scope.post, next: {}};
     $scope.formData = {form: {}};
     $scope.getPosts = getPosts;
     $scope.shouldWeRunCheckForNewPosts = true;
