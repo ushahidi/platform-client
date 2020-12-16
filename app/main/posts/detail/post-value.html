@@ -30,19 +30,18 @@
         </div>
       </div>
       <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  !attribute.value.translations[activeLanguage].value">
-          <p linkify><bdi>{{attribute.value.value}}</bdi></p>
+          <p><bdi>{{attribute.value.value}}</bdi></p>
       </div>
       <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  attribute.value.translations[activeLanguage].value">
-        <p linkify><bdi>{{attribute.value.translations[activeLanguage].value}}</bdi></p>
+        <p><bdi>{{attribute.value.translations[activeLanguage].value}}</bdi></p>        
       </div>
       <div ng-if="attribute.input ==='checkbox' && !attribute.value.translations[activeLanguage].value " ng-repeat="entry in attribute.value.value track by $index">
-        <p linkify><bdi>{{entry}}</bdi></p>
+        <p><bdi>{{entry}}</bdi></p>
       </div>
       <div ng-if="attribute.input ==='checkbox' && attribute.value.translations[activeLanguage].value " ng-repeat="entry in attribute.value.translations[activeLanguage].value track by $index"  >
-        <p linkify><bdi>{{entry}}</bdi></p>
+        <p><bdi>{{entry}}</bdi></p>
       </div>
     </div>
-
     <post-video-view
       ng-if="attribute.input === 'video'"
       label="{{attribute.translations[activeLanguage].label || attribute.label}}"
