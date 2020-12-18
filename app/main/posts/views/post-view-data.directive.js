@@ -31,7 +31,8 @@ PostViewDataController.$inject = [
     '$window',
     '$state',
     'LoadingProgress',
-    '$transitions'
+    '$transitions',
+    'PostsSdk'
 ];
 function PostViewDataController(
     $scope,
@@ -50,7 +51,8 @@ function PostViewDataController(
     $window,
     $state,
     LoadingProgress,
-    $transitions
+    $transitions,
+    PostsSdk
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -375,18 +377,21 @@ function PostViewDataController(
                 $scope.selectedPosts,
                 function (postId) {
                     $scope.selectedPosts = _.without($scope.selectedPosts, postId);
-                    return PostEndpoint.delete({ id: postId }).$promise;
+                    return PostsSdk.deletePost(postId);
                 });
             $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
             ;
 
             function handleDeleteErrors(errorResponse) {
-                Notify.apiErrors(errorResponse);
+                Notify.sdkErrors(errorResponse);
             }
-            function handleDeleteSuccess(deleted) {
+            function handleDeleteSuccess(response) {
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
-                var deletedIds = _.pluck(deleted, 'id');
+                let deletedIds = _.map(response, deleted => {
+                    return deleted.data.result.deleted;
+                });
+
                 $scope.totalItems = $scope.totalItems - deletedIds.length;
                 angular.forEach($scope.groupedPosts, function (posts, group) {
                     $scope.groupedPosts[group] = _.reject(posts, function (post) {
@@ -396,6 +401,11 @@ function PostViewDataController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
+
+                if (_.contains(deletedIds, $scope.selectedPost.post.id)) {
+                    deselectPost();
+                    $state.go('posts.data');
+                }
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
