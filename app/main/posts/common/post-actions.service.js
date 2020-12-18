@@ -2,27 +2,26 @@ module.exports = [
     '_',
     'Util',
     '$translate',
-    'PostEndpoint',
     'Notify',
     '$q',
+    'PostsSdk',
 function (
     _,
     Util,
     $translate,
-    PostEndpoint,
     Notify,
-    $q
+    $q,
+    PostsSdk
 ) {
     var PostActionsService = {
         delete: function (post) {
             var deferred = $q.defer();
-
             Notify.confirmDelete('notify.post.destroy_confirm').then(function () {
-                PostEndpoint.delete({ id: post.id }).$promise.then(function () {
+                PostsSdk.deletePost(post.id).then(function () {
                     Notify.notify('notify.post.destroy_success', { name: post.title });
                     deferred.resolve();
                 }, function (errorResponse) {
-                    Notify.apiErrors(errorResponse);
+                    Notify.sdkErrors(errorResponse);
                     deferred.reject(errorResponse);
                 });
             });
