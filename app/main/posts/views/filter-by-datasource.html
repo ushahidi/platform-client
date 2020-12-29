@@ -20,12 +20,12 @@
                     {{provider.label}}
                 </label>
             </div>
-            <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
+            <button class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
                 {{provider.total}}
                 <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                 </svg>
-            </span>
+            </button>
             <div class="dropdown-menu init" dropdown-menu>
                 <span class="post-band" ng-style="{backgroundColor: '#00aced'}"></span>
                 <p>
@@ -38,6 +38,7 @@
                             translate="post.show_only_form" 
                             translate-values="{form: provider.label}"
                             ng-click="showOnly(provider.label)"
+                            href=""
                         ></a>
                     </li>
                     <li>
@@ -45,6 +46,7 @@
                             translate="post.hide_form"
                             translate-values="{form: provider.label}"
                             ng-click="hide(provider.label)"
+                            href=""
                         ></a>
                     </li>
                     <li ng-if="featureEnabled()">
@@ -52,7 +54,7 @@
                             translate="post.messages.show_only_incoming"
                             translate-values="{provider: provider.heading.toLowerCase()}"
                             ng-click="showOnlyIncoming(provider.label)"
-
+                            href=""
                         ></a>
                     </li>
                     <div class="divider"></div>
