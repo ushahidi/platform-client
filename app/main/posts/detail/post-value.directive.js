@@ -23,7 +23,7 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
                 return false;
             }
             if ($scope.attribute.type === 'relation') {
-                PostsSdk.getPosts($scope.attribute.value.value).then(post=>{
+                PostsSdk.findPost($scope.attribute.value.value).then(post=>{
                     $scope.attribute.value.value = post.data.result;
                     $scope.$apply();
                 });

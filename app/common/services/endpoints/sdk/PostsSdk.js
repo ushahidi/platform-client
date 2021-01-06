@@ -19,9 +19,14 @@ function (
         );
     }
 
-    const getPosts = function(id) {
+    const findPost = function(id) {
         return ushahidi()
                 .getPosts(id);
+    }
+
+    const getPosts = function() {
+        return ushahidi()
+            .getPosts();
     }
 
     const savePost = function(post) {
@@ -34,5 +39,5 @@ function (
                 .deletePost(id);
     }
 
-    return { getPosts, savePost, deletePost };
+    return { findPost, getPosts, savePost, deletePost };
 }];
