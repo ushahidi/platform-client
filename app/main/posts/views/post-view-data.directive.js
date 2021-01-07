@@ -255,25 +255,23 @@ function PostViewDataController(
     }
 
     function removePostFromList(postObj) {
-        $scope.posts.forEach((post, index) => {
-            // args.post is the post being updated/saved and sent from the broadcast
-            // since a single post is being deleted here, reduce count of totalitems by 1.
-            if (post.id === postObj.id) {
-                let nextInLine = $scope.posts[index + 1];
-                $scope.posts.splice(index, 1);
-                $scope.totalItems = $scope.totalItems - 1;
-                if ($scope.posts.length) {
-                    groupPosts($scope.posts);
-                    if ($scope.selectedPost.post) {
-                        $scope.selectedPost.post = nextInLine;
-                        $state.go('posts.data.detail', {view: 'data', postId: $scope.selectedPost.post.id});
-                    }
-                } else {
-                    $scope.selectedPost = {post: null, next: {}};
-                    getPosts(false, false);
-                }
-            }
+        const removalIndex = $scope.posts.findIndex((post) => {
+            return post.id === postObj.id;
         });
+        if (removalIndex >= 0) {
+            $scope.posts.splice(removalIndex, 1);
+            if ($scope.posts.length && $scope.posts.length > 0) {
+                //PENDING QUESTION: why do we need this groupPosts call?
+                groupPosts($scope.posts);
+                if ($scope.selectedPost.post) {
+                    $scope.selectedPost.post = $scope.posts[removalIndex];
+                    $state.go('posts.data.detail', {view: 'data', postId: $scope.selectedPost.post.id});
+                }
+            } else {
+                $scope.selectedPost = {post: null, next: {}};
+                getPosts(false, false);
+            }
+        }
     }
 
     function newStatusMatchesFilters(postObj) {
@@ -420,17 +418,14 @@ function PostViewDataController(
             return _.contains($scope.selectedPosts, post.id);
         });
 
-        var count = $scope.selectedPosts.length;
-
-        var updateStatusPromises = _.map(selectedPosts, function (post) {
+        const withStatus = _.map(selectedPosts, function (post) {
             post.status = status;
-            // $scope.selectedPosts = _.without($scope.selectedPosts, post.id);
-            return PostEndpoint.update(post).$promise;
-        });
+            return post;
+        })
+        PostsSdk.bulkPatch({bulk: withStatus}).then(function (postResult) {
+            Notify.notify('notify.post.update_status_success_bulk', {count: postResult.count});
 
-        $q.all(updateStatusPromises).then(function () {
-            Notify.notify('notify.post.update_status_success_bulk', {count: count});
-            selectedPosts.forEach((post) => {
+            postResult.data.results.forEach((post) => {
                 if (!newStatusMatchesFilters(post)) {
                     removePostFromList(post);
                 }

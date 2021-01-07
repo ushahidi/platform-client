@@ -90,7 +90,7 @@ function PostActionsDirective(
             // Maybe not needed when we are using the new endpoint...
             post.completed_stages = getCompletedTasks();
             // change to new endpoint
-            PostsSdk.savePost(post).then(function (response) {
+            PostsSdk.patchPost(post).then(function (response) {
                 // @uirouter-refactor fix this to work with new states
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
 
