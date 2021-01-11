@@ -43,14 +43,17 @@ function (
         return ushahidi()
             .patchPost(post);
     }
-    const bulkPatch = function (bulk) {
+    const bulkPatch = function (items) {
         return ushahidi()
-            .patchPosts(bulk);
+            .bulkPatch(items);
     }
     const deletePost = function(id) {
         return ushahidi()
                 .deletePost(id);
     }
-
-    return { findPost, getPosts, savePost, deletePost, bulkPatch, patchPost };
+    const bulkDelete = function (ids) {
+        return ushahidi()
+                .bulkDelete(ids.map(i => { return {id: i} }));
+    }
+    return { findPost, getPosts, savePost, bulkDelete, deletePost, bulkPatch, patchPost };
 }];

@@ -371,14 +371,7 @@ function PostViewDataController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
-            var deletePostsPromises = _.map(
-                $scope.selectedPosts,
-                function (postId) {
-                    $scope.selectedPosts = _.without($scope.selectedPosts, postId);
-                    return PostsSdk.deletePost(postId);
-                });
-            $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
-            ;
+            PostsSdk.bulkDelete($scope.selectedPosts).then(handleDeleteSuccess, handleDeleteErrors)
 
             function handleDeleteErrors(errorResponse) {
                 Notify.sdkErrors(errorResponse);
@@ -386,10 +379,7 @@ function PostViewDataController(
             function handleDeleteSuccess(response) {
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
-                let deletedIds = _.map(response, deleted => {
-                    return deleted.data.result.deleted;
-                });
-
+                let deletedIds = $scope.selectedPosts;
                 $scope.totalItems = $scope.totalItems - deletedIds.length;
                 angular.forEach($scope.groupedPosts, function (posts, group) {
                     $scope.groupedPosts[group] = _.reject(posts, function (post) {
@@ -422,14 +412,16 @@ function PostViewDataController(
             post.status = status;
             return post;
         })
-        PostsSdk.bulkPatch({bulk: withStatus}).then(function (postResult) {
-            Notify.notify('notify.post.update_status_success_bulk', {count: postResult.count});
-
-            postResult.data.results.forEach((post) => {
+        PostsSdk.bulkPatch(withStatus).then(function (postResult) {
+            Notify.notify('notify.post.update_status_success_bulk', {count: selectedPosts.count});
+            let discount = 0;
+            selectedPosts.forEach((post) => {
                 if (!newStatusMatchesFilters(post)) {
+                    discount++;
                     removePostFromList(post);
                 }
             });
+            $scope.totalItems = $scope.totalItems - discount;
             clearSelectedPosts();
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);
