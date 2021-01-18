@@ -22,7 +22,7 @@ function (
     moment
 ) {
     var translate = function (lang) {
-        if (lang !== null) {
+        if (lang) {
             $translate.use(lang).then(function (langKey) {
                 if (langKey) {
                     $translate.preferredLanguage(langKey);
