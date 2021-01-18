@@ -15,24 +15,25 @@ function (
         link: function ($scope, $element, $attrs) {
 
             // Init an empty saved search
-            $scope.newAttribute = {
+            $scope.newField = {
                 required: false,
                 options: [],
                 config: {},
-                priority: 0
+                priority: 0,
+                translations:{}
             };
 
-            $scope.createNewAttribute = function (type) {
+            $scope.createNewField = function (type) {
                 // Set initial label name based on type
                 type.label = '';
-                $scope.openAttributeEditModal($scope.activeTask, _.extend($scope.newAttribute, type));
+                $scope.openFieldEditModal($scope.activeTask, _.extend($scope.newField, type));
             };
 
             $scope.closeModal = function () {
                 ModalService.close();
             };
 
-            $scope.availableAttrTypes = [
+            $scope.availableFieldTypes = [
                 {
                     label: $translate.instant('survey.short_text'),
                     type: 'varchar',

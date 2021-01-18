@@ -1,12 +1,35 @@
-<category-selector
-        enable-parents="false"
-        selected="selected"
-        form="form"
-        available="available"
-></category-selector>
-<add-category
-        form-id="formId"
-        attribute="attribute"
-        post-value="postValue"
-        available="available"
-></add-category>
+<div class="form-fieldgroup checkbox">
+    <div class="form-field checkbox">
+        <label>
+            <input
+                  type="checkbox"
+                  ng-checked="selected.length === available.length"
+                  ng-click="selectAll()"
+            >
+            <em><span translate="category.select_all"></span></em>
+        </label>
+    </div>
+    <div class="form-field checkbox" ng-repeat="category in parents track by $index">
+        <label>
+                <input
+                    type="checkbox"
+                    value="category.id"
+                    ng-checked="selected.indexOf(category.id) > -1"
+                    ng-disabled="category.children.length > 0"
+                    ng-click="toggleCategory(category)"
+                >
+                    <bdi>{{category.translations[activeSurveyLanguage].tag || category.tag}}</bdi>
+        </label>
+        <div class="form-field checkbox" ng-if="category.children" ng-repeat="child in category.children">
+            <label>
+                    <input
+                        type="checkbox"
+                        ng-checked="selected.indexOf(child.id) >= 0"
+                        value="child.id"
+                        ng-click="toggleParent(category, child.id)"
+                    >
+                    <bdi>{{child.translations[activeSurveyLanguage].tag || child.tag}}</bdi>
+            </label>
+        </div>
+    </div>
+</div>

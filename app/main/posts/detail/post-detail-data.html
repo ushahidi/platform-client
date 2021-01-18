@@ -1,101 +1,99 @@
 <div>
   <layout-class layout="d"></layout-class>
-  <article class="postcard" role="article">
+  <article class="postcard" role="article" translate-language="{{languages.active}}">
     <button class="button-beta button-flat postcard-close" ng-click="close()">
       <svg class="iconic" role="img">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
       </svg>
     </button>
-    <div class="post-band"  ng-style="{backgroundColor: form.color}"></div>
+    <div class="post-band"  ng-style="{backgroundColor: post.form.color}"></div>
+    <div class="toolbox" ng-if="languages.available.length > 1">
+      <survey-language-selector title="'View this post in another language'" languages="languages"></survey-language-selector>
+  </div>
     <post-lock ng-if="post.lock" post="post"></post-lock>
     <div class="postcard-body">
-      <h1 class="form-sheet-title survey-title" linkify>
-        <bdi>{{post.title}}</bdi>
-      </h1>
+      <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.active].name || post.form.name}}</h1>
+      <p><bdi>{{post.form.translations[languages.active].description || post.form.description}}</bdi></p>
+      
+      <h2 class="form-sheet-title survey-title">
+        <bdi>{{post.translations[languages.active].title || post.title}}</bdi>
+      </h2>
       <div class="postcard-header">
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>
         <post-actions post="post"></post-actions>
       </div>
       <twitter-widget ng-if="post.source==='twitter'" twitter-widget-id="post.data_source_message_id">
       </twitter-widget>
-      <!-- <div
-        ng-repeat="postValue in postValues"
-        ng-if="isPostValue(postValue.key) && form_attributes[postValue.key] && showType(form_attributes[postValue.key].type)"
-        class="postcard-field"
-      >
-        <post-media-value
-          ng-if="form_attributes[postValue.key].type === 'media'"
-          media-has-caption="form_attributes[postValue.key].config.hasCaption"
-          label="{{form_attributes[postValue.key].label}}"
-          media-id="postValue.value"></post-media-value>
-      </div> -->
       <div
         ng-if="post.content"
         class="postcard-field">
-        <p markdown-to-html="post.content"></p>
+          <p ng-if="!post.translations[languages.active].content" markdown-to-html="post.content"></p>
+          <p ng-if="post.translations[languages.active].content" markdown-to-html="post.translations[languages.active].content"></p>
       </div>
       <span 
-        ng-repeat="postValue in postValues"
-        ng-if="isPostValue(postValue.key) && showType(form_attributes[postValue.key].type)"
+      ng-repeat="field in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by field.id"
+      ng-if="showType(field.type) && field.value"
       >
         <post-media-value
-          ng-if="form_attributes[postValue.key].type === 'media'"
-          media-has-caption="form_attributes[postValue.key].config.hasCaption"
-          label="{{form_attributes[postValue.key].label}}"
-          media-id="postValue.value"></post-media-value>
+          ng-if="field.type === 'media'"
+          media-has-caption="field.config.hasCaption"
+          label="{{field.label}}"
+          media-id="field.value.value"></post-media-value>
         <post-value
-          ng-if="form_attributes[postValue.key].type !== 'media'"
-          key="postValue.key"
-          value="postValue.value"
-          attribute="form_attributes[postValue.key]"
-          tags="tags"
-          type="'post'"></post-value>
-      </span>
-      <post-detail-map post-id="post.id"></post-detail-map>
+          ng-if="field.type !== 'media' && field.type !== 'point'"
+          attribute="field"
+          type="'post'"
+          post="post"
+          active-language="languages.active"></post-value>
+          <post-detail-map ng-if="field.type === 'point'" label="{{field.translations[languages.active].label || field.label}}"post-id="post.id"></post-detail-map>
+    </span>
+
     </div>
   </article>
-  <div class="listing card init" ng-show="tasks.length">
+  <div class="listing card init" ng-show="post.post_content.length > 1" translate-language="{{languages.active}}">
     <h3 class="listing-heading" translate="app.tasks">Tasks</h3>
     <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
       <ul>
         <li
-          ng-repeat="task in tasks"
-          ng-class="{'active': visibleTask == task.id}">
+        ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
+        ng-class="{'active': visibleTask == task.id}">
           <a ng-click="activateTaskTab(task.id)">
-            <bdi>{{task.label}}</bdi>
+            <bdi>{{task.translations[languages.active].label || task.label}}</bdi>
           </a>
           <span class="status" ng-class="{'completed': taskIsComplete(visibleTask)}">
           </span>
         </li>
       </ul>
     </nav>
-    <div class="listing-item tasks-tabs tabs-target active">
+    <div class="listing-item tasks-tabs tabs-target active" ng-show="post.post_content.length > 1"
+      >
       <div class="alert"
-          ng-repeat="task in tasks"
+          ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
           ng-if="!taskHasValues(task)"
           ng-show="task.id === visibleTask">
         <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
       </div>
+      
+<div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div
-        ng-repeat="postValue in postValues"
-        ng-if="!isPostValue(postValue.key) && form_attributes[postValue.key] && showType(form_attributes[postValue.key].type)"
-        ng-show="form_attributes[postValue.key].form_stage_id === visibleTask"
-        ng-class="{'listing-item-primary': form_attributes[postValue.key].type === 'media'}"
+        ng-repeat="field in task.fields"
+        ng-if="field.value && showType(field.type)"
+        ng-show="task.id === visibleTask"
+        ng-class="{'listing-item-primary': field.type === 'media'}"
       >
         <post-media-value
-          ng-if="form_attributes[postValue.key].type === 'media'"
-          label="{{form_attributes[postValue.key].label}}"
-          media-id="postValue.value"></post-media-value>
+          ng-if="field.type === 'media'"
+          label="{{field.label}}"
+          media-id="field.value.value"></post-media-value>
         <post-value
-            ng-if="form_attributes[postValue.key].type !== 'media'"
-            tags="tags"
-            key="postValue.key"
-            value="postValue.value"
-            attribute="form_attributes[postValue.key]"
+            ng-if="field.type !== 'media'"
+            attribute="field"
+            active-language="languages.active"
             type="'standard'">
         </post-value>
       </div>
     </div>
   </div>
-  <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
+  </div>
+  <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'" ></post-messages>
 </div>

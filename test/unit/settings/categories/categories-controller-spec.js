@@ -2,7 +2,9 @@ describe('setting categories controller', function () {
 
     var $rootScope,
         $scope,
-        $controller;
+        $controller,
+        Notify,
+        CategoriesSdk;
 
     beforeEach(function () {
 
@@ -13,10 +15,12 @@ describe('setting categories controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_, _CategoriesSdk_) {
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
+        Notify = _Notify_;
+        CategoriesSdk = _CategoriesSdk_;
         $rootScope.hasManageSettingsPermission = function () {
             return true;
         };
@@ -29,18 +33,26 @@ describe('setting categories controller', function () {
         });
         $rootScope.$digest();
         $rootScope.$apply();
+        spyOn(Notify, 'confirmDelete').and.callThrough();
+        spyOn(CategoriesSdk, 'deleteCategory').and.callThrough();
+
     });
 
     it('should retrieve the categories', function () {
-        expect($scope.categories.length).toEqual(1);
+        $scope.refreshView();
+        expect($scope.categories.length).toEqual(2);
     });
 
     it('should delete tags upon request', function () {
-        $scope.selectedCategories = [{id: 1}];
+        $scope.selectedCategories = [1];
         $scope.deleteCategories();
-    });
-    it('should delete tag upon request', function () {
-        $scope.deleteCategory({id: 1});
+        expect(Notify.confirmDelete).toHaveBeenCalled();
+        expect(CategoriesSdk.deleteCategory).toHaveBeenCalled();
     });
 
+    it('should delete tag upon request', function () {
+        $scope.deleteCategory({id: 1});
+        expect(Notify.confirmDelete).toHaveBeenCalled();
+        expect(CategoriesSdk.deleteCategory).toHaveBeenCalled();
+    });
 });

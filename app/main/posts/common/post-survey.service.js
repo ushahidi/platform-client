@@ -2,18 +2,18 @@ module.exports = PostSurveyService;
 
 PostSurveyService.$inject = [
     'Util',
-    'FormEndpoint',
     '$rootScope',
     '$q',
-    '_'
+    '_',
+    'SurveysSdk'
 ];
 
 function PostSurveyService(
     Util,
-    FormEndpoint,
     $rootScope,
     $q,
-    _
+    _,
+    SurveysSdk
 ) {
     var PostSurveyService = {
         allowedSurveys : allowedSurveys,
@@ -52,9 +52,7 @@ function PostSurveyService(
     function allowedSurveys() {
         var allowed_forms = $q.defer();
 
-        FormEndpoint.query()
-        .$promise
-        .then(function (forms) {
+        SurveysSdk.getSurveys().then(forms => {
             if ($rootScope.hasPermission('Manage Posts')) {
                 allowed_forms.resolve(forms);
             } else {

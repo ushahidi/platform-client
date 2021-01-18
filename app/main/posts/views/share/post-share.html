@@ -1,4 +1,4 @@
-<button ng-class="{ 'button' : isButton(), 'button-flat': isAdd()}" ng-click="openShareMenu()">
+<a ng-class="{ 'button' : isButton(), 'button-flat': isAdd()}" ng-click="openShareMenu()">
 		<div class="loading" ng-if="loading">
 			<div class="line"></div>
 			<div class="line"></div>
@@ -10,4 +10,4 @@
 	<span ng-class="{'button-label': isButton(), 'label': !isButton()}" translate="app.share">
 			Share {{isButton()}}
 	</span>
-</button>
+</a>

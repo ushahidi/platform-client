@@ -1,6 +1,6 @@
-<div class="form-sheet" ng-repeat="stage in stages | limitTo: 1 - stages.length">
+<div class="form-sheet" ng-repeat="task in tasks | limitTo: 1 - tasks.length">
     <header class="form-sheet-summary">
-        <h1 class="form-sheet-title section-title">{{stage.label}}</h1>
+        <h1 class="form-sheet-title section-title">{{task.translations[activeSurveyLanguage].label || task.label}}</h1>
     </header>
     <div ng-show="stage.show_when_published" class="alert">
         <p translate="survey.task_visible_when_published">This task will be visible when post is published</p>
@@ -10,23 +10,24 @@
         <p>This task is marked for internal use only. It is not seen by users when they create a post.</p>
     </div>
     <div class="form-field switch">
-        <label translate="post.task_completed" ng-class="{'required': stage.required}">Task completed</label>
+        <label translate="post.task_completed" ng-class="{'required': task.required}">Task completed</label>
         <div class="toggle-switch">
             <input
                 class="tgl"
-                ng-attr-id="{{ 'toggle-complete-' + stage.id }}"
+                ng-attr-id="{{ 'toggle-complete-' + task.id }}"
                 type="checkbox"
-                ng-checked="stageIsComplete(stage.id)"
-                ng-click="toggleStageCompletion(stage.id)">
-            <label class="tgl-btn" for="toggle-complete-{{stage.id}}" ng-attr-id="{{ 'toggle-complete-label-' + stage.id }}"></label>
+                ng-checked="stageIsComplete(task.id)"
+                ng-click="toggleStageCompletion(task.id)">
+            <label class="tgl-btn" for="toggle-complete-{{task.id}}" ng-attr-id="{{ 'toggle-complete-label-' + task.id }}"></label>
 
         </div>
     </div>
     <post-value-edit
-            ng-repeat="attribute in stage.attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+            ng-repeat="field in task.fields | orderBy: 'priority' as filtered_result track by field.id"
             post="post"
             form="form"
             medias="medias"
-            attribute="attribute"
+            attribute="field"
+            active-survey-language="activeSurveyLanguage"
     ></post-value-edit>
 </div>

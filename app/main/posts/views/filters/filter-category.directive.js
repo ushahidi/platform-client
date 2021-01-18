@@ -1,11 +1,13 @@
 module.exports = CategorySelectDirective;
 
-CategorySelectDirective.$inject = ['TagEndpoint', '_', 'PostFilters'];
-function CategorySelectDirective(TagEndpoint, _, PostFilters) {
+CategorySelectDirective.$inject = ['CategoriesSdk', '_', 'PostFilters'];
+function CategorySelectDirective(CategoriesSdk, _, PostFilters) {
     return {
         restrict: 'E',
         replace: true,
-        scope: {},
+        scope: {
+            userLanguage:'='
+        },
         require: 'ngModel',
         link: CategorySelectLink,
         template: require('./filter-category.html')
@@ -25,7 +27,7 @@ function CategorySelectDirective(TagEndpoint, _, PostFilters) {
 
         function activate() {
             // Load categories from server
-            TagEndpoint.query().$promise.then(function (result) {
+            CategoriesSdk.getCategories().then(function (result) {
                 scope.categories = result;
                 // assign children to their parent categories
                 _.each(scope.categories, function (category) {

@@ -13,15 +13,20 @@ function AddPostSurveyListDirective() {
 
 AddPostSurveyListController.$inject = [
     '$scope',
-    '$location'
+    '$location',
+    'TranslationService'
 ];
 
 function AddPostSurveyListController(
     $scope,
-    $location
+    $location,
+    TranslationService
 ) {
 
     $scope.handleClick = handleClick;
+    TranslationService.getLanguage().then(language=>{
+        $scope.userLanguage = language;
+    });
 
     function handleClick(form) {
         $scope.closeMainsheet();

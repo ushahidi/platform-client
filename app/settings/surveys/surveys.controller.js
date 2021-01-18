@@ -1,25 +1,22 @@
+/* eslint-disable quotes */
 module.exports = [
     '$scope',
     '$rootScope',
     '$translate',
     '$location',
-    '$q',
-    'FormEndpoint',
-    'FormStageEndpoint',
     'Notify',
     '_',
     'Features',
+    'SurveysSdk',
 function (
     $scope,
     $rootScope,
     $translate,
     $location,
-    $q,
-    FormEndpoint,
-    FormStageEndpoint,
     Notify,
     _,
-    Features
+    Features,
+    SurveysSdk
 ) {
 
     // Change layout class
@@ -43,8 +40,9 @@ function (
 
     // Get all the forms for display
     $scope.refreshForms = function () {
-        FormEndpoint.queryFresh().$promise.then(function (response) {
-            $scope.forms = response;
+        SurveysSdk.getSurveys().then(function (forms) {
+            $scope.forms = forms;
+            $scope.$apply();
         });
     };
 
@@ -57,9 +55,7 @@ function (
                 return;
             }
 
-            FormEndpoint.delete({
-                id: survey.id
-            }).$promise.then(function () {
+            SurveysSdk.deleteSurvey(survey.id).then(function () {
                 Notify.notify('notify.form.destroy_form_success', { name: survey.name });
                 $scope.refreshForms();
             }, $scope.handleResponseErrors);
@@ -70,5 +66,17 @@ function (
         Notify.apiErrors(errorResponse);
     };
 
+    $scope.getLanguages = function (enabled_languages) {
+        let languages = [enabled_languages.default, ...enabled_languages.available];
+        languages = _.without(languages, "");
+        if (languages.length > 0) {
+            let languageString = languages.length > 1 ? $translate.instant('translations.languages') : $translate.instant('translations.language');
+            _.each(languages,(language, index) => {
+                let divider = index !== 0 ? ',' : ':';
+                languageString = `${languageString + divider} ${$translate.instant(`languages.${language}`)}`;
+        });
+            return languageString;
+        }
+    }
     $scope.refreshForms();
 }];

@@ -8,7 +8,9 @@
               value="category.id"
               checklist-model="selectedCategories"
           >
-          <bdi>{{ ::category.tag }}</bdi>
+          <bdi ng-if="category.translations[userLanguage].tag">{{category.translations[userLanguage].tag}}</bdi>
+          <bdi ng-if="!category.translations[userLanguage].tag">{{category.tag}}</bdi>
+
       </label>
       <div
           class="form-field checkbox"
@@ -22,7 +24,8 @@
             value="child.id"
             ng-selected="selectedCategories.indexOf(category.id) >-1"
           >
-          <bdi>{{ ::child.tag }}</bdi>
+          <bdi ng-if="child.translations[userLanguage].name ">{{child.translations[userLanguage].tag}}</bdi>
+          <bdi ng-if="!child.translations[userLanguage].name ">{{child.tag}}</bdi>
         </label>
       </div>
     </div>
