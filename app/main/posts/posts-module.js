@@ -18,6 +18,7 @@ angular.module('ushahidi.posts', [])
 .directive('postVideoView', require('./detail/post-video-value.directive.js'))
 .directive('postDetailMap', require('./detail/map.directive.js'))
 .directive('postDetailData', require('./detail/post-detail-data.directive.js'))
+.directive('postCategoryValue', require('./detail/post-category-value.directive.js'))
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
 // Create / Edit Screens
@@ -40,7 +41,8 @@ angular.module('ushahidi.posts', [])
 .directive('filterPostOrderAscDesc', require('./views/filters/filter-post-order-asc-desc.directive.js'))
 .directive('filterUnlockedOnTop', require('./views/filters/filter-unlocked-on-top.directive.js'))
 .directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
-
+.directive('surveyLanguageSelector', require('./common/survey-language-selector.directive.js'))
+.directive('postTranslationEditor', require('./modify/post-translation-editor.directive.js'))
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
 .directive('postViewMap', require('./views/post-view-map.directive.js'))

@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['FormEndpoint', 'PostLockService', '$rootScope'];
-function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
+PostCardDirective.$inject = ['PostLockService', '$rootScope'];
+function PostCardDirective(PostLockService, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -28,16 +28,6 @@ function PostCardDirective(FormEndpoint, PostLockService, $rootScope) {
             }
 
             function activate() {
-                loadForm($scope.post.form);
-            }
-
-            function loadForm(form) {
-                // Replace form with full object
-                if (form) {
-                    FormEndpoint.get({id: form.id}, function (form) {
-                        $scope.post.form = form;
-                    });
-                }
             }
 
             function clickAction(evt) {

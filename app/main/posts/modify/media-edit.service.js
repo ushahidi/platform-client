@@ -19,28 +19,37 @@ function (
         saveMedia: function (medias, post) {
             var deferred = $q.defer();
             var calls = [];
-
+            let fields = _.map(post.post_content, (task)=>{
+                return task.fields;
+            });
+            fields = _.flatten(fields);
             // Loop over medias and check for changes
             _.each(medias, function (media, key) {
                 // Check if media needs to be updated
+                let mediaField = _.filter(fields, (field)=>{
+                    if (field.id === parseInt(key)) {
+                        return field;
+                    }
+                });
                 if (media.changed) {
                     // Checking if media is marked for deletion
                     if (media.deleted) {
                         MediaEditService.deleteMedia(media.id);
-                        post.values[key][0] = null;
+                        mediaField[0].value.value = null;
                         // Check if new media or if the media file has changed
                         // otherwise just update the caption
                     // Check if a new file was uploaded
                     } else if (media.file) {
                         calls.push(MediaEditService.uploadFile(media).then(function (media) {
-                            post.values[key][0] = media ? media.id : null;
+                            //TODO: Add correct place to save id
+                            mediaField[0].value.value = media ? media.id : null;
                         }));
                     // Otherwise update the media as it has changed
                     } else {
                         // Remove irrelevant fields
                         delete media.changed;
                         calls.push(MediaEditService.update(media).then(function (media) {
-                            post.values[key][0] = media ? media.id : null;
+                            mediaField[0].value.value = media ? media.id : null;
                         }));
                     }
                 }

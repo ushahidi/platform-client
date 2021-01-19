@@ -1,11 +1,13 @@
 module.exports = FormSelectDirective;
 
-FormSelectDirective.$inject = ['FormEndpoint'];
-function FormSelectDirective(FormEndpoint) {
+FormSelectDirective.$inject = ['$rootScope', 'SurveysSdk', 'TranslationService'];
+function FormSelectDirective($rootScope, SurveysSdk, TranslationService) {
     return {
         restrict: 'E',
         replace: true,
-        scope: {},
+        scope: {
+            userLanguage:'='
+        },
         require: 'ngModel',
         link: FormSelectLink,
         template: require('./filter-form.html')
@@ -16,7 +18,9 @@ function FormSelectDirective(FormEndpoint) {
         if (!ngModel) {
             return;
         }
-
+        $rootScope.$on('language:changed', function () {
+            getUserLanguage();
+        });
         scope.forms = [];
         scope.selectedForms = [];
         scope.toggleAll = toggleAll;
@@ -32,12 +36,22 @@ function FormSelectDirective(FormEndpoint) {
         }
         function activate() {
             // Load forms
-            scope.forms = FormEndpoint.query();
+            SurveysSdk.getSurveys().then(surveys => {
+                scope.forms = surveys;
+                scope.$apply();
+            });
 
             scope.$watch('selectedForms', saveValueToView, true);
             scope.$watch(() => ngModel.$viewValue, renderModelValue, true);
             ngModel.$render = renderModelValue;
         }
+
+        function getUserLanguage () {
+            TranslationService.getLanguage().then(language => {
+                scope.userLanguage = language;
+            });
+        }
+
         function renderModelValue() {
             // Update selectedForms w/o breaking references used by checklist-model
             Array.prototype.splice.apply(scope.selectedForms, [0, scope.selectedForms.length].concat(ngModel.$viewValue));

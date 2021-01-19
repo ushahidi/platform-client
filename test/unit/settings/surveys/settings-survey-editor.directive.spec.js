@@ -12,7 +12,6 @@ describe('setting survey editor directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
 
-
         var testApp = makeTestApp();
 
         testApp.directive('surveyEditor', require('app/settings/surveys/survey-editor.directive'))
@@ -38,12 +37,11 @@ describe('setting survey editor directive', function () {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $compile = _$compile_;
-
         Notify = _Notify_;
         $location = _$location_;
 
-        spyOn($location, 'path');
-        spyOn(Notify, 'limit');
+        spyOn($location, 'path').and.callThrough();
+        spyOn(Notify, 'limit').and.callThrough();
 
         mockFormEndpoint = {
             queryFresh : function () {
@@ -60,7 +58,7 @@ describe('setting survey editor directive', function () {
         mockFeatures = {
             limit: 2,
             loadFeatures : function () {
-                return $q.resolve();
+                return $q.resolve(true);
             },
             getLimit : function () {
                 return this.limit;
@@ -75,32 +73,35 @@ describe('setting survey editor directive', function () {
         element = '<survey-editor></survey-editor>';
         element = $compile(element)($scope);
         $scope.$digest();
-    }
 
+    }
+// Activate-function
     it('should redirect if over survey limit', function () {
         mockFeatures.limit = 3;
-
         compile();
-
-        expect(Notify.limit).toHaveBeenCalled();
-        expect($location.path).toHaveBeenCalled();
+        setTimeout(function() {
+            expect(Notify.limit).toHaveBeenCalled();
+            expect($location.path).toHaveBeenCalled()
+        }, 900);
     });
 
     it('should not redirect if under survey limit', function () {
         mockFeatures.limit = 5;
 
         compile();
-
+        setTimeout(function() {
         expect(Notify.limit).not.toHaveBeenCalled();
         expect($location.path).not.toHaveBeenCalled();
+        }, 900);
     });
 
     it('should not redirect if NO survey limit', function () {
         mockFeatures.limit = true;
 
         compile();
-        expect(Notify.limit).not.toHaveBeenCalled();
-        expect($location.path).not.toHaveBeenCalled();
+        setTimeout(function() {
+            expect(Notify.limit).not.toHaveBeenCalled();
+            expect($location.path).not.toHaveBeenCalled();
+        }, 900);
     });
-
 });

@@ -44,8 +44,6 @@ describe('post value directive', function () {
     }));
 
     describe('test directive functions', function () {
-        it('should set the value var if the type if relation', function () {
-            expect(typeof (isolateScope.value[0])).toEqual('object');
-        });
+
     });
 });

@@ -8,7 +8,9 @@
     </div>
     <div class="form-field checkbox" ng-repeat="(index, form) in forms">
         <label>
-            <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms"> <bdi>{{ ::form.name }}</bdi>
+            <input checklist-value="form.id" checklist-model="selectedForms" type="checkbox" name="selectedForms"> 
+            <bdi ng-if="form.translations[userLanguage].name ">{{form.translations[userLanguage].name}}</bdi>
+            <bdi ng-if="!form.translations[userLanguage].name">{{form.name}}</bdi>
         </label>
     </div>
     <div class="form-field checkbox">
