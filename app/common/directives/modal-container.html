@@ -16,7 +16,7 @@
             </span>
         </h3>
         <modal-content></modal-content>
-        <ush-slider inside-modal="true"></ush-slider>
+        <ush-slider ng-if="sliderPresent" inside-modal="true"></ush-slider>
     </div>
     <div class="modal-overlay" ng-click="closeButtonClicked('overlay')"></div>
 </div>

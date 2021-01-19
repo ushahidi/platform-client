@@ -51,7 +51,8 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
             return scope.$new();
         }
 
-        function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
+        function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton, sliderPresent) {
+            $scope.sliderPresent = sliderPresent;
             // Clean up any previous modal content
             cleanUpModal();
             // Create new scope and keep it to destroy when done with the modal
