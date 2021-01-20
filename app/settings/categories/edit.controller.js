@@ -158,7 +158,9 @@ function (
         return true;
     }
 
-
+    function normalizeRole(role) {
+        return (_.isArray(role) && role.length === 0) ? null : role;
+    }
     function saveCategory() {
         // Set processing to disable user actions
         $scope.processing = true;
@@ -166,11 +168,12 @@ function (
         //Ensure slug is updated to tag
         $scope.category.slug = $scope.category.tag;
         $scope.category.base_language = $scope.category.enabled_languages.default;
+        $scope.category.role = normalizeRole($scope.category.role);
         // If child category with new parent
         if ($scope.category.parent_id && $scope.category.parent_id !== $scope.category.parent_id_original) {
             let parent = _.findWhere($scope.parents, { id: $scope.category.parent_id });
             // apply new permissions to child category
-            $scope.category.role = parent.role;
+            $scope.category.role = normalizeRole(parent.role)
         }
         // Save category
         CategoriesSdk.saveCategory($scope.category)
