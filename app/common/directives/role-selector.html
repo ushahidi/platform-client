@@ -1,5 +1,5 @@
     <!--// Who can add //-->
-    <fieldset ng-show="roles.length">
+    <fieldset ng-if="roles.length">
         <legend translate="{{title}}"></legend>
         <div
             class="form-field radio icon-input"
@@ -56,7 +56,7 @@
                         checklist-model="model.role"
                         checklist-value="role.name"
                         ng-disabled="role.name === 'admin'"
-                        ng-checked="role.name === 'admin'"
+                        ng-selected="role.name === 'admin' || model.role.indexOf(role) > -1"
                     >
                     {{role.display_name | translate}}
                     </label>
