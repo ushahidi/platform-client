@@ -1,5 +1,5 @@
     <!--// Who can add //-->
-    <fieldset>
+    <fieldset ng-show="roles.length">
         <legend translate="{{title}}"></legend>
         <div
             class="form-field radio icon-input"
@@ -38,6 +38,7 @@
                     ng-modaldata-fieldgroup-toggle="add_roles"
                     type="radio"
                     ng-model="everyone"
+                    ng-click="setAdmin()"
                 >
                 <span translate="app.specific_roles">Specific roles...</span>
             </label>
@@ -54,6 +55,8 @@
                         type="checkbox"
                         checklist-model="model.role"
                         checklist-value="role.name"
+                        ng-disabled="role.name === 'admin'"
+                        ng-checked="role.name === 'admin'"
                     >
                     {{role.display_name | translate}}
                     </label>
