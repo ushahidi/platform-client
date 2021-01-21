@@ -37,34 +37,36 @@ function (
     if ($location.path() === '/settings/categories/create') {
         // Allow parent category selector
         $scope.isParent = false;
+        $scope.category = {
+            base_language: 'en',
+            type: 'category',
+            icon: 'tag',
+            color: '',
+            parent_id: null,
+            parent_id_original: null,
+            translations: {}
+        };
+
         // Translate and set add category page title
         $translate('category.add_tag').then(function (title) {
             $scope.title = title;
             $scope.$emit('setPageTitle', title);
         });
-            $scope.category = {
-                base_language: 'en',
-                type: 'category',
-                icon: 'tag',
-                color: '',
-                parent_id: null,
-                parent_id_original: null,
-                translations: {}
-            };
-            TranslationService.getLanguage().then(language => {
-                //active language is the same as default when starting out.
-                $scope.languages = {
-                    default: language,
-                    active: language
-                }
 
-                $scope.languages.available = $scope.category.enabled_languages ? $scope.category.enabled_languages.available : [];
-                $scope.category.enabled_languages = {
-                    default: language,
-                    available: []
-                }
-                $scope.selectedLanguage = language;
-            });
+        TranslationService.getLanguage().then(language => {
+            //active language is the same as default when starting out.
+            $scope.languages = {
+                default: language,
+                active: language
+            }
+
+            $scope.languages.available = $scope.category.enabled_languages ? $scope.category.enabled_languages.available : [];
+            $scope.category.enabled_languages = {
+                default: language,
+                available: []
+            }
+            $scope.selectedLanguage = language;
+        });
     } else {
         // Translate and set edit category page title
         $translate('category.edit_tag').then(function (title) {

@@ -56,7 +56,7 @@ function (
                 var shortCode = lang.substr(0,2).toLowerCase();
                 require(['moment/locale/' + shortCode + '.js'], function () {
                     moment.locale(shortCode);
-                });
+                }, () => { console.error('Failed to load locale: ' + shortCode) });
             });
 
             // Translating and setting page-title

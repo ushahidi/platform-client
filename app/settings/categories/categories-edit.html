@@ -139,7 +139,7 @@
                     <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
                 </div>
             </div>
-            
+
               <!-- Who can see and add -->
               <role-selector model="category" title="'app.who_can_see_this_category'" ng-show="!category.parent_id"></role-selector>
               <div class="form-field" ng-show="category.parent_id">
@@ -150,7 +150,7 @@
               </div>
             </div>
           </form>
-          
+
           <div class="form-sheet" ng-show="category.id && (languages.default === languages.active)">
              <div class="form-sheet-summary">
                  <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
