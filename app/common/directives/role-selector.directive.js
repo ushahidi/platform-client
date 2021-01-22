@@ -31,7 +31,7 @@ function RoleSelectorController($scope, RoleEndpoint, $translate, _) {
     function setAdmin() {
         // adding admin to roles_allowed if not already there
         let admin = _.findWhere($scope.roles, {name: 'admin'});
-        if ($scope.model.role === null) {
+        if (!$scope.model.role) {
             $scope.model.role = [];
         }
         if (_.indexOf($scope.model.role, admin.name) === -1) {
