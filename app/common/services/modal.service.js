@@ -17,9 +17,9 @@ function ModalService($rootScope, $q, $templateRequest) {
         setState: setState
     };
 
-    function openTemplate(template, title, icon, scope, closeOnOverlayClick, showCloseButton, sliderPresent) {
+    function openTemplate(template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('modal:open', template, title, icon, scope, closeOnOverlayClick, showCloseButton, sliderPresent);
+            $rootScope.$emit('modal:open', template, title, icon, scope, closeOnOverlayClick, showCloseButton);
         });
     }
 

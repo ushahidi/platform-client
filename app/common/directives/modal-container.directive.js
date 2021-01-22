@@ -24,6 +24,9 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
         $scope.showCloseButton = true;
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
+        $rootScope.$on('activate:modal-slider', () => {
+            $scope.sliderOpen = true;
+        });
 
         var templateScope;
         var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
@@ -51,8 +54,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
             return scope.$new();
         }
 
-        function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton, sliderPresent) {
-            $scope.sliderPresent = sliderPresent;
+        function openModal(ev, template, title, icon, scope, closeOnOverlayClick, showCloseButton) {
             // Clean up any previous modal content
             cleanUpModal();
             // Create new scope and keep it to destroy when done with the modal
