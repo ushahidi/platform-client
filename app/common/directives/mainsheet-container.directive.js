@@ -1,8 +1,8 @@
 module.exports = MainsheetContainer;
 
-MainsheetContainer.$inject = ['$rootScope', '$compile', 'MainsheetService'];
+MainsheetContainer.$inject = ['$timeout', '$rootScope', '$compile', 'MainsheetService', 'FocusTrap'];
 
-function MainsheetContainer($rootScope, $compile, MainsheetService) {
+function MainsheetContainer($timeout, $rootScope, $compile, MainsheetService, FocusTrap) {
     return {
         restrict: 'E',
         scope: true,
@@ -20,6 +20,7 @@ function MainsheetContainer($rootScope, $compile, MainsheetService) {
 
         // Mainsheet content element
         var mainsheetContent = $element.find('mainsheet-content');
+        let trap = FocusTrap.createFocusTrap('.mainsheet-window');
 
         // Bind to mainsheet service open/close events
         MainsheetService.onOpen(openMainsheet, $scope);
@@ -38,7 +39,7 @@ function MainsheetContainer($rootScope, $compile, MainsheetService) {
             return scope.$new();
         }
 
-        function openMainsheet(event, template, title, scope) {
+        function openMainsheet(event, template, title, scope, showCloseButton) {
 
             // Clean up any previous mainsheet content
             cleanUpMainsheet();
@@ -52,7 +53,17 @@ function MainsheetContainer($rootScope, $compile, MainsheetService) {
             mainsheetContent.html(template);
             $compile(mainsheetContent)(templateScope);
 
+            $timeout(function () {
+                trap.activate();
+            });
             $scope.title = title;
+
+            // If showCloseButton isn't passed, default to true
+            if (typeof showCloseButton === 'undefined') {
+                $scope.showCloseButton = true;
+            } else {
+                $scope.showCloseButton = showCloseButton;
+            }
 
             $scope.showMainsheet = true;
             MainsheetService.setState(true);
@@ -61,6 +72,7 @@ function MainsheetContainer($rootScope, $compile, MainsheetService) {
         function closeMainsheet() {
             $scope.showMainsheet = false;
             MainsheetService.setState(false);
+            trap.deactivate();
             cleanUpMainsheet();
         }
 
