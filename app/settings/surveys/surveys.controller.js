@@ -25,7 +25,6 @@ function (
     if ($rootScope.hasManageSettingsPermission() === false) {
         return $location.path('/');
     }
-
     $translate('nav.posts_and_entities').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
@@ -39,11 +38,14 @@ function (
     });
 
     // Get all the forms for display
+    //@QUESTION-jan26: WHY?
     $scope.refreshForms = function () {
-        SurveysSdk.getSurveys().then(function (forms) {
-            $scope.forms = forms;
-            $scope.$apply();
-        });
+        if ($location.path('/settings/surveys')) {
+            return SurveysSdk.getSurveys(['id', 'name', 'translations']).then(function (forms) {
+                $scope.forms = forms;
+                $scope.$apply();
+            });
+        }
     };
 
     $scope.deleteSurvey = function (survey) {

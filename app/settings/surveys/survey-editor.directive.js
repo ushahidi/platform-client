@@ -189,7 +189,9 @@ function SurveyEditorController(
             $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
-        loadAvailableForms();
+        // @QUESTION-jan-26: WHY? This is the editor, we know what we need
+            // loadAvailableForms();
+
         loadAvailableCategories();
 
         if (!$scope.surveyId) {
@@ -271,7 +273,7 @@ function SurveyEditorController(
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        SurveysSdk.getSurveys($scope.surveyId).then(res => {
+        SurveysSdk.findSurvey($scope.surveyId).then(res => {
             //Getting roles for the survey
             $scope.survey = res;
 

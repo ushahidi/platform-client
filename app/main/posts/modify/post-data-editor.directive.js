@@ -166,16 +166,19 @@ function PostDataEditorController(
 
     function activate() {
         if ($scope.post.form_id) {
-            SurveysSdk.getSurveys($scope.post.form_id).then(result => {
+            SurveysSdk.findSurvey($scope.post.form_id).then(result => {
                 $scope.loadData(result);
             });
-
         } else {
-            SurveysSdk.getSurveys().then(forms => {
-                $scope.forms = forms;
-                $scope.$apply();
-            });
+            console.error('There is no post.form_id for post' + $scope.post.id);
         }
+        // @QUESTION: when would this happen? and why?
+        // else {
+        //     SurveysSdk.getSurveys().then(forms => {
+        //         $scope.forms = forms;
+        //         $scope.$apply();
+        //     });
+        // }
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
