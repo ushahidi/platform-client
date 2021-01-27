@@ -55,8 +55,53 @@ function (
             case 'filters':
                 return ushahidi()
                     .getSurveys(
-                        ['name', 'description', 'targeted_survey', 'everyone_can_create', 'can_create', 'id'], ''
+                        [
+                            'name', 'description', 'targeted_survey', 'everyone_can_create', 'can_create', 'id'
+                        ],
+                        [
+                            'translations', 'enabled_languages'
+                        ]
                     );
+            case 'count':
+                return ushahidi()
+                    .getSurveys(
+                        [
+                            'id'
+                        ],
+                        []
+                    );
+        }
+    }
+
+    const findSurveyTo = function(id, reason) {
+        switch (reason) {
+            case 'edit':
+                return ushahidi()
+                    .findSurvey(
+                        id
+                    );
+                break;
+            case 'delete':
+                return ushahidi()
+                    .findSurvey(
+                        id,
+                        [
+                            'targeted_survey', 'everyone_can_create', 'can_create', 'id'
+                        ]
+                    );
+                break;
+            case 'get_minimal_form':
+                return ushahidi()
+                    .findSurvey(
+                        id,
+                        [
+                            'name', 'color', 'description', 'targeted_survey', 'everyone_can_create', 'can_create', 'id'
+                        ],
+                        [
+                            'translations', 'enabled_languages'
+                        ]
+                    );
+                break;
         }
     }
     const deleteSurvey = function(id) {
@@ -64,5 +109,5 @@ function (
                 .deleteSurvey(id);
     }
 
-    return { getSurveysTo, findSurvey, getSurveys, saveSurvey, deleteSurvey };
+    return { findSurveyTo, getSurveysTo, findSurvey, getSurveys, saveSurvey, deleteSurvey };
 }];

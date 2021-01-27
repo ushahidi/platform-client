@@ -88,7 +88,7 @@ function PostEditorController(
     }
 
     function loadData() {
-        let requests = [SurveysSdk.findSurvey($scope.formId)];
+        let requests = [SurveysSdk.findSurveyTo($scope.formId, 'get_minimal_form')];
         return $q.all(requests).then(function (results) {
             $scope.post.form = results[0];
             $scope.post.post_content = results[0].tasks;

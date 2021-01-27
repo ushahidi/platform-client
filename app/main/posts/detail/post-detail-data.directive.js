@@ -58,7 +58,7 @@ function PostDetailDataController(
         // Load the post form
         if ($scope.post && $scope.post.form_id && !$scope.post.form) {
                 // Set page title to '{form.name} Details' if a post title isn't provided.
-                SurveysSdk.findSurvey($scope.post.form_id, ['name', 'id']).then(form => {
+                SurveysSdk.findSurveyTo($scope.post.form_id, 'get_minimal_form').then(form => {
                     $scope.post.form = form;
                 // Make the first task visible
                 if (!_.isEmpty($scope.post.post_content) && $scope.post.post_content.length > 1) {

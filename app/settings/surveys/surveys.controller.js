@@ -41,7 +41,7 @@ function (
     //@QUESTION-jan26: WHY?
     $scope.refreshForms = function () {
         if ($location.path('/settings/surveys')) {
-            return SurveysSdk.getSurveys(['id', 'name', 'translations']).then(function (forms) {
+            return SurveysSdk.getSurveysTo('list_and_permissions').then(function (forms) {
                 $scope.forms = forms;
                 $scope.$apply();
             });

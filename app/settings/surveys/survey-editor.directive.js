@@ -196,7 +196,7 @@ function SurveyEditorController(
 
         if (!$scope.surveyId) {
 
-            $q.all([Features.loadFeatures(), SurveysSdk.getSurveys()]).then(function (data) {
+            $q.all([Features.loadFeatures(), SurveysSdk.getSurveysTo('count')]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -229,7 +229,7 @@ function SurveyEditorController(
     }
 
     function getInterimId() {
-        var id = 'interim_id_' + $scope.currentInterimId;
+        const id = 'interim_id_' + $scope.currentInterimId;
         $scope.currentInterimId++;
         return id;
     }
@@ -242,7 +242,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        SurveysSdk.getSurveys().then(function (forms) {
+        SurveysSdk.getSurveysTo('list_and_permissions').then(function (forms) {
             $scope.availableSurveys = forms;
         });
     }
