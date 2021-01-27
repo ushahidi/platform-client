@@ -62,7 +62,8 @@ function PostValueEditController(
     }
 
     function addDefaultValue() {
-        if (($scope.attribute.type === 'title' || $scope.attribute.type === 'description')  && $scope.attribute.default) {
+        const isTitleOrDesc =  $scope.attribute.type === 'title' || $scope.attribute.type === 'description';
+        if (isTitleOrDesc && $scope.attribute.default && !$scope.post.id) {
             let fieldType = $scope.attribute.type === 'description' ? 'content' : $scope.attribute.type;
             $scope.post[fieldType] = $scope.attribute.translations[$scope.activeSurveyLanguage] && $scope.attribute.translations[$scope.activeSurveyLanguage].default ? $scope.attribute.translations[$scope.activeSurveyLanguage].default : $scope.attribute.default;
         }
