@@ -48,6 +48,6 @@ function PostShareController(
 
     function openShareMenu() {
         var template = '<share-menu-modal filters="filters" post-id="' + $scope.postId + '"></share-menu-modal>';
-        ModalService.openTemplate(template, 'app.share', 'share', $scope, true, true);
+        ModalService.openTemplate(template, 'app.share', 'share', $scope, true, true, true);
     }
 }

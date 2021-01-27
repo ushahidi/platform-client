@@ -141,6 +141,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
     }
 
     function confirm(confirmText, translateValues) {
+        $rootScope.$broadcast('activate:modal-slider');
         var deferred = $q.defer();
 
         var scope = getScope();
