@@ -51,8 +51,21 @@ function PostValueEditController(
     $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
+    $scope.$watch('activeSurveyLanguage', () =>{
+        if ($scope.form.title && !$scope.form.title.$dirty) {
+            addDefaultValue();
+        }
+        });
 
     function activate() {
+        addDefaultValue();
+    }
+
+    function addDefaultValue() {
+        if (($scope.attribute.type === 'title' || scope.attribute.type === 'description')  && $scope.attribute.default) {
+            let fieldType = $scope.attribute.type === 'description' ? 'content' : $scope.attribute.type;
+            $scope.post[fieldType] = $scope.attribute.translations[$scope.activeSurveyLanguage] && $scope.attribute.translations[$scope.activeSurveyLanguage].default ? $scope.attribute.translations[$scope.activeSurveyLanguage].default : $scope.attribute.default;
+        }
     }
 
     function taskIsMarkedCompleted() {
