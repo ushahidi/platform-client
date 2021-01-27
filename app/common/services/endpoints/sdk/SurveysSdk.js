@@ -52,6 +52,7 @@ function (
     const getSurveysTo = function(reason) {
         switch (reason) {
             case 'list_and_permissions':
+            case 'filters':
                 return ushahidi()
                     .getSurveys(
                         ['name', 'description', 'targeted_survey', 'everyone_can_create', 'can_create', 'id'], ''

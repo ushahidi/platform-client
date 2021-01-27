@@ -36,7 +36,7 @@ function FormSelectDirective($rootScope, SurveysSdk, TranslationService) {
         }
         function activate() {
             // Load forms
-            SurveysSdk.getSurveys(['id', 'name', 'translations']).then(surveys => {
+            SurveysSdk.getSurveysTo('filters').then(surveys => {
                 scope.forms = surveys;
                 scope.$apply();
             });
