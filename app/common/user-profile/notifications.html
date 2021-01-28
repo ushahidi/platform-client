@@ -32,7 +32,7 @@
                    id="{{contact.id || false}}"
                    type="checkbox"
                    ng-model="contact.can_notify">
-            <label class="tgl-btn" for="{{contact.id || false}}"></label>
+            <label class="tgl-btn" for="{{contact.id || false}}" ng-click=handleToggle()></label>
           </div>
         </div>
 
@@ -91,7 +91,7 @@
          >
       <div class="listing-item-primary">
         <h2 class="listing-item-title">
-          <a class="button button-flat"
+          <button class="button button-flat"
              role="button"
              ng-click="toggleActive(contact)"
              translate>
@@ -99,7 +99,7 @@
               <use xlink:href="/img/iconic-sprite.svg#plus"></use>
             </svg>
             contact.button.add
-          </a>
+          </button>
         </h2>
       </div>
 
