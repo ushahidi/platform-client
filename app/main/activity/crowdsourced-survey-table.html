@@ -1,5 +1,5 @@
 <div>
-    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="!noSurveys && crowdsourcedSurveyStatsByForm.length === 0"></loading-dots>
+    <loading-dots-button button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="!noSurveys && crowdsourcedSurveyStatsByForm.length === 0"></loading-dots-button>
     <fieldset ng-if="crowdsourcedSurveyStatsByForm.length >= 1">
         <table>
             <thead>
@@ -10,7 +10,7 @@
                     <th translate="activity.email">Email</th>
                     <th translate="activity.sms">SMS</th>
                     <th translate="activity.twitter">Twitter</th>
-                    
+
                 </tr>
             </thead>
 

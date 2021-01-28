@@ -189,11 +189,6 @@ function SurveyEditorController(
             $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
-        // @QUESTION-jan-26: WHY? This is the editor, we know what we need
-            // loadAvailableForms();
-
-        loadAvailableCategories();
-
         if (!$scope.surveyId) {
 
             $q.all([Features.loadFeatures(), SurveysSdk.getSurveysTo('count')]).then(function (data) {
@@ -244,6 +239,7 @@ function SurveyEditorController(
         // Get available forms for relation field
         SurveysSdk.getSurveysTo('list_and_permissions').then(function (forms) {
             $scope.availableSurveys = forms;
+            $scope.$apply();
         });
     }
 
@@ -500,6 +496,15 @@ function SurveyEditorController(
         let fieldType = getFieldType(field) ? getFieldType(field) : field.label;
         let title = field.id ? $translate.instant('survey.edit_field', {fieldType: fieldType}) : $translate.instant('survey.add_field', {fieldType: fieldType});
         title = title.replace('&amp;', '&');
+        switch (field.type) {
+            case 'relation':
+                loadAvailableForms();
+                break;
+            case 'tags':
+                loadAvailableCategories();
+                break;
+        }
+
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 

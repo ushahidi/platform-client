@@ -5,13 +5,17 @@ module.exports = [
     'Editor',
     'Notify',
     'UshahidiSdk',
+    'CategoriesSdk',
+    'SurveysSdk',
 function (
     $rootScope,
     ModalService,
     _,
     Editor,
     Notify,
-    UshahidiSdk
+    UshahidiSdk,
+    CategoriesSdk,
+    SurveysSdk
     ) {
     return {
         restrict: 'E',
@@ -49,6 +53,7 @@ function (
                  * that makes the scroll get stuck inside the editor-area */
                 let editor = document.querySelector('#editSection');
                 editor.style.height = `${editorHeight + 60}px`;
+
             };
 
             initiateEditor();

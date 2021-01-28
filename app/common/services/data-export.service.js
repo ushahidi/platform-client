@@ -25,7 +25,7 @@ function DataExport($rootScope, ExportJobEndpoint,  Notify, $window, $timeout, $
         var queries = [];
         ExportJobEndpoint.queryFresh({user: 'me'}).$promise.then(function (response) {
             _.each(response, function (job) {
-                if (job.status !== 'SUCCESS' && job.status !== 'FAILED') {
+                if (job.status !== 'SUCCESS' && job.status !== 'FAILED' && job.status !== null) {
                     queries.push(ExportJobEndpoint.getFresh({id: job.id}));
                 }
             });
