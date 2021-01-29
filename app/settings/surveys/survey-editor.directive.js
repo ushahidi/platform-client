@@ -263,6 +263,7 @@ function SurveyEditorController(
                 })
                 .filter()
                 .value();
+            $scope.$apply();
         });
     }
 
