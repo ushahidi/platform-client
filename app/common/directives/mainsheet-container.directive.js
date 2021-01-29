@@ -1,8 +1,8 @@
 module.exports = MainsheetContainer;
 
-MainsheetContainer.$inject = ['$timeout', '$rootScope', '$compile', 'MainsheetService', 'FocusTrap'];
+MainsheetContainer.$inject = ['$rootScope', '$compile', 'MainsheetService', 'FocusTrap'];
 
-function MainsheetContainer($timeout, $rootScope, $compile, MainsheetService, FocusTrap) {
+function MainsheetContainer($rootScope, $compile, MainsheetService, FocusTrap) {
     return {
         restrict: 'E',
         scope: true,
@@ -53,7 +53,7 @@ function MainsheetContainer($timeout, $rootScope, $compile, MainsheetService, Fo
             mainsheetContent.html(template);
             $compile(mainsheetContent)(templateScope);
 
-            $timeout(function () {
+            angular.element(mainsheetContent).ready(function () {
                 trap.activate();
             });
             $scope.title = title;
