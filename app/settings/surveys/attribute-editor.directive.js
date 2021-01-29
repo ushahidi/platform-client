@@ -5,17 +5,13 @@ module.exports = [
     'Editor',
     'Notify',
     'UshahidiSdk',
-    'CategoriesSdk',
-    'SurveysSdk',
 function (
     $rootScope,
     ModalService,
     _,
     Editor,
     Notify,
-    UshahidiSdk,
-    CategoriesSdk,
-    SurveysSdk
+    UshahidiSdk
     ) {
     return {
         restrict: 'E',
