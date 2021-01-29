@@ -165,6 +165,9 @@ angular.module('app',
     .factory('UshahidiSdk', function () {
         return UshahidiSdk;
     })
+    .factory('FocusTrap', function () {
+        return require('focus-trap');
+    })
     .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
