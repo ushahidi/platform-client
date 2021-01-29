@@ -70,9 +70,11 @@ function PostDataEditorController(
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
-    $scope.loadData = loadData;
+    $scope.adjustPost = adjustPost;
     $scope.isSaving = LoadingProgress.getSavingState;
     $scope.removeLanguage = removeLanguage;
+    $scope.loadSurvey = loadSurvey;
+
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
@@ -166,27 +168,27 @@ function PostDataEditorController(
 
     function activate() {
         if ($scope.post.form_id) {
-            SurveysSdk.findSurvey($scope.post.form_id).then(result => {
-                $scope.post.form = result;
-                $scope.$apply();
-                $scope.loadData();
-            });
+            loadSurvey($scope.post.form_id);
         } else {
-            console.error('There is no post.form_id for post' + $scope.post.id);
+            SurveysSdk.getSurveysTo('list_and_permissions').then(forms => {
+                $scope.forms = forms;
+                $scope.$apply();
+            });
         }
-        // @QUESTION: when would this happen? and why?
-        // else {
-        //     SurveysSdk.getSurveys().then(forms => {
-        //         $scope.forms = forms;
-        //         $scope.$apply();
-        //     });
-        // }
         $scope.medias = {};
         $scope.savingText = $translate.instant('app.saving');
         $scope.submittingText = $translate.instant('app.submitting');
     }
 
-    function loadData() {
+    function loadSurvey(id) {
+        SurveysSdk.findSurvey(id).then(result => {
+            $scope.post.form = result;
+            $scope.$apply();
+            $scope.adjustPost();
+        });
+    }
+
+    function adjustPost() {
         $scope.post.form_id = $scope.post.form.id;
         $scope.getLock();
         $scope.post.translations = Object.assign({}, $scope.post.translations);
