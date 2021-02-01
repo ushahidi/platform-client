@@ -75,7 +75,7 @@ function (
             };
 
             $scope.canDisplay = function () {
-                return $scope.editField.input !== 'upload' && $scope.editField.type !== 'title' && $scope.editField.type !== 'description' && $scope.editField.input !== 'tags';
+                return $scope.editField.input !== 'upload' && $scope.editField.input !== 'tags';
             };
 
             $scope.canMakePrivate = function () {
