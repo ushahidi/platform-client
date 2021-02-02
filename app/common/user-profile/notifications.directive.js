@@ -132,12 +132,6 @@ module.exports = [
                     contact.active = !contact.active;
                 };
 
-                $scope.handleToggle = function () {
-                    var toggleButton = document.getElementsByClassName('tgl');
-                    console.log(toggleButton);
-                    toggleButton.checked = !toggleButton.checked;
-                };
-
                 // Only enable Save if active contacts are valid
                 $scope.canUpdate = function () {
                     // Get contacts that are currently being edited
