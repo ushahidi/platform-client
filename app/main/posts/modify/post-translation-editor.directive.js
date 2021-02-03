@@ -1,5 +1,3 @@
-const { forEach } = require('angular');
-
 module.exports = PostTranslationEditor;
 
 PostTranslationEditor.$inject = [];
