@@ -25,7 +25,7 @@ function PostCategoryEditorController($scope, _) {
     $scope.selectAll = selectAll;
     $scope.isSelectAll = false;
     $scope.toggleCategory = toggleCategory;
-
+    $scope.hidden = [];
     function activate () {
             groupCategories();
             convertSelected();
@@ -37,14 +37,21 @@ function PostCategoryEditorController($scope, _) {
     activate();
 
     function groupCategories () {
+        $scope.hidden = _.filter($scope.available, category => {
+           if (!_.isUndefined(category._ush_hidden) && category._ush_hidden === true) {
+               return category;
+           }
+        });
         $scope.parents = _.filter($scope.available, category => {
-            if (!category.parent_id) {
+            if (!category.parent_id && _.isUndefined(category._ush_hidden)) {
                 return category;
             }
         });
     }
     function convertSelected() {
-        $scope.selected = _.pluck($scope.selected, 'id');
+        const selectedButHidden = _.pluck($scope.hidden, 'id');
+        const selected = _.pluck($scope.selected, 'id');
+        $scope.selected = [...selected, ...selectedButHidden];
     }
 
     function toggleParent(parent, childId) {

@@ -61,13 +61,13 @@
             <div class="form-sheet">
               <!-- Title -->
               <div class="form-field">
-                <label translate>category.editor.name</label>
-                <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
+                <label for="category-name" translate>category.editor.name</label>
+                <input id="category-name" type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
               </div>
               <!-- Description -->
               <div class="form-field">
-                <label translate>category.editor.description</label>
-                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
+                <label for="category-description" translate>category.editor.description</label>
+                <textarea id="category-description" name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
               </div>
               <!-- Parent/child-relations -->
               <fieldset
@@ -139,7 +139,7 @@
                     <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
                 </div>
             </div>
-            
+
               <!-- Who can see and add -->
               <role-selector model="category" title="'app.who_can_see_this_category'" ng-show="!category.parent_id"></role-selector>
               <div class="form-field" ng-show="category.parent_id">
@@ -150,7 +150,7 @@
               </div>
             </div>
           </form>
-          
+
           <div class="form-sheet" ng-show="category.id && (languages.default === languages.active)">
              <div class="form-sheet-summary">
                  <h3 class="form-sheet-title" translate>category.delete_this_category</h3>

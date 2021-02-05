@@ -61,6 +61,10 @@ function CollectionModeContextController(
                 $scope.notification = notifications[0];
             }
         }, angular.noop);
+
+        $rootScope.$on('collection:update', function (ev, data) {
+            $scope.collection = data;
+        });
     }
 
     function canEdit(collection) {

@@ -31,12 +31,17 @@
             class="form-field init required"
             ng-class="{'error': editForm.form.$invalid && editForm.form.$dirty, 'success': !editForm.form.$invalid && editForm.form.$dirty}"
           >
-
           <p translate="post.unstructured.add_survey.info" translate-values="{source:post.source}"></p>
           <label translate>post.unstructured.add_survey.title</label>
-              <select
+          <div class="loading" aria-label="Loading forms" ng-if="!forms" translate>
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+          </div>
+            <select
+              ng-if="forms"
               class="custom-select"
-              ng-change="loadData(form)"
+              ng-change="loadData()"
               ng-model="post.form"
             >
               <option selected disabled translate>post.unstructured.add_survey.choose</option>              
