@@ -66,8 +66,8 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
             modalContent.html(template);
             $compile(modalContent)(templateScope);
 
-            // we need timeout here to make sure the content is ready
-            $timeout(function () {
+            // we need to check that the content is ready before activating the focus-trap
+            angular.element(modalContent).ready(function () {
                 trap.activate();
             });
             $scope.title = title;
