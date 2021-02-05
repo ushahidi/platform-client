@@ -22,9 +22,9 @@
                 </div>
                 <div class="listing-item-primary">
                     <h2 class="listing-item-title">
-                        <a ng-click="collectionClickHandler(collection)">
+                        <button class="button-export" ng-click="collectionClickHandler(collection)">
                             {{collection.name}}
-                        </a>
+                        </button>
                     </h2>
                     <p class="listing-item-secondary" ng-if="collection.user_id">
                         <span translate>
