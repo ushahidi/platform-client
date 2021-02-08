@@ -167,7 +167,9 @@ function PostDataEditorController(
     function activate() {
         if ($scope.post.form_id) {
             SurveysSdk.getSurveys($scope.post.form_id).then(result => {
-                $scope.loadData(result);
+                $scope.post.form = result;
+                $scope.$apply();
+                $scope.loadData();
             });
 
         } else {
@@ -181,8 +183,8 @@ function PostDataEditorController(
         $scope.submittingText = $translate.instant('app.submitting');
     }
 
-    function loadData(form) {
-        $scope.post.form = form;
+    function loadData() {
+        $scope.post.form_id = $scope.post.form.id;
         $scope.getLock();
         $scope.post.translations = Object.assign({}, $scope.post.translations);
         if (!$scope.post.enabled_languages) {
@@ -190,7 +192,7 @@ function PostDataEditorController(
         }
         $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available]};
 
-        if (!$scope.post.post_content) {
+        if (!$scope.post.post_content || $scope.post.post_content.length === 0) {
             $scope.post.post_content = $scope.post.form.tasks;
         }
             // Initialize values on empty post-fields

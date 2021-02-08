@@ -12,7 +12,7 @@
     </button>
 
     <div class="mode-context-body">
-        <p markdown-to-html="nav.site.description"></p>
+        <p ng-if="nav.site.description" markdown-to-html="nav.site.description"></p>
 
         <!-- <saved-search-create></saved-search-create> -->
         <mode-context-form-filter></mode-context-form-filter>
