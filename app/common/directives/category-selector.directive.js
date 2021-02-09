@@ -40,22 +40,22 @@ function CategorySelectorController($scope, _) {
         $scope.categories = $scope.available;
         if ($scope.displayWarning) {
             $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
-            let available = [category.enabled_languages.default, ...category.enabled_languages.available];
-            if (available.indexOf($scope.activeLanguage.language) === -1) {
-                return category;
+                let available = [category.enabled_languages.default, ...category.enabled_languages.available];
+                if (available.indexOf($scope.activeLanguage.language) === -1) {
+                    return category;
+                }
+            });
+
+        }
+        // with v5, the selected categories are delivered as objects
+        $scope.selected = _.map($scope.selected, category => {
+            if (typeof category === 'object') {
+                return category.id
+            } else {
+                return category
             }
         });
-
-    }
-    // with v4, the selected categories are delivered as objects
-    $scope.selected = _.map($scope.selected, category => {
-        if (typeof category === 'object') {
-            return category.id
-        } else {
-            return category
-        }
-    });
-    // making sure no children are selected without their parents
+        // making sure no children are selected without their parents
         $scope.changeCategories();
     }
 

@@ -41,10 +41,10 @@
             <select
               ng-if="forms"
               class="custom-select"
-              ng-change="loadData()"
+              ng-change="loadSurvey(post.form.id)"
               ng-model="post.form"
             >
-              <option selected disabled translate>post.unstructured.add_survey.choose</option>              
+              <option selected disabled translate>post.unstructured.add_survey.choose</option>
               <option ng-repeat="form in forms" ng-value="form">
                 {{form.translations[languages.default].name || form.name}}
               </option>
@@ -90,7 +90,7 @@
 
           <button class="button-flat" ng-click="cancel()" translate>app.cancel</button>
           <button class="button button-alpha" ng-click="savePost()" ng-if="!isSaving()" translate="">app.save</button>
-          <loading-dots button-class="'button-alpha'" ng-if="isSaving()" disabled=true label="'app.saving'"></loading-dots>
+          <loading-dots-button button-class="'button-alpha'" ng-if="isSaving()" disabled=true label="'app.saving'"></loading-dots-button>
         </div>
       </div>
   </form>

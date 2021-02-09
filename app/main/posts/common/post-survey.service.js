@@ -52,7 +52,7 @@ function PostSurveyService(
     function allowedSurveys() {
         var allowed_forms = $q.defer();
 
-        SurveysSdk.getSurveys().then(forms => {
+        SurveysSdk.getSurveysTo('list_and_permissions').then(forms => {
             if ($rootScope.hasPermission('Manage Posts')) {
                 allowed_forms.resolve(forms);
             } else {

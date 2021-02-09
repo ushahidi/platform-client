@@ -15,7 +15,7 @@
         <div ng-if="editMode()">
             <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
             <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-            <loading-dots button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots>
+            <loading-dots-button button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots-button>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <loading-dots button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots>
+        <loading-dots-button button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots-button>
     </div>
 
     <!-- toolbar -->

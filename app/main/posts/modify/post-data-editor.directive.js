@@ -70,9 +70,11 @@ function PostDataEditorController(
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
-    $scope.loadData = loadData;
+    $scope.adjustPost = adjustPost;
     $scope.isSaving = LoadingProgress.getSavingState;
     $scope.removeLanguage = removeLanguage;
+    $scope.loadSurvey = loadSurvey;
+
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
@@ -166,14 +168,9 @@ function PostDataEditorController(
 
     function activate() {
         if ($scope.post.form_id) {
-            SurveysSdk.getSurveys($scope.post.form_id).then(result => {
-                $scope.post.form = result;
-                $scope.$apply();
-                $scope.loadData();
-            });
-
+            loadSurvey($scope.post.form_id);
         } else {
-            SurveysSdk.getSurveys().then(forms => {
+            SurveysSdk.getSurveysTo('list_and_permissions').then(forms => {
                 $scope.forms = forms;
                 $scope.$apply();
             });
@@ -183,7 +180,15 @@ function PostDataEditorController(
         $scope.submittingText = $translate.instant('app.submitting');
     }
 
-    function loadData() {
+    function loadSurvey(id) {
+        SurveysSdk.findSurvey(id).then(result => {
+            $scope.post.form = result;
+            $scope.$apply();
+            $scope.adjustPost();
+        });
+    }
+
+    function adjustPost() {
         $scope.post.form_id = $scope.post.form.id;
         $scope.getLock();
         $scope.post.translations = Object.assign({}, $scope.post.translations);

@@ -112,6 +112,7 @@ angular.module('ushahidi.common', [
 .directive('addCategory', require('./directives/add-category.directive.js'))
 .directive('categorySelector', require('./directives/category-selector.directive.js'))
 .directive('languageSwitch', require('./directives/language-switch.directive.js'))
+.directive('loadingDotsButton', require('./directives/loading-dots-button.directive.js'))
 .directive('loadingDots', require('./directives/loading-dots.directive.js'))
 .directive('addLanguage', require('./directives/add-language.directive.js'))
 .directive('translationsSwitch', require('./directives/translation-switch.directive.js'))
