@@ -47,15 +47,15 @@ function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurv
         SurveysSdk.getSurveysTo('filters').then(forms => {
             $scope.forms = forms;
             $scope.$apply();
+
+            getPostStats($scope.filters).$promise.then(response => {
+                if (!response || !response.totals || !response.totals[0]) {
+                    return;
+                }
+                updateCounts(response);
+            });
         });
         getUserLanguage();
-        let postCountRequest = getPostStats($scope.filters);
-        $q.all([$scope.forms.$promise, postCountRequest.$promise]).then(function (responses) {
-            if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
-                return;
-            }
-            updateCounts(responses[1]);
-        });
     }
 
     $scope.currentFocusInLabel = null;
