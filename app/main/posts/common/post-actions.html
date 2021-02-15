@@ -10,12 +10,12 @@
 
 
         <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked()">
-          <a ng-click="openEditMode(post.id)">
+          <button ng-click="openEditMode(post.id)" class="button-survey">
               <svg class="iconic" role="img">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
               </svg>
               <span class="label" translate="nav.edit">Edit</span>
-          </a>
+            </button>
         </li>
         <li>
             <!-- Collection toggle link -->
@@ -38,7 +38,7 @@
     <ul>
       <li ng-repeat="status in statuses"
           ng-show="post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked()">
-        <a ng-click="updateStatus(status)">
+        <button ng-click="updateStatus(status)" class="button-survey">
           <svg class="iconic" role="img">
             <use xlink:href="/img/iconic-sprite.svg#globe" ng-if="status=='published'"></use>
             <use xlink:href="/img/iconic-sprite.svg#box" ng-if="status=='archived'"></use>
@@ -47,16 +47,16 @@
           <span class="label" ng-if="status=='published'" translate="post.post_actions.publish">Publish</span>
           <span class="label" ng-if="status=='draft'" translate="post.post_actions.put_under_review">Put under </span>
           <span class="label" ng-if="status=='archived'" translate="post.post_actions.archive">Archive</span>
-        </a>
+        </button>
       </li>
 
       <li ng-show="post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked()">
-        <a ng-click="deletePost()">
+        <button ng-click="deletePost()" class="button-survey">
           <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
           </svg>
           <span class="label" translate="nav.delete">Delete</span>
-        </a>
+        </button>
       </li>
     </ul>
   </div>
