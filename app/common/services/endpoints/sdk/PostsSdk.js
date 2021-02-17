@@ -55,5 +55,31 @@ function (
         return ushahidi()
                 .bulkDelete(ids.map(i => { return {id: i} }));
     }
-    return { findPost, getPosts, savePost, bulkDelete, deletePost, bulkPatch, patchPost };
+
+    const getPostsTo = function(reason) {
+        switch (reason) {
+            case 'count':
+                return ushahidi()
+                    .getPosts(
+                        [
+                            'id'
+                        ],
+                        []
+                    );
+        }
+    }
+
+    const findPostTo = function(id, reason) {
+        switch (reason) {
+            case 'list':
+                return ushahidi()
+                    .findPost(
+                        id,
+                        ['id', 'title'], ['translations', 'enabled_languages']
+                    );
+                break;
+
+        }
+    }
+    return { findPostTo, getPostsTo, findPost, getPosts, savePost, bulkDelete, deletePost, bulkPatch, patchPost };
 }];

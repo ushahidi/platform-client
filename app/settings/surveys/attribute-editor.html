@@ -44,7 +44,9 @@
   <!-- editing/adding categories -->
   <div class="form-field" ng-if="editField.input ==='tags'">
     <label translate="category.which_categories">Which categories should be available</label>
+    <loading-dots button-class="'button-alpha'" not-button="true" disabled=true label="'app.loading'" ng-if="!availableCategories"></loading-dots>
     <category-selector
+        ng-if="availableCategories"
         available="availableCategories"
         selected="editField.options"
         enable-parents="true"
@@ -55,6 +57,7 @@
   <!-- End of editing/adding categories -->
   <div class="form-field" ng-if="editField.input === 'relation'">
     <label translate>survey.field_allowed_relation_survey</label>
+    <loading-dots button-class="'button-alpha'" not-button="true" disabled=true label="'app.loading'" ng-if="!availableSurveys"></loading-dots>
     <div name="visible-to">
       <div class="form-field checkbox" ng-repeat="relationForm in availableSurveys | filter : filterNotCurrentForm">
         <label>

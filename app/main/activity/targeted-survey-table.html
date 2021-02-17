@@ -1,5 +1,5 @@
 <div>
-    <loading-dots button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="!noSurveys && targetedSurveyStatsByForm.length === 0"></loading-dots>
+    <loading-dots-button button-class="'button-gamma button-flat'" label="'app.loading'" ng-if="!noSurveys && targetedSurveyStatsByForm.length === 0"></loading-dots-button>
     <fieldset ng-if="targetedSurveyStatsByForm.length >= 1">
         <table>
             <thead>
@@ -9,7 +9,7 @@
                     <th translate="activity.outbound">Outbound Surveying Messages</th>
                     <th translate="activity.recipients">Unique Recipients of Targeted Survey</th>
                     <th translate="activity.responders">Unique Responders to Targeted Survey</th>
-                    
+
                 </tr>
             </thead>
 

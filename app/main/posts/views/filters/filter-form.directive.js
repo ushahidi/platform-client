@@ -34,9 +34,10 @@ function FormSelectDirective($rootScope, SurveysSdk, TranslationService) {
                 Array.prototype.splice.apply(scope.selectedForms, [0, scope.selectedForms.length]);
             }
         }
+
         function activate() {
             // Load forms
-            SurveysSdk.getSurveys().then(surveys => {
+            SurveysSdk.getSurveysTo('filters').then(surveys => {
                 scope.forms = surveys;
                 scope.$apply();
             });

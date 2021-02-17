@@ -38,8 +38,10 @@ function PostDetailDataController(
     SurveysSdk,
     TranslationService
 ) {
-    $scope.$watch('post', function (post) {
-        activate();
+    $scope.$watch('post', function (post, oldVal) {
+        if (post !== oldVal) {
+            activate();
+        }
     });
 
     $scope.post = $scope.post.data.result;
@@ -53,24 +55,15 @@ function PostDetailDataController(
     activate();
 
     function activate() {
-
         // Load the post form
-        if ($scope.post && $scope.post.form_id) {
+        if ($scope.post && $scope.post.form_id && !$scope.post.form) {
                 // Set page title to '{form.name} Details' if a post title isn't provided.
-                SurveysSdk.getSurveys($scope.post.form_id).then(form => {
+                SurveysSdk.findSurveyTo($scope.post.form_id, 'get_minimal_form').then(form => {
                     $scope.post.form = form;
-                    // We might want to remove this since the form-name is already in the title now
-                if (!$scope.post.title) {
-                    $translate('post.type_details', {type: $scope.post.form.name}).then(function (title) {
-                        $scope.$emit('setPageTitle', title);
-                    });
-                }
-
                 // Make the first task visible
                 if (!_.isEmpty($scope.post.post_content) && $scope.post.post_content.length > 1) {
                     $scope.visibleTask = $scope.post.post_content[1].id;
                 }
-
                 _.each($scope.post.post_content, function (task) {
                     // Mark completed tasks
                         if (_.indexOf($scope.post.completed_stages, task.id) !== -1) {
@@ -78,8 +71,8 @@ function PostDetailDataController(
                         }
                     });
                 });
-            };
-        }
+        };
+    }
 
     $scope.publishedFor = function () {
         if ($scope.post.status === 'draft') {
