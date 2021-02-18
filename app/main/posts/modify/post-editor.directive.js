@@ -157,11 +157,12 @@ function PostEditorController(
         // Create/update any associated media objects
         // Media creation must be completed before we can progress with saving
         resolveMedia().then(function () {
-            $scope.post.base_language = $scope.languages.active;
-            $scope.post.type = 'report';
-            $scope.post.form_id = $scope.post.form.id;
-            delete $scope.post.form;
-            let post = PostEditService.cleanTagValues(angular.copy($scope.post));
+            let post = angular.copy($scope.post);
+            post.base_language = $scope.languages.active;
+            post.type = 'report';
+            post.form_id = $scope.post.form.id;
+            delete post.form;
+            post = PostEditService.cleanTagValues(post);
             PostsSdk.savePost(post).then(function (response) {
                 post = response.data.result;
                 var success_message = (post.status && post.status === 'published') ? 'notify.post.save_success' : 'notify.post.save_success_review';
