@@ -15,15 +15,22 @@ module.exports = [function () {
             return  {
                 then: function (successCallback, failCallback) {
                     if (post.id !== 'fail') {
-                        successCallback({id: 1, allowed_privileges: [
-                            'read',
-                            'create',
-                            'update',
-                            'delete',
-                            'search',
-                            'change_status',
-                            'read_full'
-                            ]})
+                        successCallback({
+                            data: {
+                                result: {
+                                    id: 1,
+                                    allowed_privileges: [
+                                        'read',
+                                        'create',
+                                        'update',
+                                        'delete',
+                                        'search',
+                                        'change_status',
+                                        'read_full'
+                                    ]
+                                }
+                            }
+                        });
                     } else {
                         failCallback({data:{errors:['error']}});
                     }
