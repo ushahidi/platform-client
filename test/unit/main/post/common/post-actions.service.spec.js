@@ -3,7 +3,7 @@ describe('Post Actions Service', function () {
     var PostActionsService,
         post,
         Notify,
-        PostEndpoint,
+        PostsSdk,
         mockState = {
             go: jasmine.createSpy()
         };
@@ -21,10 +21,10 @@ describe('Post Actions Service', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_PostActionsService_, _Notify_, _PostEndpoint_) {
+    beforeEach(angular.mock.inject(function (_PostActionsService_, _Notify_, _PostsSdk_) {
         PostActionsService = _PostActionsService_;
         Notify = _Notify_;
-        PostEndpoint = _PostEndpoint_;
+        PostsSdk = _PostsSdk_;
 
         post = fixture.load('posts/120.json');
     }));
@@ -38,10 +38,10 @@ describe('Post Actions Service', function () {
         });
 
         it('should delete a post', function () {
-            spyOn(PostEndpoint, 'delete').and.callThrough();
+            spyOn(PostsSdk, 'deletePost').and.callThrough();
             PostActionsService.delete(post);
 
-            expect(PostEndpoint.delete).toHaveBeenCalled();
+            expect(PostsSdk.deletePost).toHaveBeenCalled();
         });
 
         it('should return a list of statuses', function () {

@@ -36,6 +36,13 @@ module.exports = [function () {
                     successCallback({id: 1});
                 }
             }
+        },
+        patchPost: function () {
+            return {
+                then: function (successCallback, failCallback) {
+                    successCallback({id: 1});
+                }
+            }
         }
     };
 }];
