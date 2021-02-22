@@ -109,5 +109,8 @@ function (
                 .deleteSurvey(id);
     }
 
-    return { findSurveyTo, getSurveysTo, findSurvey, getSurveys, saveSurvey, deleteSurvey };
+    const areOptionsUnique = function (options) {
+        return ushahidi().areOptionsUnique(options);
+    }
+    return { findSurveyTo, getSurveysTo, findSurvey, getSurveys, saveSurvey, deleteSurvey, areOptionsUnique };
 }];
