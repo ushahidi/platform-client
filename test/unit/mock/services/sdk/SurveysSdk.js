@@ -92,6 +92,9 @@ module.exports = [function () {
                     successCallback({id: 1});
                 }
             }
+        },
+        areOptionsUnique: function () {
+            return true;
         }
     }
 }];

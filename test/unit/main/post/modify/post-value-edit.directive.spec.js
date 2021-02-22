@@ -4,7 +4,8 @@ describe('post value edit directive', function () {
         $scope,
         isolateScope,
         Notify,
-        element;
+        element,
+        SurveysSdk;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -23,11 +24,12 @@ describe('post value edit directive', function () {
 
 
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _Notify_, _SurveysSdk_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
         Notify = _Notify_;
+        SurveysSdk = _SurveysSdk_;
 
         $scope.post = fixture.load('posts/120.json');
         $scope.post.values = {
