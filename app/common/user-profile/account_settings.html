@@ -6,12 +6,12 @@
   <nav class="tabs-menu init">
     <ul>
       <li ng-class="{'active': general}">
-        <a ng-click="showGeneral()" translate>
+        <button ng-click="showGeneral()" class="tab-button" translate ng-disabled="general">
           user_profile.nav.general
         </a>
       </li>
       <li ng-class="{'active': notifications}">
-        <a ng-click="showNotifications()" translate>
+        <button ng-click="showNotifications()" class="tab-button" translate ng-disabled="notifications">
           user_profile.nav.notifications
         </a>
       </li>
