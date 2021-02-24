@@ -1,27 +1,54 @@
+<translations-switch
+        languages= "languages"
+        languages-to-select="languages.surveyLanguages",
+        remove-language="removeLanguage(index, language)"
+        ng-if="languages.surveyLanguages.length > 1"
+        >
+</translations-switch>
 <form name="editForm" novalidate>
-  <div class="form-sheet" role="article">
+    <post-translation-editor
+      ng-show="languages.default !== languages.active"
+      post="post"
+      active-language="languages.active"
+      default-language="languages.default"
+      form="editForm"
+    ></post-translation-editor>
+
+  <div class="form-sheet" role="article" ng-show="languages.default === languages.active">
     <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
-        <!-- End post stage default fields -->
-        <div class="form-field">
+    <header class="form-sheet-summary" ng-if="post.form">
+      <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.default].name || post.form.name}}</h1>
+      <p>{{post.form.translations[languages.default].description || post.form.description}}</p>
+  </header>
+<!-- End post stage default fields -->
+        <div class="form-field" ng-if="post.data_source_message_id">
           <twitter-widget ng-if="post.data_source_message_id" twitter-widget-id="post.data_source_message_id" twitter-widget-options="{'align': 'left'}">
           </twitter-widget>
         </div>
 
           <div
-            ng-if="!form"
+            ng-if="!post.form_id"
             class="form-field init required"
             ng-class="{'error': editForm.form.$invalid && editForm.form.$dirty, 'success': !editForm.form.$invalid && editForm.form.$dirty}"
           >
-
           <p translate="post.unstructured.add_survey.info" translate-values="{source:post.source}"></p>
           <label translate>post.unstructured.add_survey.title</label>
-              <select
+          <div class="loading" aria-label="Loading forms" ng-if="!forms" translate>
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+          </div>
+            <select
+              ng-if="forms"
               class="custom-select"
-              ng-change="selectForm(form)"
+              ng-change="loadSurvey(post.form.id)"
               ng-model="post.form"
             >
               <option selected disabled translate>post.unstructured.add_survey.choose</option>
-              <option ng-repeat="form in forms" ng-value="form">{{form.name}}</option>
+              <option ng-repeat="form in forms" ng-value="form">
+                {{form.translations[languages.default].name || form.name}}
+              </option>
+
             </select>
           <div class="alert error" ng-show="editForm.form.$dirty" ng-repeat="(error, value) in editForm.form.$error">
             <svg class="iconic" role="img">
@@ -32,46 +59,38 @@
         </div>
 
         <!-- Start Post custom fields -->
-
         <post-value-edit
-            ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
+            ng-repeat="attribute in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
             post="post"
             post-field=true
             form="editForm"
             medias="medias"
             attribute="attribute"
-            ng-if="form"
+            active-survey-language="languages.active"
+            ng-if="post.form"
         ></post-value-edit>
       </div>
         <!-- End Post custom fields -->
-        <!-- IF: Editing an existing post -->
 
-        <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
-        <div class="postcard-metadata">
-            <strong>This post will need to be moderated</strong> before it's visible to the public.
-        </div>
-        END: IF -->
         <!-- IF: User has permission to see other 'Tasks' -->
-
-        <post-toolbox form="editForm" post="post" ng-if="form"></post-toolbox>
+        <post-toolbox form="editForm" post="post" ng-if="post.form" ng-show="languages.default === languages.active"></post-toolbox>
         <post-tabs
-          ng-show="tasks.length > 1"
+          ng-show="post.post_content.length > 1 && languages.default === languages.active"
           form="editForm"
           post="post"
-          stages="tasks"
-          attributes="attributes"
+          tasks="post.post_content"
           medias="medias"
           visible-stage="visibleStage"
-          ng-if="form"
+          active-survey-language="languages.default"
         >
         </post-tabs>
-        <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'"></post-messages>
+        <post-messages post="post" ng-if="post.contact.id && post.source !== 'twitter'" ng-show="languages.default === languages.active"></post-messages>
       <div class="toolbar toolbar-secondary">
         <div class="button-group">
 
           <button class="button-flat" ng-click="cancel()" translate>app.cancel</button>
           <button class="button button-alpha" ng-click="savePost()" ng-if="!isSaving()" translate="">app.save</button>
-          <loading-dots button-class="'button-alpha'" ng-if="isSaving()" disabled=true label="'app.saving'"></loading-dots>
+          <loading-dots-button button-class="'button-alpha'" ng-if="isSaving()" disabled=true label="'app.saving'"></loading-dots-button>
         </div>
       </div>
   </form>

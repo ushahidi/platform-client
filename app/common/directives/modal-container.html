@@ -11,12 +11,12 @@
             <svg class="iconic" role="img" ng-if="icon">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ icon }}"></use>
             </svg>
-            <span class="label">
+            <span class="label" translate>
                 {{ title | translate }}
             </span>
         </h3>
         <modal-content></modal-content>
-        <ush-slider inside-modal="true"></ush-slider>
+        <ush-slider ng-show="sliderOpen" inside-modal="true"></ush-slider>
     </div>
     <div class="modal-overlay" ng-click="closeButtonClicked('overlay')"></div>
 </div>

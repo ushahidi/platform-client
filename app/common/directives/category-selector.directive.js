@@ -9,7 +9,9 @@ function CategorySelectorDirective() {
             selected: '=',
             enableParents: '=',
             form: '=',
-            available: '='
+            available: '=',
+            activeLanguage:'=',
+            displayWarning:'='
         },
         controller: CategorySelectorController,
         template: require('./category-selector.html')
@@ -35,13 +37,24 @@ function CategorySelectorController($scope, _) {
     };
 
     function activate() {
-        // remove default null value when creating a new post
-        if ($scope.selected[0] === null) {
-            $scope.selected = [];
-        }
-        $scope.categories = [];
-
         $scope.categories = $scope.available;
+        if ($scope.displayWarning) {
+            $scope.categoryTranslationUnavailable = _.filter($scope.categories, (category) => {
+                let available = [category.enabled_languages.default, ...category.enabled_languages.available];
+                if (available.indexOf($scope.activeLanguage.language) === -1) {
+                    return category;
+                }
+            });
+
+        }
+        // with v5, the selected categories are delivered as objects
+        $scope.selected = _.map($scope.selected, category => {
+            if (typeof category === 'object') {
+                return category.id
+            } else {
+                return category
+            }
+        });
         // making sure no children are selected without their parents
         $scope.changeCategories();
     }
@@ -57,7 +70,7 @@ function CategorySelectorController($scope, _) {
             $scope.selectedParents.splice(0, $scope.selectedParents.length);
         } else {
             _.each($scope.available, function (category) {
-                var isParentWithChildren = !category.parent_id && category.children.length > 0;
+                var isParentWithChildren = !category.parent_id && category.children && category.children.length > 0;
                 if (!_.contains($scope.selected, category.id) && !isParentWithChildren) {
                     $scope.selected.push.apply($scope.selected, [category.id]);
                 } else if (isParentWithChildren && !_.contains($scope.selectedParents, category.id)) {
@@ -104,7 +117,7 @@ function CategorySelectorController($scope, _) {
                 .intersection($scope.selected)
                 .value();
             var parentIndexSelected = -1;
-            var isParentWithChildren = !category.parent_id && category.children.length > 0;
+            var isParentWithChildren = !category.parent_id && category.children && category.children.length > 0;
             // If children are selected, add to disabled categories
             if (selectedChildren.length > 0) {
                 $scope.disabledCategories[category.id] = true;

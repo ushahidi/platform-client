@@ -12,6 +12,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
         errors: errors,
         errorsPretranslated: errorsPretranslated,
         apiErrors: apiErrors,
+        sdkErrors: sdkErrors,
         success: success,
         confirm: confirm,
         confirmModal: confirmModal,
@@ -110,6 +111,26 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
 
         SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
     }
+    function sdkErrors(errors) {
+        let scope = getScope();
+        if (errors.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            if (errors.response.data.messages) {
+                scope.errors =  _.map(errors.response.data.messages, function (value, key) {
+                    return `${key} ${value[0]}`;
+                });
+            } else {
+                scope.errors = _.flatten(Object.values(errors.response.data));
+            }
+          } else {
+            scope.errors = [errors];
+          }
+        if (!scope.errors || scope.errors.length === 0) {
+            return;
+        }
+        SliderService.openTemplate(require('./api-errors.html'), 'warning', 'error', scope, false);
+    }
 
     function success(successText, translateValues) {
         function showSlider(successText) {
@@ -120,6 +141,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
     }
 
     function confirm(confirmText, translateValues) {
+        $rootScope.$broadcast('activate:modal-slider');
         var deferred = $q.defer();
 
         var scope = getScope();

@@ -9,8 +9,8 @@ function ModeContextFormFilterDirective() {
         template: require('./mode-context-form-filter.html')
     };
 }
-ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$timeout', '$location'];
-function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $timeout, $location) {
+ModeContextFormFilter.$inject = ['$scope', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$location', 'SurveysSdk','TranslationService'];
+function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $location, SurveysSdk, TranslationService) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.hide = hide;
@@ -24,9 +24,12 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     $scope.unknown = [];
 
     activate();
+    $rootScope.$on('language:changed', function () {
+        getUserLanguage();
+    });
 
     // whenever filters change, reload the stats
-    $scope.$watch(function () {
+    $scope.$watch(function (changed) {
         return $scope.filters;
     }, function (newValue, oldValue) {
         var diff = _.omit(newValue, function (value, key, obj) {
@@ -41,15 +44,18 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
 
     function activate() {
         // Load forms
-        $scope.forms = FormEndpoint.query();
+        SurveysSdk.getSurveysTo('filters').then(forms => {
+            $scope.forms = forms;
+            $scope.$apply();
 
-        var postCountRequest = getPostStats($scope.filters);
-        $q.all([$scope.forms.$promise, postCountRequest.$promise]).then(function (responses) {
-            if (!responses[1] || !responses[1].totals || !responses[1].totals[0]) {
-                return;
-            }
-            updateCounts(responses[1]);
+            getPostStats($scope.filters).$promise.then(response => {
+                if (!response || !response.totals || !response.totals[0]) {
+                    return;
+                }
+                updateCounts(response);
+            });
         });
+        getUserLanguage();
     }
 
     $scope.currentFocusInLabel = null;
@@ -83,6 +89,12 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
             delete queryParams.source;
         }
         return PostEndpoint.stats(queryParams);
+    }
+
+    function getUserLanguage () {
+        TranslationService.getLanguage().then(language => {
+            $scope.userLanguage = language;
+        });
     }
 
     function updateCounts(stats) {

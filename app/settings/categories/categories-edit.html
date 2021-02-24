@@ -1,4 +1,4 @@
-<div>
+<div translate-language="{{languages.default}}">
     <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
@@ -24,7 +24,7 @@
         <div class="toolbar">
             <div class="button-group">
                 <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                <button class="button-alpha" type="button" ng-click="saveCategory(category)" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
+                <button class="button-alpha" type="button" ng-click="saveCategory()" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
                 {{save}}</button>
                 <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
                   <div class="loading">
@@ -34,23 +34,40 @@
                   </div>
                 </button>
             </div>
+             <!-- toolbar -->
+            <div class="progress-bar" ng-show="isLoading()">
+              <span>
+                ..
+              </span>
+            </div>
         </div>
         <!-- end toolbar -->
 
         <!-- start edit -->
+        <div class="loading" ng-show="isLoading() && !category">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
 
-        <div class="full-col">
-          <form name="form">
+        <div class="full-col" ng-show="category">
+          <translations-switch
+            languages="languages"
+            remove-language="removeLanguage(index, language)"
+            >
+          </translations-switch>
+
+          <form name="form" ng-show="languages.default === languages.active">
             <div class="form-sheet">
               <!-- Title -->
               <div class="form-field">
-                <label translate>category.editor.name</label>
-                <input type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
+                <label for="category-name" translate>category.editor.name</label>
+                <input id="category-name" type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
               </div>
               <!-- Description -->
               <div class="form-field">
-                <label translate>category.editor.description</label>
-                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
+                <label for="category-description" translate>category.editor.description</label>
+                <textarea id="category-description" name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
               </div>
               <!-- Parent/child-relations -->
               <fieldset
@@ -89,8 +106,9 @@
                             type="radio"
                             name="parent_label"
                             id="parent_label-{{parent.id}}"
-                            ng-checked="parent.id === category.parent_id"
+                            ng-selected="parent.id === category.parent_id"
                             ng-value="parent.id"
+                            ng-change="setParent(parent)"
                             ng-model="category.parent_id"
                           />
                           <bdi>{{parent.tag}}</bdi>
@@ -98,6 +116,30 @@
                   </div>
                 </div>
               </fieldset>
+              <div class="form-field">
+                <label translate="translations.category_select_default"></label>
+                <p class="alert" translate="translations.default_lang_info"></p>
+                <div class="custom-select">
+                    <select
+                          ng-model="selectedLanguage"
+                          ng-options="lang.code as lang.name for lang in languagesToSelect"
+                          ng-value="lang.code"
+                          ng-change="selectLanguage(selectedLanguage)"
+                          ng-selected="lang.code === selectedLanguage"
+                      >
+                      </select>
+                </div>
+              <div class="form-field" ng-if="category.parent" ng-show="checkParentLanguage(category.parent)">
+                <p translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span>({{'languages.' + category.parent.base_language | translate}}.</p>
+              </div>
+                <div ng-show="showLangError" class="alert error">
+                    <svg class="iconic">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                    </svg>
+                    <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
+                </div>
+            </div>
+
               <!-- Who can see and add -->
               <role-selector model="category" title="'app.who_can_see_this_category'" ng-show="!category.parent_id"></role-selector>
               <div class="form-field" ng-show="category.parent_id">
@@ -108,7 +150,8 @@
               </div>
             </div>
           </form>
-          <div class="form-sheet" ng-show="category.id">
+
+          <div class="form-sheet" ng-show="category.id && (languages.default === languages.active)">
              <div class="form-sheet-summary">
                  <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
              </div>
@@ -123,8 +166,14 @@
                      <span class="button-label" translate>category.delete_category</span>
                  </button>
              </div>
-
           </div>
+          <category-translation-editor
+            category="category"
+            default-language="languages.default"
+            active-language="languages.active"
+            ng-show="languages.default !== languages.active"
+            >
+          </category-translation-editor>
         </div>
     </main>
 </div>

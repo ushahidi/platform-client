@@ -31,7 +31,8 @@ PostViewDataController.$inject = [
     '$window',
     '$state',
     'LoadingProgress',
-    '$transitions'
+    '$transitions',
+    'PostsSdk'
 ];
 function PostViewDataController(
     $scope,
@@ -50,7 +51,8 @@ function PostViewDataController(
     $window,
     $state,
     LoadingProgress,
-    $transitions
+    $transitions,
+    PostsSdk
 ) {
     $scope.currentPage = 1;
     $scope.selectedPosts = [];
@@ -75,7 +77,7 @@ function PostViewDataController(
     $scope.selectBulkActions = selectBulkActions;
     $scope.bulkActionsSelected = '';
     $scope.closeBulkActions = closeBulkActions;
-    $scope.selectedPost = {post: $scope.post, next: {}};
+    $scope.selectedPost = {post: $scope.post && $scope.post.data ? $scope.post.data.result : $scope.post, next: {}};
     $scope.formData = {form: {}};
     $scope.getPosts = getPosts;
     $scope.shouldWeRunCheckForNewPosts = true;
@@ -253,25 +255,23 @@ function PostViewDataController(
     }
 
     function removePostFromList(postObj) {
-        $scope.posts.forEach((post, index) => {
-            // args.post is the post being updated/saved and sent from the broadcast
-            // since a single post is being deleted here, reduce count of totalitems by 1.
-            if (post.id === postObj.id) {
-                let nextInLine = $scope.posts[index + 1];
-                $scope.posts.splice(index, 1);
-                $scope.totalItems = $scope.totalItems - 1;
-                if ($scope.posts.length) {
-                    groupPosts($scope.posts);
-                    if ($scope.selectedPost.post) {
-                        $scope.selectedPost.post = nextInLine;
-                        $state.go('posts.data.detail', {view: 'data', postId: $scope.selectedPost.post.id});
-                    }
-                } else {
-                    $scope.selectedPost = {post: null, next: {}};
-                    getPosts(false, false);
-                }
-            }
+        const removalIndex = $scope.posts.findIndex((post) => {
+            return post.id === postObj.id;
         });
+        if (removalIndex >= 0) {
+            $scope.posts.splice(removalIndex, 1);
+            if ($scope.posts.length && $scope.posts.length > 0) {
+                //PENDING QUESTION: why do we need this groupPosts call?
+                groupPosts($scope.posts);
+                if ($scope.selectedPost.post) {
+                    $scope.selectedPost.post = $scope.posts[removalIndex];
+                    $state.go('posts.data.detail', {view: 'data', postId: $scope.selectedPost.post.id});
+                }
+            } else {
+                $scope.selectedPost = {post: null, next: {}};
+                getPosts(false, false);
+            }
+        }
     }
 
     function newStatusMatchesFilters(postObj) {
@@ -371,22 +371,15 @@ function PostViewDataController(
         Notify.confirmDelete('notify.post.bulk_destroy_confirm', { count: $scope.selectedPosts.length }).then(function () {
             // ask server to delete selected posts
             // and refetch posts from server
-            var deletePostsPromises = _.map(
-                $scope.selectedPosts,
-                function (postId) {
-                    $scope.selectedPosts = _.without($scope.selectedPosts, postId);
-                    return PostEndpoint.delete({ id: postId }).$promise;
-                });
-            $q.all(deletePostsPromises).then(handleDeleteSuccess, handleDeleteErrors)
-            ;
+            PostsSdk.bulkDelete($scope.selectedPosts).then(handleDeleteSuccess, handleDeleteErrors)
 
             function handleDeleteErrors(errorResponse) {
-                Notify.apiErrors(errorResponse);
+                Notify.sdkErrors(errorResponse);
             }
-            function handleDeleteSuccess(deleted) {
+            function handleDeleteSuccess(response) {
                 Notify.notify('notify.post.destroy_success_bulk');
                 // Remove deleted posts from state
-                var deletedIds = _.pluck(deleted, 'id');
+                let deletedIds = $scope.selectedPosts;
                 $scope.totalItems = $scope.totalItems - deletedIds.length;
                 angular.forEach($scope.groupedPosts, function (posts, group) {
                     $scope.groupedPosts[group] = _.reject(posts, function (post) {
@@ -396,6 +389,11 @@ function PostViewDataController(
                 $scope.posts = _.reject($scope.posts, function (post) {
                     return _.contains(deletedIds, post.id);
                 });
+
+                if (_.contains(deletedIds, $scope.selectedPost.post.id)) {
+                    deselectPost();
+                    $state.go('posts.data');
+                }
                 clearSelectedPosts();
 
                 if (!$scope.posts.length) {
@@ -410,21 +408,20 @@ function PostViewDataController(
             return _.contains($scope.selectedPosts, post.id);
         });
 
-        var count = $scope.selectedPosts.length;
-
-        var updateStatusPromises = _.map(selectedPosts, function (post) {
+        const withStatus = _.map(selectedPosts, function (post) {
             post.status = status;
-            // $scope.selectedPosts = _.without($scope.selectedPosts, post.id);
-            return PostEndpoint.update(post).$promise;
-        });
-
-        $q.all(updateStatusPromises).then(function () {
-            Notify.notify('notify.post.update_status_success_bulk', {count: count});
+            return post;
+        })
+        PostsSdk.bulkPatch(withStatus).then(function (postResult) {
+            Notify.notify('notify.post.update_status_success_bulk', {count: selectedPosts.count});
+            let discount = 0;
             selectedPosts.forEach((post) => {
                 if (!newStatusMatchesFilters(post)) {
+                    discount++;
                     removePostFromList(post);
                 }
             });
+            $scope.totalItems = $scope.totalItems - discount;
             clearSelectedPosts();
         }, function (errorResponse) {
             Notify.apiErrors(errorResponse);

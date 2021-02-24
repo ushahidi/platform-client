@@ -13,7 +13,7 @@ function (
             // Init an empty saved search
             $scope.newTask = {
                 required : false,
-                attributes: [],
+                fields: [],
                 type: 'task',
                 show_when_published: false,
                 task_is_internal_only: true

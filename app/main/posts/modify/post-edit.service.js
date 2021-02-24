@@ -10,14 +10,14 @@ function (
     Notify
 ) {
     var PostEditService = {
-        cleanPostValues: function (post) {
-            _.each(post.values, function (value, key) {
-                // Strip out empty values
-                post.values[key] = _.filter(value);
-                // Remove entirely if no values are left
-                if (!post.values[key].length) {
-                    delete post.values[key];
-                }
+        cleanTagValues: function (post) {
+            _.each(post.post_content, task => {
+                _.each(task.fields, field => {
+                    if (field.type === 'tags') {
+                        let value = angular.copy(field.value);
+                        field.value = {value};
+                    }
+                });
             });
             return post;
         },
@@ -82,6 +82,18 @@ function (
             if (!form.content || form.content.$invalid) {
                 return false;
             }
+            //built in html input verification for decimals
+            if (form.$error.step) {
+                return false;
+            }
+            // Validate post-translations
+            _.each(post.enabled_languages.available, language=>{
+                if (!post.translations[language] || !post.translations[language].title) {
+                    isPostValid = false;
+                    form.translatedTitle.$setDirty();
+                }
+            })
+
 
             if (form.$error.videoUrlValidation) {
                 form.$setValidity('videoUrlValidation', true);
@@ -90,7 +102,7 @@ function (
 
             // Validate required fields for each task that needs to be validated
             _.each(tasks_to_validate, function (task) {
-                var required_attributes = _.where(task.attributes, {required: true});
+                var required_attributes = _.where(task.fields, {required: true});
 
                 _.each(required_attributes, function (attribute) {
                     if (attribute.type !== 'title' && attribute.type !== 'description') {

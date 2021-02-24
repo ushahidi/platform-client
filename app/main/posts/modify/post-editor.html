@@ -2,12 +2,12 @@
   <div class="mode-context init" dropdown>
     <layout-class layout="a"></layout-class>
     <header class="mode-context-header">
-        <ol class="breadcrumbs">
-            <li><a href="/" ng-controller="navigation as nav"><bdi>{{nav.site.name}}</bdi></a></li>
-        </ol>
-
-        <h1 class="mode-context-title"><bdi linkify>{{post.form.name}}</bdi></h1>
-
+      <ol class="breadcrumbs">
+        <li><a href="/" ng-controller="navigation as nav"><bdi>{{nav.site.name}}</bdi></a></li>
+      </ol>
+      <h1 class="mode-context-title">
+        <bdi linkify="">{{post.form.translations[languages.active].name || post.form.name}}</bdi>
+      </h1>
     </header>
 
     <span class="mode-context-trigger" dropdown-toggle>
@@ -18,105 +18,71 @@
     </span>
 
     <div class="mode-context-body">
-      <p markdown-to-html="post.form.description"></p>
+      <p markdown-to-html="post.form.description" ng-if="post.form.description && !post.form.translations[languages.active].description"></p>
+      <p markdown-to-html="post.form.translations[languages.active].description" ng-if="post.form.translations[languages.active].description"></p>
     </div>
   </div>
 
-  <main role="main">
-      <div class="toolbar">
-          <div class="button-group" ng-show="post.id">
-              <button type="button" class="button-flat" ng-click="cancel()" translate="app.cancel">Cancel</button>
-              <button type="submit" class="button-alpha"  ng-if="!saving_post">{{save}}</button>
-              <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{saving}}
-                <div class="loading">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-              </button>
-          </div>
-          <div class="button-group" ng-show="!post.id">
-              <post-share button="true" ng-show="!post.id"></post-share>
-              <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
-              <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
-                <div class="loading">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-              </button>
-          </div>
 
+  <main role="main">
+    <div class="toolbar">
+      <div class="button-group">
+        <post-share button="true"></post-share>
+        <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
+        <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
+          <div class="loading">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+        </button>
       </div>
 
-     <div class="main-col">
+    </div>
 
-          <div class="form-sheet">
-              <div class="post-band" ng-style="{backgroundColor: form.color}"></div>
+    <div class="full-col">
 
-              <!-- Start Post custom fields -->
-              <post-value-edit
-                  ng-repeat="attribute in tasks[0].attributes | orderBy: 'priority' as filtered_result track by attribute.id"
-                  post="post"
-                  post-field=true
-                  form="postForm"
-                  medias="medias"
-                  attribute="attribute"
-              ></post-value-edit>
-              <!-- End Post custom fields -->
-              <!-- IF: Editing an existing post -->
+      <div class="form-sheet">
+        <div class="post-band" ng-style="{backgroundColor: post.form.color}"></div>
 
-              <!-- ELSE IF: Adding a new post w/o permission to manage who it's visible to
-              <div class="postcard-metadata">
-                  <strong>This post will need to be moderated</strong> before it's visible to the public.
-              </div>
-              END: IF -->
+        <!-- Start Post custom fields -->
+        <post-value-edit
+            ng-repeat="attribute in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
+            post="post"
+            post-field=true
+            form="postForm"
+            medias="medias"
+            attribute="attribute"
+            active-survey-language="languages.active"
+        ></post-value-edit>
+        <!-- End Post custom fields -->
 
-
-
-             <!-- IF: User has permission to see other 'Tasks' -->
-
-              <post-toolbox form="postForm" post="post"></post-toolbox>
-
-
-         </div>
-         <post-tabs
-             ng-show="tasks.length > 1"
-             form="postForm"
-             post="post"
-             stages="tasks"
-             attributes="attributes"
-             medias="medias"
-             visible-stage="visibleStage">
-          </post-tabs>
-
-          <post-messages post="post" ng-if="post.contact.id"></post-messages>
-          <!-- <div class="form-sheet">
-            <div class="form-sheet-actions">
-                  <div class="form-field" ng-show="!post.id">
-                      <a href="timeline.html" type="submit" class="button button-alpha" translate="app.submit">Submit</a>
-                      <a href="post-add.html" class="button button-gamma button-flat" translate"app.submit_antoher">Submit &amp; add another</a>
-                  </div>
-                  <div class="form-field" ng-show="post.id">
-                      <a href="timeline.html" type="submit" class="button button-alpha" translate="app.save">Save</a>
-                      <a href="post-add.html" class="button button-gamma button-flat" ng-click="cancel()" translate"app.cancel">Cancel</a>
-                  </div>
-            </div>
-          </div> -->
-          <ush-logo></ush-logo>
-          <div class="toolbar-secondary">
-            <div class="button-group" ng-show="!post.id">
-                <post-share button="true" ng-show="!post.id"></post-share>
-                <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
-                <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
-                    <div class="loading">
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"></div>
-                    </div>
-                </button>
-            </div>
+        <div class="toolbox" ng-if="languages.available.length > 1">
+          <survey-language-selector title="'View and add to this survey in another language'" languages="languages"></survey-language-selector>
         </div>
-      </div> <!-- END main column -->
+      </div>
+      <post-tabs
+          ng-show="post.post_content.length > 1"
+          form="postForm"
+          post="post"
+          tasks="post.post_content"
+          active-survey-language="languages.active"
+          medias="medias">
+      </post-tabs>
+      <ush-logo></ush-logo>
+      <div class="toolbar-secondary">
+        <div class="button-group" ng-show="!post.id">
+          <post-share button="true" ng-show="!post.id"></post-share>
+          <button type="submit" class="button-alpha"  ng-if="!saving_post">{{submit}}</button>
+          <button type="submit" class="button-alpha"  disabled ng-if="saving_post">{{submitting}}
+            <div class="loading">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div> <!-- END main column -->
   </main>
 </form>

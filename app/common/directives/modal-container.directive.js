@@ -4,8 +4,8 @@
  */
 module.exports = ModalContainer;
 
-ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService', 'SliderService'];
-function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderService) {
+ModalContainer.$inject = ['$timeout', '$rootScope', '$compile', 'ModalService', 'SliderService', 'FocusTrap'];
+function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderService, FocusTrap) {
     return {
         restrict: 'E',
         template: require('./modal-container.html'),
@@ -24,11 +24,15 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
         $scope.showCloseButton = true;
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
+        $rootScope.$on('activate:modal-slider', () => {
+            $scope.sliderOpen = true;
+        });
 
         var templateScope;
         var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
         // Modal content element
         var modalContent = $element.find('modal-content');
+        let trap = FocusTrap.createFocusTrap('.modal-window');
 
         // Bind to modal service open/close events
         ModalService.onOpen(openModal, $scope);
@@ -62,6 +66,10 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
             modalContent.html(template);
             $compile(modalContent)(templateScope);
 
+            // we need to check that the content is ready before activating the focus-trap
+            angular.element(modalContent).ready(function () {
+                trap.activate();
+            });
             $scope.title = title;
             $scope.icon = icon ? iconPath + '#' + icon : icon;
 
@@ -96,6 +104,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
             $scope.classVisible = false;
             $rootScope.toggleModalVisible(false);
             ModalService.setState(false);
+            trap.deactivate();
             cleanUpModal();
 
             // if (classChangePromise) {
