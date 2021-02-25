@@ -13,7 +13,7 @@ function DateSelectDirective() {
     };
 }
 
-DateSelectController.$inject = ['$scope'];
-function DateSelectController($scope) {
-    $scope.options = { format : 'yyyy-mm-dd' };
+DateSelectController.$inject = ['$scope', 'Flatpickr'];
+function DateSelectController($scope, Flatpickr) {
+    Flatpickr('.flatpickr', {});
 }
