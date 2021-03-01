@@ -88,7 +88,7 @@
                <div id="survey-build-post" class="survey-details tabs-target" >
                     <div class="listing init" style="margin-left: 4px;">
                         <h3 class="listing-heading hidden" translate="survey.post_fields">Fields</h3>
-                        <div class="listing-item" ng-repeat="field in survey.tasks[0].fields track by $index">
+                        <div class="listing-item" ng-repeat="field in survey.tasks[0].fields | orderBy: 'priority'">
                             <div class="listing-item-select">
                                 <div class="buttons-updown">
                                     <button type="button" class="button-beta" ng-disabled="isFirstField(survey.tasks[0], field)" ng-click="moveFieldUp(survey.tasks[0], field)">
@@ -317,7 +317,7 @@
                 </nav>
                 <div ng-attr-id="{{ 'section-build-' + task.id }}" class="section-1-details tabs-target active">
                     <div class="listing init">
-                        <div class="listing-item" ng-repeat="field in task.fields track by $index">
+                        <div class="listing-item" ng-repeat="field in task.fields | orderBy: 'priority'">
                             <div class="listing-item-select">
                                 <div class="buttons-updown">
                                     <button type="button" class="button-beta" ng-disabled="isFirstField(task, field)" ng-click="moveFieldUp(task, field)">
