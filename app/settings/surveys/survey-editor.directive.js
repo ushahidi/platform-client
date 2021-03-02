@@ -30,8 +30,7 @@ SurveyEditorController.$inject = [
     'Features',
     'SurveysSdk',
     'TranslationService',
-    'CategoriesSdk',
-    'UshahidiSdk'];
+    'CategoriesSdk'];
 function SurveyEditorController(
     $rootScope,
     $scope,
@@ -49,8 +48,7 @@ function SurveyEditorController(
     Features,
     SurveysSdk,
     TranslationService,
-    CategoriesSdk,
-    UshahidiSdk
+    CategoriesSdk
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -659,10 +657,10 @@ function SurveyEditorController(
             return $scope.survey.tasks.every((t) =>  {
                 return t.fields.every(f => {
                     if (
-                        UshahidiSdk.Surveys.fieldHasTranslations(f, language)
-                        && UshahidiSdk.Surveys.fieldCanHaveOptions(f)
+                        SurveysSdk.fieldHasTranslations(f, language)
+                        && SurveysSdk.fieldCanHaveOptions(f)
                     ) {
-                        return UshahidiSdk.Surveys.areOptionsUnique(
+                        return SurveysSdk.areOptionsUnique(
                             Object.values(f.translations[language].options)
                         );
                     }

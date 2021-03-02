@@ -112,5 +112,14 @@ function (
     const areOptionsUnique = function (options) {
         return ushahidi().areOptionsUnique(options);
     }
-    return { findSurveyTo, getSurveysTo, findSurvey, getSurveys, saveSurvey, deleteSurvey, areOptionsUnique };
+
+    const fieldHasTranslations = function (field, language) {
+        return ushahidi().fieldHasTranslations(field, language);
+    }
+
+    const fieldCanHaveOptions = function (field) {
+        return ushahidi().fieldCanHaveOptions(field);
+    }
+
+    return { findSurveyTo, getSurveysTo, findSurvey, getSurveys, saveSurvey, deleteSurvey, areOptionsUnique, fieldHasTranslations, fieldCanHaveOptions };
 }];
