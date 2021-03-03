@@ -73,8 +73,8 @@ describe('setting users create controller', function () {
         $rootScope.$apply();
 
         expect(Notify.notify).not.toHaveBeenCalled();
-        expect($scope.isValid).toBe(false);
-        expect($scope.saving_user).toBe(false);
+        expect($scope.displayError).toBe(true);
+        expect($scope.savingUser).toBe(false);
     });
 
     it('should save users after an error is fixed', function () {
@@ -85,8 +85,8 @@ describe('setting users create controller', function () {
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect($scope.isValid).toBe(false);
-        expect($scope.saving_user).toBe(false);
+        expect($scope.displayError).toBe(true);
+        expect($scope.savingUser).toBe(false);
         expect(Notify.notify).not.toHaveBeenCalled();
 
         // Saving with corrected values
@@ -94,10 +94,9 @@ describe('setting users create controller', function () {
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();
-
         expect(Notify.notify).toHaveBeenCalled();
         expect($scope.userSavedUser).toBe(true);
-        expect($scope.isValid).toBe(true);
-        expect($scope.saving_user).toBe(false);
+        expect($scope.displayError).toBe(false);
+        expect($scope.savingUser).toBe(false);
     });
 });

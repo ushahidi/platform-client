@@ -72,11 +72,11 @@ describe('setting categories edit controller', function () {
     });
 
     it('should show an error on save failure', function () {
-        spyOn(Notify, 'apiErrors');
+        spyOn(Notify, 'sdkErrors');
         $scope.category.id = 'fail';
         $scope.saveCategory();
         $rootScope.$digest();
-        expect(Notify.apiErrors).toHaveBeenCalled();
+        expect(Notify.sdkErrors).toHaveBeenCalled();
     });
 
     it('should return parent-name', function () {
