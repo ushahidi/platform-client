@@ -9,6 +9,7 @@
     <div class="button-group" embed-only="false" ng-hide="filtersActive">
         <div ng-if="!editMode()">
             <post-share filters="filters" button="true"></post-share>
+            <donation></donation>
             <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
         </div>
 
@@ -25,6 +26,7 @@
             <div ng-hide="filtersActive">
                 <div ng-if="!editMode()">
                     <post-share filters="filters" button="true"></post-share>
+                    <donation></donation>
                     <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
                 </div>
 

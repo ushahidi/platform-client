@@ -1,0 +1,134 @@
+<div>
+    <div class="mode-context init" dropdown>
+
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.donation</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic" role="img">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main">
+        <div class="main-col" setup-donation>
+            <form>
+                <div class="form-sheet">
+                    <div class="form-sheet-summary">
+                        <h2 class="form-sheet-title">Setup Donation</h2>
+                    </div>
+
+                    <div class="stepper">
+                        <div class="stepper-item"
+                            ng-class="{'complete': stepOneComplete, 'active' : isActiveStep(1), 'disabled' : !isActiveStep(1) }">
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge" ng-show="!stepOneComplete">1</span>
+                                Donation Details
+                            </h2>
+
+                            <div ng-show="!stepOneComplete">
+                                <div class="form-field">
+                                    <label for="donation-title">
+                                        Donation Title
+                                    </label>
+                                    <input id="donation-title" type="text" placeholder="The title of your donation" />
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="donation-description">
+                                        Description
+                                    </label>
+                                    <textarea id="donation-description"
+                                        placeholder="This is a placeholder text telling you more about this donation"> </textarea>
+                                </div>
+
+                                <div class="form-field">
+                                    <span class="label">Donation images</span>
+                                    <div class="stepper-images">
+                                        <div class="stepper-image">
+                                            <figure>
+                                                <img ng-src="/img/team-photo.jpg" class="postcard-image"
+                                                    alt="Uploaded image">
+                                            </figure>
+
+                                            <button class="button">
+                                                Delete image
+                                            </button>
+                                        </div>
+                                        <div class="stepper-image">
+                                            <figure>
+                                                <img ng-src="/img/team-photo.jpg" class="postcard-image"
+                                                    alt="Uploaded image">
+                                            </figure>
+
+                                            <button class="button">
+                                                Delete image
+                                            </button>
+                                        </div>
+                                        <div class="stepper-image">
+                                            <figure>
+                                                <img ng-src="/img/team-photo.jpg" class="postcard-image"
+                                                    alt="Uploaded image">
+                                            </figure>
+
+                                            <button class="button">
+                                                Delete image
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label for="photo">Attach image</label>
+                                        <!-- <input type="file" id="photo" /> -->
+                                        <file-upload container="fileContainer" required>
+                                        </file-upload>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <button class="button-alpha" type="submit" ng-disabled="upload.$invalid" ng-click="completeStepOne()" translate="settings.continue">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stepper-item"
+                            ng-class="{'complete': stepTwoComplete, 'active' : isActiveStep(2), 'disabled' : !isActiveStep(2) }">
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge">2</span>
+                                Wallet Address
+                            </h2>
+
+                            <div ng-show="stepOneComplete">
+                                <div class="form-field">
+                                    <label for="donation-wallet">Wallet Address </label>
+                                    <input id="donation-wallet" type="text"
+                                        placeholder="$ilp.uphold.com/qdXLkr8xAYrk" />
+                                </div>
+                                <div class="form-field">
+                                    <button class="button">
+                                        Delete wallet
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label>
+                                <input type="checkbox" id="donations-disable">
+                                Disable Monetization
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
