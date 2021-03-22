@@ -18,68 +18,74 @@
         </span>
     </div>
 
-    <main role="main">
-        <div class="main-col" setup-donation>
-            <form>
+    <main role="main" setup-donation>
+        <form id="donation" name="form" ng-submit="updateConfig()">
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+
+                    <button type="submit" ng-click="updateConfig()" class="button-alpha" ng-if="!saving_config"
+                        ng-disabled="form.$invalid || isUnchanged(site) || saving_config">{{save}}</button>
+
+                    <button type="submit" class="button-alpha" ng-if="saving_config"
+                        ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>{{saving}}
+                        <div class="loading">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <!-- end toolbar -->
+
+            <div class="main-col">
                 <div class="form-sheet">
                     <div class="form-sheet-summary">
                         <h2 class="form-sheet-title">Setup Donation</h2>
+                        <p>
+                            Please make sure you have your wallet set up on <a href="#">uphold.com</a> to set web
+                            monetization.
+                            If you don't have a wallet already please click <a href="#">here</a> to create one.
+                        </p>
                     </div>
 
                     <div class="stepper">
-                        <div class="stepper-item"
-                            ng-class="{'complete': stepOneComplete, 'active' : isActiveStep(1), 'disabled' : !isActiveStep(1) }">
+                        <div class="stepper-item active"
+                            ng-class="{'active' : isActiveStep(1), 'disabled' : !isActiveStep(1) }">
                             <h2 class="stepper-heading">
-                                <span class="stepper-badge" ng-show="!stepOneComplete">1</span>
+                                <span class="stepper-badge">1</span>
                                 Donation Details
                             </h2>
 
-                            <div ng-show="!stepOneComplete">
+                            <div>
                                 <div class="form-field">
                                     <label for="donation-title">
                                         Donation Title
                                     </label>
-                                    <input id="donation-title" type="text" placeholder="The title of your donation" />
+                                    <input id="donation-title" ng-model="site.donation.title" type="text"
+                                        placeholder="The title of your donation" />
                                 </div>
 
                                 <div class="form-field">
                                     <label for="donation-description">
-                                        Description
+                                        Donation Description
                                     </label>
-                                    <textarea id="donation-description"
+                                    <textarea id="donation-description" ng-model="site.donation.description"
                                         placeholder="This is a placeholder text telling you more about this donation"> </textarea>
                                 </div>
 
                                 <div class="form-field">
-                                    <span class="label">Donation images</span>
+                                    <span class="label">Donation Images</span>
                                     <div class="stepper-images">
-                                        <div class="stepper-image">
+                                        <div class="stepper-image" ng-repeat="image in site.donation.images">
                                             <figure>
-                                                <img ng-src="/img/team-photo.jpg" class="postcard-image"
+                                                <img ng-src="{{ image.original_file_url}}" class="postcard-image"
                                                     alt="Uploaded image">
                                             </figure>
 
-                                            <button class="button">
-                                                Delete image
-                                            </button>
-                                        </div>
-                                        <div class="stepper-image">
-                                            <figure>
-                                                <img ng-src="/img/team-photo.jpg" class="postcard-image"
-                                                    alt="Uploaded image">
-                                            </figure>
-
-                                            <button class="button">
-                                                Delete image
-                                            </button>
-                                        </div>
-                                        <div class="stepper-image">
-                                            <figure>
-                                                <img ng-src="/img/team-photo.jpg" class="postcard-image"
-                                                    alt="Uploaded image">
-                                            </figure>
-
-                                            <button class="button">
+                                            <button class="button" type="button" ng-click="deleteImage(image.id)">
                                                 Delete image
                                             </button>
                                         </div>
@@ -87,33 +93,29 @@
 
                                     <div class="form-field">
                                         <label for="photo">Attach image</label>
-                                        <!-- <input type="file" id="photo" /> -->
-                                        <file-upload container="fileContainer" required>
+                                        <file-upload container="image">
                                         </file-upload>
                                     </div>
                                 </div>
 
-                                <div class="form-field">
-                                    <button class="button-alpha" type="submit" ng-disabled="upload.$invalid" ng-click="completeStepOne()" translate="settings.continue">Continue</button>
-                                </div>
                             </div>
                         </div>
 
                         <div class="stepper-item"
-                            ng-class="{'complete': stepTwoComplete, 'active' : isActiveStep(2), 'disabled' : !isActiveStep(2) }">
+                            ng-class="{'active' : isActiveStep(2), 'disabled' : !isActiveStep(2) }">
                             <h2 class="stepper-heading">
                                 <span class="stepper-badge">2</span>
                                 Wallet Address
                             </h2>
 
-                            <div ng-show="stepOneComplete">
+                            <div>
                                 <div class="form-field">
                                     <label for="donation-wallet">Wallet Address </label>
-                                    <input id="donation-wallet" type="text"
+                                    <input id="donation-wallet" type="text" ng-model="site.donation.wallet"
                                         placeholder="$ilp.uphold.com/qdXLkr8xAYrk" />
                                 </div>
                                 <div class="form-field">
-                                    <button class="button">
+                                    <button class="button" type="button" ng-click="deleteWallet()">
                                         Delete wallet
                                     </button>
                                 </div>
@@ -122,13 +124,13 @@
 
                         <div class="form-field">
                             <label>
-                                <input type="checkbox" id="donations-disable">
+                                <input type="checkbox" ng-model="site.donation.enabled" ng-value="true" id="donations-disable">
                                 Disable Monetization
                             </label>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </main>
 </div>

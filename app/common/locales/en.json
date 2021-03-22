@@ -1459,6 +1459,10 @@
         "general_settings" : {
             "save_success" : "General settings saved"
         },
+        "donation_settings": {
+            "save_success" : "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings" : {
             "save_success" : "Map settings saved"
         },
