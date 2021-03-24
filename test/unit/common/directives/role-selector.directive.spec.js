@@ -29,6 +29,8 @@ describe('role-selector directive', function () {
         isolateScope = element.isolateScope();
 
         spyOn(isolateScope, 'setEveryone').and.callThrough();
+        spyOn(isolateScope, 'setAdmin').and.callThrough();
+
     }));
 
     it('should add the role-selector-template', function () {
@@ -45,6 +47,15 @@ describe('role-selector directive', function () {
         var elementToClick = element[0].querySelector('#add_everyone');
         elementToClick.dispatchEvent(change);
         expect(isolateScope.setEveryone).toHaveBeenCalled();
-        expect(isolateScope.model.role).toEqual([]);
+        expect(isolateScope.model.role).toEqual(null);
+    });
+    it('should always add admin', function () {
+        var change = new Event('click');
+        var elementToClick = element[0].querySelector('#add_roles');
+        elementToClick.dispatchEvent(change);
+        expect(isolateScope.setAdmin).toHaveBeenCalled();
+        expect(isolateScope.model.role.length).toEqual(1);
+        expect(isolateScope.model.role).toContain('admin');
+
     });
 });

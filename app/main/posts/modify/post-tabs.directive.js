@@ -7,10 +7,11 @@ function PostVerticalTabs() {
         scope: {
             form: '=',
             post: '=',
-            stages: '=',
-            attributes: '=',
+            tasks: '=',
             visibleStage: '=',
-            medias: '='
+            medias: '=',
+            activeSurveyLanguage:'='
+
         },
         template: require('./post-tabs.html'),
         controller: PostVerticalTabsController
@@ -19,18 +20,10 @@ function PostVerticalTabs() {
 
 PostVerticalTabsController.$inject = [
     '$scope',
-    'FormEndpoint',
-    'FormStageEndpoint',
-    'FormAttributeEndpoint',
-    'PostEditService',
     '_'
 ];
 function PostVerticalTabsController(
     $scope,
-    FormEndpoint,
-    FormStageEndpoint,
-    FormAttributeEndpoint,
-    PostEditService,
     _
 ) {
     $scope.setVisibleStage = setVisibleStage;
@@ -42,10 +35,24 @@ function PostVerticalTabsController(
 
     function activate() {
         $scope.setVisibleStage($scope.visibleStage);
+        $scope.post.completed_stages = getCompletedTasks();
     }
 
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
+    }
+
+    function getCompletedTasks() {
+        return _.chain($scope.post.completed_stages)
+            .filter(stage => {
+                if (stage.completed === 1) {
+                    return stage.form_stage_id;
+                }
+            })
+            .map(stage => {
+                return stage.form_stage_id;
+            })
+            .value();
     }
 
     function stageIsComplete(stageId) {

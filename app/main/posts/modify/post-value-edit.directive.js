@@ -11,7 +11,8 @@ function PostValueEdit() {
             attribute: '=',
             postField: '=',
             medias: '=',
-            categories: '='
+            categories: '=',
+            activeSurveyLanguage:'='
         },
         controller: PostValueEditController,
         template: require('./post-value-edit.html')
@@ -21,13 +22,15 @@ function PostValueEdit() {
 PostValueEditController.$inject = [
     '$rootScope',
     '$scope',
-    '_'
+    '_',
+    'SurveysSdk'
 ];
 
 function PostValueEditController(
     $rootScope,
     $scope,
-    _
+    _,
+    SurveysSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -42,18 +45,28 @@ function PostValueEditController(
 
     $scope.dateFormat = { format: 'yyyy-mm-dd' };
 
-    $scope.canAddValue = canAddValue;
-    $scope.canRemoveValue = canRemoveValue;
-    $scope.addValue = addValue;
-    $scope.removeValue = removeValue;
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
+    $scope.$watch('activeSurveyLanguage', () =>{
+        if ($scope.form.title && !$scope.form.title.$dirty) {
+            addDefaultValue();
+        }
+        });
 
     function activate() {
+        addDefaultValue();
+    }
+
+    function addDefaultValue() {
+        const isTitleOrDesc =  $scope.attribute.type === 'title' || $scope.attribute.type === 'description';
+        if (isTitleOrDesc && $scope.attribute.default && !$scope.post.id) {
+            let fieldType = $scope.attribute.type === 'description' ? 'content' : $scope.attribute.type;
+            $scope.post[fieldType] = $scope.attribute.translations[$scope.activeSurveyLanguage] && $scope.attribute.translations[$scope.activeSurveyLanguage].default ? $scope.attribute.translations[$scope.activeSurveyLanguage].default : $scope.attribute.default;
+        }
     }
 
     function taskIsMarkedCompleted() {
@@ -83,7 +96,6 @@ function PostValueEditController(
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
     }
-
     // Can more values be added for this attribute?
     function canAddValue(attr) {
         return (
@@ -108,16 +120,6 @@ function PostValueEditController(
 
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        if (attr.options && attr.options.length < 1) {
-            return false;
-        }
-        let tmp = [];
-        for (let x of attr.options) {
-            if (tmp.indexOf(x) !== -1) {
-                return true;
-            }
-            tmp.push(x);
-        }
-        return false;
+        return !SurveysSdk.areOptionsUnique(attr.options);
     }
 }

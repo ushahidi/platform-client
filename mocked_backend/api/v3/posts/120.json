@@ -1,6 +1,8 @@
 {
             "id": 120,
             "url": "http://192.168.33.110/api/v3/posts/120",
+            "post_content":[{"id": 1,"fields": [{"id":1}, {"id":2}], "type": "post"}],
+            "enabled_languages": {"default": "EN", "available": []},
             "user": {
                 "id": 1,
                 "url": "http://192.168.33.110/api/v3/users/1"
@@ -14,7 +16,7 @@
             "type": "report",
             "title": "Post published to members",
             "slug": null,
-            "content": "Post published to members",
+            "description": "Post published to members",
             "author_email": null,
             "author_realname": null,
             "status": "published",
@@ -23,32 +25,5 @@
             "created": "2014-09-29T21:10:16+00:00",
             "completed_stages": [],
             "updated": "2015-11-28T17:48:36+00:00",
-            "locale": "en_us",
-            "values": {
-                "test_point": [
-                    {
-                        "lon": 144.140625,
-                        "lat": -30.145127
-                    }
-                ],
-                "last_location_point": [
-                    {
-                        "lon": 125.156057,
-                        "lat": -36.173249
-                    }
-                ],
-                "description": [
-                    "test"
-                ],
-                "test_varchar": [
-                    "test"
-                ],
-                "full_name": [
-                    "test"
-                ],
-                "person_status": [
-                    "information_sought",
-                    "believed_alive"
-                ]
-            }
+            "locale": "en_us"
 }

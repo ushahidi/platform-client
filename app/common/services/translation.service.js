@@ -22,7 +22,7 @@ function (
     moment
 ) {
     var translate = function (lang) {
-        if (lang !== null) {
+        if (lang) {
             $translate.use(lang).then(function (langKey) {
                 if (langKey) {
                     $translate.preferredLanguage(langKey);
@@ -56,7 +56,7 @@ function (
                 var shortCode = lang.substr(0,2).toLowerCase();
                 require(['moment/locale/' + shortCode + '.js'], function () {
                     moment.locale(shortCode);
-                });
+                }, () => { console.error('Failed to load locale: ' + shortCode) });
             });
 
             // Translating and setting page-title
@@ -107,6 +107,7 @@ function (
                 UserEndpoint.update(user);
             });
         }
+        $rootScope.$broadcast('language:changed');
     };
 
     return {

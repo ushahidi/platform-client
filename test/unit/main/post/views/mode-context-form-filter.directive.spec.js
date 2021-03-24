@@ -4,10 +4,10 @@ describe('mode-context-form-filter directive', function () {
         element,
         isolateScope,
         PostEndpoint,
-        FormEndpoint,
         $location,
         PostSurveyService,
-        PostFilters;
+        PostFilters,
+        SurveysSdk;
     beforeEach(function () {
         var testApp;
         fixture.setBase('mocked_backend/api/v3');
@@ -16,15 +16,15 @@ describe('mode-context-form-filter directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _FormEndpoint_, _PostEndpoint_, _PostSurveyService_, _PostFilters_, _$location_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _PostEndpoint_, _PostSurveyService_, _PostFilters_, _$location_, _SurveysSdk_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         PostEndpoint = _PostEndpoint_;
-        FormEndpoint = _FormEndpoint_;
         PostSurveyService = _PostSurveyService_;
         PostFilters = _PostFilters_;
         $location = _$location_;
-        spyOn(FormEndpoint, 'query').and.callThrough();
+        SurveysSdk = _SurveysSdk_;
+        spyOn(SurveysSdk, 'getSurveysTo').and.callThrough();
         spyOn(PostEndpoint, 'stats').and.callThrough();
         spyOn(PostFilters, 'getQueryParams').and.callThrough();
 
@@ -38,7 +38,7 @@ describe('mode-context-form-filter directive', function () {
     }));
     describe('test directive-functions', function () {
         it('should fetch forms from endpoint', function () {
-            expect(FormEndpoint.query).toHaveBeenCalled();
+            expect(SurveysSdk.getSurveysTo).toHaveBeenCalled();
         });
         it('should fetch queryParams from service', function () {
             expect(PostFilters.getQueryParams).toHaveBeenCalled();

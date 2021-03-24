@@ -5,7 +5,8 @@ function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $c
     return {
         restrict: 'E',
         scope: {
-            postId: '='
+            postId: '=',
+            label: '@'
         },
         link: DetailMapLink,
         template: require('./map.html')

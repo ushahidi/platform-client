@@ -4,18 +4,18 @@
             <div class="survey-filter-label" ng-class="{'child-focused': isChildFocused(form)}">
                 <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
                 <label class="checked">
-                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-focus="setParentFocusIn(form)"
-                    ng-blur="setParentFocusOut(form)">
-                    <bdi>{{ ::form.name }}</bdi>
+                    <input type="checkbox" checklist-value="form.id" checklist-model="filters.form" ng-focus="setParentFocusIn(form)" ng-blur="setParentFocusOut(form)">
+                    <bdi ng-if="form.translations[userLanguage].name ">{{form.translations[userLanguage].name}}</bdi>
+                    <bdi ng-if="!form.translations[userLanguage].name">{{form.name}}</bdi>
                 </label>
             </div>
-             <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
+             <button class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
                 <!-- todo! show count -->
                 {{ form.post_count }}
                 <svg class="iconic" role="img">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                 </svg>
-            </span>
+            </button>
             <ul class="dropdown-menu init" dropdown-menu>
                 <li ng-show="canAddToSurvey(form)">
                     <a ui-sref="postCreate({id: form.id })">
@@ -26,16 +26,16 @@
                     </a>
                 </li>
                 <div class="divider"></div>
-                <li><a translate="post.show_only_form" translate-values="{ form: form.name }" ng-click="showOnly(form.id)">Show only </a></li>
-                <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
+                <li><button class="button-filter" translate="post.show_only_form" translate-values="{ form: form.name }" ng-click="showOnly(form.id)">Show only </button></li>
+                <li><button class="button-filter" translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</button></li>
                 <div class="divider"></div>
                 <li ng-show="hasManageSettingsPermission()">
-                    <a ui-sref="settings.surveys.id({id: form.id, action: 'edit'})">
+                    <button class="button-filter" ui-sref="settings.surveys.id({id: form.id, action: 'edit'})">
                         <svg class="iconic" role="img">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                         </svg>
                         <span class="label" translate="nav.survey_settings">Survey settings</span>
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>

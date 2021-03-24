@@ -1,8 +1,5 @@
 describe('Post create controller', function () {
-    var $scope,
-       $controller,
-       PostEndpoint,
-       FormEndpoint;
+    var $scope, $controller;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -25,15 +22,10 @@ describe('Post create controller', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_,
-                                _$controller_,
-                                _PostEndpoint_,
-                                _FormEndpoint_
-                               ) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_) {
         $scope = _$rootScope_.$new();
         $controller = _$controller_;
-        PostEndpoint = _PostEndpoint_;
-        FormEndpoint = _FormEndpoint_;
+
     }));
 
     beforeEach(function () {

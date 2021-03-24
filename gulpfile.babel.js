@@ -214,8 +214,8 @@ function testServer(done) {
     var server = new karma.Server({
         configFile: __dirname + '/test/karma.conf.js',
         singleRun: true
-    }, function () {
-        done();
+    }, function (status) {
+        done(status);
     });
     server.start();
 }

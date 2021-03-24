@@ -3,7 +3,8 @@ describe('setting categories edit controller', function () {
     var $rootScope,
         $scope,
         Notify,
-        $controller;
+        $controller,
+        CategoriesSdk;
 
     beforeEach(function () {
 
@@ -34,11 +35,12 @@ describe('setting categories edit controller', function () {
 
     });
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$controller_, _Notify_, _CategoriesSdk_) {
 
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         Notify = _Notify_;
+        CategoriesSdk = _CategoriesSdk_;
         $scope = _$rootScope_.$new();
 
         $rootScope.hasManageSettingsPermission = function () {
@@ -58,40 +60,37 @@ describe('setting categories edit controller', function () {
 
         $rootScope.$digest();
         $rootScope.$apply();
+        spyOn(Notify, 'notify').and.callThrough();
+        spyOn(CategoriesSdk, 'saveCategory').and.callThrough();
 
     });
 
     it('should save a tag and update the path', function () {
-        spyOn(Notify, 'notify');
-        $scope.saveCategory({id: 'pass'});
-        $rootScope.$digest();
+        $scope.saveCategory();
         expect(Notify.notify).toHaveBeenCalled();
+        expect(CategoriesSdk.saveCategory).toHaveBeenCalled();
     });
 
     it('should show an error on save failure', function () {
-        spyOn(Notify, 'apiErrors');
-        $scope.saveCategory({id: 'fail'});
+        spyOn(Notify, 'sdkErrors');
+        $scope.category.id = 'fail';
+        $scope.saveCategory();
         $rootScope.$digest();
-        expect(Notify.apiErrors).toHaveBeenCalled();
-    });
-
-    it('should return requested parent-tag', function () {
-        $scope.addParent(1).$promise.then(function (parent) {
-            expect(parent.id).toEqual(1);
-            expect(parent.tag).toEqual('test tag');
-        });
+        expect(Notify.sdkErrors).toHaveBeenCalled();
     });
 
     it('should return parent-name', function () {
-        $scope.parents = [{
+        const parent = {
             id: 1,
             tag: 'parent'
-        }];
-        var parent = $scope.getParentName();
-        expect(parent).toEqual('Nothing');
+        }
+        $scope.parents = [];
+        let parentName = $scope.getParentName();
+        expect(parentName).toEqual('Nothing');
+        $scope.parents = [parent];
         $scope.category.parent_id = 1;
-        parent = $scope.getParentName();
-        expect(parent).toEqual('parent');
+        $scope.category.parent = parent;
+        parentName = $scope.getParentName();
+        expect(parentName).toEqual('parent');
     });
-
 });

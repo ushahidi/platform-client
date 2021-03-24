@@ -25,14 +25,14 @@
         </div>
         <!-- end toolbar -->
 
-        <div class="main-col">
+        <div class="full-col">
             <div class="listing card">
               <article class="listing-item">
                   <div class="listing-item-primary">
+                    <h2 class="listing-item-title inline-block"><a ui-sref="settings.surveys.create" translate="settings.create">Create a new survey</a></h2>
                     <div class="button-group right">
-                        <a ui-sref="settings.surveys.create"><button class="button-alpha" translate="settings.new_survey">New survey</button></a>
+                        <a ui-sref="settings.surveys.create" class="button button-alpha" translate="settings.new_survey">New survey</a>
                     </div>
-                    <h2 class="listing-item-title"><a ui-sref="settings.surveys.create" translate="settings.create">Create a new survey</a></h2>
                     <p class="listing-item-secondary" translate="settings.create_open_or_targeted" ng-show="targetedSurveysEnabled">Create an open or targeted survey to gather information about Ushahidi.</p>
                   </div>
               </article>
@@ -40,39 +40,40 @@
             <div class="listing card">
                 <div class="listing-item" ng-show="forms.length" ng-repeat="form in forms">
                     <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
-                    <div class="listing-item-secondary" dropdown>
-                      <button class="button-beta button-flat" data-toggle="dropdown-menu" dropdown-toggle>
-                          <svg class="iconic" role="img">
-                              <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
-                          </svg>
-                          <span class="hidden">More</span>
-                      </button>
-                      <ul class="dropdown-menu init" dropdown-menu>
-                          <li>
-                              <a href="/settings/surveys/duplicate/{{form.id}}">
-                                  <svg class="iconic" role="img">
-                                      <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
-                                  </svg>
-                                  <span class="label" translate="survey.duplicate_survey">Duplicate</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a ng-click="deleteSurvey(form)">
-                                  <svg class="iconic" role="img">
-                                      <use xlink:href="/img/iconic-sprite.svg#trash"></use>
-                                  </svg>
-                                  <span class="label" translate="survey.delete">Delete</span>
-                              </a>
-                          </li>
-                      </ul>
-                    </div>
                     <div class="listing-item-primary">
                         <h2 class="listing-item-title">
                             <a href="/settings/surveys/edit/{{form.id}}" ng-show="!form.targeted_survey || !targetedSurveysEnabled">{{form.name}}</a></h2>
                             <a ui-sref="settings.surveys.targeted.published({id: form.id})" ng-show="form.targeted_survey && targetedSurveysEnabled">{{form.name}}</a>
 
                         <p class="listing-item-secondary" markdown-to-html="form.description"></p>
+                        <p class="listing-item-languages" ng-show="form.enabled_languages" >{{getLanguages(form.enabled_languages)}}</p>
                     </div>
+                    <div class="listing-item-secondary" dropdown>
+                        <button class="button-beta button-flat" data-toggle="dropdown-menu" dropdown-toggle>
+                            <svg class="iconic" role="img">
+                                <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
+                            </svg>
+                            <span class="hidden">More</span>
+                        </button>
+                        <ul class="dropdown-menu init" dropdown-menu>
+                            <li>
+                                <a href="/settings/surveys/duplicate/{{form.id}}">
+                                    <svg class="iconic" role="img">
+                                        <use xlink:href="/img/material/svg-sprite-content-symbol.svg#ic_content_copy_24px"></use>
+                                    </svg>
+                                    <span class="label" translate="survey.duplicate_survey">Duplicate</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a ng-click="deleteSurvey(form)">
+                                    <svg class="iconic" role="img">
+                                        <use xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                    </svg>
+                                    <span class="label" translate="survey.delete">Delete</span>
+                                </a>
+                            </li>
+                        </ul>
+                      </div>
                 </div>
 
             </div>

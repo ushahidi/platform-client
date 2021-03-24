@@ -24,7 +24,7 @@ require('./common/common-module.js');
 require('./main/main-module.js');
 require('./settings/settings.module.js');
 import ravenModule from './common/raven/raven';
-
+import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
@@ -84,7 +84,7 @@ angular.module('app',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
         'ngtweet'
-    ])
+        ])
 
     .constant('CONST', {
         BACKEND_URL              : backendUrl,
@@ -162,6 +162,12 @@ angular.module('app',
     //     let pluginInstance = $uiRouter.plugin(Visualizer);
     //     $trace.enable('TRANSITION');
     // }])
+    .factory('UshahidiSdk', function () {
+        return UshahidiSdk;
+    })
+    .factory('FocusTrap', function () {
+        return require('focus-trap');
+    })
     .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();
