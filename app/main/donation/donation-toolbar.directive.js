@@ -13,12 +13,19 @@ function DonationToolbarDirective() {
 
 DonationToolbarController.$inject = [
     '$scope',
-    'Util',
-    '$window'
+    '$rootScope',
+    'DonationService'
 ];
 function DonationToolbarController(
     $scope,
-    Util,
-    $window
+    $rootScope,
+    DonationService
 ) {
+    $scope.formattedAmount = 0.00;
+    $scope.openDonationModal = DonationService.openDonationModal;
+
+    $rootScope.$on('setDonatedAmount', function (event, value) {
+        $scope.formattedAmount = value;
+        $scope.$apply();
+    });
 }

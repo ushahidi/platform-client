@@ -16,27 +16,18 @@ function DonationButtonDirective() {
 DonationButtonController.$inject = [
     '$scope',
     '$window',
-    'ModalService'
+    'DonationService'
 ];
 function DonationButtonController(
     $scope,
     $window,
-    ModalService
+    DonationService
 ) {
     $scope.loading = false;
-    $scope.openDonationModal = openDonationModal;
+    $scope.openDonationModal = DonationService.openDonationModal;
     $scope.isButton = isButton;
-
-    activate();
-
-    function activate() {
-    }
 
     function isButton() {
         return $scope.button;
-    }
-
-    function openDonationModal() {
-        ModalService.openTemplate('<donation-modal> </donation-modal>', 'app.donate', false, $scope, true, true, true);
     }
 }

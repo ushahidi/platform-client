@@ -13,18 +13,37 @@ function DonationDirective() {
 
 DonationController.$inject = [
     '$scope',
-    '$window',
-    'ConfigEndpoint'
+    '$rootScope',
+    'DonationService',
+    'Features'
 ];
 function DonationController(
     $scope,
-    $window,
-    ConfigEndpoint
+    $rootScope,
+    DonationService,
+    Features
 ) {
-    $scope.loading = false;
+    $scope.loading = true;
+    $scope.donationClientEnabled = $rootScope.donationClientEnabled || false;
+    $scope.donationDeploymentEnabled = false;
+    $scope.donationFeatureEnabled = false;
 
-    activate();
+    $rootScope.$on('event:donation:started', function () {
+        $rootScope.donationClientEnabled =  true;
+        $scope.donationClientEnabled = true;
+    });
 
-    function activate() {
-    }
+    Features.loadFeatures().then(function () {
+        $scope.donationFeatureEnabled = Features.isFeatureEnabled('donation');
+
+        $scope.donationDeploymentEnabled = $rootScope.donation.enabled;
+
+        if ($scope.donationFeatureEnabled && $scope.donationDeploymentEnabled) {
+            DonationService.setupMonetization();
+
+            $rootScope.$emit('setPaymentPointer', $rootScope.donation.wallet);
+        }
+
+        $scope.loading = false;
+    });
 }

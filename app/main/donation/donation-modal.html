@@ -1,44 +1,29 @@
-<!-- <div id="donate" class="modal">
-    <div class="modal-window  modal-large">
-        <div class="modal-header">
-            <button class="button-beta button-flat modal-trigger modal-trigger-close">
-                <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#x"></use>
-                </svg>
-                <span class="hidden">Close</span>
-            </button>
-        </div>
-        
-       Modal Body
-    </div>
-
-    <div class="modal-overlay"></div>
-</div> -->
-
 <div class="modal-body">
-    <h3 class="modal-title">6 Better Things to Do After 6 P.M. That’ll Enrich Your Life</h3>
+    <h3 class="modal-title">{{ donation.title }}</h3>
     
-    <p>
-        A well-designed life is a life that is generative — it is constantly creative, productive, changing, evolving, and there is always the possibility of surprise. You get out of it more than you put in. There is a lot more than “lather, rinse, repeat” in a well-designed life, ” writes Bill Burnett in his book, Designing Your Life: How to Build a Well-Lived, Joyful Life.
-
-        The biggest problem many people have is finding TIME to pursue things, activities and projects that can completely help them decompress from work.
-
-        A well-designed life is a life that is generative — it is constantly creative, productive, changing, evolving, and there is always the possibility of surprise. You get out of it more than you put in. There is a lot more than “lather, rinse, repeat” in a well-designed life, ” writes Bill Burnett in his book, Designing Your Life: How to Build a Well-Lived, Joyful Life.
-    </p>
+    <p> {{ donation.description }} </p>
 
     <div class="modal-images">
-        <img ng-src="/img/team-photo.jpg">
-        <img ng-src="/img/team-photo.jpg">
-        <img ng-src="/img/team-photo.jpg">
+        <img ng-repeat="image in donation.images" ng-src="{{ image.original_file_url }}">
     </div>
 
     <div class="divider"></div>
 
-    <p class="soft-text">
+    <p class="soft-text" ng-show="donationClientEnabled">
         <svg class="iconic">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#heart"></use>
         </svg>
         Web monetization is enabled on this website.
-        Thank you for your donation. You have donted $ 4.56 so far
+        Thank you for your donation. You have donated {{ donation.assetCode }} {{ donation.formattedAmount }} so far
+    </p>
+
+    <p class="soft-text" ng-show="!donationClientEnabled">
+        Ushahidi deployments are now web monetization enabled. Web monetization is a way
+        of supporting the websites you love without playing advertisers game. 
+        All you need is to get your browser setup. Click the link below to learn how you can donate.
+        
+        <div>
+            <a href="#">How can I donate?</a>
+        </div>
     </p>
 </div>

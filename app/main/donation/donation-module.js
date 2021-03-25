@@ -8,4 +8,4 @@ angular.module('ushahidi.donation', [])
 
 .directive('donationToolbar', require('./donation-toolbar.directive.js'))
 
-.service('donationService', require('./donation.service.js'));
+.service('DonationService', require('./donation.service.js'));

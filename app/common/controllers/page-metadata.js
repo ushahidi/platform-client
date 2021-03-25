@@ -19,6 +19,7 @@ function (
     $scope.pageDescription = null;
     $scope.pageKeywords = null;
     $scope.pageRobots = null;
+    $scope.paymentPoiner = null;
 
     $scope.appStoreId = $window.ushahidi.appStoreId;
 
@@ -34,6 +35,7 @@ function (
     $rootScope.$on('event:update:header', function () {
         $scope.reloadSiteConfig();
     });
+
     $scope.reloadSiteConfig();
 
     $rootScope.$on('setPageTitle', function (event, title) {
@@ -71,6 +73,14 @@ function (
             } else if (robots.length) {
                 $scope.pageRobots = robots;
             }
+        }
+    });
+
+    $rootScope.$on('setPaymentPointer', function (event, pointer) {
+        $scope.paymentPoiner = null;
+
+        if (pointer && pointer.length) {
+            $scope.paymentPointer = pointer;
         }
     });
 }];

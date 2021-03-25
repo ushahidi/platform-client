@@ -5,9 +5,7 @@ function DonationModalDirective() {
     return {
         restrict: 'E',
         scope: {
-            surveyId: '=',
-            postId: '=',
-            filters: '='
+            'donation': '='
         },
         replace: true,
         controller: DonationModalController,
@@ -17,14 +15,11 @@ function DonationModalDirective() {
 
 DonationModalController.$inject = [
     '$scope',
-    '$rootScope',
-    'Util',
-    '$window'
+    '$rootScope'
 ];
 function DonationModalController(
     $scope,
-    $rootScope,
-    Util,
-    $window
+    $rootScope
 ) {
+    $scope.donationClientEnabled = $rootScope.donationClientEnabled;
 }
