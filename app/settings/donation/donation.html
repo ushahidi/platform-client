@@ -124,9 +124,10 @@
 
                         <div class="form-field">
                             <label>
-                                <input type="checkbox" ng-model="site.donation.enabled" ng-value="true" id="donations-disable">
                                 Disable Monetization
                             </label>
+                            <input id="donations-disable" type="checkbox" ng-model="site.donation.enabled"
+                                ng-true-value="false" ng-false-value="true">
                         </div>
                     </div>
                 </div>
