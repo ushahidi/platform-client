@@ -35,7 +35,7 @@ describe('setting roles directive', function () {
 
     it('shuld refresh the view', function () {
         $scope.refreshView();
-        expect($scope.roles.length).toEqual(1);
+        expect($scope.roles.length).toEqual(2);
     });
 
 });

@@ -2,9 +2,9 @@ describe('Post detail directive', function () {
     var $scope,
        $rootScope,
        isolateScope,
-       PostEndpoint,
+       PostsSdk,
        Notify,
-       FormEndpoint,
+       SurveysSdk,
        $compile,
        element;
 
@@ -35,31 +35,39 @@ describe('Post detail directive', function () {
 
     beforeEach(angular.mock.inject(function (_$rootScope_,
                                 _Notify_,
-                                _PostEndpoint_,
-                                _FormEndpoint_,
+                                _PostsSdk_,
+                                _SurveysSdk_,
                                 _$compile_
                                ) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         Notify = _Notify_;
-        PostEndpoint = _PostEndpoint_;
-        FormEndpoint = _FormEndpoint_;
+        PostsSdk = _PostsSdk_;
+        SurveysSdk = _SurveysSdk_;
         $compile = _$compile_;
 
         $rootScope.setLayout = function () {};
 
         $scope.post = {
-            tags: [],
-            form: {
-                id: 1,
-                name: 'test form'
-            },
-            user: {
-                id: 1
-            },
-            status: 'draft',
-            completed_stages: ['1', '2', '3'],
-            post_content:[{id:1}]
+            data: {
+                result: {
+                    tags: [],
+                    form: {
+                        id: 1,
+                        name: 'test form'
+                    },
+                    user: {
+                        id: 1
+                    },
+                    status: 'draft',
+                    completed_stages: ['1', '2', '3'],
+                    enabled_languages: {
+                        default: 'EN',
+                        available: []
+                    },
+                    post_content:[{id:1}]
+                }
+            }
         };
 
         $scope.moment = moment;
@@ -86,9 +94,10 @@ describe('Post detail directive', function () {
         expect(isolateScope.publishedFor()).toEqual('post.publish_for_you');
     });
 
-    it('should show type as false for point and geometry but true for other', function () {
-        expect(isolateScope.showType('point')).toEqual(false);
+    it('should show type as false for title, description and geometry but true for the rest', function () {
         expect(isolateScope.showType('geometry')).toEqual(false);
+        expect(isolateScope.showType('title')).toEqual(false);
+        expect(isolateScope.showType('description')).toEqual(false);
         expect(isolateScope.showType('other')).toEqual(true);
     });
 

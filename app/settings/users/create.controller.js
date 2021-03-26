@@ -45,6 +45,7 @@ function (
                     Notify.notify('notify.user.save_success', {name: user.realname});
                     $scope.savingUser = false;
                     $scope.userSavedUser = true;
+                    $scope.displayError = false;
                     $scope.user.id = response.id;
                     // in favor of $route.reload();
                     $state.go('settings.users', null, { reload: true });

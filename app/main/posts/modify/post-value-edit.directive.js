@@ -24,7 +24,7 @@ PostValueEditController.$inject = [
     '$scope',
     '_',
     'Flatpickr',
-    'UshahidiSdk'
+    'SurveysSdk'
 ];
 
 function PostValueEditController(
@@ -32,7 +32,7 @@ function PostValueEditController(
     $scope,
     _,
     Flatpickr,
-    UshahidiSdk
+    SurveysSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -123,6 +123,6 @@ function PostValueEditController(
 
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        return !UshahidiSdk.Surveys.areOptionsUnique(attr.options);
+        return !SurveysSdk.areOptionsUnique(attr.options);
     }
 }

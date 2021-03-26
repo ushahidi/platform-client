@@ -6,6 +6,9 @@ module.exports = ['$q', function ($q) {
                     successCallback([{
                         name: 'test role',
                         id: 1
+                    }, {
+                        name: 'admin',
+                        id: 2
                     }]);
                 }
             }};
@@ -15,6 +18,9 @@ module.exports = ['$q', function ($q) {
                 name: 'test role',
                 permissions: [],
                 id: 1
+            }, {
+                name: 'admin',
+                id: 2
             }]);
             return {
                 $promise: promise
@@ -37,6 +43,9 @@ module.exports = ['$q', function ($q) {
                     successCallback({
                         name: 'test role',
                         id: 1
+                    }, {
+                        name: 'admin',
+                        id: 2
                     });
                 }
             }};
@@ -47,6 +56,9 @@ module.exports = ['$q', function ($q) {
                     successCallback({
                         name: 'test role',
                         id: 1
+                    }, {
+                        name: 'admin',
+                        id: 2
                     });
                 }
             }};
