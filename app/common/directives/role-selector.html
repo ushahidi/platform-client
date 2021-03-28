@@ -18,7 +18,7 @@
                     ng-model="everyone"
                     ng-click="setEveryone()"
                 >
-                <span class="label" translate="nav.everyone">Everyone</span>
+                <span class="label" tabindex="0" ng-keyup="$event.keyCode == 13 && setEveryone()" translate="nav.everyone">Everyone</span>
             </label>
         </div>
 
@@ -40,7 +40,7 @@
                     ng-model="everyone"
                     ng-click="setAdmin()"
                 >
-                <span translate="app.specific_roles">Specific roles...</span>
+                <span translate="app.specific_roles" tabindex="0" ng-keyup="$event.keyCode == 13 && setAdmin()">Specific roles...</span>
             </label>
 
             <div

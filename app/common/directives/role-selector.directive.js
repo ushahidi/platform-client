@@ -37,10 +37,12 @@ function RoleSelectorController($scope, RoleEndpoint, $translate, _) {
         if (_.indexOf($scope.model.role, admin.name) === -1) {
             $scope.model.role.push(admin.name);
         }
+        document.getElementById('add_roles').click();
     }
 
     // adding all available roles to model if user clicks 'Everyone'
     function setEveryone() {
         $scope.model.role = null;
+        document.getElementById('add_everyone').click();
     }
 }
