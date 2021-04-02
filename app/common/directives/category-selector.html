@@ -45,7 +45,7 @@
         </label>
         </div>
     </div>
-    <div ng-if="categoryTranslationUnavailable.length > 0 && displayWarning" class="alert">
+    <div ng-if="categoryTranslationUnavailable.length > 0 && displayWarning" class="alert" role="alert">
         <span ng-if="categoryTranslationUnavailable.length === 1">Please note: The following category is not available in {{'languages.' + activeLanguage.language | translate}}. Its default-language will be displayed instead:</span>
         <span ng-if="categoryTranslationUnavailable.length > 1">Please note: The following categories are not available in {{'languages.' + activeLanguage.language | translate}}. Their default-languages will be displayed instead:</span>
         <ul>

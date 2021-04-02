@@ -33,7 +33,7 @@
 
         <div class="full-col">
             <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
-                <div class="alert" ng-hide="categories.length">
+                <div class="alert" ng-hide="categories.length" role="alert">
                     <p ng-hide="categories.length"><em translate>empty.category</em></p>
                 </div>
                 <div ng-repeat="category in categories">

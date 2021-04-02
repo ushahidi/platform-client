@@ -67,7 +67,7 @@
     </nav>
     <div class="listing-item tasks-tabs tabs-target active" ng-show="post.post_content.length > 1"
       >
-      <div class="alert"
+      <div class="alert" role="alert"
           ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
           ng-if="!taskHasValues(task)"
           ng-show="task.id === visibleTask">
