@@ -2,6 +2,7 @@
       uib-dropdown
       is-open="status.isopen"
       role="search"
+      id="dropdown-window"
       class="searchbar"
       auto-close="disabled"
       ng-submit="applyFilters()"
@@ -39,7 +40,7 @@
 
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
-        <button class="searchbar-options-filter button">
+        <button class="searchbar-options-filter button" id="toggle-dropdown">
             <sort-and-filter-counter></sort-and-filter-counter>
         </button>
     </div>

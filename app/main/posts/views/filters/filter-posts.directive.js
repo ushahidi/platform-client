@@ -16,8 +16,35 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element'];
-function FilterPostsController($scope, PostFilters, $state, $document, $element) {
+FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element', 'FocusTrap'];
+function FilterPostsController($scope, PostFilters, $state, $document, $element, FocusTrap) {
+    function dropdownContainerLink() {
+        let container = document.querySelector('#dropdown-window');
+        let trap = FocusTrap.createFocusTrap('#dropdown-window');
+
+        function watchClassAttribute(mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.type === 'attributes') {
+                    let attrName = mutation.attributeName;
+                    let getAttr = mutation.target.getAttribute(attrName);
+                    if (getAttr.match('active')) {
+                        trap.activate();
+                    } else {
+                        trap.deactivate();
+                    }
+                }
+            });
+        }
+
+        const observer = new MutationObserver(watchClassAttribute);
+        observer.observe(container, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    dropdownContainerLink();
+
     $scope.searchSavedToggle = false;
     $scope.status = { isopen: false };
     $scope.hideDropdown = hideDropdown;
