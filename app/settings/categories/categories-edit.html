@@ -12,7 +12,8 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic" role="img">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -24,156 +25,138 @@
         <div class="toolbar">
             <div class="button-group">
                 <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
-                <button class="button-alpha" type="button" ng-click="saveCategory()" type="submit" ng-disabled="form.$invalid" ng-if="!processing">
-                {{save}}</button>
-                <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
-                  <div class="loading">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                  </div>
+                <button class="button-alpha" type="button" ng-click="saveCategory()" type="submit"
+                    ng-disabled="form.$invalid" ng-if="!processing">
+                    {{save}}</button>
+                <button type="submit" class="button-alpha" disabled ng-if="processing">{{saving}}
+                    <div class="loading">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
                 </button>
             </div>
-             <!-- toolbar -->
+            <!-- toolbar -->
             <div class="progress-bar" ng-show="isLoading()">
-              <span>
-                ..
-              </span>
+                <span>
+                    ..
+                </span>
             </div>
         </div>
         <!-- end toolbar -->
 
         <!-- start edit -->
         <div class="loading" ng-show="isLoading() && !category">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
         </div>
 
         <div class="full-col" ng-show="category">
-          <translations-switch
-            languages="languages"
-            remove-language="removeLanguage(index, language)"
-            >
-          </translations-switch>
+            <translations-switch languages="languages" remove-language="removeLanguage(index, language)">
+            </translations-switch>
 
-          <form name="form" ng-show="languages.default === languages.active">
-            <div class="form-sheet">
-              <!-- Title -->
-              <div class="form-field">
-                <label for="category-name" translate>category.editor.name</label>
-                <input id="category-name" type="text" placeholder="{{'category.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
-              </div>
-              <!-- Description -->
-              <div class="form-field">
-                <label for="category-description" translate>category.editor.description</label>
-                <textarea id="category-description" name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="category.description"></textarea>
-              </div>
-              <!-- Parent/child-relations -->
-              <fieldset
-                class="custom-fieldset init"
-                dropdown
-                ng-show="!isParent"
-              >
-                <legend
-                  class="dropdown-trigger init active"
-                  data-toggle="dropdown-menu"
-                  dropdown-toggle
-                >
-                  <span class="legend-label" translate="app.this_category_is_child_to" translate-values="{ parent: getParentName() }">This category is a child to</span>
-                  <svg class="iconic chevron">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
-                  </svg>
-                </legend>
-                <div class="dropdown-menu init" dropdown-menu>
-                  <div class="form-field radio">
-                      <label for="parent_label-nothing">
-                          <input
-                            type="radio"
-                            name="parent_label"
-                            id="parent_label-nothing"
-                            ng-value="null"
-                            ng-checked="category.parent_id === null"
-                            ng-model="category.parent_id"
-                            />
-                          <span translate="app.nothing">Nothing</span>
-                      </label>
-                  </div>
+            <form name="form" ng-show="languages.default === languages.active">
+                <div class="form-sheet">
+                    <!-- Title -->
+                    <div class="form-field">
+                        <label for="category-name" translate>category.editor.name</label>
+                        <input id="category-name" type="text" placeholder="{{'category.editor.name' | translate}}"
+                            ng-minlength="2" ng-maxlength="255" ng-model="category.tag" required>
+                    </div>
+                    <!-- Description -->
+                    <div class="form-field">
+                        <label for="category-description" translate>category.editor.description</label>
+                        <textarea id="category-description" name="description" data-min-rows='1' rows='1'
+                            ng-maxlength="150" ng-model="category.description"></textarea>
+                    </div>
+                    <!-- Parent/child-relations -->
+                    <fieldset class="custom-fieldset init" dropdown ng-show="!isParent">
+                        <legend class="dropdown-trigger init active" data-toggle="dropdown-menu" dropdown-toggle>
+                            <span class="legend-label" translate="app.this_category_is_child_to"
+                                translate-values="{ parent: getParentName() }">This category is a child to</span>
+                            <svg class="iconic chevron">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                            </svg>
+                        </legend>
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field radio">
+                                <label for="parent_label-nothing">
+                                    <input type="radio" name="parent_label" id="parent_label-nothing" ng-value="null"
+                                        ng-checked="category.parent_id === null" ng-model="category.parent_id" />
+                                    <span translate="app.nothing">Nothing</span>
+                                </label>
+                            </div>
 
-                  <div class="form-field radio" ng-repeat="parent in parents">
-                      <label for="parent_label-{{parent.id}}">
-                          <input
-                            type="radio"
-                            name="parent_label"
-                            id="parent_label-{{parent.id}}"
-                            ng-selected="parent.id === category.parent_id"
-                            ng-value="parent.id"
-                            ng-change="setParent(parent)"
-                            ng-model="category.parent_id"
-                          />
-                          <bdi>{{parent.tag}}</bdi>
-                      </label>
-                  </div>
+                            <div class="form-field radio" ng-repeat="parent in parents">
+                                <label for="parent_label-{{parent.id}}">
+                                    <input type="radio" name="parent_label" id="parent_label-{{parent.id}}"
+                                        ng-selected="parent.id === category.parent_id" ng-value="parent.id"
+                                        ng-change="setParent(parent)" ng-model="category.parent_id" />
+                                    <bdi>{{parent.tag}}</bdi>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-field">
+                        <label translate="translations.category_select_default"></label>
+                        <p class="alert" translate="translations.default_lang_info"></p>
+                        <div class="custom-select">
+                            <select ng-model="selectedLanguage"
+                                ng-options="lang.code as lang.name for lang in languagesToSelect"
+                                ng-change="selectLanguage(selectedLanguage)">
+                            </select>
+                        </div>
+                        <div class="form-field" ng-if="category.parent" ng-show="checkParentLanguage(category.parent)">
+                            <p translate="translations.parent_child_lang">Please note that the selected a default
+                                language for this child-category is different from its parent</span>
+                                <span>({{'languages.' + category.parent.base_language | translate}}.
+                            </p>
+                        </div>
+                        <div ng-show="showLangError" class="alert error">
+                            <svg class="iconic">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#warning"></use>
+                            </svg>
+                            <p translate="translations.error_translation_exists">You cannot select this language since
+                                there is already a translation for it.</p>
+                        </div>
+                    </div>
+
+                    <!-- Who can see and add -->
+                    <role-selector model="category" title="'app.who_can_see_this_category'"
+                        ng-show="!category.parent_id"></role-selector>
+                    <div class="form-field" ng-show="category.parent_id">
+                        <svg class="iconic" role="img">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people">
+                            </use>
+                        </svg>
+                        <span translate>category.child_permissions</span>
+                    </div>
                 </div>
-              </fieldset>
-              <div class="form-field">
-                <label translate="translations.category_select_default"></label>
-                <p class="alert" translate="translations.default_lang_info"></p>
-                <div class="custom-select">
-                    <select
-                          ng-model="selectedLanguage"
-                          ng-options="lang.code as lang.name for lang in languagesToSelect"
-                          ng-value="lang.code"
-                          ng-change="selectLanguage(selectedLanguage)"
-                          ng-selected="lang.code === selectedLanguage"
-                      >
-                      </select>
+            </form>
+
+            <div class="form-sheet" ng-show="category.id && (languages.default === languages.active)">
+                <div class="form-sheet-summary">
+                    <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
                 </div>
-              <div class="form-field" ng-if="category.parent" ng-show="checkParentLanguage(category.parent)">
-                <p translate="translations.parent_child_lang">Please note that the selected a default language for this child-category is different from its parent</span> <span>({{'languages.' + category.parent.base_language | translate}}.</p>
-              </div>
-                <div ng-show="showLangError" class="alert error">
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
-                    </svg>
-                    <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
+
+                <div class="form-field">
+                    <p translate>category.delete_category_desc</p>
+
+                    <button class="button-destructive" ng-click="deleteCategory(category)">
+                        <svg class="iconic" role="img">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash">
+                            </use>
+                        </svg>
+                        <span class="button-label" translate>category.delete_category</span>
+                    </button>
                 </div>
             </div>
-
-              <!-- Who can see and add -->
-              <role-selector model="category" title="'app.who_can_see_this_category'" ng-show="!category.parent_id"></role-selector>
-              <div class="form-field" ng-show="category.parent_id">
-                <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
-                </svg>
-                <span translate>category.child_permissions</span>
-              </div>
-            </div>
-          </form>
-
-          <div class="form-sheet" ng-show="category.id && (languages.default === languages.active)">
-             <div class="form-sheet-summary">
-                 <h3 class="form-sheet-title" translate>category.delete_this_category</h3>
-             </div>
-
-             <div class="form-field">
-                 <p translate>category.delete_category_desc</p>
-
-                 <button class="button-destructive" ng-click="deleteCategory(category)">
-                     <svg class="iconic" role="img">
-                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
-                     </svg>
-                     <span class="button-label" translate>category.delete_category</span>
-                 </button>
-             </div>
-          </div>
-          <category-translation-editor
-            category="category"
-            default-language="languages.default"
-            active-language="languages.active"
-            ng-show="languages.default !== languages.active"
-            >
-          </category-translation-editor>
+            <category-translation-editor category="category" default-language="languages.default"
+                active-language="languages.active" ng-show="languages.default !== languages.active">
+            </category-translation-editor>
         </div>
     </main>
 </div>

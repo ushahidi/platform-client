@@ -17,11 +17,17 @@ function LanguageSwitchController($scope, Languages, TranslationService, $locati
     $scope.changeLanguage = changeLanguage;
     $scope.$on('event:authentication:login:succeeded', TranslationService.setStartLanguage);
     $scope.$on('event:authentication:logout:succeeded', TranslationService.setStartLanguage);
+    $scope.site = {};
     activate();
 
     function activate() {
         Languages.then(function (languages) {
             $scope.languages = languages;
+            TranslationService.getLanguage().then(lang =>{
+                let deflangs = languages.filter(language => (language.code).toString().split('-')[0] === lang.split('-')[0]);
+                $scope.site.language = deflangs.length === 1 ? deflangs[0].code : lang;
+            })
+
         });
     }
 
