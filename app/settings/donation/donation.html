@@ -45,9 +45,11 @@
                     <div class="form-sheet-summary">
                         <h2 class="form-sheet-title">Setup Donation</h2>
                         <p>
-                            Please make sure you have your wallet set up on <a href="#">uphold.com</a> to set web
+                            Please make sure you have your wallet set up on <a href="https://uphold.com">uphold.com</a>
+                            to set web
                             monetization.
-                            If you don't have a wallet already please click <a href="#">here</a> to create one.
+                            If you don't have a wallet already please click <a
+                                href="https://wallet.uphold.com/signup">here</a> to create one.
                         </p>
                     </div>
 
@@ -64,8 +66,8 @@
                                     <label for="donation-title">
                                         Donation Title
                                     </label>
-                                    <input id="donation-title" ng-model="site.donation.title" type="text"
-                                        placeholder="The title of your donation" />
+                                    <input id="donation-title" ng-model="site.donation.title" ng-required="true"
+                                        type="text" placeholder="Enter the title of your donation" />
                                 </div>
 
                                 <div class="form-field">
@@ -73,6 +75,7 @@
                                         Donation Description
                                     </label>
                                     <textarea id="donation-description" ng-model="site.donation.description"
+                                        ng-required="true"
                                         placeholder="This is a placeholder text telling you more about this donation"> </textarea>
                                 </div>
 
@@ -112,7 +115,7 @@
                                 <div class="form-field">
                                     <label for="donation-wallet">Wallet Address </label>
                                     <input id="donation-wallet" type="text" ng-model="site.donation.wallet"
-                                        placeholder="$ilp.uphold.com/qdXLkr8xAYrk" />
+                                        ng-required="true" placeholder="$ilp.uphold.com/qdXLkr8xAYrk" />
                                 </div>
                                 <div class="form-field">
                                     <button class="button" type="button" ng-click="deleteWallet()">

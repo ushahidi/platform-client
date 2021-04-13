@@ -118,6 +118,7 @@ module.exports = [
                     ConfigEndpoint.saveCache($scope.site).$promise
                         .then(function (result) {
                             $scope.saving_config = false;
+                            $rootScope.$emit('event:donation:settings:update', result.donation);
                             Notify.notify('notify.donation_settings.save_success');
                         }, function (errorResponse) {
                             Notify.apiErrors(errorResponse);

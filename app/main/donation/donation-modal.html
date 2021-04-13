@@ -1,5 +1,5 @@
 <div class="modal-body">
-    <h3 class="modal-title">{{ donation.title }}</h3>
+    <!-- <h3 class="modal-title">{{ donation.title }}</h3> -->
     
     <p> {{ donation.description }} </p>
 
@@ -18,12 +18,12 @@
     </p>
 
     <p class="soft-text" ng-show="!donationClientEnabled">
-        Ushahidi deployments are now web monetization enabled. Web monetization is a way
-        of supporting the websites you love without playing advertisers game. 
+        Ushahidi deployments are now web monetization enabled. 
+        Web monetization is a way of supporting the websites you love without playing advertisers game. 
         All you need is to get your browser setup. Click the link below to learn how you can donate.
-        
-        <div>
-            <a href="#">How can I donate?</a>
-        </div>
     </p>
+
+    <div ng-show="!donationClientEnabled">
+        <a href="#" class="link-blue">How can I donate?</a>
+    </div>
 </div>

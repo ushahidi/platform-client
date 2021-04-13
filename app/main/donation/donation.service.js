@@ -4,7 +4,6 @@ DonationService.$inject = [
     '$rootScope',
     'Util',
     'Notify',
-    'ConfigEndpoint',
     'ModalService'
 ];
 
@@ -12,22 +11,16 @@ function DonationService(
     $rootScope,
     Util,
     Notify,
-    ConfigEndpoint,
     ModalService
 ) {
 
     let total = 0;
     let scale;
 
-    ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
-        $rootScope.donation = site.donation;
-    });
-
     function setupMonetization() {
         if (document.monetization) {
             document.monetization.addEventListener('monetizationpending', () => {
-                Notify.notify('<p> Web Monetization Pending. </p>');
-
+                Notify.notify('<p> Initializing Web Monetization . </p>');
             });
 
             document.monetization.addEventListener('monetizationstart', (event) => {
@@ -69,7 +62,7 @@ function DonationService(
     function openDonationModal() {
         ModalService.openTemplate(
             '<donation-modal donation="donation"> </donation-modal>',
-            '<div> </div>',
+            $rootScope.donation.title,
             false,
             $rootScope,
             true,
