@@ -1157,6 +1157,16 @@
                 "search_terms_desc": "Add search terms separated with commas"
             }
         },
+        "donation": {
+            "title" : {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles" :{
             "member": "Member",
             "admin": "Admin",
