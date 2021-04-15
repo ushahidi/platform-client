@@ -1,6 +1,7 @@
 <div>
-    <div class="mode-context init" dropdown>
+    <layout-class layout="a"></layout-class>
 
+    <div class="mode-context init" dropdown>
         <header class="mode-context-header">
             <ol class="breadcrumbs">
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
@@ -40,21 +41,14 @@
             </div>
             <!-- end toolbar -->
 
-            <div class="main-col">
+            <div class="full-col">
                 <div class="form-sheet">
                     <div class="form-sheet-summary">
                         <h2 class="form-sheet-title">Setup Donation</h2>
-                        <p>
-                            Please make sure you have your wallet set up on <a href="https://uphold.com">uphold.com</a>
-                            to set web
-                            monetization.
-                            If you don't have a wallet already please click <a
-                                href="https://wallet.uphold.com/signup">here</a> to create one.
-                        </p>
                     </div>
 
                     <div class="stepper">
-                        <div class="stepper-item active"
+                        <div class="stepper-item"
                             ng-class="{'active' : isActiveStep(1), 'disabled' : !isActiveStep(1) }">
                             <h2 class="stepper-heading">
                                 <span class="stepper-badge">1</span>
@@ -95,7 +89,7 @@
                                     </div>
 
                                     <div class="form-field">
-                                        <label for="photo">Attach image</label>
+                                        <label for="photo">Attach an image</label>
                                         <file-upload container="image">
                                         </file-upload>
                                     </div>
@@ -110,6 +104,13 @@
                                 <span class="stepper-badge">2</span>
                                 Wallet Address
                             </h2>
+
+                            <p>
+                                Please make sure you have your wallet set up on 
+                                <a href="https://uphold.com">uphold.com</a>
+                                to set web monetization. If you don't have a wallet already please click 
+                                <a href="https://wallet.uphold.com/signup">here</a> to create one.
+                            </p>
 
                             <div>
                                 <div class="form-field">
@@ -128,9 +129,11 @@
                         <div class="form-field">
                             <label>
                                 Disable Monetization
-                            </label>
-                            <input id="donations-disable" type="checkbox" ng-model="site.donation.enabled"
+                                <input id="donations-disable" type="checkbox" 
+                                class="ng-pristine ng-untouched ng-valid ng-empty"
+                                ng-model="site.donation.enabled"
                                 ng-true-value="false" ng-false-value="true">
+                            </label>
                         </div>
                     </div>
                 </div>
