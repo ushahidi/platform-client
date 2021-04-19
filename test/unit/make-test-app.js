@@ -23,6 +23,9 @@ module.exports = function () {
         .factory('Sortable', function () {
             return require('sortablejs');
         })
+        .factory('FocusTrap', function () {
+            return require('focus-trap');
+        })
         .constant('CONST', {
             'BACKEND_URL'         : backendUrl,
             'API_URL'             : backendUrl + '/api/v2',
