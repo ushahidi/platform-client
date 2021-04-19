@@ -48,6 +48,16 @@
                        <p class="listing-item-secondary" translate>settings.settings_list.import_desc</p>
                    </div>
                </div>
+
+               <div class="listing-item" ng-show="hasPermission('Manage Settings') && donationEnabled">
+                    <div class="listing-item-primary">
+                        <h2 class="listing-item-title">
+                            <a ui-sref="settings.donation" translate>settings.settings_list.donation</a>
+                        </h2>
+                        <p class="listing-item-secondary" translate>settings.settings_list.donation_desc</p>
+                    </div>
+                </div>
+
                <div class="listing-item" ng-show="userSettingsEnabled && hxlEnabled">
                    <div class="listing-item-primary">
                        <h2 class="listing-item-title">
