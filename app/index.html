@@ -53,32 +53,8 @@
 
         </div>
 
-        <script type="text/javascript">
-            if (window.ushahidi && window.ushahidi.doorbellEnabled) {
-                window.doorbellOptions = {
-                    tags: ['platform'],
-                    appKey: window.ushahidi.doorbellAppKey,
-                    properties: {
-                        apiUrl: window.ushahidi.apiUrl
-                    },
-                    onShow: function () {
-                        injector = angular.element(document).injector();
-                        auth = injector.get('Authentication');
-                        session = injector.get('Session');
+        
 
-                        if (auth && session) {
-                            doorbell.setOption('email', session.getSessionDataEntry('email'));
-                            doorbell.setProperty('loggedIn', auth.getLoginStatus());
-                            doorbell.setProperty('role', session.getSessionDataEntry('role'));
-                            doorbell.setProperty('realname', session.getSessionDataEntry('realname'));
-                        }
-                    }
-                };
-                (function(d, t) {
-                    var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/2005?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
-                }(document, 'script'));
-            }
-        </script>
         <!--
         Intercom integration
         -->
