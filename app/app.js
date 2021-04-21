@@ -129,6 +129,8 @@ angular.module('app',
     }])
     .config(['$stateProvider', 'ngMetaProvider', function ($stateProvider, ngMetaProvider) {
         $stateProvider.decorator('data', ngMetaProvider.mergeNestedStateData);
+        ngMetaProvider.setDefaultTag('og:title', 'Ushahidi');
+        ngMetaProvider.setDefaultTag('og:image', 'https://github.com/ushahidi/platform-pattern-library/blob/master/assets/img/map-new.png');
       }])
     .factory('_', function () {
         return require('underscore/underscore');
