@@ -173,6 +173,23 @@ function (
             views: {
                 'mode-context': 'modeContext'
             },
+            resolve: {
+                data: ['ConfigEndpoint', 'ngMeta', function (ConfigEndpoint, ngMeta) {
+                    return ConfigEndpoint.get({
+                         id: 'site'
+                        }).$promise.then(function (site) {
+                        ngMeta.setTitle(site.name);
+                        ngMeta.setTag('og:description', site.description);
+                        ngMeta.setTag('og:title', site.name);
+                        ngMeta.setTag('og:image', site.image_header)
+                        console.log(site)
+                        return site;
+                    })
+                }]
+            },
+            meta: {
+                disableUpdate: true
+            },
             onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
                 if (PostFilters.getMode() === 'savedsearch') {
                     $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});

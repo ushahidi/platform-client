@@ -10,7 +10,17 @@
         <meta name="description" ng-attr-content="{{pageDescription}}">
         <meta name="keywords" ng-attr-content="{{pageKeywords}}">
         <meta name="robots" ng-attr-content="{{pageRobots}}">
+ 
+        <!-- og-tags -->
+        <meta property="og:title" content="{{ngMeta['og:title']}}" />
+        <meta property="og:description" content="{{ngMeta['og:description']}}" />
+        <meta property="og:image" content="{{ngMeta['og:image']}}" />
 
+        <!-- twitter -->
+        <meta property="twitter:title" content="{{ngMeta['og:title']}}" />
+        <meta property="twitter:description" content="{{ngMeta['og:description']}}" />
+        <meta property="twitter:image" content="{{ngMeta['og:image']}}" />
+        <!--  -->
         <meta name="apple-itunes-app" content="app-id={{appStoreId}}, app-argument={{currentFullUrl}}>">
 
         <link rel="manifest" href="/manifest.json">

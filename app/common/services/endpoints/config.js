@@ -68,5 +68,12 @@ function (
         return persist(item);
     };
 
+    ConfigEndpoint.gettingMetaData = function () {
+        return ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
+            console.log(site)
+            return site;
+        })
+    }
+
     return ConfigEndpoint;
 }];

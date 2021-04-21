@@ -18,6 +18,8 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
+require('ng-meta')
+require('angular-route')
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -83,7 +85,9 @@ angular.module('app',
         'ushahidi.main',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
-        'ngtweet'
+        'ngtweet',
+        'ngRoute',
+        'ngMeta'
         ])
 
     .constant('CONST', {
@@ -123,7 +127,9 @@ angular.module('app',
         $showdownProvider.setOption('tasklists', true);
         $showdownProvider.setOption('sanitize', true);
     }])
-
+    .config(['$stateProvider', 'ngMetaProvider', function ($stateProvider, ngMetaProvider) {
+        $stateProvider.decorator('data', ngMetaProvider.mergeNestedStateData);
+      }])
     .factory('_', function () {
         return require('underscore/underscore');
     })
@@ -184,4 +190,7 @@ angular.module('app',
     }])
     .run(['VerifierService', function (VerifierService) {
         VerifierService.debugModeCheck();
+    }])
+    .run(['ngMeta', function(ngMeta) {
+        ngMeta.init();
     }]);
