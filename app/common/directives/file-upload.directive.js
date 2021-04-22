@@ -17,9 +17,9 @@ function FileUpload() {
             ) {
                 $scope.required = typeof $attrs.required !== 'undefined';
 
-                $scope.$on('event:FileUpload', function (event) {
-                    angular.element(document.querySelector('#file')).val('');
-                });
+//                 $scope.$on('event:FileUpload', function (event) {
+//                     angular.element(document.querySelector('#file')).val('');
+//                 });
 
                 $scope.uploadFile = function ($event) {
                     if (validateFile($event.target.files[0])) {
