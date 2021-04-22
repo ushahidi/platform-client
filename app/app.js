@@ -31,6 +31,9 @@ import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
+// added image and absUrl to get path of map-new.png image from within the app itself
+let image = require('ushahidi-platform-pattern-library/assets/img/map-new.png')
+let absUrl = window.location.origin
 
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
@@ -128,9 +131,10 @@ angular.module('app',
         $showdownProvider.setOption('sanitize', true);
     }])
     .config(['$stateProvider', 'ngMetaProvider', function ($stateProvider, ngMetaProvider) {
-        $stateProvider.decorator('data', ngMetaProvider.mergeNestedStateData);
+        // "ngMetaProvider.setDefaultTag" provide fallback values to og:title and og:image
         ngMetaProvider.setDefaultTag('og:title', 'Ushahidi');
-        ngMetaProvider.setDefaultTag('og:image', 'https://github.com/ushahidi/platform-pattern-library/blob/master/assets/img/map-new.png');
+        ngMetaProvider.setDefaultTag('og:image', `${absUrl}${image}`);
+        $stateProvider.decorator('data', ngMetaProvider.mergeNestedStateData);
       }])
     .factory('_', function () {
         return require('underscore/underscore');
