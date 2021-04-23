@@ -79,6 +79,10 @@ function (
                 return $scope.editField.input !== 'upload' && $scope.editField.input !== 'tags';
             };
 
+            $scope.canDisplayDefaultValue = function () {
+                return $scope.canDisplay() && $scope.editField.input !== 'location' && $scope.editField.input !== 'relation';
+            }
+
             $scope.canMakePrivate = function () {
                 return $scope.editField.type !== 'tags' && $scope.editField.type !== 'title' && $scope.editField.type !== 'description';
             };

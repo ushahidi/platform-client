@@ -100,8 +100,8 @@
       <label class="tgl-btn" for="switchprivateresponse"></label>
     </div>
   </div>
-  <div class="form-field switch" ng-if="canDisplay()">
-    <label translate="app.default_value">Default value (optional):</label>
+  <div class="form-field switch" ng-if="canDisplayDefaultValue()">
+    <label ng-if="canDisplayDefaultValue()" translate="app.default_value">Default value (optional):</label>
     <div class="form-field">
       <div ng-switch="editField.input">
         <input ng-switch-when="location" type="text" placeholder="{{ 'form.default_location_placeholder'|translate }}" ng-model="editField.default">
