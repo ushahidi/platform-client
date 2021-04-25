@@ -38,6 +38,7 @@ function (
         $scope.planIsAvailable = Features.isViewEnabled('plan');
         $scope.userSettingsEnabled = Features.isFeatureEnabled('user-settings');
         $scope.hxlEnabled = Features.isFeatureEnabled('hxl');
+        $scope.donationEnabled = Features.isFeatureEnabled('donation');
 
         // adjusting title/description of data-export based on if hxl is enabled
         if ($scope.hxlEnabled) {
