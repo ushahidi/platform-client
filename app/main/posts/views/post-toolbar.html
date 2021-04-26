@@ -4,37 +4,39 @@
     <!-- floating action button -->
     <add-post-button></add-post-button>
 
-    <filter-posts filters="filters" embed-only="false" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
+    <filter-posts filters="filters" stats="stats" embed-only="false" ng-if="!isEmbed" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
 
-    <div class="button-group" embed-only="false" ng-hide="filtersActive">
-        <div ng-if="!editMode()">
+    <div embed-only="false" ng-if="!isEmbed" ng-hide="filtersActive">
+        <div class="button-group" ng-if="!editMode()">
             <post-share filters="filters" button="true"></post-share>
+            <donation></donation>
             <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
         </div>
 
-        <div ng-if="editMode()">
+        <div class="button-group" ng-if="editMode()">
             <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
             <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-            <loading-dots button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots>
+            <loading-dots-button button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots-button>
         </div>
     </div>
 
-    <div embed-only="true" class="hide-until-medium">
-        <filter-posts filters="filters" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
-        <div class="button-group">
-            <div ng-hide="filtersActive">
-                <div ng-if="!editMode()">
-                    <post-share filters="filters" button="true"></post-share>
-                    <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
-                </div>
+    <div embed-only="true" ng-if="isEmbed" class="hide-until-medium">
+        <filter-posts filters="filters" stats="stats" on-open="hideOtherActions()" on-close="showOtherActions()"></filter-posts>
+        
+        <div class="button-group" ng-hide="filtersActive">
+            <div ng-if="!editMode()">
+                <post-share filters="filters" button="true"></post-share>
+                <donation></donation>
+                <button ng-if="editEnabled()" class="button button-alpha" ng-click="setEditMode()" translate>app.edit</button>
+            </div>
 
-                <div ng-if="editMode()">
-                    <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
-                    <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
-                </div>
+            <div ng-if="editMode()">
+                <button ng-if="hasPermission" class="button" ng-click="cancel()" translate>app.cancel</button>
+                <button ng-if="hasPermission && !isSaving()" ng-click="savePost()" class=" button button-alpha" translate>app.save</button>
             </div>
         </div>
-        <loading-dots button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots>
+    
+        <loading-dots-button button-class="'button-alpha'" disabled=true label="'app.saving'" ng-if="isSaving()"></loading-dots-button>
     </div>
 
     <!-- toolbar -->

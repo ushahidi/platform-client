@@ -14,9 +14,13 @@ function SurveyTranslationEditor() {
     };
 }
 
-SurveyTranslationEditorController.$inject = ['$scope', 'ModalService','_'];
-function SurveyTranslationEditorController($scope, ModalService, _) {
+SurveyTranslationEditorController.$inject = ['$rootScope', '$scope', 'ModalService','_'];
+function SurveyTranslationEditorController($rootScope, $scope, ModalService, _) {
     $scope.openField = openField;
+    $scope.form = {};
+    $rootScope.$on('event:surveys:translationMissing', function () {
+        $scope.form.translation.$setDirty();
+    });
 
     function openField(field, task) {
         $scope.activeTask = task;

@@ -3,11 +3,15 @@ module.exports = [
     'ModalService',
     '_',
     'Editor',
+    'Notify',
+    'UshahidiSdk',
 function (
     $rootScope,
     ModalService,
     _,
-    Editor
+    Editor,
+    Notify,
+    UshahidiSdk
     ) {
     return {
         restrict: 'E',
@@ -45,6 +49,7 @@ function (
                  * that makes the scroll get stuck inside the editor-area */
                 let editor = document.querySelector('#editSection');
                 editor.style.height = `${editorHeight + 60}px`;
+
             };
 
             initiateEditor();
@@ -54,9 +59,11 @@ function (
                     editField.translations = {};
                 }
                 editField.instructions = $scope.editor.getMarkdown();
-                if (!$scope.fieldLabel.$invalid) {
+                if (!$scope.fieldLabel.$invalid && $scope.valuesPermissible()) {
                     editField.label = $scope.label;
                     $scope.addNewField(editField, activeTask);
+                } else {
+                    Notify.error('survey.fields.validation.required');
                 }
             };
 
@@ -64,12 +71,12 @@ function (
                 ModalService.close();
             };
 
-            $scope.onlyOptional = function () {
-                return $scope.editField.type !== 'title' && $scope.editField.type !== 'description';
+            $scope.onlyOptional = function (editField) {
+                return editField.type !== 'title' && editField.type !== 'description';
             };
 
             $scope.canDisplay = function () {
-                return $scope.editField.input !== 'upload' && $scope.editField.type !== 'title' && $scope.editField.type !== 'description' && $scope.editField.input !== 'tags';
+                return $scope.editField.input !== 'upload' && $scope.editField.input !== 'tags';
             };
 
             $scope.canMakePrivate = function () {
@@ -78,6 +85,19 @@ function (
 
             $scope.canDisableCaption = function () {
                 return $scope.editField.type === 'media' && $scope.editField.input === 'upload';
+            };
+            $scope.validateDuplicate = function () {
+                if (UshahidiSdk.Surveys.fieldCanHaveOptions($scope.editField)) {
+                    return UshahidiSdk.Surveys.areOptionsUnique($scope.editField.options);
+                }
+                return true;
+            }
+            $scope.valuesPermissible = function () {
+                if (UshahidiSdk.Surveys.fieldCanHaveOptions($scope.editField)) {
+                    return UshahidiSdk.Surveys.areOptionsUnique($scope.editField.options)
+                        || !UshahidiSdk.Surveys.hasEmptyOptions($scope.editField.options);
+                }
+                return true;
             };
         }
     };

@@ -23,7 +23,7 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
                 return false;
             }
             if ($scope.attribute.type === 'relation') {
-                PostsSdk.getPosts($scope.attribute.value.value).then(post=>{
+                PostsSdk.findPostTo($scope.attribute.value.value, 'list').then(post=>{
                     $scope.attribute.value.value = post.data.result;
                     $scope.$apply();
                 });
@@ -53,7 +53,13 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
                         }
                         $scope.attribute.value.translations[key].value = translatedOptions;
                     });
-                }
+            }
+            // The below fix is to remove trailing decimals
+            // from the value fetched from the database.
+            if ($scope.attribute.type === 'decimal') {
+                $scope.attribute.value.value = parseFloat($scope.attribute.value.value);
+            }
+
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {
                     $scope.attribute.value.value = moment($scope.attribute.value.value).format('LL');

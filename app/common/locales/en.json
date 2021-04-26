@@ -22,6 +22,8 @@
             "title" : "Documentation",
             "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom" : "Intercom",
             "description" : "Contact Ushahidi staff for chat support"
@@ -85,6 +87,7 @@
         "filter_by" :"Filter by...",
         "sort_filter": "Sort & filter",
         "apply_filters" : "Apply",
+        "close_and_view": "Close and view results",
         "show_more_less" : "Show more/less",
         "filters" : "Filters",
         "filter_by_survey" : "Filter by survey",
@@ -238,6 +241,7 @@
         "internal_use_task" : "Task is only for internal use",
         "internal_use_task_desc" : "This task will only be visible to User who have Manage Post permission.",
         "duplicate_task" : "Duplicate task",
+        "duplicate_option" : "Duplicate option is present",
         "show_this_task_to" : "Show this task to everyone when published",
         "show_this_task_to_desc" : "When a survey response is published, data from this task will be displayed.",
         "survey_name" : "Survey name",
@@ -267,6 +271,7 @@
         "radio_button": "Radio Button(s)",
         "checkbox": "Checkbox(es)",
         "related_post": "Related Post",
+        "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
         "upload_image": "Image",
         "embed_video": "Embed video",
         "markdown": "Markdown",
@@ -288,8 +293,8 @@
         "task_visible_when_published" : "This task will be visible when post is published.",
         "show_field_description" : "Add field description (optional):",
         "add_task" : "Add task",
-        "add_field" : "Add field",
-        "edit_field" : "Edit field",
+        "add_field" : "Add {{fieldType | lowercase}} field",
+        "edit_field" : "Edit {{fieldType | lowercase}} field",
         "build" : "Build",
         "configure" : "Configure",
         "require_section" : "Require this task be completed before a post can be visible to the public",
@@ -342,6 +347,11 @@
                 "desc" : "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
                 "delete" : "Delete task",
                 "delete_this" : "Delete this task"
+            }
+        },
+        "fields" : {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -646,7 +656,10 @@
         "there_are_no_posts" : "There are no posts",
         "in_this_deployment" : " in this deployment, yet.",
         "posts_total": " {{posts}} of {{total_nb}} posts",
+        "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
+        "search_results": "Results:",
         "by" : "by",
+        "duplicate_option" : "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
         "task_completed" : "Task completed",
         "everyone" : "Everyone",
         "just_you" : "Just you",
@@ -660,7 +673,9 @@
         "message_thread" : "Message Thread",
         "all_posts" : "All Posts",
         "no_search_results" : "Your search didn't match any posts",
+        "no_search_results_location" : "Your search didn't match any posts with location information",
         "no_posts_yet" : "There are no posts yet!",
+        "no_posts_yet_location": "There are no posts with location information yet!",
         "add_first_post": "Add the first post",
         "create_post" : "Create Post",
         "create" : "Create",
@@ -809,7 +824,8 @@
         "valid" : {
             "no_changes" : "You haven’t made any changes",
             "invalid_state" : "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
-            "validation_fail" : "Required fields are missing, these fields are marked with an * below.",
+            "validation_fail" : "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other" : "There was an error validating the data. Fields failing validation will display an error.",
             "title" : {
                 "required" : "A title is required",
                 "minlength" : "Title is too short",
@@ -828,7 +844,8 @@
                 "required" : "\"{{label}}\" is required",
                 "parse" : "\"{{label}}\" could not be parsed",
                 "date" : "\"{{label}}\" must be a date",
-                "number" : "\"{{label}}\" must be a number"
+                "number" : "\"{{label}}\" must be a number",
+                "step" : "\"{{label}}\" must be an integer"
             },
             "author_name" : {
                 "maxlength": "Name is too long"
@@ -1024,7 +1041,9 @@
             "webhooks" : "Webhooks",
             "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
-            "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+            "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1138,6 +1157,16 @@
                 "search_terms_desc": "Add search terms separated with commas"
             }
         },
+        "donation": {
+            "title" : {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles" :{
             "member": "Member",
             "admin": "Admin",
@@ -1176,6 +1205,8 @@
         "site_language" : "Site language",
         "site_private" : "Make this deployment private",
         "site_private_desc" : "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration" : "Disable user sign up?",
+        "site_disable_registration_desc" : "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image" : "Select image",
         "saved_settings" : "Deployment settings saved!",
         "saved_map_settings" : "Map settings saved!",
@@ -1437,6 +1468,10 @@
         },
         "general_settings" : {
             "save_success" : "General settings saved"
+        },
+        "donation_settings": {
+            "save_success" : "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
         },
         "map_settings" : {
             "save_success" : "Map settings saved"

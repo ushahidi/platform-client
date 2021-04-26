@@ -20,13 +20,17 @@ function PostValueEdit() {
 }
 
 PostValueEditController.$inject = [
+    '$rootScope',
     '$scope',
-    '_'
+    '_',
+    'SurveysSdk'
 ];
 
 function PostValueEditController(
+    $rootScope,
     $scope,
-    _
+    _,
+    SurveysSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -43,10 +47,26 @@ function PostValueEditController(
 
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
+    $scope.isAdmin = $rootScope.isAdmin;
+    $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
+    $scope.$watch('activeSurveyLanguage', () =>{
+        if ($scope.form.title && !$scope.form.title.$dirty) {
+            addDefaultValue();
+        }
+        });
 
     function activate() {
+        addDefaultValue();
+    }
+
+    function addDefaultValue() {
+        const isTitleOrDesc =  $scope.attribute.type === 'title' || $scope.attribute.type === 'description';
+        if (isTitleOrDesc && $scope.attribute.default && !$scope.post.id) {
+            let fieldType = $scope.attribute.type === 'description' ? 'content' : $scope.attribute.type;
+            $scope.post[fieldType] = $scope.attribute.translations[$scope.activeSurveyLanguage] && $scope.attribute.translations[$scope.activeSurveyLanguage].default ? $scope.attribute.translations[$scope.activeSurveyLanguage].default : $scope.attribute.default;
+        }
     }
 
     function taskIsMarkedCompleted() {
@@ -75,5 +95,31 @@ function PostValueEditController(
     }
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
+    }
+    // Can more values be added for this attribute?
+    function canAddValue(attr) {
+        return (
+            // Attribute allows unlimited values
+            attr.cardinality === 0 ||
+            // Less values than cardinality allows
+            $scope.post.values[attr.key].length < attr.cardinality
+        );
+    }
+    // Can this values be removed?
+    function canRemoveValue(attr, key) {
+        return $scope.post.values[attr.key].length > 1;
+    }
+    // Add a new value
+    function addValue(attr) {
+        $scope.post.values[attr.key].push(null);
+    }
+    // Remove a value
+    function removeValue(attr, key) {
+        $scope.post.values[attr.key].splice(key, 1);
+    }
+
+    // Is duplicate present in options attribute?
+    function duplicatePresent(attr) {
+        return !SurveysSdk.areOptionsUnique(attr.options);
     }
 }

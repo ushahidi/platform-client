@@ -13,12 +13,15 @@
 
         <meta name="apple-itunes-app" content="app-id={{appStoreId}}, app-argument={{currentFullUrl}}>">
 
+        <meta name="monetization" ng-attr-content="{{paymentPointer}}">
+        
         <link rel="manifest" href="/manifest.json">
         
         <base href="/">
     </head>
     <!-- TODO: set layouts per view directive -->
     <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible, 'demo-visible' : demoBarVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
+        <a href="#main-content" class="skip-to-content">Skip to content</a>
         <div id="bootstrap-loading">
             <!-- loading the document -->
             <div class="loading">

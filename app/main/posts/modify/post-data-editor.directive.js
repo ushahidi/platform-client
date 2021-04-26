@@ -70,9 +70,11 @@ function PostDataEditorController(
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
-    $scope.loadData = loadData;
+    $scope.adjustPost = adjustPost;
     $scope.isSaving = LoadingProgress.getSavingState;
     $scope.removeLanguage = removeLanguage;
+    $scope.loadSurvey = loadSurvey;
+
     var ignoreCancelEvent = false;
     // Need state management
     $scope.$on('event:edit:post:reactivate', function () {
@@ -154,17 +156,21 @@ function PostDataEditorController(
             }
         });
     }
+    $rootScope.$on('event:translations:languageAdded', function() {
+        // Need to wait for the form to be initiated before setting it dirty.
+        $scope.$watch('editForm', function() {
+            // Setting the form dirty if a new language is added. This is to detect changes when saving.
+            $scope.editForm.$setDirty();
+        });
+    });
 
     activate();
 
     function activate() {
         if ($scope.post.form_id) {
-            SurveysSdk.getSurveys($scope.post.form_id).then(result => {
-                $scope.loadData(result);
-            });
-
+            loadSurvey($scope.post.form_id);
         } else {
-            SurveysSdk.getSurveys().then(forms => {
+            SurveysSdk.getSurveysTo('list_and_permissions').then(forms => {
                 $scope.forms = forms;
                 $scope.$apply();
             });
@@ -174,8 +180,16 @@ function PostDataEditorController(
         $scope.submittingText = $translate.instant('app.submitting');
     }
 
-    function loadData(form) {
-        $scope.post.form = form;
+    function loadSurvey(id) {
+        SurveysSdk.findSurvey(id).then(result => {
+            $scope.post.form = result;
+            $scope.$apply();
+            $scope.adjustPost();
+        });
+    }
+
+    function adjustPost() {
+        $scope.post.form_id = $scope.post.form.id;
         $scope.getLock();
         $scope.post.translations = Object.assign({}, $scope.post.translations);
         if (!$scope.post.enabled_languages) {
@@ -183,7 +197,7 @@ function PostDataEditorController(
         }
         $scope.languages = {default: $scope.post.enabled_languages.default, available: $scope.post.enabled_languages.available, active: $scope.post.enabled_languages.default, surveyLanguages:[$scope.post.form.enabled_languages.default, ...$scope.post.form.enabled_languages.available]};
 
-        if (!$scope.post.post_content) {
+        if (!$scope.post.post_content || $scope.post.post_content.length === 0) {
             $scope.post.post_content = $scope.post.form.tasks;
         }
             // Initialize values on empty post-fields
@@ -216,18 +230,21 @@ function PostDataEditorController(
                             attr.value.value = parseInt(attr.default);
                         }
                     }
+
                     if (attr.input === 'date' || attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
                         if (attr.value.value) {
                             attr.value.value = moment(attr.value.value).toDate();
+                        } else if (attr.default) {
+                            attr.value.value = new Date(attr.default);
                         } else {
-                            attr.value.value = attr.default ? new Date(attr.default) : new Date();
+                            attr.value.value = attr.required ? moment(new Date()).toDate() : null;
                         }
                     }
                 }
-                });
             });
+        });
         if ($scope.post.status === 'published' && !canSavePost()) {
             Notify.error('post.valid.invalid_state');
         }
@@ -267,7 +284,7 @@ function PostDataEditorController(
 
     function savePost() {
         // Checking if changes are made
-        if ($scope.editForm && !$scope.editForm.$dirty && !$scope.editForm.translatedTitle.$dirty) {
+        if ($scope.editForm && !$scope.editForm.$dirty) {
             Notify.infoModal('post.valid.no_changes');
             $rootScope.$broadcast('event:edit:post:data:mode:saveError');
             return;
@@ -303,13 +320,15 @@ function PostDataEditorController(
     function removeLanguage(index, language) {
             Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
             .then(function() {
+                // Setting form dirty so we can detect changes upon save.
+                $scope.editForm.$setDirty();
                 $scope.languages.active = $scope.languages.default;
                 $scope.languages.available.splice(index, 1);
                 delete $scope.post.translations[language];
-                _.each($scope.post.post_content, task=>{
+                _.each($scope.post.post_content, task => {
                     _.each(task.fields, field => {
-                        delete field['translated-values'][language];
-                    })
+                        delete field.value.translations[language];
+                    });
                 });
             });
         };

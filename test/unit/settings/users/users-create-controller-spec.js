@@ -30,11 +30,14 @@ describe('setting users create controller', function () {
         Session = _Session_;
         $scope = _$rootScope_.$new();
 
+        $scope.setValid = function(valid) {
+            $scope.form = {$valid: valid};
+        }
+
         $rootScope.hasManageSettingsPermission = function () {
             return true;
         };
     }));
-
 
     beforeEach(function () {
         spyOn($rootScope, '$emit').and.callThrough();
@@ -52,26 +55,48 @@ describe('setting users create controller', function () {
         expect($rootScope.$emit).toHaveBeenCalled();
     });
 
-    it('should save users upon request', function () {
+    it('should save users upon if correct values is given', function () {
         spyOn(Notify, 'notify');
-
+        $scope.setValid(true);
         $scope.saveUser({id: 'pass'});
         $rootScope.$digest();
         $rootScope.$apply();
-
         expect(Notify.notify).toHaveBeenCalled();
         expect($scope.userSavedUser).toBe(true);
     });
 
     it('should fail to save a user', function () {
-        spyOn(Notify, 'errors');
-
+        spyOn(Notify, 'notify');
+        $scope.setValid(false);
         $scope.saveUser('fail');
         $rootScope.$digest();
         $rootScope.$apply();
 
-        expect(Notify.errors).toHaveBeenCalled();
-        expect($scope.saving_user).toBe(false);
+        expect(Notify.notify).not.toHaveBeenCalled();
+        expect($scope.displayError).toBe(true);
+        expect($scope.savingUser).toBe(false);
     });
 
+    it('should save users after an error is fixed', function () {
+        spyOn(Notify, 'notify');
+        // Saving with errors
+        $scope.setValid(false);
+        $scope.saveUser('fail');
+        $rootScope.$digest();
+        $rootScope.$apply();
+
+        expect($scope.displayError).toBe(true);
+        expect($scope.savingUser).toBe(false);
+        expect(Notify.notify).not.toHaveBeenCalled();
+
+        // Saving with corrected values
+        $scope.setValid(true);
+        $scope.saveUser({id: 'pass'});
+        $rootScope.$digest();
+        $rootScope.$apply();
+        expect(Notify.notify).toHaveBeenCalled();
+        expect($scope.userSavedUser).toBe(true);
+        expect($scope.displayError).toBe(false);
+        expect($scope.savingUser).toBe(false);
+    });
 });

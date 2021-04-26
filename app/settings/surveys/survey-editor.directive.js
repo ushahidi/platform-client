@@ -14,6 +14,7 @@ function SurveyEditor() {
 }
 
 SurveyEditorController.$inject = [
+    '$rootScope',
     '$scope',
     '$q',
     '$location',
@@ -31,6 +32,7 @@ SurveyEditorController.$inject = [
     'TranslationService',
     'CategoriesSdk'];
 function SurveyEditorController(
+    $rootScope,
     $scope,
     $q,
     $location,
@@ -185,12 +187,9 @@ function SurveyEditorController(
             $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
-        loadAvailableForms();
-        loadAvailableCategories();
-
         if (!$scope.surveyId) {
 
-            $q.all([Features.loadFeatures(), SurveysSdk.getSurveys()]).then(function (data) {
+            $q.all([Features.loadFeatures(), SurveysSdk.getSurveysTo('count')]).then(function (data) {
                 var forms_limit = Features.getLimit('forms');
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
@@ -223,7 +222,7 @@ function SurveyEditorController(
     }
 
     function getInterimId() {
-        var id = 'interim_id_' + $scope.currentInterimId;
+        const id = 'interim_id_' + $scope.currentInterimId;
         $scope.currentInterimId++;
         return id;
     }
@@ -236,8 +235,9 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        SurveysSdk.getSurveys().then(function (forms) {
+        SurveysSdk.getSurveysTo('list_and_permissions').then(function (forms) {
             $scope.availableSurveys = forms;
+            $scope.$apply();
         });
     }
 
@@ -261,13 +261,14 @@ function SurveyEditorController(
                 })
                 .filter()
                 .value();
+            $scope.$apply();
         });
     }
 
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        SurveysSdk.getSurveys($scope.surveyId).then(res => {
+        SurveysSdk.findSurvey($scope.surveyId).then(res => {
             //Getting roles for the survey
             $scope.survey = res;
 
@@ -489,11 +490,71 @@ function SurveyEditorController(
         if (!field.form_stage_id) {
             ModalService.close();
         }
+
         $scope.editField = field;
-        var title = field.id ? 'survey.edit_field' : 'survey.add_field';
+        let fieldType = getFieldType(field) ? getFieldType(field) : field.label;
+        let title = field.id ? $translate.instant('survey.edit_field', {fieldType: fieldType}) : $translate.instant('survey.add_field', {fieldType: fieldType});
+        title = title.replace('&amp;', '&');
+        switch (field.type) {
+            case 'relation':
+                loadAvailableForms();
+                break;
+            case 'tags':
+                loadAvailableCategories();
+                break;
+        }
+
         ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
     }
 
+    function getFieldType(attribute) {
+        var fieldTypes = {
+            'text': {
+                'varchar': $translate.instant('survey.short_text')
+            },
+            'textarea': {
+                'text': $translate.instant('survey.long_text')
+            },
+            'number': {
+                'decimal': $translate.instant('survey.number_decimal'),
+                'int': $translate.instant('survey.number_integer')
+            },
+            'location': {
+                'point': $translate.instant('survey.location')
+            },
+            'date': {
+                'datetime': $translate.instant('survey.date')
+            },
+            'datetime': {
+                'datetime': $translate.instant('survey.datetime')
+            },
+            'select': {
+                'varchar': $translate.instant('survey.select')
+            },
+            'radio': {
+                'varchar': $translate.instant('survey.radio_button')
+            },
+            'checkbox': {
+                'varchar': $translate.instant('survey.checkbox')
+            },
+            'relation' : {
+                'relation': $translate.instant('survey.related_post')
+            },
+            'upload' : {
+                'media': $translate.instant('survey.upload_image')
+            },
+            'video' : {
+                'varchar': $translate.instant('survey.embed_video')
+            },
+            'markdown' : {
+                'markdown': 'Markdown'
+            },
+            'tags' : {
+                'tags': $translate.instant('survey.categories')
+            }
+        }
+        return fieldTypes[attribute.input] ? fieldTypes[attribute.input][attribute.type] : null;
+    }
     function addNewField(field, task) {
         ModalService.close();
         // Set active task as form_stage_id
@@ -565,7 +626,7 @@ function SurveyEditorController(
         // Set saving to true to disable user actions
         $scope.saving_survey = true;
         // check there is translations for survey-names in all languages
-        if (validateSurveyTranslations()) {
+        if (validateSurveyTranslations() && validateAttributeOptionTranslations()) {
         // Save the survey
         $scope.removeInterimIds();
         $scope.survey.base_language = $scope.survey.enabled_languages.default;
@@ -586,8 +647,27 @@ function SurveyEditorController(
         .catch(handleResponseErrors);
     } else {
         $scope.saving_survey = false;
-        Notify.error(`You need to add translations for all names, check that you have translated the survey-names for all added languages`);
+        $rootScope.$broadcast('event:surveys:translationMissing');
+        Notify.error(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
+         Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language).`);
     }
+    }
+    function validateAttributeOptionTranslations() {
+        return _.every($scope.survey.enabled_languages.available, language => {
+            return $scope.survey.tasks.every((t) =>  {
+                return t.fields.every(f => {
+                    if (
+                        SurveysSdk.fieldHasTranslations(f, language)
+                        && SurveysSdk.fieldCanHaveOptions(f)
+                    ) {
+                        return SurveysSdk.areOptionsUnique(
+                            Object.values(f.translations[language].options)
+                        );
+                    }
+                    return true;
+                });
+            });
+        });
     }
     function validateSurveyTranslations() {
         return _.every($scope.survey.enabled_languages.available, language => {

@@ -13,10 +13,11 @@ function RoleSelectorDirective() {
         template: require('./role-selector.html')
     };
 }
-RoleSelectorController.$inject = ['$scope', 'RoleEndpoint', '$translate'];
+RoleSelectorController.$inject = ['$scope', 'RoleEndpoint', '$translate', '_'];
 
-function RoleSelectorController($scope, RoleEndpoint, $translate) {
+function RoleSelectorController($scope, RoleEndpoint, $translate, _) {
     $scope.setEveryone = setEveryone;
+    $scope.setAdmin = setAdmin;
 
     activate();
 
@@ -27,8 +28,19 @@ function RoleSelectorController($scope, RoleEndpoint, $translate) {
         });
     }
 
+    function setAdmin() {
+        // adding admin to roles_allowed if not already there
+        let admin = _.findWhere($scope.roles, {name: 'admin'});
+        if (!$scope.model.role) {
+            $scope.model.role = [];
+        }
+        if (_.indexOf($scope.model.role, admin.name) === -1) {
+            $scope.model.role.push(admin.name);
+        }
+    }
+
     // adding all available roles to model if user clicks 'Everyone'
     function setEveryone() {
-        $scope.model.role = [];
+        $scope.model.role = null;
     }
 }

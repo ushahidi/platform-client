@@ -22,7 +22,7 @@ function (
     moment
 ) {
     var translate = function (lang) {
-        if (lang !== null) {
+        if (lang) {
             $translate.use(lang).then(function (langKey) {
                 if (langKey) {
                     $translate.preferredLanguage(langKey);
@@ -46,17 +46,18 @@ function (
                     });
                 }
             });
+            moment.locale('en');
 
-            if (lang === 'en') {
-                // Just set moment locale
-                moment.locale('en');
-            } else {
-                // Load locale
-                require(['moment/locale/' + lang + '.js'], function () {
-                    // And then set moment locale
-                    moment.locale(lang);
-                });
-            }
+            // Load locale
+            require(['moment/locale/' + lang + '.js'], function () {
+                // And then set moment locale
+                moment.locale(lang.toLowerCase());
+            }, function() { // if it fails attempt using the 2 letter language code
+                var shortCode = lang.substr(0,2).toLowerCase();
+                require(['moment/locale/' + shortCode + '.js'], function () {
+                    moment.locale(shortCode);
+                }, () => { console.error('Failed to load locale: ' + shortCode) });
+            });
 
             // Translating and setting page-title
             $rootScope.$emit('setPageTitle', $translate.instant($document[0].title));

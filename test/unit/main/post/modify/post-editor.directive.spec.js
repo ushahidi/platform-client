@@ -97,13 +97,13 @@ describe('post editor directive', function () {
         });
 
         it('should fail to save a post', function () {
-            spyOn(Notify, 'errors');
+            spyOn(Notify, 'sdkErrors');
 
             isolateScope.post.id = 'fail';
             isolateScope.savePost();
 
             $rootScope.$apply();
-            expect(Notify.errors).toHaveBeenCalled();
+            expect(Notify.sdkErrors).toHaveBeenCalled();
         });
     });
 });

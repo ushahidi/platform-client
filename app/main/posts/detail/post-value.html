@@ -8,38 +8,44 @@
       <div ng-if="attribute.input === 'tags' && attribute.value.length > 0">
         <h2 class="form-label">
           <bdi>{{attribute.translations[activeLanguage].label || attribute.label}}</bdi>
-      </h2>
-       <post-category-value categories="attribute.value" active-language="activeLanguage"></post-category-value>
+        </h2>
+        <post-category-value categories="attribute.value" active-language="activeLanguage"></post-category-value>
+
       </div>
-      <div ng-if="attribute.type === 'relation'">
-          <a ui-sref="posts.data.detail({postId: attribute.value.value.id})">{{attribute.value.value.title}}</a>
+      <div ng-if="attribute.type === 'relation'" >
+
+          <a ui-sref="posts.data.detail({postId: attribute.value.value.id})">{{attribute.value.value.translations[activeLanguage].title || attribute.value.value.title}}</a>
+          <!-- fwd porting notes start -->
+          <!-- @review: take a look at post related rendering in case it broke during fwd porting-->
+          <!-- <a ui-sref="posts.data.detail({postId: entry.id})"><bdi>{{entry.title}}</bdi></a>&ndash;&gt; -->
+          <!-- fwd porting notes end -->
       </div>
       <div ng-if="isText(attribute.type)">
         <div ng-if="!attribute.value.translations[activeLanguage].value">
-          <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value.value}}<bdi></p>
+          <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value.value}}</bdi></p>
           <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value.value"></p>
         </div>
         <div ng-if="attribute.value.translations[activeLanguage].value">
-            <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value.translations[activeLanguage].value}}<bdi></p>
+            <p ng-if="attribute.type !== 'markdown'" linkify><bdi>{{attribute.value.translations[activeLanguage].value}}</bdi></p>
             <p ng-if="attribute.type === 'markdown'" markdown-to-html="attribute.value.translations[activeLanguage].value"></p>
         </div>
       </div>
       <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  !attribute.value.translations[activeLanguage].value">
-          <p linkify><bdi>{{attribute.value.value}}<bdi></p>
+          <p><bdi>{{attribute.value.value}}</bdi></p>
       </div>
       <div ng-if="!isText() && attribute.input !=='checkbox' && attribute.input !=='relation' && attribute.input !== 'tags' &&  attribute.value.translations[activeLanguage].value">
-        <p linkify><bdi>{{attribute.value.translations[activeLanguage].value}}<bdi></p>
+        <p><bdi>{{attribute.value.translations[activeLanguage].value}}</bdi></p>
       </div>
       <div ng-if="attribute.input ==='checkbox' && !attribute.value.translations[activeLanguage].value " ng-repeat="entry in attribute.value.value track by $index">
-        <p linkify><bdi>{{entry}}<bdi></p>
+        <p><bdi>{{entry}}</bdi></p>
       </div>
       <div ng-if="attribute.input ==='checkbox' && attribute.value.translations[activeLanguage].value " ng-repeat="entry in attribute.value.translations[activeLanguage].value track by $index"  >
-        <p linkify><bdi>{{entry}}<bdi></p>
+        <p><bdi>{{entry}}</bdi></p>
       </div>
     </div>
-
     <post-video-view
       ng-if="attribute.input === 'video'"
       label="{{attribute.translations[activeLanguage].label || attribute.label}}"
       video-url="attribute.value.value"></post-video-view>
+</div>
 </div>

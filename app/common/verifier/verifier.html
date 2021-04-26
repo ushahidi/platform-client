@@ -18,7 +18,7 @@
                 <div class="listing-item" ng-if="networkCheck">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="networkCheck.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="networkCheck.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #FFC334" ng-if="networkCheck.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -39,7 +39,7 @@
                 <div class="listing-item" ng-repeat="endpoint in endpointStatuses" ng-if="endpointStatuses">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="endpoint.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="endpoint.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #FFC334" ng-if="endpoint.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -57,7 +57,7 @@
                 <div class="listing-item" ng-repeat="endpoint in endpointStructureChecks" ng-if="!isCheckDisabled('ENDPOINT_STRUCTURE')">
                     <div class="listing-item-primary">
                             <div class="listing-item-image">
-                                <svg class="iconic"   >
+                                <svg class="iconic" role="img">
                                     <use style="fill: #de0000" ng-if="endpoint.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                     <use style="fill: #4fab2f" ng-if="endpoint.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                     <use style="fill: #FFC334" ng-if="endpoint.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -76,7 +76,7 @@
                 <div class="listing-item" ng-if="oauthStatus">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic"   >
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="oauthStatus.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="oauthStatus.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #FFC334" ng-if="oauthStatus.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -89,7 +89,7 @@
                     <div class="listing-item">
                         <div class="listing-item-primary">
                             <div class="listing-item-image">
-                                <svg class="iconic"   >
+                                <svg class="iconic" role="img">
                                     <use style="fill: #de0000" ng-if="oauthStructure.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                     <use style="fill: #4fab2f" ng-if="oauthStructure.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                     <use style="fill: #FFC334" ng-if="oauthStructure.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -102,7 +102,7 @@
                     <div class="listing-item">
                         <div class="listing-item-primary">
                             <div class="listing-item-image">
-                                <svg class="iconic">
+                                <svg class="iconic" role="img">
                                     <use style="fill: #de0000" ng-if="oauthToken.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                     <use style="fill: #4fab2f" ng-if="oauthToken.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                     <use style="fill: #FFC334" ng-if="oauthToken.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -122,7 +122,7 @@
                 <div class="listing-item" ng-if="envCheck">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="envCheck.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="envCheck.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #FFC334" ng-if="envCheck.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -142,7 +142,7 @@
                 <div class="listing-item" ng-if="transifexCheck">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="transifexCheck.type === 'error'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="transifexCheck.type === 'confirmation'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #FFC334" ng-if="transifexCheck.type === 'warning'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
@@ -162,7 +162,7 @@
                 <div class="listing-item" ng-if="dbConnection">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="dbConnection.errors" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="dbConnection.success" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #5294ff" ng-if="dbConnection.type === 'info'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#info"></use>
@@ -190,7 +190,7 @@
                 <div class="listing-item" ng-if="apiEnvs">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #de0000" ng-if="apiEnvs.errors" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-x"></use>
                                 <use style="fill: #4fab2f" ng-if="apiEnvs.success" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#circle-check"></use>
                                 <use style="fill: #5294ff" ng-if="apiEnvs.type === 'info'" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#info"></use>
@@ -217,7 +217,7 @@
                 <div class="listing-item">
                     <div class="listing-item-primary">
                         <div class="listing-item-image">
-                            <svg class="iconic">
+                            <svg class="iconic" role="img">
                                 <use style="fill: #FFC334" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                             </svg>
                         </div>

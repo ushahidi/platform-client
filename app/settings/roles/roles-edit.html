@@ -11,7 +11,7 @@
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
-            <svg class="iconic">
+            <svg class="iconic" role="img">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
@@ -41,13 +41,13 @@
             <form>
                 <div class="form-sheet">
                    <div class="form-field">
-                       <label translate>role.name</label>
-                       <input type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
+                       <label for="role-name" translate>role.name</label>
+                       <input id="role-name" type="text" placeholder="{{'role.name' | translate}}" ng-minlength="3" ng-maxlength="150" ng-model="role.display_name" required>
                    </div>
 
                     <div class="form-field">
-                        <label translate>role.description</label>
-                        <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="role.description"></textarea>
+                        <label for="role-description" translate>role.description</label>
+                        <textarea id="role-description" name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="role.description"></textarea>
                     </div>
 
                    <fieldset>
@@ -83,7 +83,7 @@
                        <p translate>role.delete_role_desc</p>
 
                        <button class="button-destructive" ng-click="deleteRole(role)">
-                           <svg class="iconic">
+                           <svg class="iconic" role="img">
                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                            </svg>
                            <span class="button-label" translate>role.delete_role</span>

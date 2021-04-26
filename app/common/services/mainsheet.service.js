@@ -18,9 +18,9 @@ function MainsheetService($rootScope, $q) {
         setState: setState
     };
 
-    function openTemplate(template, title, scope) {
+    function openTemplate(template, title, scope, showCloseButton) {
         deferredOpen.promise.then(function () {
-            $rootScope.$emit('mainsheet:open', template, title, scope);
+            $rootScope.$emit('mainsheet:open', template, title, scope, showCloseButton);
         });
     }
 

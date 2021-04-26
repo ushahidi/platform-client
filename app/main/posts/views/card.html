@@ -3,7 +3,7 @@
     <div class="listing-item-select">
         <input ng-show="canSelect" type="checkbox" checklist-value="post.id" checklist-model="selectedPosts" ng-click="stopClickPropagation($event)">
     </div>
-    <div class="postcard-body" ng-click="clickAction($event)">
+    <div class="postcard-body" tabindex="0" role="button" ng-keypress="clickAction($event)" ng-click="clickAction($event)">
       <header class="postcard-header">
 
         <post-metadata post="post" hide-date-this-week="true"></post-metadata>

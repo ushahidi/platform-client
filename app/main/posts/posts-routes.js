@@ -93,7 +93,7 @@ function (
                   */
                 post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
                     if ($transition$.params().postId) {
-                        return PostsSdk.getPosts($transition$.params().postId)
+                        return PostsSdk.findPost($transition$.params().postId)
                     }
                 }]
             },
@@ -240,7 +240,7 @@ function (
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    return PostsSdk.getPosts($transition$.params().postId);
+                    return PostsSdk.findPost($transition$.params().postId);
                 }]
             }
         }
@@ -256,7 +256,7 @@ function (
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    return PostsSdk.getPosts($transition$.params().postId);
+                    return PostsSdk.findPost($transition$.params().postId);
                 }]
             }
         }

@@ -28,6 +28,13 @@ module.exports = [function () {
                 }
             };
         },
+        sdkErrors: function (message) {
+            return {
+                then: function (successCallback) {
+                    successCallback();
+                }
+            };
+        },
         errorsPretranslated: function (message) {
             return {
                 then: function (successCallback) {

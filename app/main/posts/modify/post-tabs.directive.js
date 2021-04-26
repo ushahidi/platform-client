@@ -35,10 +35,24 @@ function PostVerticalTabsController(
 
     function activate() {
         $scope.setVisibleStage($scope.visibleStage);
+        $scope.post.completed_stages = getCompletedTasks();
     }
 
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
+    }
+
+    function getCompletedTasks() {
+        return _.chain($scope.post.completed_stages)
+            .filter(stage => {
+                if (stage.completed === 1) {
+                    return stage.form_stage_id;
+                }
+            })
+            .map(stage => {
+                return stage.form_stage_id;
+            })
+            .value();
     }
 
     function stageIsComplete(stageId) {

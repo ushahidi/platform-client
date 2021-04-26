@@ -1,12 +1,12 @@
     <!--// Who can add //-->
-    <fieldset>
+    <fieldset ng-if="roles.length">
         <legend translate="{{title}}"></legend>
         <div
             class="form-field radio icon-input"
             ng-class="{ 'checked': !model.role.length }"
         >
             <label for="add_everyone">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xlink:href="/img/iconic-sprite.svg#globe"></use>
                 </svg>
                 <input
@@ -27,7 +27,7 @@
             ng-class="{ 'checked': model.role.length }"
         >
             <label for="add_roles">
-                <svg class="iconic">
+                <svg class="iconic" role="img">
                     <use xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
                 <input
@@ -38,6 +38,7 @@
                     ng-modaldata-fieldgroup-toggle="add_roles"
                     type="radio"
                     ng-model="everyone"
+                    ng-click="setAdmin()"
                 >
                 <span translate="app.specific_roles">Specific roles...</span>
             </label>
@@ -54,6 +55,8 @@
                         type="checkbox"
                         checklist-model="model.role"
                         checklist-value="role.name"
+                        ng-disabled="role.name === 'admin'"
+                        ng-selected="role.name === 'admin' || model.role.indexOf(role.name) > -1"
                     >
                     {{role.display_name | translate}}
                     </label>
