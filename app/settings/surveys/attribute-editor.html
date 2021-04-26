@@ -104,8 +104,7 @@
     <label ng-if="canDisplayDefaultValue()" translate="app.default_value">Default value (optional):</label>
     <div class="form-field">
       <div ng-switch="editField.input">
-        <!-- <input ng-switch-when="datetime" type="datetime" date-time="editField.default" ng-model="editField.default"> -->
-        <input ng-switch-when="date" type="date" date-time="editField.default" ng-model="editField.default">
+        <input ng-switch-when="date" type="text" date-time="editField.default" ng-model="editField.default">
         <input ng-switch-default type="text" ng-if="editField.input !== 'number'" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editField.default">
       </div>
       <div ng-switch="editField.type">
