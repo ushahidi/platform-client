@@ -23,4 +23,6 @@ angular.module('ushahidi.settings', [])
 .directive('customWebhooks', require('./webhooks/webhooks.directive.js'))
 .directive('customWebhooksEditor', require('./webhooks/editor.directive.js'))
 
+.directive('setupDonation', require('./donation/donation.directive.js'))
+
 .config(require('./settings.routes.js'));

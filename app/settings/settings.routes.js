@@ -33,6 +33,14 @@ function (
     )
     .state(
         {
+            name: 'settings.donation',
+            url: '/settings/donation',
+            controller: require('./donation/donation.controller.js'),
+            template: require('./donation/donation.html')
+        }
+    )
+    .state(
+        {
             name: 'settings.dataImport',
             url: '/settings/data-import',
             controller: require('./data-import/data-import.controller.js'),
