@@ -1,0 +1,170 @@
+<div>
+    <layout-class layout="a"></layout-class>
+
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+            </ol>
+            <h1 class="mode-context-title" translate>app.donation</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic" role="img">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+    </div>
+
+    <main role="main" setup-donation>
+        <form id="donation" name="form" ng-submit="updateConfig()">
+            <!-- toolbar -->
+            <div class="toolbar">
+                <div class="button-group">
+                    <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+
+                    <button type="submit" ng-click="updateConfig()" class="button-alpha" ng-if="!saving_config"
+                        ng-disabled="form.$invalid || isUnchanged(site) || saving_config">{{save}}</button>
+
+                    <button type="submit" class="button-alpha" ng-if="saving_config"
+                        ng-disabled="form.$invalid || isUnchanged(site) || saving_config" translate>{{saving}}
+                        <div class="loading">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <!-- end toolbar -->
+
+            <div class="full-col">
+                <div class="form-sheet">
+                    <div class="form-sheet-summary">
+                        <h2 class="form-sheet-title">Setup Donation</h2>
+                    </div>
+
+                    <div class="stepper">
+                        <div class="stepper-item">
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge">1</span>
+                                Donation Details
+                            </h2>
+
+                            <div>
+                                <div class="form-field">
+                                    <label for="donation-title"
+                                        ng-class="{'success': !form.title.$invalid && form.title.$dirty, 'error' : form.title.$invalid && form.title.$dirty }"
+                                        translate>
+                                        settings.donation.title.label
+                                    </label>
+
+                                    <input name="title" id="donation-title" ng-model="site.donation.title"
+                                        ng-required="true" type="text"
+                                        placeholder="{{'settings.donation.title.placeholder' | translate }}" />
+
+                                    <div class="alert error" ng-repeat="(error, value) in form.title.$error"
+                                        ng-show="form.title.$dirty">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                        </svg>
+                                        <p>{{'settings.donation.title.' + error | translate}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-field">
+                                    <label for="donation-description">
+                                        Describe your donation
+                                    </label>
+                                    <textarea id="donation-description" ng-model="site.donation.description"
+                                        ng-required="true"
+                                        placeholder="This is a placeholder text telling more about this donation"
+                                        maxlength="2000"> </textarea>
+                                </div>
+
+                                <div class="form-field">
+                                    <span class="label">Donation images</span>
+                                    <div class="stepper-images">
+                                        <div class="stepper-image" ng-repeat="image in site.donation.images">
+                                            <figure>
+                                                <img ng-src="{{ image.original_file_url}}" class="postcard-image"
+                                                    alt="Uploaded image">
+                                            </figure>
+
+                                            <button class="button" type="button" ng-click="deleteImage(image.id)">
+                                                Delete image
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-field">
+                                        <label for="photo">Attach an image</label>
+                                        <file-upload id="file" container="image">
+                                        </file-upload>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stepper-item">
+                            <h2 class="stepper-heading">
+                                <span class="stepper-badge">2</span>
+                                Donation Wallet
+                            </h2>
+
+                            <p>
+                                Please make sure you have your wallet set up on
+                                <a target="_blank" href="https://uphold.com">uphold.com</a>
+                                to set web monetization. If you don't have a wallet already please click
+                                <a target="_blank" href="https://wallet.uphold.com/signup">here</a> to create one.
+                            </p>
+
+                            <div>
+                                <div class="form-field">
+                                    <label for="donation-wallet">Wallet address </label>
+                                    <input name="wallet" id="donation-wallet" type="text" ng-model="site.donation.wallet"
+                                        ng-required="true" placeholder="Enter a wallet address e.g $ilp.uphold.com/example" />
+                                    <div class="alert error" ng-repeat="(error, value) in form.wallet.$error"
+                                        ng-show="form.wallet.$dirty">
+                                        <svg class="iconic" role="img">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                        </svg>
+                                        <p>{{'settings.donation.wallet.' + error | translate}}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-field" ng-show="site.donation.wallet != ''">
+                                    <button class="button" type="button" ng-click="deleteWallet()">
+                                        Delete wallet
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label>
+                                Disable Monetization
+                                <input id="donations-disable" type="checkbox"
+                                    class="ng-pristine ng-untouched ng-valid ng-empty" ng-model="site.donation.enabled"
+                                    ng-true-value="false" ng-false-value="true">
+                            </label>
+                        </div>
+
+                        <!-- <div class="form-field switch">
+                            <label translate>Enable Monetization</label>
+                            <div class="toggle-switch">
+                                <input class="tgl" id="donation_enable" type="checkbox">
+                                <label class="tgl-btn" for="donation_enable"></label>
+                           </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>
