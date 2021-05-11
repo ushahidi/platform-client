@@ -23,14 +23,14 @@ PostValueEditController.$inject = [
     '$rootScope',
     '$scope',
     '_',
-    'UshahidiSdk'
+    'SurveysSdk'
 ];
 
 function PostValueEditController(
     $rootScope,
     $scope,
     _,
-    UshahidiSdk
+    SurveysSdk
 ) {
     var fieldSetAttributes = [
         'checkbox',
@@ -120,6 +120,6 @@ function PostValueEditController(
 
     // Is duplicate present in options attribute?
     function duplicatePresent(attr) {
-        return !UshahidiSdk.Surveys.areOptionsUnique(attr.options);
+        return !SurveysSdk.areOptionsUnique(attr.options);
     }
 }

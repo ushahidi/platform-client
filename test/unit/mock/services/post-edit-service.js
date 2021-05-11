@@ -3,6 +3,9 @@ module.exports = [function () {
         cleanPostValues: function (post) {
             return post;
         },
+        cleanTagValues: function (post) {
+            return post;
+        },
         validatePost: function () {
             return true;
         },

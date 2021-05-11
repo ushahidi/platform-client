@@ -24,45 +24,31 @@ describe('Post Edit Service', function () {
         PostEditService = _PostEditService_;
 
         post = fixture.load('posts/120.json');
-        var taskData = fixture.load('tasks.json');
-        tasks = taskData.results;
-        var attributeData = fixture.load('attributes.json');
-        attributes = attributeData.results;
-
-        _.each(tasks, function (task) {
-            task.attributes = [];
-            _.each(attributes, function (attribute) {
-                if (attribute.form_stage_id === task.id) {
-                    task.attributes.push(attribute);
-                }
-            });
-        });
-
     }));
 
     describe('test service functions', function () {
         it('should return invalid if any of the following are invalid: title, content or form', function () {
             form = undefined;
-            var result = PostEditService.validatePost(post, form, tasks);
+            var result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(false);
 
             form = {};
             form.title = {$invalid: true};
             form.content = {$invalid: true};
-            result = PostEditService.validatePost(post, form, tasks);
+            result = PostEditService.validatePost(post, form, post.post_content);
 
             expect(result).toBe(false);
 
             form.title = {$invalid: true};
             form.content = {$invalid: false};
-            result = PostEditService.validatePost(post, form, tasks);
+            result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(false);
 
             form.title = {$invalid: false};
             form.content = {$invalid: false};
             form.$error = {videoUrlValidation: []};
             form.$setValidity = function () { };
-            result = PostEditService.validatePost(post, form, tasks);
+            result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(false);
         });
 
@@ -72,18 +58,15 @@ describe('Post Edit Service', function () {
             form.title = {$invalid: false};
             form.content = {$invalid: false};
             form.$error = {videoUrlValidation: false};
-            var tasks_copy = [];
-            tasks_copy.push(tasks[0]);
-
-            tasks_copy[0].attributes[0].required = true;
+            post.post_content[0].fields[0].required = true;
 
             // Test undefined
-            var result = PostEditService.validatePost(post, form, tasks_copy);
+            var result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(false);
 
             // Test invalid
-            form['values_' + tasks_copy[0].attributes[0].id] = {$invalid: true};
-            result = PostEditService.validatePost(post, form, tasks_copy);
+            form['values_' + post.post_content[0].fields[0].id] = {$invalid: true};
+            result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(false);
 
         });
@@ -95,14 +78,10 @@ describe('Post Edit Service', function () {
             form.content = {$invalid: false};
             form.$error = {videoUrlValidation: false};
 
-            var tasks_copy = [];
-            tasks_copy.push(tasks[0]);
-            tasks_copy[0].attributes[0].required = true;
+            post.post_content[0].fields[0].required = true;
+            form['values_' + post.post_content[0].fields[0].id] = {$invalid: false};
 
-            form['values_' + tasks_copy[0].attributes[0].id] = {$invalid: false};
-
-            var result = PostEditService.validatePost(post, form, tasks_copy);
-
+            var result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(true);
         });
 
@@ -112,29 +91,24 @@ describe('Post Edit Service', function () {
             form.title = {$invalid: false};
             form.content = {$invalid: false};
             form.$error = {videoUrlValidation: false};
-            var tasks_copy = [];
-            tasks_copy.push(tasks[0]);
-            tasks_copy[0].attributes[0].required = true;
-            tasks_copy[0].attributes[0].type = 'checkbox';
-            tasks_copy[0].attributes[0].options = ['op1', 'op2'];
+            post.post_content[0].fields[0].required = true;
+            post.post_content[0].fields[0].type = 'checkbox';
+            post.post_content[0].fields[0].options = ['op1', 'op2'];
 
-            form['values_' + tasks_copy[0].attributes[0].id] = {$invalid: false};
+            form['values_' + post.post_content[0].fields[0].id] = {$invalid: false};
 
-            var result = PostEditService.validatePost(post, form, tasks_copy);
+            var result = PostEditService.validatePost(post, form, post.post_content);
             expect(result).toBe(true);
         });
 
         it('should clean the given post values removing null entries', function () {
-            post.values = {
-                'test': undefined,
-                'test 1': 'test'
+            post.post_content[0].fields[0].type = 'tags';
+            post.post_content[0].fields[0].value = [{id: 1, label:'op1'},{id: 2, label: 'op2'}];
+            var cleanPost = {
+                value: [{id: 1, label:'op1'},{id: 2, label: 'op2'}]
             };
-            var cleanPost = {};
-            cleanPost.values = {
-                'test 1': 'test'
-            };
-            var result = PostEditService.cleanPostValues(post);
-            expect(result.length).toEqual(cleanPost.length);
+            var result = PostEditService.cleanTagValues(post);
+            expect(result.post_content[0].fields[0].value).toEqual(cleanPost);
         });
 
         it('should return valid array of strings containing parts of url when url validation passes conditions', function () {

@@ -6,7 +6,7 @@ describe('post actions directive', function () {
         isolateScope,
         element,
         PostActionsService,
-        PostEndpoint,
+        PostsSdk,
         mockState = {
             go: jasmine.createSpy(),
             reload: jasmine.createSpy(),
@@ -37,9 +37,9 @@ describe('post actions directive', function () {
     });
 
 
-    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostEndpoint_, _PostActionsService_, _$location_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostsSdk_, _PostActionsService_, _$location_) {
         $rootScope = _$rootScope_;
-        PostEndpoint = _PostEndpoint_;
+        PostsSdk = _PostsSdk_;
         PostActionsService = _PostActionsService_;
         $location = _$location_;
 
@@ -93,10 +93,10 @@ describe('post actions directive', function () {
 
     it('should update the status of a post', function () {
         var status = 'published';
-        spyOn(PostEndpoint, 'update').and.callThrough();
+        spyOn(PostsSdk, 'patchPost').and.callThrough();
         isolateScope.updateStatus(status);
 
         expect(isolateScope.post.status).toEqual('published');
-        expect(PostEndpoint.update).toHaveBeenCalled();
+        expect(PostsSdk.patchPost).toHaveBeenCalled();
     });
 });

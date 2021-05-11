@@ -1,7 +1,8 @@
 {
             "id": 120,
             "url": "http://192.168.33.110/api/v3/posts/120",
-            "post_content":[{"id": 1,"fields": [{"id":1}, {"id":2}]}],
+            "post_content":[{"id": 1,"fields": [{"id":1}, {"id":2}], "type": "post"}],
+            "enabled_languages": {"default": "EN", "available": []},
             "user": {
                 "id": 1,
                 "url": "http://192.168.33.110/api/v3/users/1"
