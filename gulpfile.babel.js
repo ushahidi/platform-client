@@ -9,10 +9,10 @@ import del      from 'del';
 import dotenv   from 'dotenv';
 import tar      from 'gulp-tar';
 import gzip     from 'gulp-gzip';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+import WebpackDevServer     from 'webpack-dev-server';
 import colorsSupported      from 'supports-color';
 import historyApiFallback   from 'connect-history-api-fallback';
+
 import karma     from 'karma';
 import eslint    from 'gulp-eslint';
 import gulpIf    from 'gulp-if';
@@ -151,40 +151,18 @@ task('release', series('dist', 'tar'));
 // Starting the dev-server
 function devServer() {
     const config = require('./webpack.dev.config');
-    config.entry.app = [
-      // this modules required to make HRM working
-      // it responsible for all this webpack magic
-      'webpack-hot-middleware/client?reload=true'
-      // application entry point
-    ].concat(paths.entry);
-
+    config.entry = paths.entry;
     var compiler = webpack(config);
-
-    serve({
-        port: process.env.PORT || 3000,
-        open: false,
-        server: {
-            baseDir: root,
-            routes: {
-                // add locales folder under the route
-                // that the app expects them in
-                '/locales': 'app/common/locales'
+    new WebpackDevServer(compiler, config.devServer).listen(3000, 'localhost',
+        (err) => {
+            if (err) {
+                 throw new gutil.PluginError('webpack-dev-server', err);
             }
-        },
-        middleware: [
-            historyApiFallback(),
-            webpackDevMiddleware(compiler, {
-                stats: {
-                    colors: colorsSupported,
-                    chunks: false,
-                    modules: false
-                },
-                publicPath: config.output.publicPath
-            }),
-            webpackHotMiddleware(compiler)
-        ]
-    });
+            console.log('[webpack-dev-server]', 'http://localhost:3000/webpack-dev-server/index.html');
+        }
+    );
 }
+
 task('default', devServer);
 
 //Serving the dist build (for heroku)
@@ -197,9 +175,7 @@ function serveStatic() {
         ui: false,
         codeSync: false,
         open: false,
-        middleware: [
-          historyApiFallback()
-        ]
+        middleware: [historyApiFallback()]
     });
 }
 task('serve:static', serveStatic);

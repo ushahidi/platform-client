@@ -1,8 +1,9 @@
-var path    = require('path');
+var path    =   require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
+
 var GIT_COMMIT;
 // Try to get the current GIT COMMIT
 try {
@@ -49,11 +50,21 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
-      },
-      {
+        use: [
+            // MiniCssExtractPlugin.loader,
+            'style-loader',
+            'css-loader',
+            'resolve-url-loader',
+            'sass-loader?sourceMap'
+            ]
+        },
+    {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+            //MiniCssExtractPlugin.loader,
+            'style-loader',
+            'css-loader'
+            ]
       },
       {
         test: /\.png/,
@@ -91,20 +102,25 @@ module.exports = {
             }
           }
         ]
+       },
+       {
+        parser: {
+            system: false
+            }
       }
     ]
   },
-  optimization: {
-    splitChunks: {
-        chunks: 'all'
-      }
-    },
-  plugins: [
-    new MiniCssExtractPlugin(
-        {
-          filename: '[name].[contenthash].css'
-        }
-    ),
+    // optimization: {
+    //   splitChunks: {
+    //       chunks: 'all'
+    //     }
+    //   },
+    plugins: [
+    // new MiniCssExtractPlugin(
+    //     {
+    //       filename: '[name].[contenthash].css'
+    //     }
+    // ),
      // Skip locales
      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
      new webpack.DefinePlugin({
