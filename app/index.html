@@ -1,151 +1,102 @@
-<!doctype html>
-<html lang="en" ng-strict-di>
-    <head ng-controller="PageMetadata">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="/config.js"></script>
+<div>
+    <mode-bar></mode-bar>
+    <ui-view></ui-view>
+    <ush-slider></ush-slider>
+    <ush-demo-slider></ush-demo-slider>
+    <ush-modal-container></ush-modal-container>
+    <ush-mainsheet-container></ush-mainsheet-container>
+</div>
+<script type="text/javascript">
+    if (window.ushahidi && window.ushahidi.doorbellEnabled) {
+        window.doorbellOptions = {
+            tags: ['platform'],
+            appKey: window.ushahidi.doorbellAppKey,
+            properties: {
+                apiUrl: window.ushahidi.apiUrl
+            },
+            onShow: function () {
+                injector = angular.element(document).injector();
+                auth = injector.get('Authentication');
+                session = injector.get('Session');
 
-        <title ng-bind-template="{{pageTitle}} {{siteTitle}}"></title>
-        <meta name="description" ng-attr-content="{{pageDescription}}">
-        <meta name="keywords" ng-attr-content="{{pageKeywords}}">
-        <meta name="robots" ng-attr-content="{{pageRobots}}">
-
-        <meta name="apple-itunes-app" content="app-id={{appStoreId}}, app-argument={{currentFullUrl}}>">
-
-        <link rel="manifest" href="/manifest.json">
-        
-        <base href="/">
-    </head>
-    <!-- TODO: set layouts per view directive -->
-    <body ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible, 'demo-visible' : demoBarVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
-        <a href="#main-content" class="skip-to-content">Skip to content</a>
-        <div id="bootstrap-loading">
-            <!-- loading the document -->
-            <div class="loading">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-            </div>
-            <!-- end loading the document -->
-        </div>
-        <div id="bootstrap-error" class="hidden">
-            <div class="wrapper">
-                <main class="page-content">
-                    <div class="alert error">
-                        <p id="bootstrap-error-message">Sorry, something went wrong. Try reloading the page.</p>
-                    </div>
-                </main>
-            </div>
-        </div>
-        <div id="bootstrap-app" class="hidden">
-
-            <mode-bar current-user="currentUser"></mode-bar>
-            <ui-view></ui-view>
-
-            <!-- TODO: fix and uncomment
-            <first-time-config></first-time-config>
-            -->
-            <ush-slider></ush-slider>
-            <ush-demo-slider></ush-demo-slider>
-            <ush-modal-container></ush-modal-container>
-            <ush-mainsheet-container></ush-mainsheet-container>
-
-        </div>
-
-        <script type="text/javascript">
-            if (window.ushahidi && window.ushahidi.doorbellEnabled) {
-                window.doorbellOptions = {
-                    tags: ['platform'],
-                    appKey: window.ushahidi.doorbellAppKey,
-                    properties: {
-                        apiUrl: window.ushahidi.apiUrl
-                    },
-                    onShow: function () {
-                        injector = angular.element(document).injector();
-                        auth = injector.get('Authentication');
-                        session = injector.get('Session');
-
-                        if (auth && session) {
-                            doorbell.setOption('email', session.getSessionDataEntry('email'));
-                            doorbell.setProperty('loggedIn', auth.getLoginStatus());
-                            doorbell.setProperty('role', session.getSessionDataEntry('role'));
-                            doorbell.setProperty('realname', session.getSessionDataEntry('realname'));
-                        }
-                    }
-                };
-                (function(d, t) {
-                    var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/2005?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
-                }(document, 'script'));
-            }
-        </script>
-        <!--
-        Intercom integration
-        -->
-        <script type="text/javascript">
-            (function(){
-              var per_app_intercom_widget;
-
-              function getAppId() {
-                if (typeof window.intercomSettings !== 'undefined' &&
-                  typeof(window.intercomSettings.app_id) !== 'undefined') {
-                  return window.intercomSettings.app_id
-                } else if (typeof window.analytics !== 'undefined' &&
-                  typeof window.analytics._integrations !== 'undefined' &&
-                  typeof analytics._integrations.Intercom !== 'undefined' &&
-                  typeof analytics._integrations.Intercom.options !== 'undefined' &&
-                  typeof analytics._integrations.Intercom.options.appId !== 'undefined') {
-                  return analytics._integrations.Intercom.options.appId;
-                } else {
-                  return '';
+                if (auth && session) {
+                    doorbell.setOption('email', session.getSessionDataEntry('email'));
+                    doorbell.setProperty('loggedIn', auth.getLoginStatus());
+                    doorbell.setProperty('role', session.getSessionDataEntry('role'));
+                    doorbell.setProperty('realname', session.getSessionDataEntry('realname'));
                 }
-              }
-
-              per_app_intercom_widget = 'https://widget.intercom.io/widget/' + getAppId();
-              var script_tag = document.createElement('script');
-              script_tag.type = 'text/javascript';
-              script_tag.async = true;
-              script_tag.src = per_app_intercom_widget;
-
-              var existing_script = document.getElementsByTagName('script')[0];
-              existing_script.parentNode.insertBefore(script_tag, existing_script);
-            })();
-        </script>
-        <div ng-controller="intercom"></div>
-
-        <script>
-            if (window.ushahidi && window.ushahidi.gaEnabled) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-                ga('create', window.ushahidi.gaKey, 'auto');
-                ga('send', 'pageview');
             }
-        </script>
-        <script>
-            if (window.ushahidi && window.ushahidi.googleMapsApiKey) {
-                (function(d, t, c, s) {
-                    var g = d.createElement(t);g.id = 'mapsApi';g.type = 'text/javascript';g.async = true; g.src = 'https://maps.googleapis.com/maps/api/js?key=' + window.ushahidi.googleMapsApiKey + '&libraries=places';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
-                }(document, 'script', function () {
-                    var e = document.createElement('div');
-                    e.style.display = 'none';
-                    window.googlePlaces = new google.maps.places.PlacesService(e);
-                }));
-            }
-        </script>
+        };
+        (function(d, t) {
+            var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/2005?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
+        }(document, 'script'));
+    }
+</script>
+<!--
+Intercom integration
+-->
+<script type="text/javascript">
+    (function(){
+      var per_app_intercom_widget;
 
-        <!--
-          Facebook sharing code
-        -->
-          <div id="fb-root"></div>
-          <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));</script>
-    </body>
-</html>
+      function getAppId() {
+        if (typeof window.intercomSettings !== 'undefined' &&
+          typeof(window.intercomSettings.app_id) !== 'undefined') {
+          return window.intercomSettings.app_id
+        } else if (typeof window.analytics !== 'undefined' &&
+          typeof window.analytics._integrations !== 'undefined' &&
+          typeof analytics._integrations.Intercom !== 'undefined' &&
+          typeof analytics._integrations.Intercom.options !== 'undefined' &&
+          typeof analytics._integrations.Intercom.options.appId !== 'undefined') {
+          return analytics._integrations.Intercom.options.appId;
+        } else {
+          return '';
+        }
+      }
+
+      per_app_intercom_widget = 'https://widget.intercom.io/widget/' + getAppId();
+      var script_tag = document.createElement('script');
+      script_tag.type = 'text/javascript';
+      script_tag.async = true;
+      script_tag.src = per_app_intercom_widget;
+
+      var existing_script = document.getElementsByTagName('script')[0];
+      existing_script.parentNode.insertBefore(script_tag, existing_script);
+    })();
+</script>
+<div ng-controller="intercom"></div>
+
+<script>
+    if (window.ushahidi && window.ushahidi.gaEnabled) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', window.ushahidi.gaKey, 'auto');
+        ga('send', 'pageview');
+    }
+</script>
+<script>
+    if (window.ushahidi && window.ushahidi.googleMapsApiKey) {
+        (function(d, t, c, s) {
+            var g = d.createElement(t);g.id = 'mapsApi';g.type = 'text/javascript';g.async = true; g.src = 'https://maps.googleapis.com/maps/api/js?key=' + window.ushahidi.googleMapsApiKey + '&libraries=places';g.onload=c;g.onreadystatechange=c; s = d.getElementsByTagName(t)[0];s.parentNode.insertBefore(g, s);
+        }(document, 'script', function () {
+            var e = document.createElement('div');
+            e.style.display = 'none';
+            window.googlePlaces = new google.maps.places.PlacesService(e);
+        }));
+    }
+</script>
+
+<!--
+  Facebook sharing code
+-->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>

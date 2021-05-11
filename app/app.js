@@ -19,6 +19,9 @@ require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
 
+// Make sure we have a window.ushahidi object
+window.ushahidi = window.ushahidi || {};
+
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
@@ -29,9 +32,6 @@ import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
-
-// Make sure we have a window.ushahidi object
-window.ushahidi = window.ushahidi || {};
 
 // this 'environment variable' will be set within the gulpfile
 var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),

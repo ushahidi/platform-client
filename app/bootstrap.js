@@ -1,33 +1,16 @@
-require('./app');
-require('angular-lazy-bootstrap/src/bootstrap.js');
+require('./app.js');
+import singleSpaAngularJS from 'single-spa-angularjs';
 
-// Load site config THEN bootstrap the app
-angular.lazy()
-    .resolve(['$q', '$http', function ($q, $http) {
-        if (!window.ushahidi.verifier) {
-            return $http.get(window.ushahidi.apiUrl + '/config')
-            .then(function (response) {
-                window.ushahidi.bootstrapConfig = response.data.results;
-            });
-        }
-    }])
-    .loading(function () {
-        // Show loading
-        angular.element(document.getElementById('bootstrap-loading')).removeClass('hidden');
-    })
-    .error(function (error) {
-        // Show error
-        try {
-            error.data.errors[0].message &&
-            angular.element(document.getElementById('bootstrap-error-message')).html(error.data.errors[0].message);
-        } finally {
-            angular.element(document.getElementById('bootstrap-error')).removeClass('hidden');
-        }
-    })
-    .done(function () {
-        // Hide loading
-        angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    })
-    .bootstrap(document, ['app'], {
-        strictDi: true
+//exporting lifecycle-functions for angular-app, previous config is set in root-config
+const ngLifecycles = singleSpaAngularJS({
+    angular: angular,
+    mainAngularModule: 'app',
+    uiRouter: true,
+    preserveGlobal: false,
+    strictDi: true,
+    template: require('./index.html')
     });
+
+export const bootstrap = ngLifecycles.bootstrap;
+export const mount = ngLifecycles.mount;
+export const unmount = ngLifecycles.unmount;

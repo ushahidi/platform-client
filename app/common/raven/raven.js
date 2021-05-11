@@ -1,7 +1,8 @@
 import angular from 'angular';
 import ravenService from './raven.service';
+const ravenUrl = window.ushahidi && window.ushahidi.ravenUrl
+    ? window.ushahidi.ravenUrl : false;
 
-const ravenUrl = window.ushahidi.ravenUrl || false;
 let ravenModule;
 // Load raven if configured
 if (ravenUrl) {
