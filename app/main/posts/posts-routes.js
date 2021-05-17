@@ -173,6 +173,24 @@ function (
             views: {
                 'mode-context': 'modeContext'
             },
+            resolve: {
+                // data for this state is fetched from ConfigEndpoint and is dynamic based on individual deployment.
+                // If image_header for a deployment is not set the fallback og:image will be previewed
+                data: ['ConfigEndpoint', 'ngMeta', function (ConfigEndpoint, ngMeta) {
+                    return ConfigEndpoint.get({
+                        id: 'site'
+                    }).$promise.then(function (site) {
+                        ngMeta.setTitle(site.name);
+                        ngMeta.setTag('og:description', site.description);
+                        ngMeta.setTag('og:title', site.name);
+                        ngMeta.setTag('og:image', site.image_header)
+                        return site;
+                    })
+                }]
+            },
+            meta: {
+                disableUpdate: true
+            },
             onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
                 if (PostFilters.getMode() === 'savedsearch') {
                     $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
@@ -214,7 +232,7 @@ function (
      * we need to  be able to set mode-context as collectionModeContext or as savedSearchModeContext
      * without the route since the user would land in /views/map after the redirect
      */
-        .state(
+    .state(
         {
             url: '^/collections/{collectionId:int}/map',
             name: 'posts.map.collection',
@@ -241,7 +259,18 @@ function (
                 //change to selectedPost and refactor the selectedposts in general
                 post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
                     return PostsSdk.findPost($transition$.params().postId);
+                }],
+                //below is the post's title and content fetched and set as og:title and og:description resp. from PostsSdk Endpoint
+                data: ['ngMeta', '$transition$', 'PostsSdk', function (ngMeta, $transition$, PostsSdk) {
+                        PostsSdk.findPost($transition$.params().postId)
+                        .then((post) => {
+                            ngMeta.setTag('og:title', post.data.result.title);
+                            ngMeta.setTag('og:description', post.data.result.content);
+                        })
                 }]
+            },
+            meta: {
+                disableUpdate: true
             }
         }
     )

@@ -18,6 +18,8 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
+require('ng-meta')
+require('angular-route')
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -29,6 +31,9 @@ import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
+// added image and absUrl to get path of map-new.png image from within the app itself
+let image = require('ushahidi-platform-pattern-library/assets/img/map-new.png')
+let absUrl = window.location.origin
 
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
@@ -83,7 +88,9 @@ angular.module('app',
         'ushahidi.main',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
-        'ngtweet'
+        'ngtweet',
+        'ngRoute',
+        'ngMeta'
         ])
 
     .constant('CONST', {
@@ -123,7 +130,12 @@ angular.module('app',
         $showdownProvider.setOption('tasklists', true);
         $showdownProvider.setOption('sanitize', true);
     }])
-
+    .config(['$stateProvider', 'ngMetaProvider', function ($stateProvider, ngMetaProvider) {
+        // "ngMetaProvider.setDefaultTag" provide fallback values to og:title and og:image
+        ngMetaProvider.setDefaultTag('og:title', 'Ushahidi');
+        ngMetaProvider.setDefaultTag('og:image', `${absUrl}${image}`);
+        $stateProvider.decorator('data', ngMetaProvider.mergeNestedStateData);
+      }])
     .factory('_', function () {
         return require('underscore/underscore');
     })
@@ -184,4 +196,7 @@ angular.module('app',
     }])
     .run(['VerifierService', function (VerifierService) {
         VerifierService.debugModeCheck();
+    }])
+    .run(['ngMeta', function(ngMeta) {
+        ngMeta.init();
     }]);
