@@ -72,14 +72,18 @@ module.exports = {
           // loader: 'url-loader?limit=10000'
           loader: 'file-loader',
           options: {
-            esModule: false,
-          },
+            esModule: false
+          }
         }
       },
       {
         test: /\.svg/,
         use: {
-          loader: 'svg-url-loader?limit=1'
+          loader: 'svg-url-loader?limit=1',
+          options: {
+            // make loader to behave like url-loader, for all svg files
+            encoding: 'base64'
+          },
         }
       },
       {
