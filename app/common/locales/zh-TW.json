@@ -22,6 +22,8 @@
             "title": "文件",
             "description": "學習如何安裝、設定與管理你的 Ushahidi 網站"
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom": "Intercom線上客服",
             "description": "聯絡 Ushahidi 公司來取得線上聊天功能"
@@ -124,7 +126,7 @@
     "demo_warnings": {
         "close": "Close",
         "visitor": {
-            "not_expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts for the next {{days}} days.",
+            "not_expired": "這個網站 {{site_name}} 使用 Ushahidi 的免費試用版本，在接下來的 {{days}} 天裡只能看到前 25 筆資料",
             "expired": "Deployment {{site_name}} is using a free trial of Ushahidi. You will only see the first 25 posts."
         },
         "user": {
@@ -157,14 +159,14 @@
         "new_post": "新的資料",
         "by": "作者",
         "context_body": "人們與 {{site}} 互動的摘要",
-        "inbound": "Inbound Response Messages",
-        "outbound": "Outbound Surveying Messages",
-        "recipients": "Unique Recipients of Targeted Survey",
-        "responders": "Unique Responders to Targeted Survey",
-        "all_targeted": "All Targeted Surveys",
-        "no_targeted": "You don't have any Targeted Survey data to show.",
-        "all_sources": "All Data Souces",
-        "web_mobile": "Web and Mobile",
+        "inbound": "收到的回應訊息",
+        "outbound": "送出的調查訊息",
+        "recipients": "目標調查的不重複收件人",
+        "responders": "目標調查的不重複收件人",
+        "all_targeted": "所有目標調查",
+        "no_targeted": "目前沒有任何目標調查資料可以顯示",
+        "all_sources": "所有資料來源",
+        "web_mobile": "網站與手機",
         "email": "email",
         "sms": "sms",
         "twitter": "twitter",
@@ -180,8 +182,9 @@
         "add_field_instructions_placeholder": "介紹這個欄位...",
         "add_post_type": "新增調查",
         "add_step": "新增任務",
+        "add_language": "Add language",
         "added_form_stage_attribute": "已儲存的欄位",
-        "field_allowed_relation_post_type": "Allowed surveys",
+        "field_allowed_relation_post_type": "允許的調查",
         "choose_order_message": "選擇並排序你想加入到此調查的欄位",
         "created_form_stage": "已儲存的任務",
         "currently_disabled": "此調查遭停用",
@@ -221,6 +224,7 @@
         "save_post_type": "儲存調查",
         "save_post_step": "儲存任務",
         "saved_form": "調查已儲存",
+        "select_language": "Select languages",
         "step_delete": "刪除",
         "step_name": "Task Name",
         "step_rename": "重新命名",
@@ -231,17 +235,17 @@
     },
     "survey": {
         "delete_task": "刪除任務",
-        "duplicate_survey": "Duplicate",
+        "duplicate_survey": "複製",
         "internal_use_task": "任務內容只做內部使用",
         "internal_use_task_desc": "這個任務內容只會提供給管理資料的使用者",
         "duplicate_task": "複製任務",
-        "duplicate_option": "Duplicate option is present",
+        "duplicate_option": "複製選項已經存在",
         "show_this_task_to": "在發布後顯示這個任務給所有人",
-        "show_this_task_to_desc": "When a survey response is published, data from this task will be displayed.",
-        "survey_name": "Survey name",
-        "describe_your_survey": "Describe your survey...",
-        "describe_this_task": "Describe this task...",
-        "untitled_task": "Untitled task",
+        "show_this_task_to_desc": "當一個調查回應發布，這個任務的資料就會顯示",
+        "survey_name": "調查名稱",
+        "describe_your_survey": "介紹你的調查",
+        "describe_this_task": "介紹這個任務",
+        "untitled_task": "沒有標題的任務",
         "add_task": "新增任務",
         "title": "標題",
         "field_allowed_relation_survey": "Allowed surveys",
@@ -286,8 +290,8 @@
         "tasks": "任務",
         "task_visible_when_published": "This task will be visible when post is published.",
         "show_field_description": "Add field description (optional):",
-        "add_field": "新增欄位",
-        "edit_field": "資料欄位",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "Build",
         "configure": "Configure",
         "require_section": "Require this task be completed before a post can be visible to the public",
@@ -311,6 +315,7 @@
         "response_private_desc": "Only people with permission to edit responses can see responses to this field",
         "require_task_desc": "Require this task be completed before a post can be visible to the public",
         "survey_permissions": "此調查權限",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "Who can add to this survey",
         "survey_field": "Survey field",
         "choose_survey_field": "Choose what should be assigned to each survey field",
@@ -339,6 +344,11 @@
                 "desc": "<strong>If you delete this task</strong>, all of the data captured in it will also be deleted. Proceed with caution.",
                 "delete": "Delete task",
                 "delete_this": "Delete this task"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -428,42 +438,42 @@
         "collections": {
             "collections": "集合",
             "all_collections": "所有集合",
-            "search_collections": "Search Collections"
+            "search_collections": "搜尋集合"
         },
         "sort": {
             "order": {
-                "filter_type_tag": "Order",
-                "desc": "Newest first",
-                "asc": "Oldest first"
+                "filter_type_tag": "排序",
+                "desc": "新的在前面",
+                "asc": "舊的在前面"
             },
             "orderby": {
-                "post_date": "Post Date",
-                "created": "Date created",
-                "updated": "Date updated"
+                "post_date": "資料建立日期",
+                "created": "建立日期",
+                "updated": "更新日期"
             },
             "unlockedOnTop": {
-                "filter_type_tag": "Unlocked posts on top"
+                "filter_type_tag": "解除置頂資料"
             }
         },
         "filter_tabs": {
-            "order": "Order",
+            "order": "排序",
             "order_group": {
                 "orderby": {
-                    "post_date": "Post Date",
-                    "created": "Date created",
-                    "updated": "Date updated"
+                    "post_date": "資料建立日期",
+                    "created": "建立日期",
+                    "updated": "更新日期"
                 },
                 "order": {
-                    "desc": "Newest first",
-                    "asc": "Oldest first"
+                    "desc": "新的在前面",
+                    "asc": "舊的在前面"
                 },
-                "unlocked_on_top_yes": "Yes",
-                "unlocked_on_top_no": "No"
+                "unlocked_on_top_yes": "是",
+                "unlocked_on_top_no": "否"
             },
-            "orderby": "Order by",
-            "order_unlocked_on_top": "Unlocked posts on top",
-            "savedsearch": "Saved Search",
-            "saved_search": "Saved Search",
+            "orderby": "排序",
+            "order_unlocked_on_top": "解除置頂資料",
+            "savedsearch": "儲存的搜尋",
+            "saved_search": "儲存的搜尋",
             "q": "關鍵字",
             "created_after": "開始日期",
             "created_before": "結束日期",
@@ -484,10 +494,10 @@
             "mapped": "Show posts with a location",
             "source": "Source"
         },
-        "unmapped_start_one": "There is",
-        "unmapped_start_many": "There are",
-        "unmapped_one": "{{post_nb}} post",
-        "unmapped_many": "{{post_nb}} posts",
+        "unmapped_start_one": "有",
+        "unmapped_start_many": "有",
+        "unmapped_one": "{{post_nb}} 筆資料",
+        "unmapped_many": "{{post_nb}} 筆資料",
         "unmapped_end": "not shown here because they don't include location information.",
         "more": "更多",
         "keyword": "關鍵字",
@@ -524,7 +534,7 @@
         "compare_form": "比較調查",
         "compare_": "比較",
         "created": "建立時間",
-        "cumulative": "Show cumulative totals",
+        "cumulative": "顯示累積總數",
         "cumulative_post_count": "資料總數量",
         "custom": "自訂日期範圍",
         "custom_display": "{{start || 'Beginning'}} to {{end || 'Now'}}",
@@ -542,7 +552,7 @@
     "message": {
         "button": {
             "dismiss": "忽略",
-            "upgrade": "Upgrade now",
+            "upgrade": "現在就升級",
             "default": "好",
             "cancel": "取消"
         }
@@ -553,12 +563,12 @@
         }
     },
     "nav": {
-        "404": "Whoops",
+        "404": "喔喔",
         "about": "關於",
         "activity": "活動",
         "add_post": "新增資料",
         "account_settings": "帳號設定",
-        "alerts": "Alerts",
+        "alerts": "警告",
         "all": "全部",
         "author_tagline": "作者 {{author}}",
         "appearance": "顯示",
@@ -628,15 +638,17 @@
         "map": "地圖",
         "list": "時間軸",
         "activity": "活動",
-        "data": "Data"
+        "data": "資料"
     },
     "post": {
-        "see_more_plural": "See {{newPostsCount}} new posts",
-        "see_more_singular": "See {{newPostsCount}} new post",
+        "see_more_plural": "檢視 {{newPostsCount}} 筆新資料",
+        "see_more_singular": "檢視 {{newPostsCount}} 筆新資料",
         "add_to_form": "加至 {{form}}",
         "posts": "資料",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "尚未有資料",
-        "in_this_deployment": "in this deployment, yet.",
+        "in_this_deployment": "還沒在這個網站",
         "posts_total": "{{posts}} of {{total_nb}} posts",
         "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
         "search_results": "Results:",
@@ -803,7 +815,8 @@
         "valid": {
             "no_changes": "You haven’t made any changes",
             "invalid_state": "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
-            "validation_fail": "必填欄位尚未填寫，這些欄位標示有*",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "標題必填",
                 "minlength": "標題太短",
@@ -822,7 +835,8 @@
                 "required": "\"{{label}}\" 必填",
                 "parse": "\"{{label}}\" 無法處理",
                 "date": "\"{{label}}\" 必須是日期",
-                "number": "\"{{label}}\" 必須是數字"
+                "number": "\"{{label}}\" 必須是數字",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": "姓名太長"
@@ -870,11 +884,11 @@
         "just_you": "只有你"
     },
     "webhook": {
-        "add_webhook": "Add Role",
-        "edit_webhook": "Edit Role",
+        "add_webhook": "新增角色",
+        "edit_webhook": "編輯角色",
         "uuid": "Webhook UUID",
-        "name": "Name",
-        "shared_secret": "Shared Secret",
+        "name": "名稱",
+        "shared_secret": "共用的密碼",
         "url": "API URL",
         "entity_type": "Entity Type",
         "event_type": "Event Type",
@@ -885,19 +899,19 @@
         "delete_webhook_desc": "<strong>If you delete this webhook</strong>, all associated webhook events will be lost. Proceed with caution."
     },
     "saved_search": {
-        "visible_to_public": "This Saved Search is visible to the public",
-        "visible_to_you": "This Saved Search is visible to just you and admins",
-        "visible_to_roles": "This Saved Search is visible to {{roles}}",
-        "featured": "Featured",
+        "visible_to_public": "儲存的搜尋是公開的",
+        "visible_to_you": "這個儲存的搜尋只有你跟管理者看得到",
+        "visible_to_roles": "儲存的搜尋是 {{roles}} 可見",
+        "featured": "推薦",
         "featured_tooltip": "Featured searches appear to all users in <br>the \"Saved Searches\" menu"
     },
     "collection": {
-        "visible_to_public": "This Collection is visible to the public",
+        "visible_to_public": "這個集合是公開的",
         "visible_to_you": "這個集合只有你和管理者能看見",
         "visible_to_roles": "這個集合開放給 {{roles}}"
     },
     "set": {
-        "by": "by",
+        "by": "由",
         "clear_search": "清除搜尋",
         "create_collection": "建立集合",
         "create_new": "建立新的",
@@ -939,6 +953,7 @@
         "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
         "show_categories": "Show available categories",
         "child_permissions": "Permissions for this category are managed by the parent category.",
+        "which_categories": "Which categories should be available",
         "select_all": "全選",
         "choose_roles": "選擇角色",
         "create_tag": "建立分類",
@@ -1017,7 +1032,9 @@
             "webhooks": "Webhooks",
             "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans": "Plans",
-            "plan_desc": "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+            "plan_desc": "Your deployment's current plan is <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1130,6 +1147,16 @@
                 "search_terms_desc": "Add search terms separated with commas"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "Member",
             "admin": "Admin",
@@ -1168,6 +1195,8 @@
         "site_language": "網站語言",
         "site_private": "Make this deployment private",
         "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "選擇圖片",
         "saved_settings": "Deployment settings saved!",
         "saved_map_settings": "地圖設定已儲存",
@@ -1430,6 +1459,10 @@
         "general_settings": {
             "save_success": "一般設定已儲存"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "地圖設定已儲存"
         },
@@ -1528,6 +1561,7 @@
             "delete_attribute_confirm": "您確定要刪除這個欄位？",
             "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
             "destroy_attribute_success": "Field {{name}} deleted",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "A survey-name is needed",
@@ -1644,6 +1678,30 @@
         "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
         "agree": "I agree to Ushahidi's Terms of Service.",
         "accept_and_continue": "Accept and Continue"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "Acoli",
@@ -1771,6 +1829,7 @@
         "en-CH": "English (Switzerland)",
         "en-GB": "English (United Kingdom)",
         "en-US": "English (United States)",
+        "en-EN": "English",
         "myv": "Erzya",
         "eo": "Esperanto",
         "et": "Estonian",

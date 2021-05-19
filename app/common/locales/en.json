@@ -22,6 +22,8 @@
             "title" : "Documentation",
             "description" : "Learn how to set up, configure, and manage your Ushahidi deployment."
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom" : "Intercom",
             "description" : "Contact Ushahidi staff for chat support"
@@ -1039,7 +1041,9 @@
             "webhooks" : "Webhooks",
             "webhooks_desc" : "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans" : "Plans",
-            "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>."
+            "plan_desc" : "Your deployment's current plan is <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1151,6 +1155,16 @@
                 "access_token_secret_desc":"Add the access secret that you generated for your Twitter app.",
                 "search_terms": "Twitter search terms",
                 "search_terms_desc": "Add search terms separated with commas"
+            }
+        },
+        "donation": {
+            "title" : {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
             }
         },
         "roles" :{
@@ -1454,6 +1468,10 @@
         },
         "general_settings" : {
             "save_success" : "General settings saved"
+        },
+        "donation_settings": {
+            "save_success" : "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
         },
         "map_settings" : {
             "save_success" : "Map settings saved"
