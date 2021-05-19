@@ -59,6 +59,7 @@ angular.module('ushahidi.mock', [])
 .service('CategoriesSdk', require('./services/sdk/CategoriesSdk.js'))
 .service('UtilsSdk', require('./services/sdk/UtilsSdk.js'))
 .service('PostsSdk', require('./services/sdk/PostsSdk.js'))
+.service('AccessibilityService', require('./services/accessibility.service'))
 
 .controller('navigation', require('./controllers/navigation.controller.mock.js'))
 .factory('socket', require('./factories/socket-factory.mock.js'))
