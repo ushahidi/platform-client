@@ -1,4 +1,4 @@
-<div>
+<div ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible, 'demo-visible' : demoBarVisible }" class="{{ globalLayout }} ltr-namespace" canvas>
     <mode-bar></mode-bar>
     <ui-view></ui-view>
     <ush-slider></ush-slider>
