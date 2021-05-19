@@ -1,7 +1,5 @@
 var path    =   require('path');
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-// var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 
 var GIT_COMMIT;
@@ -114,17 +112,7 @@ module.exports = {
       }
     ]
   },
-    // optimization: {
-    //   splitChunks: {
-    //       chunks: 'all'
-    //     }
-    //   },
     plugins: [
-    // new MiniCssExtractPlugin(
-    //     {
-    //       filename: '[name].[contenthash].css'
-    //     }
-    // ),
      // Skip locales
      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
      new webpack.DefinePlugin({
@@ -133,10 +121,6 @@ module.exports = {
       VERIFIER: JSON.stringify(process.env.VERIFIER || false),
       GIT_COMMIT: JSON.stringify(GIT_COMMIT || false),
       USH_DISABLE_CHECKS: JSON.stringify(process.env.USH_DISABLE_CHECKS) || false
-    }),
-    // Injects bundles in your index.html instead of wiring all manually.
-    new HtmlWebpackPlugin({
-      template: 'app/index.html'
     })
   ]
 }
