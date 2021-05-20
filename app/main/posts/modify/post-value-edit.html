@@ -267,6 +267,9 @@
                 </div>
                 <!-- type: checkbox -->
                 <div ng-switch-when="checkbox">
+                    <div class="alert" role="alert" ng-show="duplicatePresent(attribute) && isAdmin()">
+                        <p translate>post.duplicate_option</p>
+                    </div>
                     <div class="form-field checkbox" ng-repeat="(index, option) in attribute.options track by index">
                         <label>
                             <input
