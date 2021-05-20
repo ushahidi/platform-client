@@ -47,7 +47,7 @@
                     <form name="surveyName">
                         <label for="survey_name" translate required>survey.survey_name</label>
                         <!-- Use once api handles translations  -->
-                        <input type="text" id="survey_name" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name" required>
+                        <input type="text" id="survey_name" ng-init="setFocus('survey_name')" placeholder="{{ 'survey.survey_name' | translate }}" ng-model="survey.name" required>
                         <div
                             class="alert error"
                             ng-show="surveyName.$invalid && surveyName.$dirty"
