@@ -142,7 +142,7 @@ function (
         }
         if (provider === 'gmail') {
             $scope.processing = true;
-            $http.get(Util.url('/gmail/initialize')).then(
+            $http.get(Util.url('/plugins/gmail/initialize')).then(
                 function(response) {
                     $window.open(response.data.auth_url, 'popup', 'height=700, width=550, left=300, top=200');
                     setTimeout(
@@ -163,7 +163,7 @@ function (
         }
         if (provider === 'gmail') {
             $scope.processing = true;
-            $http.post(Util.url('/gmail/unauthorize')).then(
+            $http.post(Util.url('/plugins/gmail/unauthorize')).then(
                 function(response) {
                     toggleGmailConnectionButton();
                     Notify.notify(response.data.message);
@@ -178,7 +178,7 @@ function (
 
     $scope.authorizeGmailProvider = function (code) {
         var payload = {code};
-        return $http.post(Util.url('/gmail/authorize'), payload).then(
+        return $http.post(Util.url('/plugins/gmail/authorize'), payload).then(
             function(response) {
                 Notify.notify(response.data.message);
                 toggleGmailConnectionButton();
