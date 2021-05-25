@@ -50,7 +50,7 @@
                         HDX User Id
                     </label>
                     <p translate="settings.user_settings.profile_page"> Found on your Humanitarian Data Exchange (HDX) profile page</p>
-                    <input id="hdx_maintainer_id" name="hdx_maintainer_id" ng-required="true" type="text" ng-model="tempMaintainerId" required="required"/>
+                    <input id="hdx_maintainer_id" name="hdx_maintainer_id" ng-init="setFocus('hdx_maintainer_id')" ng-required="true" type="text" ng-model="tempMaintainerId" required="required"/>
                 </div>
 
                 <div class="form-field alert error" ng-show="!hxlMaintainerSet && api.hdx_maintainer_id.$invalid && api.hdx_maintainer_id.$dirty">

@@ -14,8 +14,8 @@ function PostToolbarDirective() {
     };
 }
 
-PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress'];
-function PostToolbarController($scope, $rootScope, Notify, PostLockService, $state, LoadingProgress) {
+PostToolbarController.$inject = ['$scope', '$rootScope', '$window', 'Notify', 'PostLockService', '$state', 'LoadingProgress'];
+function PostToolbarController($scope, $rootScope, $window, Notify, PostLockService, $state, LoadingProgress) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
     $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
@@ -27,7 +27,7 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.hideOtherActions = hideOtherActions;
     $scope.showOtherActions = showOtherActions;
     $scope.filtersActive = false;
-
+    $scope.isEmbed = ($window.self !== $window.top) ? true : false;
 
     function editEnabled() {
         if (!$scope.selectedPost || !$scope.hasPermission) {

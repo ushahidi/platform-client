@@ -4,7 +4,6 @@ require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap');
-require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
 require('angular-elastic');
 require('angular-filter');
@@ -71,7 +70,6 @@ angular.module('app',
         'LocalStorageModule',
         'pascalprecht.translate',
         'ui.bootstrap.pagination',
-        'angular-datepicker',
         'angular.filter',
         'ng-showdown',
         'ngGeolocation',
@@ -154,6 +152,9 @@ angular.module('app',
     })
     .factory('Editor', function () {
         return require('@toast-ui/editor');
+    })
+    .factory('Flatpickr', function () {
+        return require('flatpickr').default;
     })
     // inject the router instance into a `run` block by name
     //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {

@@ -1,8 +1,8 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = ['$rootScope', '$scope', '$translate', 'moment', 'Features'];
+ActivityController.$inject = ['$rootScope', '$scope', '$translate', 'moment', 'Features', 'Flatpickr'];
 
-function ActivityController($rootScope, $scope, $translate, moment, Features) {
+function ActivityController($rootScope, $scope, $translate, moment, Features, Flatpickr) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = 'all';
@@ -12,8 +12,7 @@ function ActivityController($rootScope, $scope, $translate, moment, Features) {
         created_before: null
     };
     $scope.filtersMenuOpen = false;
-    $scope.dateOptions = { format : 'yyyy-mm-dd' };
-
+    Flatpickr('.flatpickr', {});
     $scope.saveFilters = saveFilters;
     $scope.cancelChangeFilters = cancelChangeFilters;
     $scope.targetedSurveysEnabled = false;

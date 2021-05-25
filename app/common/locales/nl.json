@@ -22,6 +22,8 @@
             "title": "Documentatie",
             "description": "Leer hoe je een Ushahidi platform kunt inrichten, configureren en beheren."
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom": "Intercom",
             "description": "Neem contact op met een Ushahidi medewerker voor ondersteuning"
@@ -180,6 +182,7 @@
         "add_field_instructions_placeholder": "Licht dit veld toe...",
         "add_post_type": "Formulier toevoegen",
         "add_step": "Taak toevoegen",
+        "add_language": "Add language",
         "added_form_stage_attribute": "Veld opgeslagen",
         "field_allowed_relation_post_type": "Toegestane onderzoeken",
         "choose_order_message": "Choose and order the fields that you would like to include in this survey",
@@ -221,6 +224,7 @@
         "save_post_type": "Formulier opslaan",
         "save_post_step": "Taak opslaan",
         "saved_form": "Formulier opgeslagen.",
+        "select_language": "Select languages",
         "step_delete": "Verwijderen",
         "step_name": "Taaknaam",
         "step_rename": "Hernoemen",
@@ -286,8 +290,8 @@
         "tasks": "Taken",
         "task_visible_when_published": "De taak wordt zichtbaar wanneer de plaatsing is gepubliceerd.",
         "show_field_description": "Add field description (optional):",
-        "add_field": "Veld toevoegen",
-        "edit_field": "Veld wijzigen",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "Build",
         "configure": "Configure",
         "require_section": "Vereis dat de taak is afgerond alvorens een plaatsing zichtbaar wordt",
@@ -311,6 +315,7 @@
         "response_private_desc": "Only people with permission to edit responses can see responses to this field",
         "require_task_desc": "Vereis dat de taak is afgerond alvorens een plaatsing zichtbaar wordt voor iedereen",
         "survey_permissions": "Formulier permissies",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "Wie mag dit formulier gebruiken",
         "survey_field": "Formulierveld",
         "choose_survey_field": "Choose what should be assigned to each survey field",
@@ -339,6 +344,11 @@
                 "desc": "<strong>Wanneer je de taak verwijdert</strong>, zullen alle gegevens vastgelegd in de taak ook worden verwijderd. Wees voorzichtig.",
                 "delete": "Taak verwijderen",
                 "delete_this": "Taak verwijderen"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -635,6 +645,8 @@
         "see_more_singular": "Bekijk {{newPostsCount}} nieuwe plaatsing",
         "add_to_form": "Voeg toe aan {{form}}",
         "posts": "Plaatsingen",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "Er zijn geen plaatsingen",
         "in_this_deployment": "op dit platform, tot op heden.",
         "posts_total": "{{posts}} van {{total_nb}} plaatsingen",
@@ -803,7 +815,8 @@
         "valid": {
             "no_changes": "You haven’t made any changes",
             "invalid_state": "De plaatsing heeft een ongeldige status. Rond alle aangegeven taken af om de plaatsing opnieuw te publiceren. Ook kan de status van de plaatsing worden gewijzigd bijv. in \"Wacht op beoordeling\"",
-            "validation_fail": "Required fields are missing, these fields are marked with an * below.",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "A title is required",
                 "minlength": "Title is too short",
@@ -822,7 +835,8 @@
                 "required": "\"{{label}}\" is required",
                 "parse": "\"{{label}}\" could not be parsed",
                 "date": "\"{{label}}\" dient een datum te zijn",
-                "number": "\"{{label}}\" dient een getal te zijn"
+                "number": "\"{{label}}\" dient een getal te zijn",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": "Name is too long"
@@ -939,6 +953,7 @@
         "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
         "show_categories": "Categorieën",
         "child_permissions": "De rechten voor de categorie worden bepaald door de bovenliggende categorie.",
+        "which_categories": "Which categories should be available",
         "select_all": "Alles selecteren",
         "choose_roles": "Rollen kiezen",
         "create_tag": "Categorie toevoegen",
@@ -1017,7 +1032,9 @@
             "webhooks": "Webhooks",
             "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
             "plans": "Abonnementen",
-            "plan_desc": "Het abonnement voor het platform is <strong>{{current_plan}}</strong>."
+            "plan_desc": "Het abonnement voor het platform is <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1130,6 +1147,16 @@
                 "search_terms_desc": "Voeg zoektermen toe, gescheiden door komma's"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "Lid",
             "admin": "Beheerder",
@@ -1168,6 +1195,8 @@
         "site_language": "Website taal",
         "site_private": "Maak deze implementatie privé",
         "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "Select image",
         "saved_settings": "Deployment settings saved!",
         "saved_map_settings": "Kaartinstellingen opgeslagen!",
@@ -1430,6 +1459,10 @@
         "general_settings": {
             "save_success": "Algemene instellingen opgeslagen"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "Kaartinstellingen opgeslagen"
         },
@@ -1528,6 +1561,7 @@
             "delete_attribute_confirm": "Weet u zeker dat u dit veld wilt verwijderen?",
             "delete_attribute_confirm_desc": "De actie kan niet ongedaan worden gemaakt. Wanneer het veld wordt verwijderd, dan worden alle gegevens voor dit veld verwijderd van bestaande plaatsingen.",
             "destroy_attribute_success": "Veldn {{name}} verwijderd",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "Geef het formulier een naam",
@@ -1644,6 +1678,30 @@
         "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
         "agree": "Ik ga akkoord met de gebruiksvoorwaarden.",
         "accept_and_continue": "Accepteren en doorgaan"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "Acoli",
@@ -1771,6 +1829,7 @@
         "en-CH": "English (Switzerland)",
         "en-GB": "English (United Kingdom)",
         "en-US": "English (United States)",
+        "en-EN": "English",
         "myv": "Erzya",
         "eo": "Esperanto",
         "et": "Estonian",

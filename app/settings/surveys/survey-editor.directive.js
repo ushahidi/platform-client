@@ -30,7 +30,8 @@ SurveyEditorController.$inject = [
     'Features',
     'SurveysSdk',
     'TranslationService',
-    'CategoriesSdk'];
+    'CategoriesSdk',
+    'AccessibilityService'];
 function SurveyEditorController(
     $rootScope,
     $scope,
@@ -48,7 +49,8 @@ function SurveyEditorController(
     Features,
     SurveysSdk,
     TranslationService,
-    CategoriesSdk
+    CategoriesSdk,
+    AccessibilityService
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
@@ -90,6 +92,7 @@ function SurveyEditorController(
 
     $scope.switchTab = switchTab;
     $scope.tab_history = {};
+    $scope.setFocus = AccessibilityService.setFocus;
 
     $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
