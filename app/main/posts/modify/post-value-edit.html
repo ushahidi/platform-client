@@ -67,8 +67,6 @@
                 'error': form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
                 'success': ! form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
                 'required': attribute.required,
-                'date' : isDate(attribute),
-                'date time' : isDateTime(attribute),
                 'location' : attribute.input === 'location'
             }"
         >
