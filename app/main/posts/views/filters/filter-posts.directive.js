@@ -16,11 +16,15 @@ function FilterPostsDirective() {
     };
 }
 
-FilterPostsController.$inject = ['$scope', 'PostFilters', '$state', '$document', '$element', 'FocusTrap'];
-function FilterPostsController($scope, PostFilters, $state, $document, $element, FocusTrap) {
+FilterPostsController.$inject = ['$rootScope', '$scope', 'PostFilters', '$state', '$document', '$element', 'FocusTrap'];
+function FilterPostsController($rootScope, $scope, PostFilters, $state, $document, $element, FocusTrap) {
     function dropdownContainerLink() {
         let container = document.querySelector('#dropdown-window');
         let trap = FocusTrap.createFocusTrap('#dropdown-window');
+
+        $rootScope.$on('event:pauseTrap', function(event, value) {
+            value ? trap.pause() : trap.unpause();
+        });
 
         function watchClassAttribute(mutations) {
             mutations.forEach(function (mutation) {
@@ -70,6 +74,7 @@ function FilterPostsController($scope, PostFilters, $state, $document, $element,
                 $scope.onClose();
             }
         });
+        
     }
 
     function applyFilters() {
