@@ -74,7 +74,7 @@ function FilterPostsController($rootScope, $scope, PostFilters, $state, $documen
                 $scope.onClose();
             }
         });
-        
+
     }
 
     function applyFilters() {
