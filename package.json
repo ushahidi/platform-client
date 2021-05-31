@@ -27,7 +27,6 @@
     "eslint"
   ],
   "devDependencies": {
-    "@uirouter/visualizer": "^5.0.0",
     "angular-mocks": "^1.5.6",
     "ansi-colors": "^4.1.1",
     "babel-core": "^6.7.7",
