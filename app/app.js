@@ -151,6 +151,12 @@ angular.module('app',
     .factory('localizedFormat', function () {
         return require('dayjs/plugin/localizedFormat');
     })
+    .factory('utc', function () {
+        return require('dayjs/plugin/utc');
+    })
+    .factory('isSameOrBefore', function () {
+        return require('dayjs/plugin/isSameOrBefore');
+    })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
