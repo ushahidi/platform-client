@@ -114,6 +114,7 @@
     "checklist-model": "~0.11.0",
     "cross-fetch": "^3.0.4",
     "d3": "^3.5.17",
+    "dayjs": "^1.10.5",
     "flatpickr": "^4.6.9",
     "focus-trap": "^6.3.0",
     "leaflet": "^1.6.0",

@@ -142,6 +142,15 @@ angular.module('app',
     .factory('moment', function () {
         return require('moment');
     })
+    .factory('dayjs', function () {
+        return require('dayjs');
+    })
+    .factory('relativeTime', function () {
+        return require('dayjs/plugin/relativeTime');
+    })
+    .factory('localizedFormat', function () {
+        return require('dayjs/plugin/localizedFormat');
+    })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
