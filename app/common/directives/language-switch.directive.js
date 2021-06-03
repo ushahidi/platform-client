@@ -1,3 +1,5 @@
+const { lang } = require('moment');
+
 module.exports = LanguageSwitchDirective;
 
 LanguageSwitchDirective.$inject = [];
@@ -20,9 +22,7 @@ function LanguageSwitchController($scope, Languages, TranslationService, $locati
     activate();
 
     function activate() {
-        Languages.then(function (languages) {
-            $scope.languages = languages;
-        });
+        $scope.languages = Languages.getLanguages();
     }
 
     function changeLanguage(code) {

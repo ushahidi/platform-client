@@ -26,24 +26,18 @@ function (
             $translate.use(lang).then(function (langKey) {
                 if (langKey) {
                     $translate.preferredLanguage(langKey);
-                    Languages.then(function (languages) {
+                    let languages = Languages.getLanguages();
                         let language = languages.find(l => l.code === langKey);
 
                         if ($rootScope.rtlEnabled !== language.rtl) {
                             if (language.rtl) {
-                                require.ensure(
-                                    ['ushahidi-platform-pattern-library/assets/css/rtl-style.min.css'], () => {
-                                        $rootScope.$apply(() => {
-                                            require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
-                                            $rootScope.rtlEnabled = language.rtl;
-                                        });
-                                    }, 'rtl'
-                                );
+                                    require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
+                                    $rootScope.rtlEnabled = language.rtl;
                             } else {
+
                                 $rootScope.rtlEnabled = language.rtl;
                             }
                         }
-                    });
                 }
             });
             moment.locale('en');
