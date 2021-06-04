@@ -1,11 +1,10 @@
 module.exports = FilterPostOrderAscDescDirective;
 
 FilterPostOrderAscDescDirective.$inject = [
-    'moment',
     '$rootScope',
     '_'
 ];
-function FilterPostOrderAscDescDirective(moment, $rootScope, _) {
+function FilterPostOrderAscDescDirective($rootScope, _) {
     return {
         restrict: 'E',
         require: 'ngModel',
