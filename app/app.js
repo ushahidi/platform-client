@@ -139,9 +139,6 @@ angular.module('app',
         require('imports-loader?L=leaflet!leaflet-easybutton');
         return L;
     })
-    .factory('moment', function () {
-        return require('moment');
-    })
     .factory('dayjs', function () {
         return require('dayjs');
     })

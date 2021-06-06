@@ -122,7 +122,6 @@
     "leaflet.locatecontrol": "^0.71.1",
     "leaflet.markercluster": "1.0.5",
     "libphonenumber-js": "^1.0.24",
-    "moment": "2.19.3",
     "moment-timezone": "^0.5.4",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
