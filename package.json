@@ -21,7 +21,9 @@
     "eslint": "gulp eslint",
     "eslintfix": "gulp eslintfix",
     "verify": "gulp verify",
-    "languages": "gulp languages"
+    "languages": "gulp languages",
+    "analyze:dev": "gulp analyze:devBundle",
+    "analyze:build": "gulp analyze:buildBundle"
   },
   "pre-commit": [
     "eslint"

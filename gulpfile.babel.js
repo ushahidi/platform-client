@@ -9,6 +9,7 @@ import del      from 'del';
 import dotenv   from 'dotenv';
 import tar      from 'gulp-tar';
 import gzip     from 'gulp-gzip';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported      from 'supports-color';
@@ -148,6 +149,17 @@ task('release', series('dist', 'tar'));
 * Serve-options
 */
 
+//Analyzer plugin for analyze:dev and analyze:build tasks
+function analyzerPlugin(done) {
+    const config = require('./webpack.config');
+
+    config.plugins.push(
+        new BundleAnalyzerPlugin()
+    );
+
+    done();
+}
+
 // Starting the dev-server
 function devServer() {
     const config = require('./webpack.dev.config');
@@ -186,6 +198,10 @@ function devServer() {
     });
 }
 task('default', devServer);
+
+//analyze:dev and analyze:build tasks
+task('analyze:devBundle', series(analyzerPlugin, devServer));
+task('analyze:buildBundle', series(analyzerPlugin, 'dist'));
 
 //Serving the dist build (for heroku)
 function serveStatic() {

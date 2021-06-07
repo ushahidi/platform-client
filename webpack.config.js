@@ -2,7 +2,6 @@ var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 var GIT_COMMIT;
 // Try to get the current GIT COMMIT
@@ -101,9 +100,6 @@ module.exports = {
       }
     },
   plugins: [
-    new BundleAnalyzerPlugin({
-        generateStatsFile: true
-    }),
     new MiniCssExtractPlugin(
         {
           filename: '[name].[contenthash].css'
