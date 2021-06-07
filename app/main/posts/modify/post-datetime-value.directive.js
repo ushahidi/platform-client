@@ -1,4 +1,4 @@
-module.exports = ['moment', '_', function (moment, _) {
+module.exports = ['moment', 'Flatpickr', '_', function (moment, Flatpickr, _) {
     return {
         restrict: 'E',
         replace: true,
@@ -18,6 +18,14 @@ module.exports = ['moment', '_', function (moment, _) {
 
             // Update models on render
             ngModel.$render = render;
+            Flatpickr('#flatpickr', {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i',
+                onChange: function(selectedDates, dateStr, instance) {
+                  $scope.model = dateStr;
+                  save();
+                }
+            });
 
             // Render ngModel viewValue into scope
             function render() {

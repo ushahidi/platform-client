@@ -22,6 +22,8 @@
             "title": "Документация",
             "description": "Научи се как да създаваш, настройваш и управляваш своята Ushahidi инсталация."
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom": "Intercom",
             "description": "Свържи се с екипа на Ushahidi за поддържка през чат"
@@ -180,6 +182,7 @@
         "add_field_instructions_placeholder": "Обясни това поле...",
         "add_post_type": "Добави допитване",
         "add_step": "Добави задача",
+        "add_language": "Add language",
         "added_form_stage_attribute": "Запазено поле",
         "field_allowed_relation_post_type": "Разрешени допивания",
         "choose_order_message": "Избери и подреди полетата, които би искал да включиш в допитването",
@@ -221,6 +224,7 @@
         "save_post_type": "Запази допитване",
         "save_post_step": "Запази задача",
         "saved_form": "Допитването е запазено.",
+        "select_language": "Select languages",
         "step_delete": "Изтрий",
         "step_name": "Име на задача",
         "step_rename": "Преименувай",
@@ -286,8 +290,8 @@
         "tasks": "Задачи",
         "task_visible_when_published": "Тази задача ще бъде видима когато публикацията е публична.",
         "show_field_description": "Add field description (optional):",
-        "add_field": "Добави поле",
-        "edit_field": "Промени полето",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "Изгради",
         "configure": "Настрой",
         "require_section": "Изискай тази задача преди публикация да бъде публично достъпна",
@@ -311,6 +315,7 @@
         "response_private_desc": "Само хора с права да променят могат да видят отговорите на това поле",
         "require_task_desc": "Изискай тази задача преди публикация да бъде публично достъпна",
         "survey_permissions": "Права за допитване",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "Кой може да добавя към това допитване",
         "survey_field": "Полета на допитване",
         "choose_survey_field": "Изберете какво трябва да се припише на всяко поле в допитването",
@@ -339,6 +344,11 @@
                 "desc": "<strong>Ако изтриете тази задача</strong>, всички данни събрани от нея ще бъдат също изтрити. Продължете внимателно.",
                 "delete": "Изтрий задача",
                 "delete_this": "Изтрий тази задача"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -635,6 +645,8 @@
         "see_more_singular": "Виж {{newPostsCount}} нови публикации",
         "add_to_form": "Добави към {{form}}",
         "posts": "Публикации",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "Няма никакви публикации",
         "in_this_deployment": "все още в тази инсталация.",
         "posts_total": "{{posts}} от {{total_nb}} публикации",
@@ -803,7 +815,8 @@
         "valid": {
             "no_changes": "Не сте направили никакви промени",
             "invalid_state": "This post is currently in an invalid state. You'll need to complete all required tasks before you can re-publish this post. You can either complete the necessary tasks or give your post a different status, like \"under review.\"",
-            "validation_fail": "Задължителни полета липсва. Тези полета са отбелязани с * отдолу.",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "Заглавието е задължително",
                 "minlength": "Заглавието е твърде късо",
@@ -822,7 +835,8 @@
                 "required": "\"{{label}}\" е задължително",
                 "parse": "\"{{label}}\" не може да се разпознае",
                 "date": "\"{{label}}\" трябва да е дата",
-                "number": "\"{{label}}\" трябва да е число"
+                "number": "\"{{label}}\" трябва да е число",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": "Името е твърде дълго"
@@ -939,6 +953,7 @@
         "delete_category_desc": "<strong>Ако изтриете тази категория</strong>, няма вече да бъде свързана с публикациите. Продължете внимателно.",
         "show_categories": "Покажи наличните категории",
         "child_permissions": "Правата за тази категория се управляват през родителската категория",
+        "which_categories": "Which categories should be available",
         "select_all": "Избери всички",
         "choose_roles": "Избери роля",
         "create_tag": "Създай категория",
@@ -1017,7 +1032,9 @@
             "webhooks": "Webhooks",
             "webhooks_desc": "Създай webhook, които да изпращат данни от Ushahidi платформата на външни приложения при определени събития.",
             "plans": "Планове",
-            "plan_desc": "Планът на инсталацията ви е <strong>{{current_plan}}</strong>."
+            "plan_desc": "Планът на инсталацията ви е <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Тук може да добавите вашият уникален API ключ за акаунта ви в Humanitarian Data Exchange (HDX).",
@@ -1130,6 +1147,16 @@
                 "search_terms_desc": "Добави думи за търсене отделени със запетая"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "Член",
             "admin": "Администратор",
@@ -1168,6 +1195,8 @@
         "site_language": "Език на сайта",
         "site_private": "Направи тази инсталация частна",
         "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "Избери снимка",
         "saved_settings": "Настройките на инсталацията бяха запазени",
         "saved_map_settings": "Настройките на картата бяха запазени!",
@@ -1430,6 +1459,10 @@
         "general_settings": {
             "save_success": "Общите настройки са запазени"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "Настройките на картата бяха запазени"
         },
@@ -1528,6 +1561,7 @@
             "delete_attribute_confirm": "Сигурни ли сте, че искате да изтриете това поле?",
             "delete_attribute_confirm_desc": "Това действие не може да бъде обърнато. Изтривайки полето ще махнете всички данни от съществуващите публикации.",
             "destroy_attribute_success": "Полето {{name}} е изтрито",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "Изисква се име за допитването",
@@ -1644,6 +1678,30 @@
         "terms_of_service": "Обновихме нашите <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Условия за ползване</a> и <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Условия на поверителност</a>. Моля прегледайте тези документи и приемете условията, за да може да продължите да използвате услугите на Ushahidi's.",
         "agree": "Съгласявам се с условията на ползване на Ushahidi.",
         "accept_and_continue": "Съгласи се и продължи"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "Acoli",
@@ -1771,6 +1829,7 @@
         "en-CH": "English (Switzerland)",
         "en-GB": "English (United Kingdom)",
         "en-US": "English (United States)",
+        "en-EN": "English",
         "myv": "Erzya",
         "eo": "Есперанто",
         "et": "Естонски",

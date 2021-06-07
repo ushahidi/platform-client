@@ -22,6 +22,8 @@
             "title": "Dokumentace",
             "description": "Naučte se, jak nastavit, konfigurovat a spravovat nasazení systému Ushahidi."
         },
+        "donate": "Darujte",
+        "donation": "Dary",
         "intercom": {
             "intercom": "Intercom",
             "description": "Kontaktovat pracovníky Ushahidi pro podporu chatu"
@@ -180,6 +182,7 @@
         "add_field_instructions_placeholder": "Vysvětlit toto pole...",
         "add_post_type": "Přidat průzkum",
         "add_step": "Přidat úlohu",
+        "add_language": "Přidat jazyk",
         "added_form_stage_attribute": "Uložené pole",
         "field_allowed_relation_post_type": "Povolené průzkumy",
         "choose_order_message": "Vyberte a seřaďte pole, která byste chtěl zahrnout do tohoto průzkumu",
@@ -221,6 +224,7 @@
         "save_post_type": "Uložit průzkum",
         "save_post_step": "Uložit úlohu",
         "saved_form": "Průzkum uložen",
+        "select_language": "Vyberte jazyky",
         "step_delete": "Smazat",
         "step_name": "Název úlohy",
         "step_rename": "Přejmenovat",
@@ -235,7 +239,7 @@
         "internal_use_task": "Úloha je určena pouze pro interní použití",
         "internal_use_task_desc": "Tato úloha bude viditelná pouze pro uživatele, kteří mají oprávnění ke správě příspěvků.",
         "duplicate_task": "Zdvojit úlohu",
-        "duplicate_option": "Duplicate option is present",
+        "duplicate_option": "Možnost duplikátu je k dispozici",
         "show_this_task_to": "Zobrazit tuto úlohu všem při publikování",
         "show_this_task_to_desc": "Při zveřejnění odpovědi na průzkum se zobrazí data z této úlohy.",
         "survey_name": "Název průzkumu",
@@ -265,7 +269,7 @@
         "radio_button": "Přepínací tlačítko(a)",
         "checkbox": "Zaškrtávací políčko(a)",
         "related_post": "Související příspěvek",
-        "related_post_info": "Please note, the posts to relate to needs to be published, posts that are \"Under review\" will not appear in the search-results",
+        "related_post_info": "Vezměte prosím na vědomí, že příspěvky, kterých se to týká, musí být zveřejněny, příspěvky, které jsou v procesu kontroly, se ve výsledcích vyhledávání neobjeví.",
         "upload_image": "Obrázek",
         "embed_video": "Vložené video",
         "markdown": "Markdown",
@@ -286,8 +290,8 @@
         "tasks": "Úlohy",
         "task_visible_when_published": "Tato úloha bude viditelná při zveřejnění příspěvku.",
         "show_field_description": "Přidat popis pole (volitelné):",
-        "add_field": "Přidat pole",
-        "edit_field": "Upravit pole",
+        "add_field": "Přidat pole {{fieldType | lowercase}}",
+        "edit_field": "Upravit pole {{fieldType | lowercase}}",
         "build": "Vytvořit",
         "configure": "Konfigurovat",
         "require_section": "Vyžaduje, aby byla tato úloha dokončena dříve, než může být příspěvek viditelný veřejnosti",
@@ -311,6 +315,7 @@
         "response_private_desc": "Pouze lidé s povolením k úpravám odpovědí mohou vidět odpovědi na toto pole",
         "require_task_desc": "Vyžaduje, aby byla tato úloha dokončena dříve, než může být příspěvek viditelný veřejnosti",
         "survey_permissions": "Práva k průzkumu",
+        "only_edit": "Odpovědi na toto pole uvidí pouze lidé s oprávněním upravovat odpovědi.",
         "who_can_add": "Kdo může do tohoto průzkumu přidat",
         "survey_field": "Pole průzkumu",
         "choose_survey_field": "Vyberte, co by mělo být přiřazeno ke každému poli průzkumu",
@@ -339,6 +344,11 @@
                 "desc": "<strong>Pokud tuto úlohu vymažete</strong>, odstraní se i všechna data obsažená v ní. Postupujte opatrně.",
                 "delete": "Smazat úlohu",
                 "delete_this": "Smazat tuto úlohu"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Chybí povinná pole, tato pole jsou označena *."
             }
         },
         "targeted_survey": {
@@ -635,13 +645,15 @@
         "see_more_singular": "Viz {{newPostsCount}} nových příspěvků",
         "add_to_form": "Přidat do {{form}}",
         "posts": "Příspěvky",
+        "post_title": "Vložit název",
+        "post_desc": "Vložit popis",
         "there_are_no_posts": "Nejsou žádné příspěvky",
         "in_this_deployment": "v tomto nasazení.",
         "posts_total": "{{posts}} z {{total_nb}} příspěvků",
         "posts_total_map": "Zobrazování {{posts}} z {{total_nb}} příspěvků s informacemi o poloze na mapě.",
         "search_results": "Výsledek:",
         "by": "od",
-        "duplicate_option": "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
+        "duplicate_option": "Došlo k problému s konfigurací tohoto pole kvůli duplikátům, přejděte do nastavení průzkumu a opravte ho.",
         "task_completed": "Úloha dokončena",
         "everyone": "Kdokoliv",
         "just_you": "Jen vy",
@@ -803,7 +815,8 @@
         "valid": {
             "no_changes": "Neprovedl jste žádné změny",
             "invalid_state": "Tento příspěvek je v neplatném stavu. Budete muset dokončit všechny požadované úlohy, než budete moci tento příspěvek znovu publikovat. Můžete buď dokončit potřebné úlohy, nebo dát vašemu příspěvku jiný stav, například \"ke kontrole\".",
-            "validation_fail": "Požadovaná pole chybí, tato pole jsou označena * níže.",
+            "validation_fail": "Chybí povinná pole, tato pole jsou označena *.",
+            "validation_fail_other": "Při ověřování dat došlo k chybě. Pole, u kterých se nepodařilo ověřit, zobrazí chybu.",
             "title": {
                 "required": "Je vyžadován název",
                 "minlength": "Název je příliš krátký",
@@ -822,7 +835,8 @@
                 "required": "\"{{label}} je povinný",
                 "parse": "\"{{label}}\" nelze analyzovat",
                 "date": "\"{{label}}\" musí být datum",
-                "number": "\"{{label}}\" musí být číslo"
+                "number": "\"{{label}}\" musí být číslo",
+                "step": "\"{{label}}\" musí být celé číslo"
             },
             "author_name": {
                 "maxlength": "Název je příliš dlouhý"
@@ -939,6 +953,7 @@
         "delete_category_desc": "<strong>Pokud tuto kategorii odstraníte</strong>, nebude již spojena s žádnými příspěvky. Postupovat opatrně.",
         "show_categories": "Zobrazit dostupné kategorie",
         "child_permissions": "Oprávnění pro tuto kategorii jsou spravována nadřazenou kategorií.",
+        "which_categories": "Které kategorie by měly být k dispozici",
         "select_all": "Vybrat vše",
         "choose_roles": "Vybrat role",
         "create_tag": "Vytvořit kategorii",
@@ -1017,7 +1032,9 @@
             "webhooks": "Webhooks",
             "webhooks_desc": "Vytvořit webhooks které odesílají data platformy Ushahidi externím aplikacím při spuštění určitých událostí.",
             "plans": "Plány",
-            "plan_desc": "Současný plán nasazení je <strong>{{current_plan}}</strong>."
+            "plan_desc": "Současný plán nasazení je <strong>{{current_plan}}</strong>.",
+            "donation": "Dar",
+            "donation_desc": "Vytvářejte a spravujte dary, které mohou lidé poskytnout vaší organizaci."
         },
         "user_settings": {
             "user_settings_desc_1": "Zde můžete přidat svůj jedinečný klíč API pro svůj účet Human Data Exchange (HDX).",
@@ -1130,6 +1147,16 @@
                 "search_terms_desc": "Přidat hledané výrazy oddělené čárkami"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Název daru",
+                "placeholder": "Zadejte název svého daru",
+                "required": "Název daru je povinný"
+            },
+            "wallet": {
+                "required": "Je nutná adresa peněženky pro darování"
+            }
+        },
         "roles": {
             "member": "Člen",
             "admin": "Správce",
@@ -1168,6 +1195,8 @@
         "site_language": "Jazyk stránek",
         "site_private": "Udělat toto nasazení soukromé",
         "site_private_desc": "Povolením této možnosti bude vaše nasazení a jeho data přístupná pouze registrovaným uživatelům se správnými oprávněními, kteří se k přístupu musí přihlásit",
+        "site_disable_registration": "Zakázat registraci uživatele?",
+        "site_disable_registration_desc": "Zaškrtnutím této možnosti se deaktivuje funkce registrace. Správci budou muset uživatele přidávat ručně.",
         "select_image": "Vybrat obrázek",
         "saved_settings": "Nastavení Nasazení byly uloženy!",
         "saved_map_settings": "Nastavení map uloženo!",
@@ -1430,6 +1459,10 @@
         "general_settings": {
             "save_success": "Obecná nastavení uložena"
         },
+        "donation_settings": {
+            "save_success": "Nastavení daru bylo uloženo",
+            "delete_question": "Opravdu chcete {{name}} smazat."
+        },
         "map_settings": {
             "save_success": "Nastavení mapy uloženo"
         },
@@ -1528,6 +1561,7 @@
             "delete_attribute_confirm": "Opravdu chcete toto pole smazat?",
             "delete_attribute_confirm_desc": "Tuto akci nelze vrátit zpět. Vymazání tohoto pole odstraní jeho data ze všech existujících příspěvků.",
             "destroy_attribute_success": "Pole {{name}} smazáno",
+            "survey_name_required": "Název průzkumu je povinný",
             "validation": {
                 "name": {
                     "required": "Název průzkumu je vyžadován",
@@ -1644,6 +1678,30 @@
         "terms_of_service": "Aktualizovali jsme naše <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Smluvní podmínky</a> a <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Zásady ochrany osobních údajů</a>. Přečtěte si tyto dokumenty pečlivě a přijměte podmínky, abyste mohli nadále využívat služby společnosti Ushahidi.",
         "agree": "Souhlasím se Smluvními podmínkami společnosti Ushahidi.",
         "accept_and_continue": "Přijmout a pokračovat"
+    },
+    "translations": {
+        "languages": "Jazyky",
+        "language": "Jazyk",
+        "default": "výchozí",
+        "translate_field": "Přeložit pole",
+        "survey_select_default": "Vyberte výchozí jazyk pro tento průzkum",
+        "category_select_default": "Vyberte výchozí jazyk pro tuto kategorii",
+        "error_translation_exists": "Tento jazyk nemůžete vybrat, protože pro něj již existuje překlad.",
+        "edit_default_text": "Text ve výchozím jazyce",
+        "edit_placeholder": "Sem napište překlad",
+        "add_translation": "Přidejte svůj překlad níže:",
+        "survey_name_required": "Je vyžadován překlad názvu průzkumu",
+        "field_add_translation": "Pole (kliknutím přidáte překlad):",
+        "add_translation_lang": "Přidat překlad",
+        "translate_field_name": "Přeložit název pole",
+        "translate_field_desc": "Přeložit popis pole",
+        "category_translations_link": "Chcete-li přidat překlady k názvům kategorií, přejděte do <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Nastavení kategorie</a>",
+        "parent_child_lang": "Pamatujte, že vybraný výchozí jazyk pro tuto podřízenou kategorii se liší od jejího nadřazeného jazyka",
+        "post_title_required": "Překlad pro název je vyžadován",
+        "add_a_language": "Přidat jazyk",
+        "error_no_default": "Před přidáním nového překladu musíte určit výchozí jazyk.",
+        "select_language": "Vyberte jazyk, do kterého chcete přidat překlad",
+        "default_lang_info": "Toto je jazyk, který se použije, pokud nejsou k dispozici žádné překlady pro jazyk, který uživatel nastavil pro nasazení."
     },
     "languages": {
         "ach": "Acoli",
@@ -1771,6 +1829,7 @@
         "en-CH": "Angličtina (Switzerland)",
         "en-GB": "Angličtina (Spojené Království)",
         "en-US": "Angličtina (Spojené státy)",
+        "en-EN": "Čeština",
         "myv": "Erzja",
         "eo": "Esperanto",
         "et": "Estonština",

@@ -85,6 +85,7 @@ angular.module('ushahidi.common', [
 .controller('intercom', require('./controllers/intercom.js'))
 .service('LoadingProgress', require('./services/loadingProgress.service.js'))
 .service('DataExport', require('./services/data-export.service.js'))
+.service('AccessibilityService', require('./services/accessibility.service.js'))
 .service('HxlExport', require('./services/hxl-export.service.js'))
 .service('DataImport', require('./services/data-import.service.js'))
 .service('VerifierService', require('./verifier/verifier.service.js'))
