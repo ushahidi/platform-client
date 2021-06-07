@@ -21,7 +21,7 @@
 
         <div class="main-col">
 
-            <div class="alert">
+            <div class="alert" role="alert">
                 <p><em translate>settings.data_sources.hint_turn_on_off</em></p>
             </div>
 
@@ -53,7 +53,7 @@
                             <p translate>settings.data_sources.hint_plugin_needs_configuring</p>
                         </div>
 
-                        <div class="alert" ng-if="!available_providers[provider.id]">
+                        <div class="alert" role="alert" ng-if="!available_providers[provider.id]">
                             <p translate translate-values="{value: '{{provider.name}}'}">
                                 settings.data_sources.unavailable
                             </p>
