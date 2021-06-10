@@ -3,6 +3,7 @@ describe('filters-posts directive', function () {
     var $rootScope,
         $scope,
         PostFilters,
+        FocusTrap,
         element,
         isolateScope,
         $compile,
@@ -48,11 +49,12 @@ describe('filters-posts directive', function () {
         user: false,
         source: ['sms', 'twitter','web', 'email']
     };
-    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _PostFilters_) {
+    beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _PostFilters_, _FocusTrap_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         PostFilters = _PostFilters_;
+        FocusTrap = _FocusTrap_;
 
         $scope.filters = defaults;
         $scope.onOpen = jasmine.createSpy();
@@ -66,6 +68,14 @@ describe('filters-posts directive', function () {
     }));
 
     describe('test directive functions', function () {
+
+        const mutationObserverMock = class {
+            constructor(callback) {}
+            disconnect() {}
+            observe(element, initObject) {}
+        }
+        global.MutationObserver = mutationObserverMock;
+
         it('reactiveFilters should be false', function () {
             expect(PostFilters.reactiveFilters).toEqual(false); // revisit where we set the default for this?
         });

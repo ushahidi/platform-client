@@ -8,6 +8,7 @@ module.exports = [
     'LoadingProgress',
     'UserSettingsEndpoint',
     'Notify',
+    'AccessibilityService',
 function (
     $scope,
     $rootScope,
@@ -17,7 +18,8 @@ function (
     $q,
     LoadingProgress,
     UserSettingsEndpoint,
-    Notify
+    Notify,
+    AccessibilityService
 ) {
     $scope.saveKey = saveKey;
     $scope.changeKey = changeKey;
@@ -29,6 +31,7 @@ function (
     $scope.cancelMaintainerSet = cancelMaintainerSet;
     $scope.cancelApiKeySet = cancelApiKeySet;
     $scope.isLoading = LoadingProgress.getLoadingState;
+    $scope.setFocus = AccessibilityService.setFocus;
 
     $scope.tempApiKey = '';
     $scope.tempMaintainerId = '';

@@ -67,7 +67,6 @@
                 'error': form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
                 'success': ! form['values_' + attribute.id].$invalid && form['values_' + attribute.id].$dirty,
                 'required': attribute.required,
-                'date' : isDate(attribute) || isDateTime(attribute),
                 'location' : attribute.input === 'location'
             }"
         >
@@ -93,8 +92,7 @@
                         </svg>
                         <input
                             type="date"
-                            pick-a-date="date"
-                            pick-a-date-options="dateFormat"
+                            id="date"
                             name="values_{{attribute.id}}"
                             ng-model="attribute.value.value"
                             ng-required="attribute.required"

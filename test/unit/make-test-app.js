@@ -23,6 +23,12 @@ module.exports = function () {
         .factory('Sortable', function () {
             return require('sortablejs');
         })
+        .factory('FocusTrap', function () {
+            return require('focus-trap');
+        })
+        .factory('Flatpickr', function () {
+            return function () {};
+        })
         .constant('CONST', {
             'BACKEND_URL'         : backendUrl,
             'API_URL'             : backendUrl + '/api/v2',
