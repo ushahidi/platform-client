@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
   <script src="/config.js"></script>
 
   <title>Root Config</title>
@@ -51,7 +52,9 @@
     {
       "imports": {
         "@ushahidi/root-config": "//localhost:9000/ushahidi-root-config.js",
-        "@ushahidi/legacyAngularjsApp": "http://localhost:3000/bundle.js"
+        "@ushahidi/legacyAngularjsApp": "//localhost:3000/bundle.js",
+        "@ushahidi/utilities": "//localhost:8080/ushahidi-utilities.js",
+        "@ushahidi/api": "//localhost:8600/ushahidi-api.js"
       }
     }
   </script>
@@ -76,7 +79,9 @@
 <body>
   <script>
     System.import('@ushahidi/root-config');
-    System.import('@ushahidi/legacyAngularjsApp')
+    System.import('@ushahidi/legacyAngularjsApp');
+    System.import('@ushahidi/api');
+    System.import('@ushahidi/utilities');
   </script>
   <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
 </body>
