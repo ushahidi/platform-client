@@ -23,6 +23,7 @@ PostValueEditController.$inject = [
     '$rootScope',
     '$scope',
     '_',
+    'Flatpickr',
     'SurveysSdk'
 ];
 
@@ -30,6 +31,7 @@ function PostValueEditController(
     $rootScope,
     $scope,
     _,
+    Flatpickr,
     SurveysSdk
 ) {
     var fieldSetAttributes = [
@@ -43,14 +45,15 @@ function PostValueEditController(
     $scope.isTextarea = isTextarea;
     $scope.isCheckbox = isCheckbox;
 
-    $scope.dateFormat = { format: 'yyyy-mm-dd' };
-
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
+    angular.element(document).ready(function () {
+        Flatpickr('#date',{});
+    });
     $scope.$watch('activeSurveyLanguage', () =>{
         if ($scope.form.title && !$scope.form.title.$dirty) {
             addDefaultValue();
