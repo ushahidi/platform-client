@@ -5,18 +5,21 @@ import {
     constructLayoutEngine,
 } from "single-spa-layout";
 import microfrontendLayout from "./microfrontend-layout.html";
-require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
+import { setPageMetadata } from "./setConfig";
+
+require("ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css");
 const routes = constructRoutes(microfrontendLayout);
 
-    const applications = constructApplications({
-        routes,
-        loadApp({ name }) {
-            return System.import(name);
-        },
-    });
-    const layoutEngine = constructLayoutEngine({ routes, applications });
+const applications = constructApplications({
+    routes,
+    loadApp({ name }) {
+        return System.import(name);
+    },
+});
+const layoutEngine = constructLayoutEngine({ routes, applications });
 
-    applications.forEach(registerApplication);
-    layoutEngine.activate();
-    
-    start();
+applications.forEach(registerApplication);
+layoutEngine.activate();
+
+start();
+setPageMetadata();
