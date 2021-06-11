@@ -162,6 +162,12 @@ angular.module('app',
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
+    .factory('Chartist', function () {
+        return require('chartist');
+    })
+    .factory('frappe', function () {
+        return require('frappe-charts/dist/frappe-charts.min.cjs');
+    })
     .run(['$rootScope', 'LoadingProgress', '$transitions', '$uiRouter', function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
         // this handles the loading-state app-wide
         LoadingProgress.watchTransitions();

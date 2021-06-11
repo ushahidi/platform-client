@@ -11,8 +11,74 @@ function ActivityTimeChart() {
     };
 }
 
-ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', '_', 'PostFilters'];
-function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, PostFilters) {
+ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', 'Chartist', 'frappe', '_', 'PostFilters'];
+function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chartist, frappe, _, PostFilters) {
+
+    //===== FRAPPE ======
+
+    $scope.frappeData = {
+        labels: ['Sun', 'Mon', 'Tue', 'Wed'],
+        datasets: [
+            {
+                name: 'Draft', type: 'line',
+                values: [2, 3, 5, 7]
+            },
+            {
+                name: 'Published', type: 'line',
+                values: [1, '', '', 2]
+            }
+        ],
+        yMarkers: [{ label: 'Marker', value: 70 }],
+
+        yRegions: [{ label: 'Region', start: -10, end: 50 }]
+    }
+
+    const chart = new frappe.Chart('#chart', {
+        title: 'My Awesome Chart',
+        data: $scope.frappeData,
+        type: 'axis-mixed', // or 'bar', 'line', 'scatter', 'pie', 'percentage'
+        height: 350,
+        lineOptions: {
+            dotSize: 6 // default: 4
+        },
+        colors: ['#7cd6fd', '#743ee2']
+    });
+
+
+
+    //===== CHARTIST ======
+
+    $scope.chartistData =  {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        series: [
+            [12, 9, 7, 8, 5],
+            [2, 1, 3.5, 7, 3],
+            [1, 3, 4, 5, 6]
+        ]
+    };
+
+    $scope.chartistOptions = {
+        width: 400,
+        height: 300,
+        low: 0,
+        fullWidth: true,
+        lineSmooth: false,
+        // As this is axis specific we need to tell Chartist to use whole numbers only on the concerned axis
+        axisY: {
+            onlyInteger: true/*,
+            offset: 0*/
+        }
+    }
+
+    // Create a new line chart object where as first parameter we pass in a selector
+    // that is resolving to our chart container element. The Second parameter
+    // is the actual data object.
+    new Chartist.Line('.ct-chart', $scope.chartistData, $scope.chartistOptions);
+
+
+
+    //===== D3 ======
+
     var yAxisLabelCumulative = $translate.instant('graph.cumulative_post_count'),
         yAxisLabel = $translate.instant('graph.new_post_count'),
         xAxisLabel = $translate.instant('graph.post_date');
