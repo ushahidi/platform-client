@@ -25,12 +25,9 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chart
             },
             {
                 name: 'Published', type: 'line',
-                values: [1, '', '', 2]
+                values: [1, 2]
             }
-        ],
-        yMarkers: [{ label: 'Marker', value: 70 }],
-
-        yRegions: [{ label: 'Region', start: -10, end: 50 }]
+        ]
     }
 
     const chart = new frappe.Chart('#chart', {
@@ -51,9 +48,28 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chart
     $scope.chartistData =  {
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         series: [
-            [12, 9, 7, 8, 5],
-            [2, 1, 3.5, 7, 3],
-            [1, 3, 4, 5, 6]
+            [2, 3, 5, 7],
+            [1, 2]
+
+            /* trying out date
+            {
+                name: 'draft',
+                data: [
+                  {x: new Date(143134652600), y: 2},
+                  {x: new Date(143234652600), y: 3},
+                  {x: new Date(143340052600), y: 5},
+                  {x: new Date(143366652600), y: 7},
+                  {x: new Date(143410652600), y: 8},
+                  {x: new Date(143508652600), y: 9}
+                ]
+            },
+            {
+                name: 'published',
+                data: [
+                  {x: new Date(143134652600), y: 1},
+                  {x: new Date(143234652600), y: 2}
+                ]
+            }*/
         ]
     };
 
