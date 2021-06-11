@@ -14,7 +14,8 @@
 @import "~nvd3/build/nv.d3";
 @import '~@toast-ui/editor/dist/toastui-editor-viewer.css'; // editor's ui
 @import '~@toast-ui/editor/dist/toastui-editor.css'; // editor's content
-@import '~flatpickr/dist/flatpickr.min.css'; 
+@import '~flatpickr/dist/flatpickr.min.css';
+@import "~chartist/dist/scss/chartist.scss";
 
 
 // Custom overrides
@@ -25,3 +26,4 @@
 @import "overrides/doorbell";
 @import "overrides/intercom";
 @import "overrides/tui-markdown";
+@import "overrides/chartist-settings";
