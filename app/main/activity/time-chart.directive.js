@@ -11,8 +11,8 @@ function ActivityTimeChart() {
     };
 }
 
-ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', 'Chartist', 'frappe', '_', 'PostFilters'];
-function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chartist, frappe, _, PostFilters) {
+ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', 'Chartist', 'frappe', 'ChartistTooltip', '_', 'PostFilters'];
+function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chartist, frappe, ChartistTooltip, _, PostFilters) {
 
     //===== FRAPPE ======
 
@@ -48,8 +48,18 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chart
     $scope.chartistData =  {
         labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         series: [
-            [2, 3, 5, 7],
-            [1, 2]
+            //[2, 3, 5, 7],
+            //[1, 2],
+            [
+                {meta: 'description', value: 2},
+                {meta: 'description', value: 3},
+                {meta: 'description', value: 5},
+                {meta: 'description', value: 7}
+            ],
+            [
+                {meta: 'description', value: 1},
+                {meta: 'description', value: 2}
+            ]
 
             /* trying out date
             {
@@ -83,7 +93,34 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, Chart
         axisY: {
             onlyInteger: true/*,
             offset: 0*/
-        }
+        },
+        plugins: [
+            /* Not able to get any plugins to work
+            ChartistTooltip({
+                appendToBody: true
+            }),
+            Chartist.plugins.ctAxisTitle({
+              axisX: {
+                axisTitle: 'Time (mins)',
+                axisClass: 'ct-axis-title',
+                offset: {
+                  x: 0,
+                  y: 50
+                },
+                textAnchor: 'middle'
+              },
+              axisY: {
+                axisTitle: 'Goals',
+                axisClass: 'ct-axis-title',
+                offset: {
+                  x: 0,
+                  y: 0
+                },
+                textAnchor: 'middle',
+                flipTitle: false
+              }
+            })*/
+        ]
     }
 
     // Create a new line chart object where as first parameter we pass in a selector
