@@ -22,6 +22,8 @@
             "title": "Dokumentáció",
             "description": "Itt megtudhatod, hogyan telepítsd, konfiguráld és menedzseld az Ushahidi alkalmazásod"
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom": "Intercom",
             "description": "Lépj kapcsolatba az Ushahidi csapatával, hogy csetes támogatást kaphass"
@@ -85,7 +87,7 @@
         "filter_by": "Szűrés",
         "sort_filter": "Elrendez és szűr",
         "apply_filters": "Alkalmaz",
-        "close_and_view": "Close and view results",
+        "close_and_view": "Bezárás és az eredmények megtekintése",
         "show_more_less": "Többet/kevesebbet mutat",
         "filters": "Szűrők",
         "filter_by_survey": "A kérdőív alapján szűrés",
@@ -180,6 +182,7 @@
         "add_field_instructions_placeholder": "Mező elmagyarázása",
         "add_post_type": "Kérdőív hozzáadása",
         "add_step": "Feladat hozzáadása",
+        "add_language": "Add language",
         "added_form_stage_attribute": "Elmentett mező",
         "field_allowed_relation_post_type": "Megengedett kérdőívek",
         "choose_order_message": "Válassz és rendezd sorrendbe a mezőket, amelyeket ebben a kérdőívben szeretnél látni.",
@@ -221,6 +224,7 @@
         "save_post_type": "Kérdőív/felmérés mentése",
         "save_post_step": "Feladat mentése",
         "saved_form": "Felmérés/kérdőív mentve",
+        "select_language": "Select languages",
         "step_delete": "Törlés",
         "step_name": "Feladat elnevezése",
         "step_rename": "Átnevezés",
@@ -286,8 +290,8 @@
         "tasks": "Feladatok",
         "task_visible_when_published": "Ez a feladat akkor lesz látható, ha a bejegyzés közzétett állapotba kerül.",
         "show_field_description": "Add meg a mező leírást (opcionális)",
-        "add_field": "Mező hozzáadása",
-        "edit_field": "Mező szerkesztése",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "Felépítés",
         "configure": "Beállítás",
         "require_section": "Ezt a feladatot el kell végezni, mielőtt a bejegyzés nyilvánosságra kerül",
@@ -311,6 +315,7 @@
         "response_private_desc": "Csak a megfelelő jogosultsággal rendelkező felhasználók fogják látni és szerkeszteni az erre a mezőre beérkezett válaszokat",
         "require_task_desc": "Ezt a feladatot el kell végezni, mielőtt a bejegyzés nyilvánosságra kerül",
         "survey_permissions": "Kérdőív engedélyek",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "Ki az, aki ehhez a kérdőívhez hozzáadhat",
         "survey_field": "Kérdőív mező",
         "choose_survey_field": "Válaszd ki, mi kerüljön minden kérdőív mezőhöz",
@@ -339,6 +344,11 @@
                 "desc": "<strong>Ha törlöd ezt a feladatot </strong>, minden, a feladathoz tartozó adat szintén törlésre kerül. Szükséges körültekintően folytatni. ",
                 "delete": "Feladat törlése",
                 "delete_this": "Feladat törlése"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -635,11 +645,13 @@
         "see_more_singular": "{{newPostsCount}} új poszt érhető el",
         "add_to_form": "Hozzáadás ide {{form}}",
         "posts": "Bejegyzések",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "Nincsenek bejegyzések",
         "in_this_deployment": "ebben a telepített változatban, még",
         "posts_total": "{{posts}} a {{total_nb}} bejegyzésből",
         "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
-        "search_results": "Results:",
+        "search_results": "Eredmények:",
         "by": "szerző:",
         "duplicate_option": "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
         "task_completed": "Elvégzett feladat",
@@ -803,7 +815,8 @@
         "valid": {
             "no_changes": "Nem hajtottál létre változást",
             "invalid_state": "Ez a bejegyzés jelenleg érvénytelen állapotban van. Minden szükséges feladatot el kell végezni a bejegyzés újrapublikálása előtt. Ezt megteheted, vagy át is állíthatod a bejegyzést egy másik állapotra, mint \"ellenőrzés alatt\"",
-            "validation_fail": "Szükséges mezők hiányoznak, ezeket *-al jelöltük lentebb",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "Cím megadása kötelező",
                 "minlength": "Túl rövid a cím",
@@ -822,7 +835,8 @@
                 "required": "\"{{label}}\" szükséges",
                 "parse": "\"{{label}}\" nem feldolgozható",
                 "date": "\"{{label}}\" dátum kell, hogy legyen",
-                "number": "\"{{label}}\" számformátumú kell, hogy legyen"
+                "number": "\"{{label}}\" számformátumú kell, hogy legyen",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": "Túl hosszú a név"
@@ -939,6 +953,7 @@
         "delete_category_desc": "<strong>Ha kitörlöd ezt a kategóriát</strong>akkor semmilyen bejegyzés nem fog hozzá tartozni. Óvatosan járj el.",
         "show_categories": "Elérhető kategóriák",
         "child_permissions": "A kategóriához tartozó engedélyeket a szülő kategória menedzseli.",
+        "which_categories": "Which categories should be available",
         "select_all": "Összes kiválasztása",
         "choose_roles": "Szerep kiválasztása",
         "create_tag": "Kategória létrehozása",
@@ -1017,7 +1032,9 @@
             "webhooks": "Webhookok",
             "webhooks_desc": "Webhhok-ok létrehozása, amely az Ushahidi Platform adatait külső alkalmazásoknak küldi, bizonyos események megtörténtekor.",
             "plans": "Tervek",
-            "plan_desc": "A telepítésed jelenlegi csomagja <strong>{{current_plan}}</strong>."
+            "plan_desc": "A telepítésed jelenlegi csomagja <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Itt hozzáadhatod az egyedi API-kulcsod a Humanitárius Adat Tőzsde (Humanitarian Data Exchange (HDX)) felhasználódhoz.",
@@ -1130,6 +1147,16 @@
                 "search_terms_desc": "Add meg a keresési kifejezéseket vesszővel elválasztva"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "Tag",
             "admin": "Admi",
@@ -1168,6 +1195,8 @@
         "site_language": "Az oldal nyelve",
         "site_private": "Legyen ez a telepített változat privát",
         "site_private_desc": "Ez az opció a telepítést és az adatokat csak a megfelelő jogosultsággal rendelkező reigsztrált felhasználók számára teszi elérhetővé. A hozzáféréshez be kell jelentkezni.",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "Kép választása",
         "saved_settings": "A telepítési beállításokat mentettük!",
         "saved_map_settings": "Térkép beállítások menteve",
@@ -1430,6 +1459,10 @@
         "general_settings": {
             "save_success": "Általános beállítások mentve"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "Térkép beállítások mentve"
         },
@@ -1528,6 +1561,7 @@
             "delete_attribute_confirm": "Biztosan törölni akarod ezt a mezőt?",
             "delete_attribute_confirm_desc": "Ez a művelet nem vonható vissza. E mező törlésével eltávolításra kerül a mező adata az összes bejegyzésből.",
             "destroy_attribute_success": "{{name}} mező törölve",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "Kérdőív elnevezés szükséges",
@@ -1644,6 +1678,30 @@
         "terms_of_service": "Frissítettük az <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Általános Szolgáltatási Feltételeinket </a> és az <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Adatkezelési tájékozatót</a>. Kérjük, tekintsd át ezeket a dokumentumokat alaposan, és fogadd el a feltételeket annak érdekében, hogy megkezdhesd az Ushahidi szolgáltatások használatát.",
         "agree": "Elfogadom az Ushahidi ÁSZF-jét",
         "accept_and_continue": "Elfogadás és folytatás"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "Acholi",
@@ -1771,6 +1829,7 @@
         "en-CH": "angol (Svájc)",
         "en-GB": "angol (Egyesült Királyság)",
         "en-US": "angol (Amerikai Egyesült Államok)",
+        "en-EN": "English",
         "myv": "erza",
         "eo": "eszperantó",
         "et": "Észt",

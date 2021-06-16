@@ -3,22 +3,38 @@ module.exports = PostToolbarDirective;
 PostToolbarDirective.$inject = [];
 function PostToolbarDirective() {
     return {
-        restrict: 'E',
+        restrict: "E",
         scope: {
-            filters: '=',
-            selectedPost: '=',
-            stats: '='
+            filters: "=",
+            selectedPost: "=",
+            stats: "=",
         },
         controller: PostToolbarController,
-        template: require('./post-toolbar.html')
+        template: require("./post-toolbar.html"),
     };
 }
 
-PostToolbarController.$inject = ['$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress'];
-function PostToolbarController($scope, $rootScope, Notify, PostLockService, $state, LoadingProgress) {
+PostToolbarController.$inject = [
+    "$scope",
+    "$rootScope",
+    "$window",
+    "Notify",
+    "PostLockService",
+    "$state",
+    "LoadingProgress",
+];
+function PostToolbarController(
+    $scope,
+    $rootScope,
+    $window,
+    Notify,
+    PostLockService,
+    $state,
+    LoadingProgress
+) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
-    $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
+    $scope.hasPermission = $rootScope.hasPermission("Manage Posts");
     $scope.editEnabled = editEnabled;
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.isSaving = LoadingProgress.getSavingState;
@@ -27,32 +43,34 @@ function PostToolbarController($scope, $rootScope, Notify, PostLockService, $sta
     $scope.hideOtherActions = hideOtherActions;
     $scope.showOtherActions = showOtherActions;
     $scope.filtersActive = false;
-
+    $scope.isEmbed = $window.self !== $window.top ? true : false;
 
     function editEnabled() {
         if (!$scope.selectedPost || !$scope.hasPermission) {
             return false;
         }
 
-        return $scope.selectedPost ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost) : false;
+        return $scope.selectedPost
+            ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost)
+            : false;
     }
 
     function savePost() {
-        $rootScope.$broadcast('event:edit:post:data:mode:save');
+        $rootScope.$broadcast("event:edit:post:data:mode:save");
     }
 
     function editMode() {
-        return $state.$current.name === 'posts.data.edit';
+        return $state.$current.name === "posts.data.edit";
     }
 
     function setEditMode() {
         if (editEnabled()) {
-            $state.go('posts.data.edit', {postId: $scope.selectedPost.id});
+            $state.go("posts.data.edit", { postId: $scope.selectedPost.id });
         }
     }
 
     function cancel() {
-        $state.go('posts.data.detail', {postId: $scope.selectedPost.id});
+        $state.go("posts.data.detail", { postId: $scope.selectedPost.id });
     }
 
     function hideOtherActions() {

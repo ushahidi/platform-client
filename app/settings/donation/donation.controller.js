@@ -3,18 +3,8 @@ module.exports = [
     "$rootScope",
     "$location",
     "$translate",
-    "FormEndpoint",
-    "Notify",
     "_",
-    function (
-        $scope,
-        $rootScope,
-        $location,
-        $translate,
-        FormEndpoint,
-        Notify,
-        _
-    ) {
+    function ($scope, $rootScope, $location, $translate, _) {
         // Redirect to home if not authorized
         if ($rootScope.hasManageSettingsPermission() === false) {
             return $location.path("/");
@@ -24,13 +14,5 @@ module.exports = [
         $rootScope.setLayout("layout-c");
         // Change mode
         $scope.$emit("event:mode:change", "settings");
-
-        $scope.fileContainer = {
-            file: null,
-        };
-
-        FormEndpoint.queryFresh().$promise.then(function (response) {
-            $scope.forms = response;
-        });
     },
 ];

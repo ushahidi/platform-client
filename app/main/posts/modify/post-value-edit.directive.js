@@ -4,46 +4,36 @@ PostValueEdit.$inject = [];
 
 function PostValueEdit() {
     return {
-        restrict: 'E',
+        restrict: "E",
         scope: {
-            form: '=',
-            post: '=',
-            attribute: '=',
-            postField: '=',
-            medias: '=',
-            categories: '=',
-            activeSurveyLanguage:'='
+            form: "=",
+            post: "=",
+            attribute: "=",
+            postField: "=",
+            medias: "=",
+            categories: "=",
+            activeSurveyLanguage: "=",
         },
         controller: PostValueEditController,
-        template: require('./post-value-edit.html')
+        template: require("./post-value-edit.html"),
     };
 }
 
 PostValueEditController.$inject = [
-    '$rootScope',
-    '$scope',
-    '_',
-    'SurveysSdk'
+    "$rootScope",
+    "$scope",
+    "_",
+    "Flatpickr",
+    "SurveysSdk",
 ];
 
-function PostValueEditController(
-    $rootScope,
-    $scope,
-    _,
-    SurveysSdk
-) {
-    var fieldSetAttributes = [
-        'checkbox',
-        'radio',
-        'tags'
-    ];
+function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
+    var fieldSetAttributes = ["checkbox", "radio", "tags"];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
     $scope.isText = isText;
     $scope.isTextarea = isTextarea;
     $scope.isCheckbox = isCheckbox;
-
-    $scope.dateFormat = { format: 'yyyy-mm-dd' };
 
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
@@ -51,28 +41,47 @@ function PostValueEditController(
     $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
-    $scope.$watch('activeSurveyLanguage', () =>{
+    angular.element(document).ready(function () {
+        Flatpickr("#date", {});
+    });
+    $scope.$watch("activeSurveyLanguage", () => {
         if ($scope.form.title && !$scope.form.title.$dirty) {
             addDefaultValue();
         }
-        });
+    });
 
     function activate() {
         addDefaultValue();
     }
 
     function addDefaultValue() {
-        const isTitleOrDesc =  $scope.attribute.type === 'title' || $scope.attribute.type === 'description';
+        const isTitleOrDesc =
+            $scope.attribute.type === "title" ||
+            $scope.attribute.type === "description";
         if (isTitleOrDesc && $scope.attribute.default && !$scope.post.id) {
-            let fieldType = $scope.attribute.type === 'description' ? 'content' : $scope.attribute.type;
-            $scope.post[fieldType] = $scope.attribute.translations[$scope.activeSurveyLanguage] && $scope.attribute.translations[$scope.activeSurveyLanguage].default ? $scope.attribute.translations[$scope.activeSurveyLanguage].default : $scope.attribute.default;
+            let fieldType =
+                $scope.attribute.type === "description"
+                    ? "content"
+                    : $scope.attribute.type;
+            $scope.post[fieldType] =
+                $scope.attribute.translations[$scope.activeSurveyLanguage] &&
+                $scope.attribute.translations[$scope.activeSurveyLanguage]
+                    .default
+                    ? $scope.attribute.translations[$scope.activeSurveyLanguage]
+                          .default
+                    : $scope.attribute.default;
         }
     }
 
     function taskIsMarkedCompleted() {
         // If we are dealing with a Post Field we want to always show errors for required post fields
         // Otherwise we only want to show errors for required fields of Tasks marked as completed
-        return !_.isUndefined($scope.postField) ? true : _.contains($scope.post.completed_stages, $scope.attribute.form_stage_id);
+        return !_.isUndefined($scope.postField)
+            ? true
+            : _.contains(
+                  $scope.post.completed_stages,
+                  $scope.attribute.form_stage_id
+              );
     }
 
     function isFieldSetStructure(attr) {
@@ -82,19 +91,19 @@ function PostValueEditController(
         return false;
     }
     function isDate(attr) {
-        return attr.input === 'date';
+        return attr.input === "date";
     }
     function isDateTime(attr) {
-        return attr.input === 'datetime';
+        return attr.input === "datetime";
     }
     function isText(attr) {
-        return attr.input === 'text';
+        return attr.input === "text";
     }
     function isTextarea(attr) {
-        return attr.input === 'textarea';
+        return attr.input === "textarea";
     }
     function isCheckbox(attr) {
-        return attr.input === 'checkbox';
+        return attr.input === "checkbox";
     }
     // Can more values be added for this attribute?
     function canAddValue(attr) {

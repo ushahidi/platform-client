@@ -22,6 +22,8 @@
             "title": "الوثائق",
             "description": "تعلم كيفية تنصيب و اعداد وادارة عملية نشر برنامج أوشاهيدي و جعله متاح للاستخدام."
         },
+        "donate": "Donate",
+        "donation": "Donation",
         "intercom": {
             "intercom": "نظام الإتصال الداخلي",
             "description": "قم بتواصل مع موظفين اوشاهيدي لدردشة الدعم"
@@ -180,6 +182,7 @@
         "add_field_instructions_placeholder": "وضح هذا الحقل",
         "add_post_type": "إضافة استطلاع",
         "add_step": "إضافة مهام",
+        "add_language": "Add language",
         "added_form_stage_attribute": "حقل محفوظ",
         "field_allowed_relation_post_type": "الاستطلاعات المسموحة",
         "choose_order_message": "اختر واطلب الحقول التي ترغب في تضمينها في هذا الاستطلاع",
@@ -221,6 +224,7 @@
         "save_post_type": "حفظ الإستطلاع",
         "save_post_step": "حفظ المهمة",
         "saved_form": "تم حفظ الإستطلاع",
+        "select_language": "Select languages",
         "step_delete": "حذف",
         "step_name": "اسم المهمة",
         "step_rename": "اعادة تسمية",
@@ -286,8 +290,8 @@
         "tasks": "المهام",
         "task_visible_when_published": "ستكون هذه المهمة مرئية عند نشر البوست",
         "show_field_description": "إضافة حقل للوصف (إختياري):",
-        "add_field": "إضافة حقل",
-        "edit_field": "تعديل الحقل",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "إنشاء",
         "configure": "تهيئة",
         "require_section": "يجب إتمام هذه المهمة قبل أن تصبح البوست مرئية للجمهور",
@@ -311,6 +315,7 @@
         "response_private_desc": "يمكن فقط للأشخاص الذين لديهم إذن بتعديل الردود مشاهدة الردود في هذا الحقل",
         "require_task_desc": "يجب إتمام هذه المهمة قبل أن تصبح البوست مرئية للجمهور",
         "survey_permissions": "رخص الاستطلاع",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "من يستطيع الإضافة لهذا الإطلاع",
         "survey_field": "حقل الاستطلاع",
         "choose_survey_field": "اختر الذي يجب تعينه لكل حقول الاستطلاع",
@@ -339,6 +344,11 @@
                 "desc": " <strong> إذا قمت بحذف هذه المهمة </ قوي>، كافة البيانات التي تم التقاطها فيها كذلك ستحذف.تابع بحذر.",
                 "delete": "حذف المهمة",
                 "delete_this": "حذف المهمة"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -635,6 +645,8 @@
         "see_more_singular": "انظر {{newPostsCount}} بوست جديد",
         "add_to_form": "إضافة إلى {{form}}",
         "posts": "المنشورات",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "لا توجد منشورات",
         "in_this_deployment": "في عملية نشر البرنامج وجعله متاح هذه، بعدُ.",
         "posts_total": "{{posts}} من أصل {{total_nb}} منشورات",
@@ -803,7 +815,8 @@
         "valid": {
             "no_changes": "لم تقم باي تغيير",
             "invalid_state": "هذا المشاركة ليست في حالة صحيحة الآن. ستحتاج إلى إكمال جميع المهام المطلوبة قبل أن تتمكن من إعادة نشر هذه المشاركة. يمكنك إكمال المهام اللازمة أو تعيين حالة مختلفة مثل \"تحت المراجعة\".",
-            "validation_fail": "توجد حقول مطلوبة مفقودة. تتميز هذه الحقول بـ * أسفلها.",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "العنوان مطلوب.",
                 "minlength": "العنوان قصير جدا",
@@ -822,7 +835,8 @@
                 "required": "مطلوب \"{{label}}\"",
                 "parse": "لا يمكن قراءة \"{{label}}\"",
                 "date": "\"{{label}}\" يجب أن يكون تاريخ",
-                "number": "\"{{label}}\" يجب أن يكون رقم"
+                "number": "\"{{label}}\" يجب أن يكون رقم",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": " الإسم طويل جدا"
@@ -939,6 +953,7 @@
         "delete_category_desc": "<strong>إذا مسحت هذه الفئة </strong>، لن يكون موصولا بأي بوست. تقدم بحذر",
         "show_categories": "اظهر الفئات الموجودة",
         "child_permissions": "تتم إدارة أذونات هذه الفئة بواسطة الفئة الرئيسية.",
+        "which_categories": "Which categories should be available",
         "select_all": "تحديد الكل",
         "choose_roles": "اختيار أدوار",
         "create_tag": "إنشاء فئة",
@@ -1017,7 +1032,9 @@
             "webhooks": "Webhooks",
             "webhooks_desc": "إنشاء webhooks التي ترسل بيانات منصة اوشاهيدي إلى تطبيقات خارجية عند تشغيل أحداث معينة",
             "plans": "الخطط\n",
-            "plan_desc": "خطة إنتشارك الحالية هي  <strong>{{current_plan}}</strong>"
+            "plan_desc": "خطة إنتشارك الحالية هي  <strong>{{current_plan}}</strong>",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1130,6 +1147,16 @@
                 "search_terms_desc": "اضف مصطلحات البحث منفصلة بفواصل"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "عضو",
             "admin": "المشرف",
@@ -1168,6 +1195,8 @@
         "site_language": "لغة الموقع ",
         "site_private": "  جعل عملية النشر هذه خاصة ",
         "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "اختر الصورة",
         "saved_settings": "تم حفظ اعدادات نشر و توزيع البرنامج ",
         "saved_map_settings": "تم حفظ إعدادات الخريطة",
@@ -1430,6 +1459,10 @@
         "general_settings": {
             "save_success": "تم حفظ الإعدادات العامة"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "تم حفظ إعدادات الخريطة"
         },
@@ -1528,6 +1561,7 @@
             "delete_attribute_confirm": " هل أنت متأكد أنك تريد حذف هذا المجال؟",
             "delete_attribute_confirm_desc": "لا يمكن التراجع عن هذا العملية. سيؤدي حذف هذا الحقل إلى إزالة بياناته من جميع البوستات الموجودة",
             "destroy_attribute_success": "تم حذف حقل {{name}}.",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "يلزم اسم الاستطلاع ",
@@ -1644,6 +1678,30 @@
         "terms_of_service": "لقد قمنا بتجديد <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">شروط و الخدمات</a> و <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\"> سياسة الخصوصية</a>. رجاءا راجع هذ‌ه المستندات بعناية و قم بقبول الشروط لكي تستمر في استخدام خدمات اوشاهيدي",
         "agree": "اقبل بشروط و خدمات اوشاهيدي",
         "accept_and_continue": "قبول و الاستمرار"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "أكولي",
@@ -1771,6 +1829,7 @@
         "en-CH": "الإنجليزية(سويسرا)",
         "en-GB": "انجليزية(المملكة المتحدة)",
         "en-US": "انجليزية(الولايات المتحدة)",
+        "en-EN": "English",
         "myv": "الإرزية",
         "eo": "الإسبرانتو",
         "et": "الإستونية",

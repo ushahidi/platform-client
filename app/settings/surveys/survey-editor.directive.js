@@ -3,34 +3,36 @@ module.exports = SurveyEditor;
 SurveyEditor.$inject = [];
 function SurveyEditor() {
     return {
-        restrict: 'E',
+        restrict: "E",
         scope: {
-            surveyId: '=',
-            actionType: '='
+            surveyId: "=",
+            actionType: "=",
         },
         controller: SurveyEditorController,
-        template: require('./survey-editor.html')
+        template: require("./survey-editor.html"),
     };
 }
 
 SurveyEditorController.$inject = [
-    '$rootScope',
-    '$scope',
-    '$q',
-    '$location',
-    '$translate',
-    '$state',
-    'FormRoleEndpoint',
-    'ConfigEndpoint',
-    'RoleEndpoint',
-    '_',
-    'Notify',
-    'SurveyNotify',
-    'ModalService',
-    'Features',
-    'SurveysSdk',
-    'TranslationService',
-    'CategoriesSdk'];
+    "$rootScope",
+    "$scope",
+    "$q",
+    "$location",
+    "$translate",
+    "$state",
+    "FormRoleEndpoint",
+    "ConfigEndpoint",
+    "RoleEndpoint",
+    "_",
+    "Notify",
+    "SurveyNotify",
+    "ModalService",
+    "Features",
+    "SurveysSdk",
+    "TranslationService",
+    "CategoriesSdk",
+    "AccessibilityService",
+];
 function SurveyEditorController(
     $rootScope,
     $scope,
@@ -48,12 +50,13 @@ function SurveyEditorController(
     Features,
     SurveysSdk,
     TranslationService,
-    CategoriesSdk
+    CategoriesSdk,
+    AccessibilityService
 ) {
     $scope.saving = false;
     $scope.currentInterimId = 0;
     $scope.survey = {
-        color: null
+        color: null,
     };
     $scope.canReorderTask = canReorderTask;
     $scope.moveTaskUp = moveTaskUp;
@@ -90,11 +93,12 @@ function SurveyEditorController(
 
     $scope.switchTab = switchTab;
     $scope.tab_history = {};
+    $scope.setFocus = AccessibilityService.setFocus;
 
     $scope.loadRoleData = loadRoleData;
     $scope.roles_allowed = [];
     $scope.roles = [];
-    $scope.languagesToSelect = require('../../common/global/language-list.json');
+    $scope.languagesToSelect = require("../../common/global/language-list.json");
 
     $scope.onlyOptional = onlyOptional;
     $scope.anonymiseReportersEnabled = false;
@@ -107,18 +111,22 @@ function SurveyEditorController(
         $scope.tab_history = {};
 
         // Set initial menu tab
-        $scope.switchTab('post', 'survey-build');
+        $scope.switchTab("post", "survey-build");
         $scope.loadRoleData();
-        $scope.save = $translate.instant('app.save');
-        $scope.saving = $translate.instant('app.saving');
-        ConfigEndpoint.get({id: 'map'}, function (map) {
-            $scope.location_precision = 1000 / Math.pow(10, map.location_precision);
+        $scope.save = $translate.instant("app.save");
+        $scope.saving = $translate.instant("app.saving");
+        ConfigEndpoint.get({ id: "map" }, function (map) {
+            $scope.location_precision =
+                1000 / Math.pow(10, map.location_precision);
         });
 
-        Features.loadFeatures()
-        .then(() => {
-            $scope.targetedSurveysEnabled = Features.isFeatureEnabled('targeted-surveys');
-            $scope.anonymiseReportersEnabled = Features.isFeatureEnabled('anonymise-reporters');
+        Features.loadFeatures().then(() => {
+            $scope.targetedSurveysEnabled = Features.isFeatureEnabled(
+                "targeted-surveys"
+            );
+            $scope.anonymiseReportersEnabled = Features.isFeatureEnabled(
+                "anonymise-reporters"
+            );
         });
 
         if ($scope.surveyId) {
@@ -126,103 +134,112 @@ function SurveyEditorController(
         } else {
             // When creating new survey
             // pre-fill object with default tasks and attributes
-            $scope.survey =    {
+            $scope.survey = {
                 color: null,
                 require_approval: true,
                 everyone_can_create: true,
-                translations:{},
+                translations: {},
                 tasks: [
                     {
                         priority: 0,
                         required: false,
-                        type: 'post',
-                        label: 'Post',
+                        type: "post",
+                        label: "Post",
                         show_when_published: true,
                         task_is_internal_only: false,
                         translations: {},
                         fields: [
                             {
                                 cardinality: 0,
-                                input: 'text',
+                                input: "text",
                                 priority: 1,
                                 required: true,
-                                label: 'Title',
-                                type: 'title',
+                                label: "Title",
+                                type: "title",
                                 config: {},
                                 form_stage_id: getInterimId(),
-                                translations:{}
+                                translations: {},
                             },
                             {
                                 cardinality: 0,
-                                input: 'text',
+                                input: "text",
                                 priority: 2,
                                 required: true,
-                                label: 'Description',
-                                type: 'description',
+                                label: "Description",
+                                type: "description",
                                 options: [],
                                 config: {},
                                 form_stage_id: getInterimId(),
-                                translations:{}
-                            }
+                                translations: {},
+                            },
                         ],
-                        is_public: true
-                    }
-                ]
+                        is_public: true,
+                    },
+                ],
             };
-            TranslationService.getLanguage().then(language => {
+            TranslationService.getLanguage().then((language) => {
                 //active language is the same as default when starting out.
                 if (!$scope.survey.enabled_languages) {
                     $scope.survey.enabled_languages = {
                         default: language,
-                        available: []
-                    }
+                        available: [],
+                    };
                     $scope.languages = {
                         default: $scope.survey.enabled_languages.default,
                         active: $scope.survey.enabled_languages.default,
                         available: $scope.survey.enabled_languages.available,
-                        surveyLanguages: [$scope.survey.enabled_languages.default, ...$scope.survey.enabled_languages.available]
-                    }
-                    }
-                });
+                        surveyLanguages: [
+                            $scope.survey.enabled_languages.default,
+                            ...$scope.survey.enabled_languages.available,
+                        ],
+                    };
+                }
+            });
             $scope.survey.tasks[0].id = $scope.getInterimId();
         }
 
         if (!$scope.surveyId) {
-
-            $q.all([Features.loadFeatures(), SurveysSdk.getSurveysTo('count')]).then(function (data) {
-                var forms_limit = Features.getLimit('forms');
+            $q.all([
+                Features.loadFeatures(),
+                SurveysSdk.getSurveysTo("count"),
+            ]).then(function (data) {
+                var forms_limit = Features.getLimit("forms");
                 // When limit is TRUE , it means no limit
                 // @todo run check before render
                 if (forms_limit !== true && forms_limit <= data[1].length) {
-                    Notify.limit('limit.post_type_limit_reached');
-                    $location.path('settings/surveys');
+                    Notify.limit("limit.post_type_limit_reached");
+                    $location.path("settings/surveys");
                 }
             });
         }
     }
 
     function onlyOptional(editField) {
-        return editField.type !== 'title' && editField.type !== 'description';
+        return editField.type !== "title" && editField.type !== "description";
     }
 
     function switchTab(section, tab) {
         // First unset last active tab
         var old_tab = $scope.tab_history[section];
         if (old_tab) {
-            var old_tab_li = old_tab + '-li';
-            angular.element(document.getElementById(old_tab)).removeClass('active');
-            angular.element(document.getElementById(old_tab_li)).removeClass('active');
+            var old_tab_li = old_tab + "-li";
+            angular
+                .element(document.getElementById(old_tab))
+                .removeClass("active");
+            angular
+                .element(document.getElementById(old_tab_li))
+                .removeClass("active");
         }
         // Set new active tab
-        tab = tab + '-' + section;
+        tab = tab + "-" + section;
         $scope.tab_history[section] = tab;
-        var tab_li = tab + '-li';
-        angular.element(document.getElementById(tab)).addClass('active');
-        angular.element(document.getElementById(tab_li)).addClass('active');
+        var tab_li = tab + "-li";
+        angular.element(document.getElementById(tab)).addClass("active");
+        angular.element(document.getElementById(tab_li)).addClass("active");
     }
 
     function getInterimId() {
-        const id = 'interim_id_' + $scope.currentInterimId;
+        const id = "interim_id_" + $scope.currentInterimId;
         $scope.currentInterimId++;
         return id;
     }
@@ -235,7 +252,7 @@ function SurveyEditorController(
 
     function loadAvailableForms() {
         // Get available forms for relation field
-        SurveysSdk.getSurveysTo('list_and_permissions').then(function (forms) {
+        SurveysSdk.getSurveysTo("list_and_permissions").then(function (forms) {
             $scope.availableSurveys = forms;
             $scope.$apply();
         });
@@ -248,11 +265,15 @@ function SurveyEditorController(
             // adding category-objects attribute-options
             $scope.availableCategories = _.chain($scope.availableCategories)
                 .map(function (category) {
-                    const ret = _.findWhere($scope.availableCategories, {id: category.id});
+                    const ret = _.findWhere($scope.availableCategories, {
+                        id: category.id,
+                    });
                     if (ret && ret.children.length > 0) {
                         ret.children = _.chain(ret.children)
                             .map(function (child) {
-                                return _.findWhere($scope.availableCategories, {id: child.id});
+                                return _.findWhere($scope.availableCategories, {
+                                    id: child.id,
+                                });
                             })
                             .filter()
                             .value();
@@ -268,43 +289,50 @@ function SurveyEditorController(
     function loadFormData() {
         // If we're editing an existing survey,
         // load the survey info and all the fields.
-        SurveysSdk.findSurvey($scope.surveyId).then(res => {
+        SurveysSdk.findSurvey($scope.surveyId).then((res) => {
             //Getting roles for the survey
             $scope.survey = res;
 
-            TranslationService.getLanguage().then(language => {
+            TranslationService.getLanguage().then((language) => {
                 //active language is the same as default when starting out.
                 if (!$scope.survey.enabled_languages) {
                     $scope.survey.enabled_languages = {
                         default: language,
-                        available: []
-                    }
+                        available: [],
+                    };
                 }
-                if ($scope.survey.enabled_languages.default === '') {
+                if ($scope.survey.enabled_languages.default === "") {
                     $scope.survey.enabled_languages.default = language;
                 }
                 $scope.languages = {
                     default: $scope.survey.enabled_languages.default,
                     active: $scope.survey.enabled_languages.default,
                     available: $scope.survey.enabled_languages.available,
-                    surveyLanguages: [$scope.survey.enabled_languages.default, ...$scope.survey.enabled_languages.available]
-                }
-                $scope.selectedLanguage = $scope.survey.enabled_languages.default;
+                    surveyLanguages: [
+                        $scope.survey.enabled_languages.default,
+                        ...$scope.survey.enabled_languages.available,
+                    ],
+                };
+                $scope.selectedLanguage =
+                    $scope.survey.enabled_languages.default;
             });
 
             // Making sure translations are of type objects
             // make required
-            $scope.survey.translations = Object.assign({}, $scope.survey.translations);
-            _.map($scope.survey.tasks, task => {
+            $scope.survey.translations = Object.assign(
+                {},
+                $scope.survey.translations
+            );
+            _.map($scope.survey.tasks, (task) => {
                 task.translations = Object.assign({}, task.translations);
                 delete task.icon;
-                _.map(task.fields,field => {
+                _.map(task.fields, (field) => {
                     field.translations = Object.assign({}, field.translations);
                 });
             });
             getRoles($scope.survey.id);
             // removing data if duplicated survey
-            if ($scope.actionType === 'duplicate') {
+            if ($scope.actionType === "duplicate") {
                 delete $scope.survey.id;
                 delete $scope.survey.created;
                 delete $scope.survey.updated;
@@ -329,21 +357,21 @@ function SurveyEditorController(
     }
 
     function getRoles() {
-        FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise.then(res=>{
-            $scope.roles_allowed = _.pluck(res, 'role_id');
-        })
+        FormRoleEndpoint.queryFresh({ formId: $scope.surveyId }).$promise.then(
+            (res) => {
+                $scope.roles_allowed = _.pluck(res, "role_id");
+            }
+        );
     }
 
     function loadRoleData() {
-        $q.all([
-            RoleEndpoint.query().$promise
-        ]).then(function (results) {
+        $q.all([RoleEndpoint.query().$promise]).then(function (results) {
             $scope.roles = results[0];
         });
     }
 
     function cancel() {
-        $location.url('/settings/surveys');
+        $location.url("/settings/surveys");
     }
 
     function handleResponseErrors(error) {
@@ -385,7 +413,7 @@ function SurveyEditorController(
 
     function canReorderTask(task) {
         //Only the Post task can not be reordered
-        return task.label !== 'Post';
+        return task.label !== "Post";
     }
 
     function moveTaskUp(task) {
@@ -420,7 +448,7 @@ function SurveyEditorController(
         field.priority = field.priority + increment;
 
         // Resort field list
-        task.fields = _.sortBy(fields, 'priority');
+        task.fields = _.sortBy(fields, "priority");
     }
 
     function changeTaskPriority(task, increment) {
@@ -439,7 +467,7 @@ function SurveyEditorController(
         task.priority = task.priority + increment;
 
         // Resort stage list
-        $scope.survey.tasks = _.sortBy(tasks, 'priority');
+        $scope.survey.tasks = _.sortBy(tasks, "priority");
     }
 
     function changeTaskLabel(task) {
@@ -457,11 +485,20 @@ function SurveyEditorController(
 
     // Start Modify Tasks
     function openTaskModal() {
-        ModalService.openTemplate('<survey-task-create></survey-task-create>', 'survey.add_task', '', $scope, true, true);
+        ModalService.openTemplate(
+            "<survey-task-create></survey-task-create>",
+            "survey.add_task",
+            "",
+            $scope,
+            true,
+            true
+        );
     }
 
     function getNewTaskPriority() {
-        return $scope.survey.tasks.length ? _.last($scope.survey.tasks).priority + 1 : 0;
+        return $scope.survey.tasks.length
+            ? _.last($scope.survey.tasks).priority + 1
+            : 0;
     }
 
     function getNewFieldPriority(task) {
@@ -474,13 +511,20 @@ function SurveyEditorController(
         task.priority = getNewTaskPriority();
         task.id = $scope.getInterimId();
         $scope.survey.tasks.push(task);
-        $scope.switchTab(task.id, 'section-build');
+        $scope.switchTab(task.id, "section-build");
     }
 
     function openFieldModal(task) {
         // Set active task so we know who this field will belong to
         $scope.activeTask = task;
-        ModalService.openTemplate('<survey-attribute-create></survey-attribute-create>', 'survey.add_field', '', $scope, true, true);
+        ModalService.openTemplate(
+            "<survey-attribute-create></survey-attribute-create>",
+            "survey.add_field",
+            "",
+            $scope,
+            true,
+            true
+        );
     }
 
     function openFieldEditModal(task, field) {
@@ -493,67 +537,78 @@ function SurveyEditorController(
 
         $scope.editField = field;
         let fieldType = getFieldType(field) ? getFieldType(field) : field.label;
-        let title = field.id ? $translate.instant('survey.edit_field', {fieldType: fieldType}) : $translate.instant('survey.add_field', {fieldType: fieldType});
-        title = title.replace('&amp;', '&');
+        let title = field.id
+            ? $translate.instant("survey.edit_field", { fieldType: fieldType })
+            : $translate.instant("survey.add_field", { fieldType: fieldType });
+        title = title.replace("&amp;", "&");
         switch (field.type) {
-            case 'relation':
+            case "relation":
                 loadAvailableForms();
                 break;
-            case 'tags':
+            case "tags":
                 loadAvailableCategories();
                 break;
         }
 
-        ModalService.openTemplate('<survey-attribute-editor></survey-attribute-editor>', title, '', $scope, true, true);
+        ModalService.openTemplate(
+            "<survey-attribute-editor></survey-attribute-editor>",
+            title,
+            "",
+            $scope,
+            true,
+            true
+        );
     }
 
     function getFieldType(attribute) {
         var fieldTypes = {
-            'text': {
-                'varchar': $translate.instant('survey.short_text')
+            text: {
+                varchar: $translate.instant("survey.short_text"),
             },
-            'textarea': {
-                'text': $translate.instant('survey.long_text')
+            textarea: {
+                text: $translate.instant("survey.long_text"),
             },
-            'number': {
-                'decimal': $translate.instant('survey.number_decimal'),
-                'int': $translate.instant('survey.number_integer')
+            number: {
+                decimal: $translate.instant("survey.number_decimal"),
+                int: $translate.instant("survey.number_integer"),
             },
-            'location': {
-                'point': $translate.instant('survey.location')
+            location: {
+                point: $translate.instant("survey.location"),
             },
-            'date': {
-                'datetime': $translate.instant('survey.date')
+            date: {
+                datetime: $translate.instant("survey.date"),
             },
-            'datetime': {
-                'datetime': $translate.instant('survey.datetime')
+            datetime: {
+                datetime: $translate.instant("survey.datetime"),
             },
-            'select': {
-                'varchar': $translate.instant('survey.select')
+            select: {
+                varchar: $translate.instant("survey.select"),
             },
-            'radio': {
-                'varchar': $translate.instant('survey.radio_button')
+            radio: {
+                varchar: $translate.instant("survey.radio_button"),
             },
-            'checkbox': {
-                'varchar': $translate.instant('survey.checkbox')
+            checkbox: {
+                varchar: $translate.instant("survey.checkbox"),
             },
-            'relation' : {
-                'relation': $translate.instant('survey.related_post')
+            relation: {
+                relation: $translate.instant("survey.related_post"),
             },
-            'upload' : {
-                'media': $translate.instant('survey.upload_image')
+            upload: {
+                media: $translate.instant("survey.upload_image"),
             },
-            'video' : {
-                'varchar': $translate.instant('survey.embed_video')
+            video: {
+                varchar: $translate.instant("survey.embed_video"),
             },
-            'markdown' : {
-                'markdown': 'Markdown'
+            markdown: {
+                markdown: "Markdown",
             },
-            'tags' : {
-                'tags': $translate.instant('survey.categories')
-            }
-        }
-        return fieldTypes[attribute.input] ? fieldTypes[attribute.input][attribute.type] : null;
+            tags: {
+                tags: $translate.instant("survey.categories"),
+            },
+        };
+        return fieldTypes[attribute.input]
+            ? fieldTypes[attribute.input][attribute.type]
+            : null;
     }
     function addNewField(field, task) {
         ModalService.close();
@@ -571,7 +626,10 @@ function SurveyEditorController(
     }
 
     function deleteField(field, task) {
-        Notify.confirmDelete('notify.form.delete_attribute_confirm', 'notify.form.delete_attribute_confirm_desc').then(function () {
+        Notify.confirmDelete(
+            "notify.form.delete_attribute_confirm",
+            "notify.form.delete_attribute_confirm_desc"
+        ).then(function () {
             // If we have not yet saved this field
             // we can drop it immediately
             if (!field.id) {
@@ -584,7 +642,9 @@ function SurveyEditorController(
                 });
             }
 
-            Notify.notify('notify.form.destroy_attribute_success', {name: field.label});
+            Notify.notify("notify.form.destroy_attribute_success", {
+                name: field.label,
+            });
         });
     }
 
@@ -600,23 +660,33 @@ function SurveyEditorController(
             field.form_stage_id = dup.id;
         });
         $scope.survey.tasks.push(dup);
-        $scope.switchTab(dup.id, 'section-build');
+        $scope.switchTab(dup.id, "section-build");
     }
 
     function deleteTask(task) {
-        Notify.confirmDelete('notify.form.delete_stage_confirm', 'notify.form.delete_stage_confirm_desc').then(function () {
+        Notify.confirmDelete(
+            "notify.form.delete_stage_confirm",
+            "notify.form.delete_stage_confirm_desc"
+        ).then(function () {
             // If we haven't saved the task yet then we can just drop it
             if (!task.id || _.isString(task.id)) {
-                $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
-                    return item.label !== task.label;
-                });
+                $scope.survey.tasks = _.filter(
+                    $scope.survey.tasks,
+                    function (item) {
+                        return item.label !== task.label;
+                    }
+                );
             } else {
-                 $scope.survey.tasks = _.filter($scope.survey.tasks, function (item) {
-                    return item.id !== task.id;
-                });
+                $scope.survey.tasks = _.filter(
+                    $scope.survey.tasks,
+                    function (item) {
+                        return item.id !== task.id;
+                    }
+                );
             }
-            Notify.notify('notify.form.destroy_stage_success', {name: task.label});
-
+            Notify.notify("notify.form.destroy_stage_success", {
+                name: task.label,
+            });
         });
     }
     // END - modify task
@@ -626,64 +696,84 @@ function SurveyEditorController(
         // Set saving to true to disable user actions
         $scope.saving_survey = true;
         // check there is translations for survey-names in all languages
-        if (validateSurveyTranslations() && validateAttributeOptionTranslations()) {
-        // Save the survey
-        $scope.removeInterimIds();
-        $scope.survey.base_language = $scope.survey.enabled_languages.default;
-        SurveysSdk.saveSurvey($scope.survey).then(response => {
-            $scope.survey = response.data.result;
-            saveRoles();
-            // Display success message
-            SurveyNotify.success(
-                'notify.form.edit_form_success',
-                { name: $scope.survey.name },
-                { formId: $scope.survey.id }
-            );
+        if (
+            validateSurveyTranslations() &&
+            validateAttributeOptionTranslations()
+        ) {
+            // Save the survey
+            $scope.removeInterimIds();
+            $scope.survey.base_language =
+                $scope.survey.enabled_languages.default;
+            SurveysSdk.saveSurvey($scope.survey)
+                .then((response) => {
+                    $scope.survey = response.data.result;
+                    saveRoles();
+                    // Display success message
+                    SurveyNotify.success(
+                        "notify.form.edit_form_success",
+                        { name: $scope.survey.name },
+                        { formId: $scope.survey.id }
+                    );
 
-            // Redirect to survey list
-            $state.go('settings.surveys', {}, { reload: true });
-        })
-        // Catch and handle errors
-        .catch(handleResponseErrors);
-    } else {
-        $scope.saving_survey = false;
-        $rootScope.$broadcast('event:surveys:translationMissing');
-        Notify.error(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
+                    // Redirect to survey list
+                    $state.go("settings.surveys", {}, { reload: true });
+                })
+                // Catch and handle errors
+                .catch(handleResponseErrors);
+        } else {
+            $scope.saving_survey = false;
+            $rootScope.$broadcast("event:surveys:translationMissing");
+            Notify.error(`You need to add translations for all names, and ensure checkboxes and radios do not have duplicates.
          Check that you have translated the survey-names for all added languages and that your checkbox and radio button values are unique (within each language).`);
-    }
+        }
     }
     function validateAttributeOptionTranslations() {
-        return _.every($scope.survey.enabled_languages.available, language => {
-            return $scope.survey.tasks.every((t) =>  {
-                return t.fields.every(f => {
-                    if (
-                        SurveysSdk.fieldHasTranslations(f, language)
-                        && SurveysSdk.fieldCanHaveOptions(f)
-                    ) {
-                        return SurveysSdk.areOptionsUnique(
-                            Object.values(f.translations[language].options)
-                        );
-                    }
-                    return true;
+        return _.every(
+            $scope.survey.enabled_languages.available,
+            (language) => {
+                return $scope.survey.tasks.every((t) => {
+                    return t.fields.every((f) => {
+                        if (
+                            SurveysSdk.fieldHasTranslations(f, language) &&
+                            SurveysSdk.fieldCanHaveOptions(f)
+                        ) {
+                            return SurveysSdk.areOptionsUnique(
+                                Object.values(f.translations[language].options)
+                            );
+                        }
+                        return true;
+                    });
                 });
-            });
-        });
+            }
+        );
     }
     function validateSurveyTranslations() {
-        return _.every($scope.survey.enabled_languages.available, language => {
-            return $scope.survey.translations[language] && $scope.survey.translations[language].name;
-        });
+        return _.every(
+            $scope.survey.enabled_languages.available,
+            (language) => {
+                return (
+                    $scope.survey.translations[language] &&
+                    $scope.survey.translations[language].name
+                );
+            }
+        );
     }
 
     function saveRoles() {
         // adding admin to roles_allowed if not already there
-        let admin = _.findWhere($scope.roles, {name: 'admin'});
-        if (!$scope.survey.everyone_can_create && _.indexOf($scope.roles_allowed, admin.id) === -1) {
+        let admin = _.findWhere($scope.roles, { name: "admin" });
+        if (
+            !$scope.survey.everyone_can_create &&
+            _.indexOf($scope.roles_allowed, admin.id) === -1
+        ) {
             $scope.roles_allowed.push(admin.id);
         }
-        return FormRoleEndpoint
-        .saveCache(_.extend({ roles: $scope.roles_allowed }, { formId: $scope.survey.id }))
-        .$promise;
+        return FormRoleEndpoint.saveCache(
+            _.extend(
+                { roles: $scope.roles_allowed },
+                { formId: $scope.survey.id }
+            )
+        ).$promise;
     }
 
     function toggleTaskRequired(task) {
@@ -700,24 +790,30 @@ function SurveyEditorController(
 
     // Options functions
     $scope.hasOptions = function (attribute) {
-        return _.contains(['checkbox', 'radio', 'select'], attribute.input);
+        return _.contains(["checkbox", "radio", "select"], attribute.input);
     };
     $scope.removeOption = function (attribute, key) {
         attribute.options.splice(key, 1);
     };
     $scope.addOption = function (attribute) {
-        attribute.options.push('');
+        attribute.options.push("");
     };
 
     // Translations
-    $scope.removeLanguage = function(index, language) {
-        Notify.confirmModal('Are you sure you want to remove this language and all the translations?','','','','Remove language', 'cancel')
-        .then(function() {
-            $scope.survey.enabled_languages.available.splice(index,1);
+    $scope.removeLanguage = function (index, language) {
+        Notify.confirmModal(
+            "Are you sure you want to remove this language and all the translations?",
+            "",
+            "",
+            "",
+            "Remove language",
+            "cancel"
+        ).then(function () {
+            $scope.survey.enabled_languages.available.splice(index, 1);
             delete $scope.survey.translations[language];
-            _.map($scope.survey.tasks, task => {
+            _.map($scope.survey.tasks, (task) => {
                 delete task.translations[language];
-                _.map(task.fields, field => {
+                _.map(task.fields, (field) => {
                     delete field.translations[language];
                 });
             });
@@ -725,18 +821,17 @@ function SurveyEditorController(
         });
     };
 
-    $scope.selectLanguage = function  (language) {
+    $scope.selectLanguage = function (language) {
         if ($scope.survey.enabled_languages.available.indexOf(language) > -1) {
             $scope.showLangError = true;
         } else {
             $scope.showLangError = false;
             $scope.languages = {
                 default: language,
-                active:language,
-                available: $scope.survey.enabled_languages.available
-
-            }
+                active: language,
+                available: $scope.survey.enabled_languages.available,
+            };
             $scope.survey.enabled_languages.default = language;
         }
-    }
+    };
 }
