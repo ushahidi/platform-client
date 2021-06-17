@@ -14,7 +14,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "pretty-quick --staged && concurrently npm:test npm:lint"
+            
         }
     },
     "devDependencies": {
