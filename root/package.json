@@ -1,12 +1,12 @@
 {
-    "name": "@ushahidi/root-config",
+    "name": "@ushahidi/root",
     "scripts": {
-        "start": "webpack serve --port 9000 --env isLocal",
+        "start": "webpack serve --env isLocal",
         "lint": "eslint src --ext js",
         "test": "cross-env BABEL_ENV=test jest --passWithNoTests",
         "format": "prettier --write .",
         "check-format": "prettier --check .",
-        "build": "webpack --mode=production"
+        "build": "webpack --mode=production --progress"
     },
     "husky": {
         "hooks": {}

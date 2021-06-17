@@ -50,9 +50,9 @@ let paths = {
     ],
     output: root,
     // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
-    config: resolveToApp('config.js'),
+    // config: resolveToApp('config.js'),
     languages: resolveToApp('common/locales'),
-    dest: path.join(__dirname, 'server/www')
+    dest: path.join(__dirname, 'dist')
 };
 
 // Cleaning up directories
@@ -120,6 +120,7 @@ function copyLanguages(done) {
 
     done();
 }
+
 function downloadLanguages(done) {
     // argv.dev checks if the --dev flag was sent when calling the task
     let destination = argv.dev ? path.join(__dirname, root) : paths.dest;
@@ -131,7 +132,7 @@ function downloadLanguages(done) {
 */
 
 // use webpack.config.js to build modules
-task('dist', series(clean, distWebpack, distConfig, downloadLanguages, copyLanguages));
+task('dist', series(clean, distWebpack, /** distConfig, **/ downloadLanguages, copyLanguages));
 task('build', series('dist'));
 
 /**

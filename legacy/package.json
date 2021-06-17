@@ -1,7 +1,6 @@
 {
-    "name": "ushahidi-platform-client",
+    "name": "@ushahidi/legacy",
     "version": "4.4.1",
-    "description": "Ushahidi Platform Official Web Client",
     "main": "gulpfile.js",
     "repository": {
         "type": "git",
