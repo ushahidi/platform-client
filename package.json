@@ -3,7 +3,23 @@
   "version": "1.0.0",
   "description": "Ushahidi Platform Official Web Client",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:api && npm run build:legacy && npm run build:utilities && npm run build:root && npm run copy:build",
+    "build:api": "cd api && npm install && npm run build",
+    "build:utilities": "cd utilities && npm install && npm run build",
+    "build:root": "cd rootconfig && npm install && npm run build",
+    "build:legacy": "cd legacy && npm install && npm run build",
+    "copy:build": "mkdir -p build && npm run copy:root && npm run copy:legacy && npm run copy:api && npm run copy:utilities",
+    "copy:root": "cp -R root/dist/* build/",
+    "copy:legacy": "cp -R legacy/dist/* build/",
+    "copy:api": "cp -R api/dist/* build/",
+    "copy:utilities": "cp -R utilities/dist/* build/",
+    "serve": "cd proxy && npm start",
+    "lint:api": "cd api && npm run lint",
+    "lint:legacy": "cd legacy && npm run lint",
+    "lint:root": "cd root && npm run lint",
+    "lint:utilities": "cd utilities && npm run lint",
+    "lint": "npm run lint:legacy && npm run lint:utilities && npm run lint:api && npm run lint:root"
   },
   "repository": {
     "type": "git",

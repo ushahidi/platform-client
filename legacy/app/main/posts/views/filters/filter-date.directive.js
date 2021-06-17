@@ -3,26 +3,26 @@ module.exports = DateSelectDirective;
 DateSelectDirective.$inject = [];
 function DateSelectDirective() {
     return {
-        restrict: "E",
+        restrict: 'E',
         scope: {
-            dateBeforeModel: "=",
-            dateAfterModel: "=",
+            dateBeforeModel: '=',
+            dateAfterModel: '='
         },
         controller: DateSelectController,
-        template: require("./filter-date.html"),
+        template: require('./filter-date.html')
     };
 }
 
-DateSelectController.$inject = ["$scope", "$rootScope", "Flatpickr"];
+DateSelectController.$inject = ['$scope', '$rootScope', 'Flatpickr'];
 function DateSelectController($scope, $rootScope, Flatpickr) {
-    let pickers = Flatpickr(".flatpickr", {});
+    let pickers = Flatpickr('.flatpickr', {});
 
     function pauseTrap() {
-        $rootScope.$broadcast("event:pauseTrap", true);
+        $rootScope.$broadcast('event:pauseTrap', true);
     }
 
     function unPauseTrap() {
-        $rootScope.$broadcast("event:pauseTrap", false);
+        $rootScope.$broadcast('event:pauseTrap', false);
     }
 
     // There are multiple pickers because of start/end-date in filters

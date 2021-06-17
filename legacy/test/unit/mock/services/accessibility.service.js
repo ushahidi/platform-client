@@ -1,7 +1,7 @@
 module.exports = AccessibilityService;
 function AccessibilityService() {
     return {
-        setFocus,
+        setFocus
     };
     function setFocus(id) {}
 }

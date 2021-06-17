@@ -1,22 +1,22 @@
 module.exports = [
-    "moment",
-    "Flatpickr",
-    "_",
+    'moment',
+    'Flatpickr',
+    '_',
     function (moment, Flatpickr, _) {
         return {
-            restrict: "E",
+            restrict: 'E',
             replace: true,
             scope: {},
-            require: "ngModel",
-            template: require("./post-datetime-value.html"),
+            require: 'ngModel',
+            template: require('./post-datetime-value.html'),
             link: function ($scope, element, attrs, ngModel) {
                 // Split date time in time and date fields
                 $scope.timeOptions = {
-                    format: "HH:i",
+                    format: 'HH:i',
                     interval: 15,
-                    onClose: save,
+                    onClose: save
                 };
-                $scope.dateOptions = { format: "yyyy-mm-dd", onClose: save };
+                $scope.dateOptions = { format: 'yyyy-mm-dd', onClose: save };
                 $scope.model = null;
 
                 // If no ngModel, skip the rest
@@ -26,13 +26,13 @@ module.exports = [
 
                 // Update models on render
                 ngModel.$render = render;
-                Flatpickr("#flatpickr", {
+                Flatpickr('#flatpickr', {
                     enableTime: true,
-                    dateFormat: "Y-m-d H:i",
+                    dateFormat: 'Y-m-d H:i',
                     onChange: function (selectedDates, dateStr, instance) {
                         $scope.model = dateStr;
                         save();
-                    },
+                    }
                 });
 
                 // Render ngModel viewValue into scope
@@ -48,7 +48,7 @@ module.exports = [
                 function save() {
                     ngModel.$setViewValue($scope.model);
                 }
-            },
+            }
         };
-    },
+    }
 ];

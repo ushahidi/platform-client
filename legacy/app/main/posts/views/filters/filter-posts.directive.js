@@ -3,27 +3,27 @@ module.exports = FilterPostsDirective;
 FilterPostsDirective.$inject = [];
 function FilterPostsDirective() {
     return {
-        restrict: "E",
+        restrict: 'E',
         scope: {
-            filters: "=",
-            onOpen: "&",
-            onClose: "&",
-            stats: "=",
+            filters: '=',
+            onOpen: '&',
+            onClose: '&',
+            stats: '='
         },
         replace: true,
         controller: FilterPostsController,
-        template: require("./filter-posts.html"),
+        template: require('./filter-posts.html')
     };
 }
 
 FilterPostsController.$inject = [
-    "$rootScope",
-    "$scope",
-    "PostFilters",
-    "$state",
-    "$document",
-    "$element",
-    "FocusTrap",
+    '$rootScope',
+    '$scope',
+    'PostFilters',
+    '$state',
+    '$document',
+    '$element',
+    'FocusTrap'
 ];
 function FilterPostsController(
     $rootScope,
@@ -35,19 +35,19 @@ function FilterPostsController(
     FocusTrap
 ) {
     function dropdownContainerLink() {
-        let container = document.querySelector("#dropdown-window");
-        let trap = FocusTrap.createFocusTrap("#dropdown-window");
+        let container = document.querySelector('#dropdown-window');
+        let trap = FocusTrap.createFocusTrap('#dropdown-window');
 
-        $rootScope.$on("event:pauseTrap", function (event, value) {
+        $rootScope.$on('event:pauseTrap', function (event, value) {
             value ? trap.pause() : trap.unpause();
         });
 
         function watchClassAttribute(mutations) {
             mutations.forEach(function (mutation) {
-                if (mutation.type === "attributes") {
+                if (mutation.type === 'attributes') {
                     let attrName = mutation.attributeName;
                     let getAttr = mutation.target.getAttribute(attrName);
-                    if (getAttr.match("active")) {
+                    if (getAttr.match('active')) {
                         trap.activate();
                     } else {
                         trap.deactivate();
@@ -59,7 +59,7 @@ function FilterPostsController(
         const observer = new MutationObserver(watchClassAttribute);
         observer.observe(container, {
             attributes: true,
-            attributeFilter: ["class"],
+            attributeFilter: ['class']
         });
     }
 
@@ -76,7 +76,7 @@ function FilterPostsController(
     activate();
 
     function activate() {
-        $scope.$watch("status.isopen", (value) => {
+        $scope.$watch('status.isopen', (value) => {
             if (value) {
                 $scope.onOpen();
             } else {
@@ -86,14 +86,14 @@ function FilterPostsController(
     }
 
     function applyFilters() {
-        if ($state.$current.includes["posts.data"]) {
+        if ($state.$current.includes['posts.data']) {
             PostFilters.reactiveFilters = true;
         }
         $scope.status.isopen = false;
     }
 
     function removeQueryFilter() {
-        PostFilters.clearFilter("q", "");
+        PostFilters.clearFilter('q', '');
     }
 
     function showDropdown() {

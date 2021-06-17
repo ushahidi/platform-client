@@ -1,10 +1,10 @@
 module.exports = [
-    "$rootScope",
-    "$location",
-    "$window",
-    "$scope",
-    "Authentication",
-    "ConfigEndpoint",
+    '$rootScope',
+    '$location',
+    '$window',
+    '$scope',
+    'Authentication',
+    'ConfigEndpoint',
     function (
         $rootScope,
         $location,
@@ -13,7 +13,7 @@ module.exports = [
         Authentication,
         ConfigEndpoint
     ) {
-        var USHAHIDI = "Ushahidi";
+        var USHAHIDI = 'Ushahidi';
         $scope.siteTitle = USHAHIDI;
         $scope.pageTitle = null;
         $scope.pageDescription = null;
@@ -27,26 +27,26 @@ module.exports = [
 
         // Then update from server
         $scope.reloadSiteConfig = function () {
-            ConfigEndpoint.get({ id: "site" }).$promise.then(function (site) {
+            ConfigEndpoint.get({ id: 'site' }).$promise.then(function (site) {
                 $scope.siteTitle = site.name ? site.name : USHAHIDI;
             });
         };
 
-        $rootScope.$on("event:update:header", function () {
+        $rootScope.$on('event:update:header', function () {
             $scope.reloadSiteConfig();
         });
 
         $scope.reloadSiteConfig();
 
-        $rootScope.$on("setPageTitle", function (event, title) {
+        $rootScope.$on('setPageTitle', function (event, title) {
             $scope.pageTitle = null;
 
             if (title && title.length) {
-                $scope.pageTitle = title + " - ";
+                $scope.pageTitle = title + ' - ';
             }
         });
 
-        $rootScope.$on("setPageDescription", function (event, description) {
+        $rootScope.$on('setPageDescription', function (event, description) {
             $scope.pageDescription = null;
 
             if (description && description.length) {
@@ -54,7 +54,7 @@ module.exports = [
             }
         });
 
-        $rootScope.$on("setPageKeywords", function (event, keywords) {
+        $rootScope.$on('setPageKeywords', function (event, keywords) {
             $scope.pageKeywords = null;
 
             if (keywords && keywords.length) {
@@ -62,26 +62,26 @@ module.exports = [
             }
         });
 
-        $rootScope.$on("setPageRobots", function (event, robots) {
+        $rootScope.$on('setPageRobots', function (event, robots) {
             $scope.pageRobots = null;
 
             if (robots) {
                 if (robots === true) {
-                    $scope.pageRobots = "index, follow";
+                    $scope.pageRobots = 'index, follow';
                 } else if (robots === false) {
-                    $scope.pageRobots = "noindex, nofollow";
+                    $scope.pageRobots = 'noindex, nofollow';
                 } else if (robots.length) {
                     $scope.pageRobots = robots;
                 }
             }
         });
 
-        $rootScope.$on("setPaymentPointer", function (event, pointer) {
+        $rootScope.$on('setPaymentPointer', function (event, pointer) {
             $scope.paymentPoiner = null;
 
             if (pointer && pointer.length) {
                 $scope.paymentPointer = pointer;
             }
         });
-    },
+    }
 ];

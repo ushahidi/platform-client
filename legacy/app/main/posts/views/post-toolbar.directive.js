@@ -3,25 +3,25 @@ module.exports = PostToolbarDirective;
 PostToolbarDirective.$inject = [];
 function PostToolbarDirective() {
     return {
-        restrict: "E",
+        restrict: 'E',
         scope: {
-            filters: "=",
-            selectedPost: "=",
-            stats: "=",
+            filters: '=',
+            selectedPost: '=',
+            stats: '='
         },
         controller: PostToolbarController,
-        template: require("./post-toolbar.html"),
+        template: require('./post-toolbar.html')
     };
 }
 
 PostToolbarController.$inject = [
-    "$scope",
-    "$rootScope",
-    "$window",
-    "Notify",
-    "PostLockService",
-    "$state",
-    "LoadingProgress",
+    '$scope',
+    '$rootScope',
+    '$window',
+    'Notify',
+    'PostLockService',
+    '$state',
+    'LoadingProgress'
 ];
 function PostToolbarController(
     $scope,
@@ -34,7 +34,7 @@ function PostToolbarController(
 ) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
-    $scope.hasPermission = $rootScope.hasPermission("Manage Posts");
+    $scope.hasPermission = $rootScope.hasPermission('Manage Posts');
     $scope.editEnabled = editEnabled;
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.isSaving = LoadingProgress.getSavingState;
@@ -56,21 +56,21 @@ function PostToolbarController(
     }
 
     function savePost() {
-        $rootScope.$broadcast("event:edit:post:data:mode:save");
+        $rootScope.$broadcast('event:edit:post:data:mode:save');
     }
 
     function editMode() {
-        return $state.$current.name === "posts.data.edit";
+        return $state.$current.name === 'posts.data.edit';
     }
 
     function setEditMode() {
         if (editEnabled()) {
-            $state.go("posts.data.edit", { postId: $scope.selectedPost.id });
+            $state.go('posts.data.edit', { postId: $scope.selectedPost.id });
         }
     }
 
     function cancel() {
-        $state.go("posts.data.detail", { postId: $scope.selectedPost.id });
+        $state.go('posts.data.detail', { postId: $scope.selectedPost.id });
     }
 
     function hideOtherActions() {

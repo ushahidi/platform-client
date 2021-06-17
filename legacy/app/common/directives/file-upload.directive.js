@@ -2,23 +2,23 @@ module.exports = FileUpload;
 
 function FileUpload() {
     return {
-        restrict: "E",
-        template: require("./file-upload.html"),
+        restrict: 'E',
+        template: require('./file-upload.html'),
         replace: true,
         scope: {
-            container: "=",
-            model: "=",
-            validation: "=",
+            container: '=',
+            model: '=',
+            validation: '='
         },
         controller: [
-            "$scope",
-            "$attrs",
-            "Notify",
+            '$scope',
+            '$attrs',
+            'Notify',
             function ($scope, $attrs, Notify) {
-                $scope.required = typeof $attrs.required !== "undefined";
+                $scope.required = typeof $attrs.required !== 'undefined';
 
-                $scope.$on("event:FileUpload", function (event) {
-                    angular.element(document.querySelector("#file")).val("");
+                $scope.$on('event:FileUpload', function (event) {
+                    angular.element(document.querySelector('#file')).val('');
                 });
 
                 $scope.uploadFile = function ($event) {
@@ -30,17 +30,17 @@ function FileUpload() {
                             $scope.container.dataURI = dataURL;
                             $scope.container.changed = true;
                             $scope.container.deleted = false;
-                            $scope.model = "changed";
+                            $scope.model = 'changed';
                             $scope.$apply();
                         };
                         reader.readAsDataURL($event.target.files[0]);
                     } else {
-                        Notify.error("post.media.error_in_upload");
+                        Notify.error('post.media.error_in_upload');
                     }
                 };
 
                 function validateFile(container) {
-                    if ($scope.validation === "image") {
+                    if ($scope.validation === 'image') {
                         var mimeReg = /[\/.](gif|jpg|jpeg|png)$/i;
                         var mimeCheck = mimeReg.test(container.type);
                         var sizeCheck = container.size < 1048576;
@@ -48,7 +48,7 @@ function FileUpload() {
                     }
                     return true;
                 }
-            },
-        ],
+            }
+        ]
     };
 }

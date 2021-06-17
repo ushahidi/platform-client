@@ -1,12 +1,12 @@
 module.exports = ActivityController;
 
 ActivityController.$inject = [
-    "$rootScope",
-    "$scope",
-    "$translate",
-    "moment",
-    "Features",
-    "Flatpickr",
+    '$rootScope',
+    '$scope',
+    '$translate',
+    'moment',
+    'Features',
+    'Flatpickr'
 ];
 
 function ActivityController(
@@ -19,14 +19,14 @@ function ActivityController(
 ) {
     // Initial values
     $scope.isActivityAvailable = false;
-    $scope.currentInterval = "all";
-    $scope.editableInterval = "all";
+    $scope.currentInterval = 'all';
+    $scope.editableInterval = 'all';
     $scope.filters = {
         created_after: null,
-        created_before: null,
+        created_before: null
     };
     $scope.filtersMenuOpen = false;
-    Flatpickr(".flatpickr", {});
+    Flatpickr('.flatpickr', {});
     $scope.saveFilters = saveFilters;
     $scope.cancelChangeFilters = cancelChangeFilters;
     $scope.targetedSurveysEnabled = false;
@@ -37,19 +37,19 @@ function ActivityController(
 
     function activate() {
         // Change mode
-        $scope.$emit("event:mode:change", "activity");
+        $scope.$emit('event:mode:change', 'activity');
         // Set the page title
-        $translate("nav.activity").then(function (title) {
-            $scope.$emit("setPageTitle", title);
+        $translate('nav.activity').then(function (title) {
+            $scope.$emit('setPageTitle', title);
         });
         if ($rootScope.loggedin) {
             $scope.loggedIn = true;
         }
 
         Features.loadFeatures().then(function () {
-            $scope.isActivityAvailable = Features.isViewEnabled("activity");
+            $scope.isActivityAvailable = Features.isViewEnabled('activity');
             $scope.targetedSurveysEnabled = Features.isFeatureEnabled(
-                "targeted-surveys"
+                'targeted-surveys'
             );
         });
 
@@ -79,19 +79,19 @@ function ActivityController(
      */
     function setDateRange(interval) {
         switch (interval) {
-            case "month":
+            case 'month':
                 $scope.filters.created_after = moment(
-                    moment().startOf("month").toDate()
+                    moment().startOf('month').toDate()
                 )
                     .utc()
                     .format();
                 $scope.filters.created_before = null;
                 break;
-            case "all":
+            case 'all':
                 $scope.filters.created_after = null;
                 $scope.filters.created_before = null;
                 break;
-            case "custom":
+            case 'custom':
                 if (
                     $scope.createdAfter &&
                     $scope.createdBefore &&
@@ -102,26 +102,26 @@ function ActivityController(
                     $scope.filters.created_after = moment(
                         moment($scope.createdAfter).utc()
                     )
-                        .startOf("day")
+                        .startOf('day')
                         .format();
                     $scope.filters.created_before = moment(
                         moment($scope.createdBefore).utc()
                     )
-                        .endOf("day")
+                        .endOf('day')
                         .format();
                 }
                 if ($scope.createdAfter) {
                     $scope.filters.created_after = moment(
                         moment($scope.createdAfter).utc()
                     )
-                        .startOf("day")
+                        .startOf('day')
                         .format();
                 }
                 if ($scope.createdBefore) {
                     $scope.filters.created_before = moment(
                         moment($scope.createdBefore).utc()
                     )
-                        .startOf("day")
+                        .startOf('day')
                         .format();
                 }
                 break;
@@ -129,7 +129,7 @@ function ActivityController(
             default:
                 // Default to this week
                 $scope.filters.created_after = moment(
-                    moment().startOf("week").toDate()
+                    moment().startOf('week').toDate()
                 )
                     .utc()
                     .format();

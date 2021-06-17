@@ -4,16 +4,16 @@ RoleSelectorDirective.$inject = [];
 
 function RoleSelectorDirective() {
     return {
-        restrict: "E",
+        restrict: 'E',
         scope: {
-            model: "=",
-            title: "=",
+            model: '=',
+            title: '='
         },
         controller: RoleSelectorController,
-        template: require("./role-selector.html"),
+        template: require('./role-selector.html')
     };
 }
-RoleSelectorController.$inject = ["$scope", "RoleEndpoint", "$translate", "_"];
+RoleSelectorController.$inject = ['$scope', 'RoleEndpoint', '$translate', '_'];
 
 function RoleSelectorController($scope, RoleEndpoint, $translate, _) {
     $scope.setEveryone = setEveryone;
@@ -30,7 +30,7 @@ function RoleSelectorController($scope, RoleEndpoint, $translate, _) {
 
     function setAdmin() {
         // adding admin to roles_allowed if not already there
-        let admin = _.findWhere($scope.roles, { name: "admin" });
+        let admin = _.findWhere($scope.roles, { name: 'admin' });
         if (!$scope.model.role) {
             $scope.model.role = [];
         }

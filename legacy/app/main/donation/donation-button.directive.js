@@ -3,17 +3,17 @@ module.exports = DonationButtonDirective;
 DonationButtonDirective.$inject = [];
 function DonationButtonDirective() {
     return {
-        restrict: "E",
+        restrict: 'E',
         replace: true,
         scope: {
-            button: "=?",
+            button: '=?'
         },
         controller: DonationButtonController,
-        template: require("./donation-button.html"),
+        template: require('./donation-button.html')
     };
 }
 
-DonationButtonController.$inject = ["$scope", "$window", "DonationService"];
+DonationButtonController.$inject = ['$scope', '$window', 'DonationService'];
 function DonationButtonController($scope, $window, DonationService) {
     $scope.loading = false;
     $scope.openDonationModal = DonationService.openDonationModal;

@@ -4,31 +4,31 @@ PostValueEdit.$inject = [];
 
 function PostValueEdit() {
     return {
-        restrict: "E",
+        restrict: 'E',
         scope: {
-            form: "=",
-            post: "=",
-            attribute: "=",
-            postField: "=",
-            medias: "=",
-            categories: "=",
-            activeSurveyLanguage: "=",
+            form: '=',
+            post: '=',
+            attribute: '=',
+            postField: '=',
+            medias: '=',
+            categories: '=',
+            activeSurveyLanguage: '='
         },
         controller: PostValueEditController,
-        template: require("./post-value-edit.html"),
+        template: require('./post-value-edit.html')
     };
 }
 
 PostValueEditController.$inject = [
-    "$rootScope",
-    "$scope",
-    "_",
-    "Flatpickr",
-    "SurveysSdk",
+    '$rootScope',
+    '$scope',
+    '_',
+    'Flatpickr',
+    'SurveysSdk'
 ];
 
 function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
-    var fieldSetAttributes = ["checkbox", "radio", "tags"];
+    var fieldSetAttributes = ['checkbox', 'radio', 'tags'];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
     $scope.isText = isText;
@@ -42,9 +42,9 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
     angular.element(document).ready(function () {
-        Flatpickr("#date", {});
+        Flatpickr('#date', {});
     });
-    $scope.$watch("activeSurveyLanguage", () => {
+    $scope.$watch('activeSurveyLanguage', () => {
         if ($scope.form.title && !$scope.form.title.$dirty) {
             addDefaultValue();
         }
@@ -56,12 +56,12 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
 
     function addDefaultValue() {
         const isTitleOrDesc =
-            $scope.attribute.type === "title" ||
-            $scope.attribute.type === "description";
+            $scope.attribute.type === 'title' ||
+            $scope.attribute.type === 'description';
         if (isTitleOrDesc && $scope.attribute.default && !$scope.post.id) {
             let fieldType =
-                $scope.attribute.type === "description"
-                    ? "content"
+                $scope.attribute.type === 'description'
+                    ? 'content'
                     : $scope.attribute.type;
             $scope.post[fieldType] =
                 $scope.attribute.translations[$scope.activeSurveyLanguage] &&
@@ -91,19 +91,19 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
         return false;
     }
     function isDate(attr) {
-        return attr.input === "date";
+        return attr.input === 'date';
     }
     function isDateTime(attr) {
-        return attr.input === "datetime";
+        return attr.input === 'datetime';
     }
     function isText(attr) {
-        return attr.input === "text";
+        return attr.input === 'text';
     }
     function isTextarea(attr) {
-        return attr.input === "textarea";
+        return attr.input === 'textarea';
     }
     function isCheckbox(attr) {
-        return attr.input === "checkbox";
+        return attr.input === 'checkbox';
     }
     // Can more values be added for this attribute?
     function canAddValue(attr) {

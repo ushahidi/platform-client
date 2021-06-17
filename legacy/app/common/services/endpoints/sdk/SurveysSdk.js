@@ -1,7 +1,7 @@
 module.exports = [
-    "Util",
-    "Session",
-    "UshahidiSdk",
+    'Util',
+    'Session',
+    'UshahidiSdk',
     function (Util, Session, UshahidiSdk) {
         let _ushahidi = null;
 
@@ -10,9 +10,9 @@ module.exports = [
                 return _ushahidi;
             }
             return new UshahidiSdk.Surveys(
-                Util.url(""),
-                Session.getSessionDataEntry("accessToken"),
-                Session.getSessionDataEntry("accessTokenExpires")
+                Util.url(''),
+                Session.getSessionDataEntry('accessToken'),
+                Session.getSessionDataEntry('accessTokenExpires')
             );
         };
         /**
@@ -45,50 +45,50 @@ module.exports = [
         };
         const getSurveysTo = function (reason) {
             switch (reason) {
-                case "list_and_permissions":
-                case "filters":
+                case 'list_and_permissions':
+                case 'filters':
                     return ushahidi().getSurveys(
                         [
-                            "name",
-                            "description",
-                            "targeted_survey",
-                            "everyone_can_create",
-                            "can_create",
-                            "id",
+                            'name',
+                            'description',
+                            'targeted_survey',
+                            'everyone_can_create',
+                            'can_create',
+                            'id'
                         ],
-                        ["translations", "enabled_languages"]
+                        ['translations', 'enabled_languages']
                     );
-                case "count":
-                    return ushahidi().getSurveys(["id"], []);
+                case 'count':
+                    return ushahidi().getSurveys(['id'], []);
             }
         };
 
         const findSurveyTo = function (id, reason) {
             switch (reason) {
-                case "edit":
+                case 'edit':
                     return ushahidi().findSurvey(id);
                     break;
-                case "delete":
+                case 'delete':
                     return ushahidi().findSurvey(id, [
-                        "targeted_survey",
-                        "everyone_can_create",
-                        "can_create",
-                        "id",
+                        'targeted_survey',
+                        'everyone_can_create',
+                        'can_create',
+                        'id'
                     ]);
                     break;
-                case "get_minimal_form":
+                case 'get_minimal_form':
                     return ushahidi().findSurvey(
                         id,
                         [
-                            "name",
-                            "color",
-                            "description",
-                            "targeted_survey",
-                            "everyone_can_create",
-                            "can_create",
-                            "id",
+                            'name',
+                            'color',
+                            'description',
+                            'targeted_survey',
+                            'everyone_can_create',
+                            'can_create',
+                            'id'
                         ],
-                        ["translations", "enabled_languages"]
+                        ['translations', 'enabled_languages']
                     );
                     break;
             }
@@ -118,7 +118,7 @@ module.exports = [
             deleteSurvey,
             areOptionsUnique,
             fieldHasTranslations,
-            fieldCanHaveOptions,
+            fieldCanHaveOptions
         };
-    },
+    }
 ];

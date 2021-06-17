@@ -1,6 +1,6 @@
 module.exports = DonationService;
 
-DonationService.$inject = ["$rootScope", "Util", "Notify", "ModalService"];
+DonationService.$inject = ['$rootScope', 'Util', 'Notify', 'ModalService'];
 
 function DonationService($rootScope, Util, Notify, ModalService) {
     let total = 0;
@@ -9,28 +9,28 @@ function DonationService($rootScope, Util, Notify, ModalService) {
     function setupMonetization() {
         if (document.monetization) {
             document.monetization.addEventListener(
-                "monetizationpending",
+                'monetizationpending',
                 () => {
-                    Notify.notify("<p> Initializing Web Monetization . </p>");
+                    Notify.notify('<p> Initializing Web Monetization . </p>');
                 }
             );
 
             document.monetization.addEventListener(
-                "monetizationstart",
+                'monetizationstart',
                 (event) => {
                     if (
                         event.detail.paymentPointer ===
                         $rootScope.donation.wallet
                     ) {
-                        $rootScope.$broadcast("event:donation:started");
+                        $rootScope.$broadcast('event:donation:started');
 
-                        Notify.notify("<p> Web Monetization Started. </p>");
+                        Notify.notify('<p> Web Monetization Started. </p>');
                     }
                 }
             );
 
             document.monetization.addEventListener(
-                "monetizationprogress",
+                'monetizationprogress',
                 (event) => {
                     // initialize currency and scale on first progress event
                     if (total === 0) {
@@ -46,12 +46,12 @@ function DonationService($rootScope, Util, Notify, ModalService) {
                     $rootScope.donation.assetCode = event.detail.assetCode;
                     $rootScope.donation.formattedAmount = formatted;
 
-                    $rootScope.$emit("setDonatedAmount", formatted);
+                    $rootScope.$emit('setDonatedAmount', formatted);
                 }
             );
 
-            document.monetization.addEventListener("monetizationstop", () => {
-                Notify.notify("<p> Web Monetization Stopped. </p>");
+            document.monetization.addEventListener('monetizationstop', () => {
+                Notify.notify('<p> Web Monetization Stopped. </p>');
             });
         }
     }
@@ -77,6 +77,6 @@ function DonationService($rootScope, Util, Notify, ModalService) {
     return {
         disableMonetization,
         setupMonetization,
-        openDonationModal,
+        openDonationModal
     };
 }

@@ -17,6 +17,7 @@
         "update-webdriver": "webdriver-manager update",
         "preprotractor": "npm run update-webdriver",
         "protractor": "protractor test/protractor-conf.js",
+        "lint": "npm run eslint",
         "eslint": "gulp eslint",
         "eslintfix": "gulp eslintfix",
         "verify": "gulp verify",
