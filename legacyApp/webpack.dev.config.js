@@ -9,7 +9,7 @@ config.output = {
   path: path.resolve(__dirname, 'dist'),
   libraryTarget: 'system'
 };
-config.devtool = 'sourcemap'
+config.devtool = 'inline-source-map'
 
 config.devServer = {
   headers: {
