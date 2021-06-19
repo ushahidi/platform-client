@@ -13,9 +13,7 @@
         "coverage": "cross-env BABEL_ENV=test jest --coverage"
     },
     "husky": {
-        "hooks": {
-            
-        }
+        "hooks": {}
     },
     "devDependencies": {
         "@babel/core": "^7.12.16",
