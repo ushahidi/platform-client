@@ -17,6 +17,7 @@ require("angular-nvd3/src/angular-nvd3");
 require("angular-cache");
 require("angular-linkify");
 require("ngtweet");
+require("oclazyload");
 
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
@@ -25,6 +26,7 @@ window.ushahidi = window.ushahidi || {};
 require("./common/common-module.js");
 require("./main/main-module.js");
 require("./settings/settings.module.js");
+require("./activity/activity-module.js");
 import ravenModule from "./common/raven/raven";
 import * as UshahidiSdk from "ushahidi-platform-sdk/build/src/index";
 // Load platform-pattern-library CSS
@@ -84,8 +86,10 @@ angular
         "ushahidi.common",
         "ushahidi.main",
         "ushahidi.settings",
+        "ushahidi.activity",
         "ui.bootstrap.dropdown",
         "ngtweet",
+        "oc.lazyLoad"
     ])
 
     .constant("CONST", {
