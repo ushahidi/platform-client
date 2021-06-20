@@ -1,5 +1,11 @@
 {
     "name": "@ushahidi/root",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ushahidi/platform-client.git"
+    },
+    "author": "Ushahidi",
+    "license": "AGPL-3.0",
     "scripts": {
         "start": "webpack serve --env isLocal",
         "lint": "eslint src --ext js",
@@ -18,6 +24,7 @@
         "@babel/preset-env": "^7.12.7",
         "@babel/runtime": "^7.12.5",
         "concurrently": "^5.3.0",
+        "copy-webpack-plugin": "^9.0.0",
         "cross-env": "^7.0.3",
         "eslint": "^7.15.0",
         "eslint-config-important-stuff": "^1.1.0",

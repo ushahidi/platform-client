@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Ushahidi Platform Official Web Client",
   "scripts": {
+    "start": "http-server ./build -c-1",
     "build": "npm run build:api && npm run build:legacy && npm run build:utilities && npm run build:root && npm run copy",
     "build:api": "cd api && npm install && npm run build",
     "build:root": "cd root && npm install && npm run build",
@@ -18,7 +19,7 @@
     "lint:legacy": "cd legacy && npm run lint",
     "lint:root": "cd root && npm run lint",
     "lint:utilities": "cd utilities && npm run lint",
-    "serve": "cd proxy && npm start"
+    "serve": "cd server && npm start"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/ushahidi/platform-client/issues"
   },
-  "homepage": "https://github.com/ushahidi/platform-client#readme"
+  "homepage": "https://github.com/ushahidi/platform-client#readme",
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
 }

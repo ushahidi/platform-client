@@ -2,6 +2,7 @@ var path = require("path");
 const { merge } = require("webpack-merge");
 const singleSpaDefaults = require("webpack-config-single-spa");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = (webpackConfigEnv, argv) => {
     const orgName = "ushahidi";
@@ -39,6 +40,13 @@ module.exports = (webpackConfigEnv, argv) => {
                     orgName,
                 },
             }),
+            new CopyPlugin({
+                patterns: [
+                  {
+                    from: path.resolve(__dirname, "src/config.js"),
+                  },
+                ],
+              }),
         ],
     });
 };

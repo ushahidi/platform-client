@@ -5,10 +5,11 @@ config.mode = 'development';
 
 config.output = {
 //TODO check how to add name dynamically to single-spa
-  filename: 'bundle.js',
+  filename: 'ushahidi-legacy-app.dev.js',
   path: path.resolve(__dirname, 'dist'),
   libraryTarget: 'system'
 };
+
 config.devtool = 'sourcemap'
 
 config.devServer = {

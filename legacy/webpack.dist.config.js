@@ -7,10 +7,11 @@ var config = require('./webpack.config');
 config.mode = 'production';
 
 config.output = {
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[name].[chunkhash].js',
+    filename: 'ushahidi-legacy-app.js',
+    // chunkFilename: '[name].[chunkhash].js',
     publicPath: '',
-    path: path.resolve(__dirname, 'dist') // Overwritten by gulp
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'system'
 };
 
 config.optimization = {
@@ -31,6 +32,5 @@ config.optimization = {
 };
 
 config.stats = 'none';
-
 
 module.exports = config;

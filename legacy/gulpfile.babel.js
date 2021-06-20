@@ -152,14 +152,15 @@ task('release', series('dist', 'tar'));
 // Starting the dev-server
 function devServer() {
     const config = require('./webpack.dev.config');
+    const port = process.env.PORT || 3000;
     config.entry = paths.entry;
     var compiler = webpack(config);
-    new WebpackDevServer(compiler, config.devServer).listen(3000, 'localhost',
+    new WebpackDevServer(compiler, config.devServer).listen(port, 'localhost',
         (err) => {
             if (err) {
                  throw new gutil.PluginError('webpack-dev-server', err);
             }
-            console.log('[webpack-dev-server]', 'http://localhost:3000/webpack-dev-server/index.html');
+            console.log('[webpack-dev-server]', `http://localhost:${port}/webpack-dev-server/index.html`);
         }
     );
 }

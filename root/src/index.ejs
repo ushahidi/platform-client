@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  
-  <script src="/config.js"></script>
+
+  <script src="config.js"></script>
 
   <title>Root Config</title>
+
   <base href="/" />
 
   <!--
@@ -21,7 +22,7 @@
     This CSP allows any SSL-enabled host and for arbitrary eval(), but you should limit these directives further to increase your app's security.
     Learn more about CSP policies at https://content-security-policy.com/#directive
   -->
-  
+
   <meta name="importmap-type" content="systemjs-importmap" />
   <!-- If you wish to turn off import-map-overrides for specific environments (prod), uncomment the line below -->
   <!-- More info at https://github.com/joeldenning/import-map-overrides/blob/master/docs/configuration.md#domain-list -->
@@ -47,18 +48,16 @@
   <!-- Add your organization's prod import map URL to this script's src  -->
   <!-- <script type="systemjs-importmap" src="/importmap.json"></script> -->
 
-  <% if (isLocal) { %>
   <script type="systemjs-importmap">
     {
       "imports": {
-        "@ushahidi/root-config": "//localhost:9000/ushahidi-root-config.js",
-        "@ushahidi/legacyAngularjsApp": "//localhost:3000/bundle.js",
-        "@ushahidi/utilities": "//localhost:8080/ushahidi-utilities.js",
-        "@ushahidi/api": "//localhost:8600/ushahidi-api.js"
+        "@ushahidi/root-config": "/ushahidi-root-config.js",
+        "@ushahidi/legacy-app": "/ushahidi-legacy-app.js",
+        "@ushahidi/utilities": "/ushahidi-utilities.js",
+        "@ushahidi/api": "/ushahidi-api.js"
       }
     }
   </script>
-  <% } %>
 
   <!--
     If you need to support Angular applications, uncomment the script tag below to ensure only one instance of ZoneJS is loaded
@@ -79,9 +78,9 @@
 <body>
   <script>
     System.import('@ushahidi/root-config');
-    System.import('@ushahidi/legacyAngularjsApp');
     System.import('@ushahidi/api');
     System.import('@ushahidi/utilities');
+    System.import('@ushahidi/legacy-app');
   </script>
   <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
 </body>
