@@ -1,33 +1,33 @@
 'use strict';
 
-import {task, src, dest, series, parallel} from 'gulp';
-import webpack  from 'webpack';
-import path     from 'path';
-import rename   from 'gulp-rename';
-import serve    from 'browser-sync';
-import del      from 'del';
-import dotenv   from 'dotenv';
-import tar      from 'gulp-tar';
-import gzip     from 'gulp-gzip';
-import WebpackDevServer     from 'webpack-dev-server';
-import colorsSupported      from 'supports-color';
-import historyApiFallback   from 'connect-history-api-fallback';
+import { task, src, dest, series, parallel } from 'gulp';
+import webpack from 'webpack';
+import path from 'path';
+import rename from 'gulp-rename';
+import serve from 'browser-sync';
+import del from 'del';
+import dotenv from 'dotenv';
+import tar from 'gulp-tar';
+import gzip from 'gulp-gzip';
+import WebpackDevServer from 'webpack-dev-server';
+import colorsSupported from 'supports-color';
+import historyApiFallback from 'connect-history-api-fallback';
 
-import karma     from 'karma';
-import eslint    from 'gulp-eslint';
-import gulpIf    from 'gulp-if';
-import fs        from 'fs';
-import log       from 'fancy-log';
-import c         from 'ansi-colors';
+import karma from 'karma';
+import eslint from 'gulp-eslint';
+import gulpIf from 'gulp-if';
+import fs from 'fs';
+import log from 'fancy-log';
+import c from 'ansi-colors';
 import PluginError from 'plugin-error';
-import minimist  from 'minimist';
+import minimist from 'minimist';
 import verifier from './gulp/verifier';
 const argv = minimist(process.argv.slice(2));
 
 let root = 'app';
 
 // Load .env file
-dotenv.config({silent: true});
+dotenv.config({ silent: true });
 
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
@@ -41,12 +41,12 @@ let resolveToApp = (glob = '') => {
 let paths = {
     js: resolveToApp('**/*!(.spec.js).js'), // exclude spec files
     html: [
-      resolveToApp('**/*.html'),
-      resolveToApp('index.html')
+        resolveToApp('**/*.html'),
+        resolveToApp('index.html')
     ],
     entry: [
-      'babel-polyfill',
-      path.join(__dirname, root, 'bootstrap.js')
+        'babel-polyfill',
+        path.join(__dirname, root, 'bootstrap.js')
     ],
     output: root,
     // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
@@ -66,7 +66,7 @@ function clean(done) {
 // Copy config.js into dist
 function distConfig() {
     return src(paths.config)
-      .pipe(dest(paths.dest));
+        .pipe(dest(paths.dest));
 }
 
 // Build webpack for production
@@ -75,7 +75,7 @@ function distWebpack(done) {
     config.entry.app = paths.entry;
     config.output.path = paths.dest;
     webpack(config, (err, stats) => {
-        if (err)  {
+        if (err) {
             throw new PluginError('webpack', err);
         }
 
@@ -158,7 +158,7 @@ function devServer() {
     new WebpackDevServer(compiler, config.devServer).listen(port, 'localhost',
         (err) => {
             if (err) {
-                 throw new gutil.PluginError('webpack-dev-server', err);
+                throw new gutil.PluginError('webpack-dev-server', err);
             }
             console.log('[webpack-dev-server]', `http://localhost:${port}/webpack-dev-server/index.html`);
         }
@@ -217,9 +217,9 @@ task('tdd', startTdd);
 // Use eslint to check code
 function runEslint() {
     return src(['app/**/*.js', 'test/**/*.js', 'gulpfile.babel.js'])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 }
 task('eslint', runEslint);
 
@@ -234,26 +234,26 @@ function isFixed(file) {
 // Fix in app-directory
 function eslintFixApp() {
     return src(['app/**/*.js'])
-    .pipe(eslint({
-        fix: true
-    }))
-    .pipe(eslint.format())
-    // if running fix - replace existing file with fixed one
-    .pipe(gulpIf(isFixed, dest('./app')))
-    .pipe(eslint.failAfterError());
+        .pipe(eslint({
+            fix: true
+        }))
+        .pipe(eslint.format())
+        // if running fix - replace existing file with fixed one
+        .pipe(gulpIf(isFixed, dest('./app')))
+        .pipe(eslint.failAfterError());
 }
 task('eslintfix:app', eslintFixApp);
 
 // Fix in test-directory
 function eslintFixTests() {
     return src(['test/**/*.js'])
-    .pipe(eslint({
-        fix: true
-    }))
-    .pipe(eslint.format())
-    // if running fix - replace existing file with fixed one
-    .pipe(gulpIf(isFixed, dest('./test')))
-    .pipe(eslint.failAfterError());
+        .pipe(eslint({
+            fix: true
+        }))
+        .pipe(eslint.format())
+        // if running fix - replace existing file with fixed one
+        .pipe(gulpIf(isFixed, dest('./test')))
+        .pipe(eslint.failAfterError());
 }
 task('eslintfix:test', eslintFixTests);
 
