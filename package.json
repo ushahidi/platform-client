@@ -19,7 +19,18 @@
     "lint:legacy": "cd legacy && npm run lint",
     "lint:root": "cd root && npm run lint",
     "lint:utilities": "cd utilities && npm run lint",
-    "serve": "cd server && npm start"
+    "serve": "node ./server/scripts/start.js && concurrently \"yarn serve:apps\" \"yarn serve:base-wait\" \"yarn show-ready\"",
+    "serve:apps": "concurrently \"yarn serve:modules\" \"yarn watch:legacy\"",
+    "serve:modules": "concurrently \"yarn serve:api\" \"yarn serve:utilities\"",
+    "serve:base": "concurrently \"yarn serve:root\" \"yarn serve:proxy\"",
+    "serve:base-wait": "wait-on http://0.0.0.0:9093 && wait-on http://0.0.0.0:9094 && yarn serve:base",
+    "serve:proxy": "node ./server/scripts/proxy.js",
+    "serve:api": "cd api && npm start",
+    "serve:legacy": "cd legacy && npm start",
+    "serve:root": "cd root && npm start",
+    "serve:utilities": "cd utilities && npm start",
+    "show-ready": "wait-on http://0.0.0.0:9090 && node ./server/scripts/ready.js",
+    "watch:legacy": "cd legacy && concurrently \"npm run watch\""
   },
   "repository": {
     "type": "git",
@@ -32,6 +43,15 @@
   },
   "homepage": "https://github.com/ushahidi/platform-client#readme",
   "devDependencies": {
-    "http-server": "^0.12.3"
+    "address": "^1.1.2",
+    "colors": "^1.4.0",
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^2.0.0",
+    "http-server": "^0.12.3",
+    "wait-on": "^5.3.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }

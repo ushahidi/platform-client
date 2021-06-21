@@ -1,7 +1,7 @@
 {
     "name": "@ushahidi/api",
     "scripts": {
-        "start": "webpack serve",
+        "start": "webpack serve --port 9093",
         "start:standalone": "webpack serve --env standalone",
         "build": "webpack --mode=production",
         "analyze": "webpack --mode=production --env analyze",

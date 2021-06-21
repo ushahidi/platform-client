@@ -7,7 +7,7 @@
     "author": "Ushahidi",
     "license": "AGPL-3.0",
     "scripts": {
-        "start": "webpack serve --env isLocal",
+        "start": "webpack serve --port 9091 --env isLocal",
         "lint": "eslint src --ext js",
         "test": "cross-env BABEL_ENV=test jest --passWithNoTests",
         "format": "prettier --write .",
