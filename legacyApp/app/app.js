@@ -138,7 +138,13 @@ angular
             modules: [{
                 name: 'ushahidi.activity',
                 files: [
-                    'app/activity/activity-module.js'
+                    './activity/activity-module.js',
+                    './activity/activity-timeline.directive.js',
+                    './activity/activity.controller.js',
+                    './activity/bar-chart.directive.js',
+                    './activity/crowdsourced-survey-table.directive.js',
+                    './activity/targeted-survey-table.directive.js',
+                    './activity/time-chart.directive.js'
                 ]
             }]
         });

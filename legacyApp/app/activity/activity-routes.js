@@ -12,11 +12,11 @@ function (
         name: 'activity',
         url: '/activity',
         controller: require('./activity.controller.js'),
-        template: require('./activity.html')/*,
+        template: require('./activity.html'),
         resolve: {
             loadDependencies: ['$ocLazyLoad', function($ocLazyLoad) {
                 return $ocLazyLoad.load('ushahidi.activity');
             }]
-        }*/
+        }
     });
 }];
