@@ -123,7 +123,13 @@ angular.module('app',
             modules: [{
                 name: 'ushahidi.activity',
                 files: [
-                    '/activity/activity-module.js'
+                    './activity/activity-module.js',
+                    './activity/activity-timeline.directive.js',
+                    './activity/activity.controller.js',
+                    './activity/bar-chart.directive.js',
+                    './activity/crowdsourced-survey-table.directive.js',
+                    './activity/targeted-survey-table.directive.js',
+                    './activity/time-chart.directive.js'
                 ]
             }]
         });
