@@ -48,7 +48,7 @@ app.use(
     })
 );
 
-// Stop the Angular HMR from timing out.
+// Stop the Angularjs HMR from timing out.
 app.use(
     createProxyMiddleware([
         "/sockjs-node",
@@ -64,7 +64,7 @@ app.use(
     })
 );
 
-// Proxy the HMR endpoint to the Angular client.
+// Proxy the HMR endpoint to the Angularjs client.
 app.use(
     createProxyMiddleware("/sockjs-legacy", {
         target: `http://localhost:${LEGACY_PORT}/`,
