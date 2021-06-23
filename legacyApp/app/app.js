@@ -135,22 +135,24 @@ angular
         $urlRouterProvider.otherwise("/404");
         $urlMatcherFactoryProvider.strictMode(false);
     }])
-    /*.config(function ($ocLazyLoadProvider) {
+    /*.config([
+        "$ocLazyLoadProvider",
+        function ($ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({
             modules: [{
                 name: 'ushahidi.activity',
                 files: [
-                    '//localhost:3000/app/activity/activity-module.js',
-                    '//localhost:3000/app/activity/activity-timeline.directive.js',
+                    './activity/activity-module.js',
+                    /*'//localhost:3000/app/activity/activity-timeline.directive.js',
                     '//localhost:3000/app/activity/activity.controller.js',
                     '//localhost:3000/app/activity/bar-chart.directive.js',
                     '//localhost:3000/app/activity/crowdsourced-survey-table.directive.js',
                     '//localhost:3000/app/activity/targeted-survey-table.directive.js',
-                    '//localhost:3000/app/activity/time-chart.directive.js'
+                    '//localhost:3000/app/activity/time-chart.directive.js'*\/
                 ]
             }]
         });
-    })*/
+    }])*/
     .config([
         "$showdownProvider",
         function ($showdownProvider) {
