@@ -1,7 +1,7 @@
 {
     "name": "@ushahidi/utilities",
     "scripts": {
-        "start": "webpack serve",
+        "start": "webpack serve --port 9094",
         "start:standalone": "webpack serve --env standalone",
         "build": "webpack --mode=production",
         "analyze": "webpack --mode=production --env analyze",
