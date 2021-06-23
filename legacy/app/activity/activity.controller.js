@@ -18,6 +18,7 @@ function ActivityController(
     Flatpickr
 ) {
     // Initial values
+    console.log('here')
     $scope.isActivityAvailable = false;
     $scope.currentInterval = "all";
     $scope.editableInterval = "all";

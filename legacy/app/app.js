@@ -26,7 +26,7 @@ window.ushahidi = window.ushahidi || {};
 require("./common/common-module.js");
 require("./main/main-module.js");
 require("./settings/settings.module.js");
-require('./activity/activity-module.js')
+require('./activity/activity-lazy.js')
 // require("./activity/activity-module.js");
 import ravenModule from "./common/raven/raven";
 import * as UshahidiSdk from "ushahidi-platform-sdk/build/src/index";
@@ -87,8 +87,8 @@ angular
         "ushahidi.common",
         "ushahidi.main",
         "ushahidi.settings",
-        "ushahidi.activity",
         "ui.bootstrap.dropdown",
+        "ushahidi.activity",
         "ngtweet",
         "oc.lazyLoad"
     ])

@@ -17,6 +17,8 @@ function (
             _
         ) {
 
+            console.log('in directive')
+
             /*
             Helper function to produce human friendly timestamps
             */

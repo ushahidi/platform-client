@@ -5,7 +5,7 @@ config.mode = 'development';
 
 config.output = {
 //TODO check how to add name dynamically to single-spa
-  filename: 'ushahidi-legacy-app.js',
+  filename: '[name].js',
   path: path.resolve(__dirname, 'dist'),
   libraryTarget: 'system'
 };
