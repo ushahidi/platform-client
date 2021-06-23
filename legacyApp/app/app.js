@@ -125,30 +125,32 @@ angular
             $locationProvider.html5Mode(true).hashPrefix("!");
         },
     ])
-    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider) {
+    .config([
+        "$urlRouterProvider", "$urlMatcherFactoryProvider",
+        function ($urlRouterProvider, $urlMatcherFactoryProvider) {
         $urlRouterProvider.when("", "/views/map");
         $urlRouterProvider.when("/", "/views/map");
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
         $urlRouterProvider.otherwise("/404");
         $urlMatcherFactoryProvider.strictMode(false);
-    })
-    .config(function ($ocLazyLoadProvider) {
+    }])
+    /*.config(function ($ocLazyLoadProvider) {
         $ocLazyLoadProvider.config({
             modules: [{
                 name: 'ushahidi.activity',
                 files: [
-                    './activity/activity-module.js',
-                    './activity/activity-timeline.directive.js',
-                    './activity/activity.controller.js',
-                    './activity/bar-chart.directive.js',
-                    './activity/crowdsourced-survey-table.directive.js',
-                    './activity/targeted-survey-table.directive.js',
-                    './activity/time-chart.directive.js'
+                    '//localhost:3000/app/activity/activity-module.js',
+                    '//localhost:3000/app/activity/activity-timeline.directive.js',
+                    '//localhost:3000/app/activity/activity.controller.js',
+                    '//localhost:3000/app/activity/bar-chart.directive.js',
+                    '//localhost:3000/app/activity/crowdsourced-survey-table.directive.js',
+                    '//localhost:3000/app/activity/targeted-survey-table.directive.js',
+                    '//localhost:3000/app/activity/time-chart.directive.js'
                 ]
             }]
         });
-    })
+    })*/
     .config([
         "$showdownProvider",
         function ($showdownProvider) {
