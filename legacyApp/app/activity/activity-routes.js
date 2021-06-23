@@ -14,21 +14,13 @@ function (
         controller: require('./activity.controller.js'),
         template: require('./activity.html'),
         lazyLoad: function ($transition$) {
-            console.log('here')
+
             var $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-            return System.import([
-                            'http:localhost:3000/app/activity/activity-module.js',
-                            'http:localhost:3000/app/activity/activity-timeline.directive.js',
-                            'http:localhost:3000/app/activity/activity.controller.js',
-                            'http:localhost:3000/app/activity/bar-chart.directive.js',
-                            'http:localhost:3000/app/activity/crowdsourced-survey-table.directive.js',
-                            'http:localhost:3000/app/activity/targeted-survey-table.directive.js',
-                            'http:localhost:3000/app/activity/time-chart.directive.js'
-                         ]).then(mod => {
+            return System.import('./app/activity/activity-lazy.js').then(mod => {
                 console.log(mod)
-                // $ocLazyLoad.load(mod.CONTACTS_MODULE));
-            })
-          }
+                //  $ocLazyLoad.load(mod.CONTACTS_MODULE));
+            })}
+          
         // resolve: {
         //     loadDependencies: ['$ocLazyLoad', function($ocLazyLoad) {
         //         return $ocLazyLoad.load([

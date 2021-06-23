@@ -135,6 +135,10 @@ angular
         $urlMatcherFactoryProvider.strictMode(false);
     })
     .config(function ($ocLazyLoadProvider) {
+
+        $ocLazyLoadProvider.config({
+            debug: true
+          });
         // $ocLazyLoad.load('./activity/activity-module.js');
         // $ocLazyLoadProvider.config()
             // {
