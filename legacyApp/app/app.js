@@ -135,6 +135,18 @@ angular
         $urlRouterProvider.otherwise("/404");
         $urlMatcherFactoryProvider.strictMode(false);
     }])
+    .config([
+        "$ocLazyLoadProvider",
+        function ($ocLazyLoadProvider) {
+        $ocLazyLoadProvider.config({
+            /*modules: [{
+                name: 'ushahidi.activity',
+                files: [
+                    './activity/activity-module.js'
+                ]
+            }]*/
+        });
+    }])
     /*.config([
         "$ocLazyLoadProvider",
         function ($ocLazyLoadProvider) {
