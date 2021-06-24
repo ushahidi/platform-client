@@ -65,6 +65,11 @@ module.exports = [
                     });
                 }
 
+                $scope.toggleMonetization = function () {
+                    $scope.site.donation.enabled = !$scope.site.donation.enabled;
+                    $scope.updateConfig();
+                }
+
                 function uploadImage() {
                     var dfd = $q.defer();
                     if ($scope.image.file) {

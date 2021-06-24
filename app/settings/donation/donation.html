@@ -147,21 +147,18 @@
                         </div>
 
                         <div class="form-field">
-                            <label>
-                                Disable Monetization
-                                <input id="donations-disable" type="checkbox"
-                                    class="ng-pristine ng-untouched ng-valid ng-empty" ng-model="site.donation.enabled"
-                                    ng-true-value="false" ng-false-value="true">
-                            </label>
+                            <div ng-if="site.donation.enabled">
+                                <button class="button-destructive"  ng-click="toggleMonetization()">Disable Monetization</button>
+                            </div>
+                            <div ng-if="!site.donation.enabled" >
+                                <div class="alert">
+                                    <p>Monetization is currently disabled.</p>
+                                </div>
+                                <div>
+                                    <button class="button-alpha"  ng-click="toggleMonetization()">Enable Monetization</button>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- <div class="form-field switch">
-                            <label translate>Enable Monetization</label>
-                            <div class="toggle-switch">
-                                <input class="tgl" id="donation_enable" type="checkbox">
-                                <label class="tgl-btn" for="donation_enable"></label>
-                           </div>
-                        </div> -->
                     </div>
                 </div>
             </div>
