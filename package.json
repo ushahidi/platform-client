@@ -5,10 +5,10 @@
   "scripts": {
     "start": "http-server ./build -c-1",
     "build": "npm run build:api && npm run build:legacy && npm run build:utilities && npm run build:root && npm run copy",
-    "build:api": "cd api && npm install && npm run build",
+    "build:api": "cd api && npm install",
     "build:root": "cd root && npm install && npm run build",
-    "build:legacy": "cd legacy && npm install && npm run build",
-    "build:utilities": "cd utilities && npm install && npm run build",
+    "build:legacy": "cd legacy && npm install",
+    "build:utilities": "cd utilities && npm install",
     "copy": "mkdir -p build && npm run copy:api && npm run copy:legacy && npm run copy:utilities && npm run copy:root",
     "copy:api": "cp -R api/dist/* build/",
     "copy:root": "cp -R root/dist/* build/",

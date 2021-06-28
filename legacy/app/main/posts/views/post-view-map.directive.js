@@ -190,6 +190,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             let getFirstPostChunk = PostEndpoint.geojson(conditions);
             currentGeoJsonRequests.push(getFirstPostChunk);
             return getFirstPostChunk.$promise.then(function (posts) {
+                console.log('here')
                 // Adding the first 200 posts to map here and getting the totals
                 $scope.stats.filteredPosts = posts.total;
                 addPostsToMap(posts)
