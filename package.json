@@ -1,0 +1,57 @@
+{
+  "name": "ushahidi-platform-client",
+  "version": "1.0.0",
+  "description": "Ushahidi Platform Official Web Client",
+  "scripts": {
+    "start": "http-server ./build -c-1",
+    "build": "npm run build:api && npm run build:legacy && npm run build:utilities && npm run build:root && npm run copy",
+    "build:api": "cd api && npm install && npm run build",
+    "build:root": "cd root && npm install && npm run build",
+    "build:legacy": "cd legacy && npm install && npm run build",
+    "build:utilities": "cd utilities && npm install && npm run build",
+    "copy": "mkdir -p build && npm run copy:api && npm run copy:legacy && npm run copy:utilities && npm run copy:root",
+    "copy:api": "cp -R api/dist/* build/",
+    "copy:root": "cp -R root/dist/* build/",
+    "copy:legacy": "cp -R legacy/dist/* build/",
+    "copy:utilities": "cp -R utilities/dist/* build/",
+    "lint": "npm run lint:legacy && npm run lint:utilities && npm run lint:api && npm run lint:root",
+    "lint:api": "cd api && npm run lint",
+    "lint:legacy": "cd legacy && npm run lint",
+    "lint:root": "cd root && npm run lint",
+    "lint:utilities": "cd utilities && npm run lint",
+    "serve": "node ./server/scripts/start.js && concurrently \"yarn serve:apps\" \"yarn serve:base-wait\" \"yarn show-ready\"",
+    "serve:apps": "concurrently \"yarn serve:modules\" \"yarn watch:legacy\"",
+    "serve:modules": "concurrently \"yarn serve:api\" \"yarn serve:utilities\"",
+    "serve:base": "concurrently \"yarn serve:root\" \"yarn serve:proxy\"",
+    "serve:base-wait": "wait-on http://0.0.0.0:9093 && wait-on http://0.0.0.0:9094 && yarn serve:base",
+    "serve:proxy": "node ./server/scripts/proxy.js",
+    "serve:api": "cd api && npm start",
+    "serve:legacy": "cd legacy && npm start",
+    "serve:root": "cd root && npm start",
+    "serve:utilities": "cd utilities && npm start",
+    "show-ready": "wait-on http://0.0.0.0:9090 && node ./server/scripts/ready.js",
+    "watch:legacy": "cd legacy && concurrently \"npm run watch\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ushahidi/platform-client.git"
+  },
+  "author": "Ushahidi",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ushahidi/platform-client/issues"
+  },
+  "homepage": "https://github.com/ushahidi/platform-client#readme",
+  "devDependencies": {
+    "address": "^1.1.2",
+    "colors": "^1.4.0",
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^2.0.0",
+    "http-server": "^0.12.3",
+    "wait-on": "^5.3.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
