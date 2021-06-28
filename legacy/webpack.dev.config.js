@@ -7,7 +7,8 @@ config.output = {
 //TODO check how to add name dynamically to single-spa
   filename: '[name].js',
   path: path.resolve(__dirname, 'dist'),
-  libraryTarget: 'system'
+  libraryTarget: 'system',
+  publicPath: '/'
 };
 
 config.devtool = 'sourcemap'
