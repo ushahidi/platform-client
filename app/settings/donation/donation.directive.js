@@ -66,8 +66,14 @@ module.exports = [
                 }
 
                 $scope.toggleMonetization = function () {
-                    $scope.site.donation.enabled = !$scope.site.donation.enabled;
-                    $scope.updateConfig();
+                    // we don't need to have a valid form if disabling monetization
+                    if ($scope.form.$valid || $scope.site.donation.enabled) {
+                        $scope.site.donation.enabled = !$scope.site.donation.enabled;
+                        $scope.showMessage = false;
+                        $scope.updateConfig();
+                    } else {
+                        $scope.showMessage = true;
+                    }
                 }
 
                 function uploadImage() {
