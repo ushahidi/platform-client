@@ -149,15 +149,15 @@
 
                         <div class="form-field">
                             <div ng-if="site.donation.enabled">
-                                <button class="button-destructive"  ng-click="toggleMonetization()">Disable Monetization</button>
+                                <button class="button-destructive"  translate="app.disable_monetization" ng-click="toggleMonetization()">Disable Monetization</button>
                             </div>
-                            <div class="alert error" ng-if="showMessage && form.$invalid">Fill in required fields above before enabling monetization.</div>
+                            <div class="alert error" ng-if="showMessage && form.$invalid" translate="app.enable_monetization_error">Fill in required fields above before enabling monetization.</div>
                             <div ng-if="!site.donation.enabled" >
                                 <div class="alert">
-                                    <p>Monetization is currently disabled.</p>
+                                    <p translate="app.enable_monetization_info">Monetization is currently disabled.</p>
                                 </div>
                                 <div>
-                                    <button class="button-alpha" ng-click="toggleMonetization()">Enable Monetization</button>
+                                    <button class="button-alpha" translate="app.enable_monetization" ng-click="toggleMonetization()">Enable Monetization</button>
                                 </div>
                             </div>
                         </div>
