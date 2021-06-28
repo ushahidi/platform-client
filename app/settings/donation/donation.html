@@ -57,6 +57,7 @@
                             <div>
                                 <div class="form-field">
                                     <label for="donation-title"
+                                        class="required"
                                         ng-class="{'success': !form.title.$invalid && form.title.$dirty, 'error' : form.title.$invalid && form.title.$dirty }"
                                         translate>
                                         settings.donation.title.label
@@ -125,7 +126,7 @@
 
                             <div>
                                 <div class="form-field">
-                                    <label for="donation-wallet">Wallet address </label>
+                                    <label for="donation-wallet" class="required">Wallet address </label>
                                     <input name="wallet" id="donation-wallet" type="text" ng-model="site.donation.wallet"
                                         ng-required="true" placeholder="Enter a wallet address e.g $ilp.uphold.com/example" />
                                     <div class="alert error" ng-repeat="(error, value) in form.wallet.$error"
