@@ -1,4 +1,4 @@
-export const ACTIVITY_MODULE = angular.module('ushahidi.activity.lazy', [])
+export const ACTIVITY_MODULE = angular.module('ushahidi.activity', [])
 
 .directive('activityTimeline', require('./activity-timeline.directive.js'))
 .directive('activityBarChart', require('./bar-chart.directive.js'))
