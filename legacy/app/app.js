@@ -130,6 +130,13 @@ angular
         $urlMatcherFactoryProvider.strictMode(false);
     })
     .config([
+        '$ocLazyLoadProvider',
+        function ($ocLazyLoadProvider) {
+        $ocLazyLoadProvider.config({
+            debug: true
+        });
+    }])
+    .config([
         '$showdownProvider',
         function ($showdownProvider) {
             $showdownProvider.setOption('simplifiedAutoLink', true);
