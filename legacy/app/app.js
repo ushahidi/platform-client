@@ -17,6 +17,7 @@ require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
+require('oclazyload');
 
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
@@ -85,7 +86,8 @@ angular
         'ushahidi.main',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
-        'ngtweet'
+        'ngtweet',
+        'oc.lazyLoad'
     ])
 
     .constant('CONST', {
