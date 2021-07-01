@@ -1,7 +1,7 @@
 // possibly consider moving this to its own function and trigger in root-config?
 
 let backendUrl = "";
-// window.ushahidi.backendUrl is configured in ./rootconfig/src/config.js
+// window.ushahidi.backendUrl is configured in ./root/src/config.js
 // BACKEND_URL is set on build-time with Webpack from environment variables
 if (window.ushahidi && window.ushahidi.backendUrl) {
     backendUrl = window.ushahidi.backendUrl;
