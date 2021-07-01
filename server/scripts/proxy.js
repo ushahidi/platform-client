@@ -8,7 +8,7 @@ var app = express();
 const PROXY_PORT = 9090;
 const API_PORT = 9093;
 const UTILITIES_PORT = 9094;
-const LEGACY_PORT = 9092;
+const LEGACY_PORT = 3000;
 const ROOT_PORT = 9091;
 
 // Proxy to the single-spa api module.
