@@ -46,7 +46,8 @@ let paths = {
     ],
     entry: {
         "ushahidi-legacy-app": ['babel-polyfill', path.join(__dirname, root, 'bootstrap.js')],
-        "activity": path.join(__dirname, root, '/activity/activity-module.js')
+        "activity": path.join(__dirname, root, '/activity/activity-module.js'),
+        "settings": path.join(__dirname, root, '/settings/settings.module.js')
     },
     output: root,
     // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),

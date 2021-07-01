@@ -1,5 +1,5 @@
-angular
-    .module('ushahidi.settings', [])
+export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
+
     .directive(
         'afterImportCsv',
         require('./data-import/data-after-import.directive.js')
@@ -51,6 +51,4 @@ angular
         require('./webhooks/editor.directive.js')
     )
 
-    .directive('setupDonation', require('./donation/donation.directive.js'))
-
-    .config(require('./settings.routes.js'));
+    .directive('setupDonation', require('./donation/donation.directive.js'));
