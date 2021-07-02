@@ -170,6 +170,7 @@ angular
     )
     .service('HxlExport', require('./services/hxl-export.service.js'))
     .service('DataImport', require('./services/data-import.service.js'))
+    .service('ImportNotify', require('./services/import.notify.service.js'))
     .service('VerifierService', require('./verifier/verifier.service.js'))
     // Global directives
     .directive('publishSelector', require('./directives/publish-selector.js'))

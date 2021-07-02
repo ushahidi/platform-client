@@ -5,7 +5,6 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
         require('./data-import/data-after-import.directive.js')
     )
     .directive('importerCsv', require('./data-import/data-import.directive.js'))
-    .service('ImportNotify', require('./data-import/import.notify.service.js'))
     .directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
 
     .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
@@ -51,4 +50,6 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
         require('./webhooks/editor.directive.js')
     )
 
-    .directive('setupDonation', require('./donation/donation.directive.js'));
+    .directive('setupDonation', require('./donation/donation.directive.js'))
+
+    .config(require('./other-routes.js'));
