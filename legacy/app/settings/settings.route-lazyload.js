@@ -6,6 +6,11 @@ module.exports = [
         /* todo: these routes should only exist when the user is admin! */
         $stateProvider
             .state({
+                name: 'settings',
+                controller: require('./settings.controller.js'),
+                template: require('./settings.html')
+            })
+            .state({
                 name: 'settings.list',
                 url: '/settings',
                 template: require('./settings-list.html'),
