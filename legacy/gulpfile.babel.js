@@ -12,7 +12,7 @@ import gzip from 'gulp-gzip';
 import WebpackDevServer from 'webpack-dev-server';
 import colorsSupported from 'supports-color';
 import historyApiFallback from 'connect-history-api-fallback';
-
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import karma from 'karma';
 import eslint from 'gulp-eslint';
 import gulpIf from 'gulp-if';
@@ -166,6 +166,27 @@ function devServer() {
 }
 
 task('default', devServer);
+
+// Starting the dev-server and running analyzis
+function analyzeBundle() {
+    const config = require('./webpack.dev.config');
+    const port = process.env.PORT || 3000;
+    config.entry = paths.entry;
+    config.plugins.push(
+        new BundleAnalyzerPlugin()
+    );
+    var compiler = webpack(config);
+    new WebpackDevServer(compiler, config.devServer).listen(port, 'localhost',
+        (err) => {
+            if (err) {
+                throw new gutil.PluginError('webpack-dev-server', err);
+            }
+            console.log('[webpack-dev-server]', `http://localhost:${port}/webpack-dev-server/index.html`);
+        }
+    );
+}
+
+task('analyze', analyzeBundle);
 
 //Serving the dist build (for heroku)
 function serveStatic() {
