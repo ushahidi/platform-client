@@ -52,4 +52,4 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
 
     .directive('setupDonation', require('./donation/donation.directive.js'))
 
-    .config(require('./other-routes.js'));
+    .config(require('./settings-list.routes.js'));
