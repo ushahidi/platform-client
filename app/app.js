@@ -168,13 +168,6 @@ angular.module('app',
     .factory('Flatpickr', function () {
         return require('flatpickr').default;
     })
-    // inject the router instance into a `run` block by name
-    //.run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
-    //     // * uncomment this to enable the visualizer *
-    //     let Visualizer = require('@uirouter/visualizer').Visualizer;
-    //     let pluginInstance = $uiRouter.plugin(Visualizer);
-    //     $trace.enable('TRANSITION');
-    // }])
     .factory('UshahidiSdk', function () {
         return UshahidiSdk;
     })
