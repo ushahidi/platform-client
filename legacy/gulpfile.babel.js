@@ -44,10 +44,10 @@ let paths = {
         resolveToApp('**/*.html'),
         resolveToApp('index.html')
     ],
-    entry: [
-        'babel-polyfill',
-        path.join(__dirname, root, 'bootstrap.js')
-    ],
+    entry: {
+        "ushahidi-legacy-app": ['babel-polyfill', path.join(__dirname, root, 'bootstrap.js')],
+        "activity": path.join(__dirname, root, '/activity/activity-module.js')
+    },
     output: root,
     // blankTemplates: path.join(__dirname, 'generator', 'component/**/*.**'),
     // config: resolveToApp('config.js'),
