@@ -136,18 +136,19 @@ function (
         $scope.formEnabled[provider_id] = !$scope.formEnabled[provider_id];
     };
 
-    $scope.initializeProvider = function (provider) {
+    $scope.initializeProvider = function (provider_id) {
         if ($scope.processing) {
             return false;
         }
-        if (provider === 'gmail') {
+        if (provider_id === 'gmail') {
             $scope.processing = true;
             $http.get(Util.url('/plugins/gmail/initialize')).then(
                 function(response) {
-                    $window.open(response.data.auth_url, 'popup', 'height=700, width=550, left=300, top=200');
                     setTimeout(
                         () => ModalService.openTemplate('<gmail-auth></gmail-auth>', 'Connect Your Gmail Account', false, $scope, true, false)
                     , 3000);
+
+                    $window.open(response.data.auth_url, 'popup', 'height=700, width=550, left=300, top=200');
                 },
                 function (errorResponse) { // error
                     Notify.apiErrors(errorResponse);
@@ -157,11 +158,11 @@ function (
         }
     };
 
-    $scope.disconnectProvider = function (provider) {
+    $scope.disconnectProvider = function (provider_id) {
         if ($scope.processing) {
             return false;
         }
-        if (provider === 'gmail') {
+        if (provider_id === 'gmail') {
             $scope.processing = true;
             $http.post(Util.url('/plugins/gmail/unauthorize')).then(
                 function(response) {
@@ -176,8 +177,8 @@ function (
         }
     }
 
-    $scope.authorizeGmailProvider = function (code) {
-        var payload = {code};
+    $scope.authorizeGmailProvider = function (code, date) {
+        var payload = {code, date};
         return $http.post(Util.url('/plugins/gmail/authorize'), payload).then(
             function(response) {
                 Notify.notify(response.data.message);
@@ -246,6 +247,8 @@ function (
         $scope.authenticable_providers = response[1]['authenticable-providers'];
         $scope.available_providers = response[3]['data-providers'];
 
+        console.log($scope.forms);
+
         // Enable form elements as appropriate
         _.forEach($scope.settings, function (provider, name) {
             if (provider.form_id) {
@@ -258,7 +261,6 @@ function (
             if (provider.date) {
                 $scope.settings[name].date = moment(provider.date).toDate();
             }
-            // console.log(provider.date);
         });
         // Keep track of providers with saved settings
         $scope.savedProviders = {};

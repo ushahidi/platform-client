@@ -12,7 +12,8 @@
 
         <span class="mode-context-trigger">
             <svg class="iconic" role="img">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
+                </use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -33,7 +34,7 @@
                     <div class="listing-item-secondary">
                         <button type="button" class="button-beta button-flat listing-item-toggle" dropdown-toggle>
                             <svg class="iconic" role="img">
-                              <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                             </svg>
                             <span class="button-label" translate>settings.data_sources.configure</span>
                         </button>
@@ -88,12 +89,14 @@
                                     <span ng-hide="processing" translate>Disconnect your gmail account</span>
                                 </button>
                                 <p>
-                                    Your account {{settings[provider.id]['email']}} is connected.
+                                    Your account {{ settings[provider.id]['email'] }} is connected.
                                 </p>
                             </div>
                         </div>
 
-                        <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)" ng-if="available_providers[provider.id]">
+                        <form name="forms.{{provider.id}}" ng-submit="saveProviderSettings(provider.id)"
+                            ng-if="available_providers[provider.id]">
+
                             <div class="form-field switch" ng-if="forms[provider.id].$valid">
                                 <label translate>settings.data_sources.enable_provider_message</label>
                                 <div class="toggle-switch">
@@ -103,6 +106,7 @@
                                     <label class="tgl-btn" for="{{provider.id}}_enable"></label>
                                 </div>
                             </div>
+
                             <div class="form-field switch" ng-if="forms[provider.id].$valid">
                                 <label translate="settings.data_sources.associate_with_form">Import to survey</label>
                                 <div class="toggle-switch">
@@ -216,7 +220,7 @@
 
                             <div ng-repeat="(option_key, option) in provider.options track by option_key"
                                 ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid, 'form-field' : option.input !== 'radio', 'required' : option.rules.indexOf('required') > -1 }"
-                                ng-hide="option.is_gmail_support == isGmailSupportEnabled">
+                                ng-show="option.is_gmail_support !== isGmailSupportEnabled">
                                 <div class="" ng-if="option.input == 'read-only-text'">
                                     <label ng-if="option.label" ng-bind-html="option.label" class="input-label"></label>
                                     <p ng-bind-html="option.description"></p>
@@ -250,22 +254,17 @@
                                         ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving"
                                         ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}" />
 
-                                    <input ng-if="option.rules.indexOf('date') > -1"
-                                        type="date"
-                                        pick-a-date="date"
+                                    <input ng-if="option.rules.indexOf('date') > -1" type="date" pick-a-date="date"
                                         pick-a-date-options="{ format: 'yyyy-mm-dd' }"
-                                        id="gmail_date"
-                                        name="gmail_date"
-                                        placeholder="Select Start Date"
-                                        ng-model="settings[provider.id][option_key]"
-                                        ng-required="option.rules.indexOf('required') > -1"
-                                        ng-disabled="saving"
-                                        ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}"/>
-
-                                    <input ng-if="option.rules.indexOf('number') == -1 && option.rules.indexOf('email') == -1 && option.rules.indexOf('password') == -1 && option.rules.indexOf('date') == -1"
                                         id="{{provider.id}}_{{option_key}}" name="{{option_key}}"
-                                        type="{{option.input}}"
-                                        ng-model="settings[provider.id][option_key]"
+                                        placeholder="" ng-model="settings[provider.id][option_key]"
+                                        ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving"
+                                        ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}" />
+
+                                    <input
+                                        ng-if="option.rules.indexOf('number') == -1 && option.rules.indexOf('email') == -1 && option.rules.indexOf('password') == -1 && option.rules.indexOf('date') == -1"
+                                        id="{{provider.id}}_{{option_key}}" name="{{option_key}}"
+                                        type="{{option.input}}" ng-model="settings[provider.id][option_key]"
                                         ng-required="option.rules.indexOf('required') > -1" ng-disabled="saving"
                                         ng-class="{error:formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid}" />
                                 </div>

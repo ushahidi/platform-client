@@ -25,8 +25,9 @@ function GmailAuthController(
 
     function submit() {
         $scope.processing = true;
-        $scope.$parent.authorizeGmailProvider($scope.code)
+        $scope.$parent.authorizeGmailProvider($scope.code, $scope.date)
         .finally(function () {
+            // $scope.$parent.
             $scope.processing = false;
             $scope.$parent.closeModal();
         })
