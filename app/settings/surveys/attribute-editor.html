@@ -35,6 +35,52 @@
           <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
           </svg>
+            Only people with permission to edit responses will be able to see responses to this field.
+        </p>
+        <div class="toggle-switch">
+           <input class="tgl" id="switchprivateresponse" type="checkbox" ng-model="editAttribute.response_private">
+           <label class="tgl-btn" for="switchprivateresponse"></label>
+        </div>
+       </div>
+       <div class="form-field switch" ng-if="canDisplayDefaultValue()">
+          <div id="form-field" class="form-field">
+            <div ng-switch="editAttribute.input" ng-if="errorMessage()">
+
+                <label for="video-defaultvalue" ng-if="displayVideoLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="video" id="video-defaultvalue" type="text" placeholder="Video url link" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="date-defaultvalue" ng-if="displayDateLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="date" id="date-defaultvalue" type="text" placeholder="2020-05-29" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="datetime-defaultvalue" ng-if="displayDateTimeLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="datetime" id="datetime-defaultvalue" type="text" placeholder="2020-05-29 04:15 pm" date-time="editAttribute.default" ng-model="editAttribute.default" ng-change="canDisplayError()">
+
+                <label for="int-defaultvalue" ng-if="displayIntLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="int" id="int-defaultvalue" type="number" step="1" ng-model="editAttribute.default">
+
+                <label for="decimal-defaultvalue" ng-if="displayDecimalLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-when="decimal" id="decimal-defaultvalue" type="number" ng-model="editAttribute.default">
+
+                <label for="defaultvalue" ng-if="displayDefaultLabel()" translate="app.default_value">Default value (optional):</label>
+                <input ng-switch-default id="defaultvalue" type="text" placeholder="{{ 'form.default_default_placeholder'|translate }}" ng-model="editAttribute.default" ng-change="canDisplayError()">
+            </div>
+          </div>
+          <div
+            class="alert error hidden"
+            id="displayError"
+
+          >
+            <svg class="iconic">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+            </svg>
+            <span >{{errorMessage()}}</span>
+          </div>
+        </div>
+
+   <div class="form-field">
+      <button ng-show="!editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.add_and_close">Add &amp; close</button>
+      <button ng-show="editAttribute.id" type="button" class="button-alpha modal-trigger" ng-click="save(editAttribute, activeTask)" translate="app.update_and_close">Update &amp; close</button>
+   </div>
           <span class="button-label hidden">Remove</span>
         </button>
       </div>
