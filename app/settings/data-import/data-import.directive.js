@@ -56,6 +56,7 @@ function (
                 $scope.required_fields = [];
                 $scope.required_fields_map = {};
                 $scope.hasRequiredTask = false;
+                $scope.multiple_values_attributes = {};
 
                 Features.loadFeatures().then(function () {
                     $scope.csvEnabled = Features.isFeatureEnabled('data-import');
@@ -179,6 +180,10 @@ function (
                     .reject({type : 'point'})
                     .reject({type : 'title'})
                     .reject({type : 'description'})
+                    .map(function(attribute) {
+                        attribute.canHaveMultipleValues = attribute.cardinality === 0;
+                        return attribute;
+                    })
                     .concat(points)
                     // Add in the Post specific mappable fields
                     .push({
@@ -239,7 +244,12 @@ function (
                     }
 
                 }
+                const mappedFields = Object.values($scope.csv.maps_to);
 
+                $scope.csv.multiple_values_attributes = Object.keys($scope.multiple_values_attributes)
+                                                        .filter(function(key) {
+                                                            return mappedFields.includes(key) && $scope.multiple_values_attributes[key];
+                                                        });
                 updateAndImport($scope.csv);
 
             }

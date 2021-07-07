@@ -173,6 +173,7 @@
                                   <tr>
                                       <th translate="data_import.survey_field">Survey field</th>
                                       <th translate="data_import.csv_column">CSV column</th>
+                                      <th>Includes multiple values</th>
                                   </tr>
                               </thead>
 
@@ -190,6 +191,9 @@
                                                 </option>
                                               </select>
                                           </div>
+                                      </td>
+                                      <td>
+                                        <input ng-show="attribute.canHaveMultipleValues" ng-model="multiple_values_attributes[attribute.key]" type="checkbox">
                                       </td>
                                   </tr>
                               </tbody>
