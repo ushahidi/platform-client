@@ -21,7 +21,9 @@
     "eslint": "gulp eslint",
     "eslintfix": "gulp eslintfix",
     "verify": "gulp verify",
-    "languages": "gulp languages"
+    "languages": "gulp languages",
+    "analyze:dev": "gulp analyze:devBundle",
+    "analyze:build": "gulp analyze:buildBundle"
   },
   "pre-commit": [
     "eslint"
@@ -83,6 +85,7 @@
     "transifex": "^1.6.6",
     "url-loader": "^3.0.0",
     "webpack": "^4.41.4",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0"
   },
