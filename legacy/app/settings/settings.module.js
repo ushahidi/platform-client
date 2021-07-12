@@ -1,11 +1,10 @@
-angular
-    .module('ushahidi.settings', [])
+export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
+
     .directive(
         'afterImportCsv',
         require('./data-import/data-after-import.directive.js')
     )
     .directive('importerCsv', require('./data-import/data-import.directive.js'))
-    .service('ImportNotify', require('./data-import/import.notify.service.js'))
     .directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
 
     .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
@@ -53,4 +52,4 @@ angular
 
     .directive('setupDonation', require('./donation/donation.directive.js'))
 
-    .config(require('./settings.routes.js'));
+    .config(require('./settings-list.routes.js'));

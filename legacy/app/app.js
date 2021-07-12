@@ -25,7 +25,7 @@ window.ushahidi = window.ushahidi || {};
 // Load ushahidi modules
 require('./common/common-module.js');
 require('./main/main-module.js');
-require('./settings/settings.module.js');
+require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
 import ravenModule from './common/raven/raven';
 import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
@@ -85,7 +85,7 @@ angular
         ravenModule,
         'ushahidi.common',
         'ushahidi.main',
-        'ushahidi.settings',
+        'ushahidi.settings.routes',
         'ushahidi.activity.routes',
         'ui.bootstrap.dropdown',
         'ngtweet',
