@@ -55,64 +55,9 @@
 
         </div>
 
-        <script type="text/javascript">
-            if (window.ushahidi && window.ushahidi.doorbellEnabled) {
-                window.doorbellOptions = {
-                    tags: ['platform'],
-                    appKey: window.ushahidi.doorbellAppKey,
-                    properties: {
-                        apiUrl: window.ushahidi.apiUrl
-                    },
-                    onShow: function () {
-                        injector = angular.element(document).injector();
-                        auth = injector.get('Authentication');
-                        session = injector.get('Session');
+        
 
-                        if (auth && session) {
-                            doorbell.setOption('email', session.getSessionDataEntry('email'));
-                            doorbell.setProperty('loggedIn', auth.getLoginStatus());
-                            doorbell.setProperty('role', session.getSessionDataEntry('role'));
-                            doorbell.setProperty('realname', session.getSessionDataEntry('realname'));
-                        }
-                    }
-                };
-                (function(d, t) {
-                    var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/2005?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
-                }(document, 'script'));
-            }
-        </script>
-        <!--
-        Intercom integration
-        -->
-        <script type="text/javascript">
-            (function(){
-              var per_app_intercom_widget;
-
-              function getAppId() {
-                if (typeof window.intercomSettings !== 'undefined' &&
-                  typeof(window.intercomSettings.app_id) !== 'undefined') {
-                  return window.intercomSettings.app_id
-                } else if (typeof window.analytics !== 'undefined' &&
-                  typeof window.analytics._integrations !== 'undefined' &&
-                  typeof analytics._integrations.Intercom !== 'undefined' &&
-                  typeof analytics._integrations.Intercom.options !== 'undefined' &&
-                  typeof analytics._integrations.Intercom.options.appId !== 'undefined') {
-                  return analytics._integrations.Intercom.options.appId;
-                } else {
-                  return '';
-                }
-              }
-
-              per_app_intercom_widget = 'https://widget.intercom.io/widget/' + getAppId();
-              var script_tag = document.createElement('script');
-              script_tag.type = 'text/javascript';
-              script_tag.async = true;
-              script_tag.src = per_app_intercom_widget;
-
-              var existing_script = document.getElementsByTagName('script')[0];
-              existing_script.parentNode.insertBefore(script_tag, existing_script);
-            })();
-        </script>
+        <!-- Needed for loading intercom-widget -->
         <div ng-controller="intercom"></div>
 
         <script>
@@ -138,16 +83,6 @@
             }
         </script>
 
-        <!--
-          Facebook sharing code
-        -->
-          <div id="fb-root"></div>
-          <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));</script>
+       
     </body>
 </html>
