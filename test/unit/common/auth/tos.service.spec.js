@@ -8,7 +8,7 @@ describe('TermsOfService', function () {
 
     beforeEach(function () {
         makeTestApp()
-        .value('moment', require('moment'))
+        .value('dayjs', require('dayjs'))
 
         .service('TermsOfServiceEndpoint', function () {
             return {

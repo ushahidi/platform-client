@@ -3,13 +3,17 @@ module.exports = PostMetadataDirective;
 PostMetadataDirective.$inject = [
     '$translate',
     '_',
-    'moment',
+    'dayjs',
+    'relativeTime',
+    'localizedFormat',
     'PostMetadataService'
 ];
 function PostMetadataDirective(
     $translate,
     _,
-    moment,
+    dayjs,
+    relativeTime,
+    localizedFormat,
     PostMetadataService
 ) {
     return {
@@ -45,8 +49,11 @@ function PostMetadataDirective(
             }
 
             function formatDates() {
-                var postDate = moment($scope.post.post_date),
-                    now = moment();
+                dayjs.extend(relativeTime);
+                dayjs.extend(localizedFormat);
+
+                let postDate = dayjs($scope.post.post_date),
+                    now = dayjs();
 
                 if (now.isSame(postDate, 'day')) {
                     $scope.displayTime = postDate.fromNow();

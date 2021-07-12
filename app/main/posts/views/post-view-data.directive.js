@@ -21,7 +21,10 @@ PostViewDataController.$inject = [
     '_',
     'PostEndpoint',
     'PostViewService',
-    'moment',
+    'dayjs',
+    'utc',
+    'relativeTime',
+    'isSameOrBefore',
     '$translate',
     '$q',
     'PostActionsService',
@@ -41,7 +44,10 @@ function PostViewDataController(
     _,
     PostEndpoint,
     PostViewService,
-    moment,
+    dayjs,
+    utc,
+    relativeTime,
+    isSameOrBefore,
     $translate,
     $q,
     PostActionsService,
@@ -89,7 +95,8 @@ function PostViewDataController(
     /**
      * setting "now" time as utc for new posts filter
      */
-    let timeOfPageLoad = moment().utc();
+    dayjs.extend(utc);
+    let timeOfPageLoad = dayjs().utc();
 
     let unbindFns = [];
 
@@ -429,11 +436,14 @@ function PostViewDataController(
     }
 
     function createPostGroups(posts) {
-        var now = moment(),
-            yesterday = moment().subtract(1, 'days');
+        var now = dayjs(),
+            yesterday = dayjs().subtract(1, 'days');
 
         return _.groupBy(posts, function (post) {
-            var postDate = moment(post.post_date);
+            var postDate = dayjs(post.post_date);
+
+            dayjs.extend(relativeTime);
+
             if (now.isSame(postDate, 'd')) {
                 return $translate.instant('nav.today');
             } else if (yesterday.isSame(postDate, 'd')) {
@@ -505,7 +515,9 @@ function PostViewDataController(
 
     function getNewPosts() {
         let existingFilters = PostFilters.getQueryParams($scope.filters);
-        let filterDate = moment(existingFilters.date_before).utc();
+        let filterDate = dayjs(existingFilters.date_before).utc();
+
+        dayjs.extend(isSameOrBefore);
 
         // if the filter end date was set to earlier than the time of page load
         // there could not possibly be any reason to check for new posts

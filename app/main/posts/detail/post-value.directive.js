@@ -1,4 +1,4 @@
-module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoint, moment, _, PostsSdk) {
+module.exports = ['PostEndpoint', 'dayjs', '_','PostsSdk', function (PostEndpoint, dayjs, _, PostsSdk) {
     return {
         restrict: 'E',
         replace: true,
@@ -62,13 +62,13 @@ module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoi
 
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {
-                    $scope.attribute.value.value = moment($scope.attribute.value.value).format('LL');
+                    $scope.attribute.value.value = dayjs($scope.attribute.value.value).format('LL');
                 }
                 if ($scope.attribute.input === 'datetime') {
-                    $scope.attribute.value.value = moment($scope.attribute.value.value).format('LLL');
+                    $scope.attribute.value.value = dayjs($scope.attribute.value.value).format('LLL');
                 }
                 if ($scope.attribute.input === 'time') {
-                    $scope.attribute.value.value = moment($scope.attribute.value.value).format('LT');
+                    $scope.attribute.value.value = dayjs($scope.attribute.value.value).format('LT');
                 }
             }
         }

@@ -17,7 +17,7 @@ describe('post editor directive', function () {
             return function () {};
         })
         .value('PostEntity', {})
-        .value('moment', function () {
+        .value('dayjs', function () {
             return {
                 subtract : function () {
                     return this;

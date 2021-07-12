@@ -11,7 +11,6 @@ module.exports = [
     'DataImport',
     'Features',
     'CollectionEndpoint',
-    'moment',
     '_',
 function (
     $translate,
@@ -26,7 +25,6 @@ function (
     DataImport,
     Features,
     CollectionEndpoint,
-    moment,
     _
 ) {
     return {

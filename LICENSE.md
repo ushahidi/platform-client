@@ -31,7 +31,7 @@ library is linked to its license below:
 * [Angular Translate](https://github.com/angular-translate/angular-translate/blob/master/LICENSE)
 * [Gravatar](https://github.com/emerleite/node-gravatar/blob/master/Readme.md#license)
 * [Leaflet](https://github.com/Leaflet/Leaflet/blob/master/LICENSE)
-* [Moment.JS](https://github.com/moment/moment/blob/develop/LICENSE)
+* [Day.Js](https://github.com/iamkun/dayjs/blob/dev/LICENSE)
 * [Showdown](https://github.com/ushahidi/showdown/blob/master/license.txt)
 * [Underscore](https://github.com/jashkenas/underscore/blob/master/LICENSE)
 

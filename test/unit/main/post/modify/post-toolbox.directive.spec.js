@@ -5,7 +5,7 @@ describe('post toolbox directive', function () {
         isolateScope,
         element;
 
-    function moment() {
+    function dayjs() {
         return {
             format: function () {}
         };
@@ -21,7 +21,7 @@ describe('post toolbox directive', function () {
         .value('$filter', function () {
             return function () {};
         })
-        .value('moment', moment);
+        .value('dayjs', dayjs);
 
         angular.mock.module('testApp');
     });
