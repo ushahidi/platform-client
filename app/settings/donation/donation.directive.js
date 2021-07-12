@@ -65,6 +65,17 @@ module.exports = [
                     });
                 }
 
+                $scope.toggleMonetization = function () {
+                    // we don't need to have a valid form if disabling monetization
+                    if ($scope.form.$valid || $scope.site.donation.enabled) {
+                        $scope.site.donation.enabled = !$scope.site.donation.enabled;
+                        $scope.showMessage = false;
+                        $scope.updateConfig();
+                    } else {
+                        $scope.showMessage = true;
+                    }
+                }
+
                 function uploadImage() {
                     var dfd = $q.defer();
                     if ($scope.image.file) {
