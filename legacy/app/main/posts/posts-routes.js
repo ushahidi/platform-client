@@ -77,7 +77,7 @@ function (
             }]
         }
     )
-    .state(
+    /*.state(
         {
             url: '/views/data',
             name: 'posts.data',
@@ -90,7 +90,7 @@ function (
                 /**
                  * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
                  * Nothing happens if there no postId except for not having a selectedPost.
-                  */
+                  *\/
                 post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
                     if ($transition$.params().postId) {
                         return PostsSdk.findPost($transition$.params().postId)
@@ -107,7 +107,7 @@ function (
                 }
             }]
         }
-    )
+    )*/
 
     /**
      * @uirouter-refactor

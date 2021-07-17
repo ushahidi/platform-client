@@ -1,5 +1,6 @@
 angular.module('ushahidi.posts', [])
 
+/*
 // Shared directives + services
 .directive('postActions', require('./data/common/post-actions.directive.js'))
 .directive('postMetadata', require('./data/common/post-metadata.directive.js'))
@@ -9,6 +10,7 @@ angular.module('ushahidi.posts', [])
 // Post Locking
 .service('PostLockService', require('./data/common/post-lock.service.js'))
 .directive('postLock', require('./data/common/post-lock.directive.js'))
+*/
 
 // Detail Screen
 .directive('postMessages', require('./detail/post-messages.directive.js'))
@@ -19,7 +21,7 @@ angular.module('ushahidi.posts', [])
 .directive('postDetailMap', require('./detail/map.directive.js'))
 .directive('postDetailData', require('./detail/post-detail-data.directive.js'))
 .directive('postCategoryValue', require('./detail/post-category-value.directive.js'))
-.service('PostActionsService', require('./data/common/post-actions.service.js'))
+//.service('PostActionsService', require('./data/common/post-actions.service.js'))
 
 // Create / Edit Screens
 .service('PostEntity', require('./modify/post-entity.service.js'))
@@ -46,8 +48,8 @@ angular.module('ushahidi.posts', [])
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
 .directive('postViewMap', require('./views/map/post-view-map.directive.js'))
-.directive('postCard', require('./data/views/post-card.directive.js'))
-.directive('postPreviewMedia', require('./data/views/post-preview-media.directive.js'))
+//.directive('postCard', require('./data/views/post-card.directive.js'))
+//.directive('postPreviewMedia', require('./data/views/post-preview-media.directive.js'))
 .directive('addPostButton', require('./views/post-toolbar/add-post-button.directive.js'))
 .directive('addPostSurveyList', require('./views/post-toolbar/add-post-survey-list.directive.js'))
 .directive('addPostTextButton', require('./views/post-toolbar/add-post-text-button.directive.js'))
@@ -56,7 +58,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterBySurveyDropdown', require('./views/map/filter-by-survey-dropdown.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar/post-toolbar.directive.js'))
 .directive('filterByDatasource', require('./views/map/filter-by-datasource.directive.js'))
-.directive('postViewData', require('./data/views/post-view-data.directive.js'))
+//.directive('postViewData', require('./data/views/post-view-data.directive.js'))
 // Filters
 .directive('filterPosts', require('./views/post-toolbar/filters/filter-posts.directive.js'))
 .directive('filterCategory', require('./views/post-toolbar/filters/filter-category.directive.js'))
