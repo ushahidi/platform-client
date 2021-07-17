@@ -265,8 +265,8 @@ function (
         {
             name: 'posts.noui',
             url: '/map/noui',
-            controller: require('./views/post-view-noui.controller.js'),
-            template: require('./views/post-view-noui.html'),
+            controller: require('./views/map/post-view-noui.controller.js'),
+            template: require('./views/map/post-view-noui.html'),
             params: {
                 view: {value: 'noui', squash: true}
             }
