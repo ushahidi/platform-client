@@ -1,0 +1,32 @@
+<div class="modal-body">
+    <form class="panel-body" name="form" ng-submit="submit()">
+        <div class="form-field">
+            <label for="code" class="input-label" translate>
+              Auth Code
+            </label>
+            <input type="text" id="code" name="code" ng-model="code" ng-disabled="processing" placeholder="Enter the authorization code" required>
+        </div>
+
+        <div class="form-field">
+            <label for="date" class="input-label" translate> Sync Date </label>
+
+            <p translate>
+                Select from which point in time it wants to retrieve messages from the inbox.
+            </p>
+
+            <input type="date" id="date" name="date" pick-a-date="date" pick-a-date-options="{ format: 'yyyy-mm-dd' }"
+                placeholder="" ng-model="date" ng-disabled="processing" />
+        </div>
+        <div class="form-field">
+            <button type="button" class="button-link" ng-click="cancel()" translate="app.cancel">Cancel</button>
+            <button type="submit" class="button-primary" ng-disabled="form.$invalid || processing">
+                <div class="loading" ng-show="processing">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <span translate>Authorize</span>
+            </button>
+        </div>
+    </form>
+</div>
