@@ -13,9 +13,15 @@ angular.module('ushahidi.data', [])
 // Detail Screen
 .service('PostActionsService', require('./common/post-actions.service.js'))
 
+// Post editing workflows
+.directive('surveyLanguageSelector', require('./common/survey-language-selector.directive.js'))
+
 // Timeline, data and Map screen
 .directive('postCard', require('./views/post-card.directive.js'))
 .directive('postPreviewMedia', require('./views/post-preview-media.directive.js'))
 .directive('postViewData', require('./views/post-view-data.directive.js'))
+
+.directive('collectionToggleButton', require('./common/collection-toggle/collection-toggle-button.js'))
+.directive('collectionToggleLink', require('./common/collection-toggle/collection-toggle-link.js'))
 
 .config(require('./data-routes.js'))
