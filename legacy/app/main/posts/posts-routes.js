@@ -156,7 +156,7 @@ function (
             }
         }
     )
-    .state(
+    /*.state(
         {
             name: 'posts.map',
             abstract: true,
@@ -181,7 +181,7 @@ function (
                 }
             }]
         }
-    )
+    )*/
     .state(
         {
             url: '^/savedsearches/{savedSearchId:int}/map',
@@ -261,17 +261,17 @@ function (
             }
         }
     )
-    .state(
+    /*.state(
         {
             name: 'posts.noui',
             url: '/map/noui',
-            controller: require('./views/map/post-view-noui.controller.js'),
-            template: require('./views/map/post-view-noui.html'),
+            controller: require('../map/post-view-noui.controller.js'),
+            template: require('../map/post-view-noui.html'),
             params: {
                 view: {value: 'noui', squash: true}
             }
         }
-    )
+    )*/
     .state(
         {
             name: 'postCreate',
