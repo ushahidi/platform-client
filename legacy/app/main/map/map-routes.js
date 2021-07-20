@@ -38,8 +38,8 @@ function (
         {
             name: 'posts.noui',
             url: '/map/noui',
-            controller: require('../map/post-view-noui.controller.js'),
-            template: require('../map/post-view-noui.html'),
+            controller: require('./post-view-noui.controller.js'),
+            template: require('./post-view-noui.html'),
             params: {
                 view: {value: 'noui', squash: true}
             }
