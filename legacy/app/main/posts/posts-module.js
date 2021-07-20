@@ -1,17 +1,5 @@
 angular.module('ushahidi.posts', [])
 
-/*
-// Shared directives + services
-.directive('postActions', require('./data/common/post-actions.directive.js'))
-.directive('postMetadata', require('./data/common/post-metadata.directive.js'))
-.service('PostMetadataService', require('./data/common/post-metadata.service.js'))
-.service('PostSurveyService', require('./data/common/post-survey.service.js'))
-
-// Post Locking
-.service('PostLockService', require('./data/common/post-lock.service.js'))
-.directive('postLock', require('./data/common/post-lock.directive.js'))
-*/
-
 // Detail Screen
 .directive('postMessages', require('./detail/post-messages.directive.js'))
 .directive('postAddForm', require('./detail/post-add-form.directive.js'))
@@ -21,7 +9,6 @@ angular.module('ushahidi.posts', [])
 .directive('postDetailMap', require('./detail/map.directive.js'))
 .directive('postDetailData', require('./detail/post-detail-data.directive.js'))
 .directive('postCategoryValue', require('./detail/post-category-value.directive.js'))
-//.service('PostActionsService', require('./data/common/post-actions.service.js'))
 
 // Create / Edit Screens
 .service('PostEntity', require('./modify/post-entity.service.js'))
@@ -43,22 +30,13 @@ angular.module('ushahidi.posts', [])
 .directive('filterPostOrderAscDesc', require('./views/post-toolbar/filters/filter-post-order-asc-desc.directive.js'))
 .directive('filterUnlockedOnTop', require('./views/post-toolbar/filters/filter-unlocked-on-top.directive.js'))
 .directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
-//.directive('surveyLanguageSelector', require('./data/common/survey-language-selector.directive.js'))
 .directive('postTranslationEditor', require('./modify/post-translation-editor.directive.js'))
 // Timeline, data and Map screen
 .service('PostViewService', require('./views/post-view.service.js'))
-//.directive('postViewMap', require('../map/post-view-map.directive.js'))
-//.directive('postCard', require('./data/views/post-card.directive.js'))
-//.directive('postPreviewMedia', require('./data/views/post-preview-media.directive.js'))
 .directive('addPostButton', require('./views/post-toolbar/add-post-button.directive.js'))
 .directive('addPostSurveyList', require('./views/post-toolbar/add-post-survey-list.directive.js'))
 .directive('addPostTextButton', require('./views/post-toolbar/add-post-text-button.directive.js'))
-//.directive('modeContext', require('../map/mode-context.directive.js'))
-//.directive('modeContextFormFilter', require('../map/mode-context-form-filter.directive.js'))
-//.directive('filterBySurveyDropdown', require('../map/filter-by-survey-dropdown.directive.js'))
-//.directive('postToolbar', require('./views/post-toolbar/post-toolbar.directive.js'))
-//.directive('filterByDatasource', require('../map/filter-by-datasource.directive.js'))
-//.directive('postViewData', require('./data/views/post-view-data.directive.js'))
+
 // Filters
 .directive('filterPosts', require('./views/post-toolbar/filters/filter-posts.directive.js'))
 .directive('filterCategory', require('./views/post-toolbar/filters/filter-category.directive.js'))
@@ -96,8 +74,6 @@ angular.module('ushahidi.posts', [])
 .directive('collectionModeContext', require('./collections/mode-context.directive.js'))
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
-//.directive('collectionToggleButton', require('./data/common/collection-toggle/collection-toggle-button.js'))
-//.directive('collectionToggleLink', require('./data/common/collection-toggle/collection-toggle-link.js'))
 
 .config(require('./posts-routes.js'))
 
