@@ -39,3 +39,7 @@ angular.module('ushahidi.map', [])
 .directive('postExport', require('./post-toolbar/share/post-export.directive.js'))
 
 .config(require('./map-routes.js'))
+
+.run(['Leaflet', function (L) {
+    L.Icon.Default.imagePath = '/img';
+}]);

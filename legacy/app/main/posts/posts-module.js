@@ -48,8 +48,3 @@ angular.module('ushahidi.posts', [])
 .directive('collectionListing', require('./collections/listing.directive.js'))
 
 .config(require('./posts-routes.js'))
-
-.run(['Leaflet', function (L) {
-    L.Icon.Default.imagePath = '/img';
-}])
-;
