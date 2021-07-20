@@ -2,10 +2,12 @@ angular.module('ushahidi.map', [])
 
 // Timeline, data and Map screen
 .directive('postViewMap', require('./post-view-map.directive.js'))
-.directive('modeContext', require('./mode-context.directive.js'))
-.directive('modeContextFormFilter', require('./mode-context-form-filter.directive.js'))
-.directive('filterBySurveyDropdown', require('./filter-by-survey-dropdown.directive.js'))
-.directive('filterByDatasource', require('./filter-by-datasource.directive.js'))
+
+//Mode context
+.directive('modeContext', require('./mode-context/mode-context.directive.js'))
+.directive('modeContextFormFilter', require('./mode-context/mode-context-form-filter.directive.js'))
+.directive('filterBySurveyDropdown', require('./mode-context/filter-by-survey-dropdown.directive.js'))
+.directive('filterByDatasource', require('./mode-context/filter-by-datasource.directive.js'))
 
 .directive('addPostButton', require('./post-toolbar/add-post-button.directive.js'))
 .directive('addPostSurveyList', require('./post-toolbar/add-post-survey-list.directive.js'))
