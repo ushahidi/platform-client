@@ -28,11 +28,30 @@ angular.module('ushahidi.posts', [])
 .directive('postToolbox', require('./modify/post-toolbox.directive.js'))
 .directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
 .directive('postTranslationEditor', require('./modify/post-translation-editor.directive.js'))
-// Timeline, data and Map screen
-.service('PostViewService', require('./views/post-view.service.js'))
-// @todo move elsewhere? Used in post-view and activity
-.directive('postViewUnavailable', require('./views/post-view-unavailable.directive.js'))
 
+// Post view service
+.service('PostViewService', require('./post-view.service.js'))
+.directive('addPostTextButton', require('./add-post-text-button.directive.js'))
+
+// Post editing workflows
+.directive('filterPostSortingOptions', require('./post-toolbar/filters/filter-post-sorting-options.directive.js'))
+.directive('filterPostOrderAscDesc', require('./post-toolbar/filters/filter-post-order-asc-desc.directive.js'))
+.directive('filterUnlockedOnTop', require('./post-toolbar/filters/filter-unlocked-on-top.directive.js'))
+
+// Filters
+.service('PostFilters', require('./post-toolbar/post-filters.service.js'))
+.directive('filterCategory', require('./post-toolbar/filters/filter-category.directive.js'))
+.directive('filterDate', require('./post-toolbar/filters/filter-date.directive.js'))
+.directive('filterForm', require('./post-toolbar/filters/filter-form.directive.js'))
+.directive('filterVisibleTo', require('./post-toolbar/filters/filter-visible-to.directive.js'))
+.directive('filterStatus', require('./post-toolbar/filters/filter-status.directive.js'))
+.directive('filterSource', require('./post-toolbar/filters/filter-source.directive.js'))
+.directive('filterLocation', require('./post-toolbar/filters/filter-location.directive.js'))
+.directive('filterHasLocation', require('./post-toolbar/filters/filter-has-location.directive.js'))
+.directive('postActiveSearchFilters', require('./post-toolbar/filters/active-search-filters.directive.js'))
+.service('FilterTransformers', require('./post-toolbar/filters/filter-transformers.service.js'))
+.directive('filtersDropdown', require('./post-toolbar/filters/filters-dropdown.directive.js'))
+.directive('filterSavedSearch', require('./post-toolbar/filters/filter-saved-search.directive.js'))
 
 .directive('savedSearchEditor', require('./savedsearches/editor-directive.js'))
 .directive('savedSearchCreate', require('./savedsearches/create-directive.js'))
