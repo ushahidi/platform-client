@@ -19,6 +19,7 @@ angular.module('ushahidi.map', [])
 .directive('filterUnlockedOnTop', require('./post-toolbar/filters/filter-unlocked-on-top.directive.js'))
 
 // Filters
+.directive('postToolbar', require('./post-toolbar/post-toolbar.directive.js'))
 .directive('filterPosts', require('./post-toolbar/filters/filter-posts.directive.js'))
 .directive('filterCategory', require('./post-toolbar/filters/filter-category.directive.js'))
 .directive('filterDate', require('./post-toolbar/filters/filter-date.directive.js'))
