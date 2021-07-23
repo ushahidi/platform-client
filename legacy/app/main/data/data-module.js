@@ -21,32 +21,31 @@ angular.module('ushahidi.data', [])
 .directive('postDetailMap', require('./post-detail/map.directive.js'))
 .directive('postDetailData', require('./post-detail/post-detail-data.directive.js'))
 .directive('postCategoryValue', require('./post-detail/post-category-value.directive.js'))
+// Post Locking
+.service('PostLockService', require('./post-detail/post-lock.service.js'))
+.directive('postLock', require('./post-detail/post-lock.directive.js'))
 
 // Create / Edit Screens
-.service('PostEntity', require('./post-edit/post-entity.service.js'))
-.service('PostEditService', require('./post-edit/post-edit.service.js'))
-.service('MediaEditService', require('./post-edit/media-edit.service.js'))
-.directive('postMedia', require('./post-edit/post-media.directive.js'))
-.directive('postVideoInput', require('./post-edit/post-video.directive.js'))
-.directive('postDatetime', require('./post-edit/post-datetime-value.directive.js'))
-.directive('postLocation', require('./post-edit/location.directive.js'))
-.directive('postRelation', require('./post-edit/post-relation.directive.js'))
+.service('PostEntity', require('./split-into-post-edit-and-create/post-entity.service.js'))
+.service('PostEditService', require('./split-into-post-edit-and-create/post-edit.service.js'))
+.service('MediaEditService', require('./split-into-post-edit-and-create/media-edit.service.js'))
+.directive('postMedia', require('./split-into-post-edit-and-create/post-media.directive.js'))
+.directive('postVideoInput', require('./split-into-post-edit-and-create/post-video.directive.js'))
+.directive('postDatetime', require('./split-into-post-edit-and-create/post-datetime-value.directive.js'))
+.directive('postLocation', require('./split-into-post-edit-and-create/location.directive.js'))
+.directive('postRelation', require('./split-into-post-edit-and-create/post-relation.directive.js'))
 
 // Post editing workflows
-.directive('postEditor', require('./post-edit/post-editor.directive.js'))
-.directive('postValueEdit', require('./post-edit/post-value-edit.directive.js'))
-.directive('postCategoryEditor', require('./post-edit/post-category-editor.js'))
-.directive('postTabs', require('./post-edit/post-tabs.directive.js'))
-.directive('postToolbox', require('./post-edit/post-toolbox.directive.js'))
-.directive('postDataEditor', require('./post-edit/post-data-editor.directive.js'))
-.directive('postTranslationEditor', require('./post-edit/post-translation-editor.directive.js'))
+.directive('postEditor', require('./split-into-post-edit-and-create/post-editor.directive.js'))
+.directive('postValueEdit', require('./split-into-post-edit-and-create/post-value-edit.directive.js'))
+.directive('postCategoryEditor', require('./split-into-post-edit-and-create/post-category-editor.js'))
+.directive('postTabs', require('./split-into-post-edit-and-create/post-tabs.directive.js'))
+.directive('postToolbox', require('./split-into-post-edit-and-create/post-toolbox.directive.js'))
+.directive('postDataEditor', require('./split-into-post-edit-and-create/post-data-editor.directive.js'))
+.directive('postTranslationEditor', require('./split-into-post-edit-and-create/post-translation-editor.directive.js'))
 
 // Shared directives + services
 .service('PostSurveyService', require('./no-groups-yet/post-survey.service.js'))
-
-// Post Locking
-.service('PostLockService', require('./no-groups-yet/post-lock.service.js'))
-.directive('postLock', require('./no-groups-yet/post-lock.directive.js'))
 
 // Post editing workflows
 .directive('surveyLanguageSelector', require('./no-groups-yet/survey-language-selector.directive.js'))
