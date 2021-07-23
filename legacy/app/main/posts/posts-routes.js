@@ -174,38 +174,6 @@ function (
     )
     .state(
         {
-            name: 'posts.data.detail',
-            url: '^/posts/:postId',
-            component: 'postDetailData',
-            params: {
-                activeCol: {value: 'post', squash: true}
-            },
-            resolve: {
-                //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    return PostsSdk.findPost($transition$.params().postId);
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            name: 'posts.data.edit',
-            url: '^/posts/:postId/edit',
-            component: 'postDataEditor',
-            params: {
-                activeCol: {value: 'post', squash: true}
-            },
-            resolve: {
-                //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    return PostsSdk.findPost($transition$.params().postId);
-                }]
-            }
-        }
-    )
-    .state(
-        {
             name: 'postCreate',
             url: '/posts/create/:id',
             controller: require('./modify/post-create.controller.js'),
