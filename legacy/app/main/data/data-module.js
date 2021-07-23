@@ -12,18 +12,22 @@ angular.module('ushahidi.data', [])
 .service('PostMetadataService', require('./post-card/post-metadata.service.js'))
 .directive('collectionToggleLink', require('./post-card/collection-toggle/collection-toggle-link.js'))
 
-// Detail Screen
-.directive('postMessages', require('./post-detail/post-messages.directive.js'))
-.directive('postAddForm', require('./post-detail/post-add-form.directive.js'))
-.directive('postValue', require('./post-detail/post-value.directive.js'))
-.directive('postMediaValue', require('./post-detail/post-media-value.directive.js'))
-.directive('postVideoView', require('./post-detail/post-video-value.directive.js'))
-.directive('postDetailMap', require('./post-detail/map.directive.js'))
-.directive('postDetailData', require('./post-detail/post-detail-data.directive.js'))
-.directive('postCategoryValue', require('./post-detail/post-category-value.directive.js'))
+// Post Detail
+.directive('postDetailData', require('./data-view-right/post-detail/post-detail-data.directive.js'))
+.directive('postDetailMap', require('./data-view-right/post-detail/map.directive.js'))
+.directive('postCategoryValue', require('./data-view-right/post-detail/post-category-value.directive.js'))
+.directive('postMediaValue', require('./data-view-right/post-detail/post-media-value.directive.js'))
+.directive('postValue', require('./data-view-right/post-detail/post-value.directive.js'))
+.directive('postVideoView', require('./data-view-right/post-detail/post-video-value.directive.js'))
+.directive('postAddForm', require('./data-view-right/post-detail/post-add-form.directive.js'))
+.directive('postMessages', require('./data-view-right/post-messages.directive.js'))
 // Post Locking
-.service('PostLockService', require('./post-detail/post-lock.service.js'))
-.directive('postLock', require('./post-detail/post-lock.directive.js'))
+.service('PostLockService', require('./data-view-right/post-detail/post-lock.service.js'))
+.directive('postLock', require('./data-view-right/post-detail/post-lock.directive.js'))
+
+// Post Edit
+.directive('postToolbox', require('./data-view-right/post-edit/post-toolbox.directive.js'))
+.directive('postDataEditor', require('./data-view-right/post-edit/post-data-editor.directive.js'))
 
 // Create / Edit Screens
 .service('PostEntity', require('./split-into-post-edit-and-create/post-entity.service.js'))
@@ -40,8 +44,6 @@ angular.module('ushahidi.data', [])
 .directive('postValueEdit', require('./split-into-post-edit-and-create/post-value-edit.directive.js'))
 .directive('postCategoryEditor', require('./split-into-post-edit-and-create/post-category-editor.js'))
 .directive('postTabs', require('./split-into-post-edit-and-create/post-tabs.directive.js'))
-.directive('postToolbox', require('./split-into-post-edit-and-create/post-toolbox.directive.js'))
-.directive('postDataEditor', require('./split-into-post-edit-and-create/post-data-editor.directive.js'))
 .directive('postTranslationEditor', require('./split-into-post-edit-and-create/post-translation-editor.directive.js'))
 
 // Shared directives + services
@@ -50,6 +52,6 @@ angular.module('ushahidi.data', [])
 // Post editing workflows
 .directive('surveyLanguageSelector', require('./no-groups-yet/survey-language-selector.directive.js'))
 
-.directive('collectionToggleButton', require('./no-groups-yet/collection-toggle/collection-toggle-button.js'))
+.directive('collectionToggleButton', require('./collection-toggle/collection-toggle-button.js'))
 
 .config(require('./data-routes.js'))
