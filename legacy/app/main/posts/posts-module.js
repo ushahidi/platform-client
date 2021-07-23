@@ -1,34 +1,5 @@
 angular.module('ushahidi.posts', [])
 
-// Detail Screen
-.directive('postMessages', require('./detail/post-messages.directive.js'))
-.directive('postAddForm', require('./detail/post-add-form.directive.js'))
-.directive('postValue', require('./detail/post-value.directive.js'))
-.directive('postMediaValue', require('./detail/post-media-value.directive.js'))
-.directive('postVideoView', require('./detail/post-video-value.directive.js'))
-.directive('postDetailMap', require('./detail/map.directive.js'))
-.directive('postDetailData', require('./detail/post-detail-data.directive.js'))
-.directive('postCategoryValue', require('./detail/post-category-value.directive.js'))
-
-// Create / Edit Screens
-.service('PostEntity', require('./modify/post-entity.service.js'))
-.service('PostEditService', require('./modify/post-edit.service.js'))
-.service('MediaEditService', require('./modify/media-edit.service.js'))
-.directive('postMedia', require('./modify/post-media.directive.js'))
-.directive('postVideoInput', require('./modify/post-video.directive.js'))
-.directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
-.directive('postLocation', require('./modify/location.directive.js'))
-.directive('postRelation', require('./modify/post-relation.directive.js'))
-
-// Post editing workflows
-.directive('postEditor', require('./modify/post-editor.directive.js'))
-.directive('postValueEdit', require('./modify/post-value-edit.directive.js'))
-.directive('postCategoryEditor', require('./modify/post-category-editor.js'))
-.directive('postTabs', require('./modify/post-tabs.directive.js'))
-.directive('postToolbox', require('./modify/post-toolbox.directive.js'))
-.directive('postDataEditor', require('./modify/post-data-editor.directive.js'))
-.directive('postTranslationEditor', require('./modify/post-translation-editor.directive.js'))
-
 // Post view service
 .service('PostViewService', require('./post-view.service.js'))
 .directive('addPostTextButton', require('./add-post-text-button.directive.js'))
