@@ -18,15 +18,13 @@ angular.module('ushahidi.map', [])
 .directive('filterBySurveyDropdown', require('./mode-context/filter-by-survey-dropdown.directive.js'))
 .directive('filterByDatasource', require('./mode-context/filter-by-datasource.directive.js'))
 
-// Add post
-.directive('addPostButton', require('./post-toolbar/add-post/add-post-button.directive.js'))
-.directive('addPostSurveyList', require('./post-toolbar/add-post/add-post-survey-list.directive.js'))
-
 // Post toolbar
 .directive('postToolbar', require('./post-toolbar/post-toolbar.directive.js'))
 .directive('filterPosts', require('./post-toolbar/filter-posts.directive.js'))
 .directive('sortAndFilterCounter', require('./post-toolbar/sort-and-filter-counter.directive.js'))
-
+// Add post
+.directive('addPostButton', require('./post-toolbar/add-post/add-post-button.directive.js'))
+.directive('addPostSurveyList', require('./post-toolbar/add-post/add-post-survey-list.directive.js'))
 // Share
 .directive('postShare', require('./post-toolbar/share/post-share.directive.js'))
 .directive('shareMenu', require('./post-toolbar/share/share-menu.directive.js'))
