@@ -3,15 +3,6 @@ angular.module('ushahidi.data', [])
 // Post-view-data
 .directive('postViewData', require('./post-view-data.directive.js'))
 
-// Post card related
-.directive('postCard', require('./post-card/post-card.directive.js'))
-.directive('postPreviewMedia', require('./post-card/post-preview-media.directive.js'))
-.directive('postActions', require('./post-card/post-actions.directive.js'))
-.service('PostActionsService', require('./post-card/post-actions.service.js'))
-.directive('postMetadata', require('./post-card/post-metadata.directive.js'))
-.service('PostMetadataService', require('./post-card/post-metadata.service.js'))
-.directive('collectionToggleLink', require('./post-card/collection-toggle/collection-toggle-link.js'))
-
 // Post Detail
 .directive('postDetailData', require('./data-view-right/post-detail/post-detail-data.directive.js'))
 .directive('postDetailMap', require('./data-view-right/post-detail/map.directive.js'))
