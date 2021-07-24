@@ -71,4 +71,14 @@ function (
             }
         }
     )
+
+    // Add post create route here for now
+    .state(
+        {
+            name: 'postCreate',
+            url: '/posts/create/:id',
+            controller: require('./post-create/post-create.controller.js'),
+            template: require('./post-create/main.html')
+        }
+    )
 }];

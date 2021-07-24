@@ -172,14 +172,6 @@ function (
             }
         }
     )
-    .state(
-        {
-            name: 'postCreate',
-            url: '/posts/create/:id',
-            controller: require('./modify/post-create.controller.js'),
-            template: require('./modify/main.html')
-        }
-    )
     // .state(
     //     {
     //         name: 'postEdit',

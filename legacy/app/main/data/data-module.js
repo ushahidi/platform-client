@@ -19,23 +19,25 @@ angular.module('ushahidi.data', [])
 // Post Edit
 .directive('postToolbox', require('./data-view-right/post-edit/post-toolbox.directive.js'))
 .directive('postDataEditor', require('./data-view-right/post-edit/post-data-editor.directive.js'))
+.directive('postTranslationEditor', require('./data-view-right/post-edit/post-translation-editor.directive.js'))
 
 // Create / Edit Screens
 .service('PostEntity', require('./split-into-post-edit-and-create/post-entity.service.js'))
 .service('PostEditService', require('./split-into-post-edit-and-create/post-edit.service.js'))
-.service('MediaEditService', require('./split-into-post-edit-and-create/media-edit.service.js'))
-.directive('postMedia', require('./split-into-post-edit-and-create/post-media.directive.js'))
-.directive('postVideoInput', require('./split-into-post-edit-and-create/post-video.directive.js'))
-.directive('postDatetime', require('./split-into-post-edit-and-create/post-datetime-value.directive.js'))
-.directive('postLocation', require('./split-into-post-edit-and-create/location.directive.js'))
-.directive('postRelation', require('./split-into-post-edit-and-create/post-relation.directive.js'))
+.service('MediaEditService', require('./edit-create/media-edit.service.js'))
+.directive('postMedia', require('./edit-create/post-media.directive.js'))
+.directive('postVideoInput', require('./edit-create/post-video.directive.js'))
+.directive('postDatetime', require('./edit-create/post-datetime-value.directive.js'))
+.directive('postLocation', require('./edit-create/location.directive.js'))
+.directive('postRelation', require('./edit-create/post-relation.directive.js'))
+
+// Post Create
+.directive('postEditor', require('./post-create/post-editor.directive.js'))
 
 // Post editing workflows
-.directive('postEditor', require('./split-into-post-edit-and-create/post-editor.directive.js'))
-.directive('postValueEdit', require('./split-into-post-edit-and-create/post-value-edit.directive.js'))
+.directive('postValueEdit', require('./edit-create/post-value-edit.directive.js'))
 .directive('postCategoryEditor', require('./split-into-post-edit-and-create/post-category-editor.js'))
-.directive('postTabs', require('./split-into-post-edit-and-create/post-tabs.directive.js'))
-.directive('postTranslationEditor', require('./split-into-post-edit-and-create/post-translation-editor.directive.js'))
+.directive('postTabs', require('./edit-create/post-tabs.directive.js'))
 
 // Shared directives + services
 .service('PostSurveyService', require('./no-groups-yet/post-survey.service.js'))
