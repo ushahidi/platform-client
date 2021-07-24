@@ -22,8 +22,8 @@ angular.module('ushahidi.data', [])
 .directive('postTranslationEditor', require('./data-view-right/post-edit/post-translation-editor.directive.js'))
 
 // Create / Edit Screens
-.service('PostEntity', require('./split-into-post-edit-and-create/post-entity.service.js'))
-.service('PostEditService', require('./split-into-post-edit-and-create/post-edit.service.js'))
+.service('PostEntity', require('./edit-create/not-grouped-yet/post-entity.service.js'))
+.service('PostEditService', require('./edit-create/not-grouped-yet/post-edit.service.js'))
 .service('MediaEditService', require('./edit-create/media-edit.service.js'))
 .directive('postMedia', require('./edit-create/post-media.directive.js'))
 .directive('postVideoInput', require('./edit-create/post-video.directive.js'))
@@ -36,7 +36,7 @@ angular.module('ushahidi.data', [])
 
 // Post editing workflows
 .directive('postValueEdit', require('./edit-create/post-value-edit.directive.js'))
-.directive('postCategoryEditor', require('./split-into-post-edit-and-create/post-category-editor.js'))
+.directive('postCategoryEditor', require('./edit-create/post-category-editor.js'))
 .directive('postTabs', require('./edit-create/post-tabs.directive.js'))
 
 // Shared directives + services
