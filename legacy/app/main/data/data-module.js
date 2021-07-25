@@ -25,7 +25,6 @@ angular.module('ushahidi.data', [])
 
 // Common (edit, detail and or create)
 .directive('postMessages', require('./common/post-edit-detail/post-messages.directive.js'))
-.directive('surveyLanguageSelector', require('./common/post-edit-detail-create/survey-language-selector.directive.js'))
 .service('MediaEditService', require('./common/post-edit-create/media-edit.service.js'))
 .directive('postMedia', require('./common/post-edit-create/post-media.directive.js'))
 .directive('postVideoInput', require('./common/post-edit-create/post-video.directive.js'))
@@ -35,12 +34,13 @@ angular.module('ushahidi.data', [])
 .directive('postValueEdit', require('./common/post-edit-create/post-value-edit.directive.js'))
 .directive('postCategoryEditor', require('./common/post-edit-create/post-category-editor.js'))
 .directive('postTabs', require('./common/post-edit-create/post-tabs.directive.js'))
+.directive('surveyLanguageSelector', require('./common/post-edit-detail-create/survey-language-selector.directive.js'))
+.service('PostEntity', require('./common/post-edit-detail-create/post-entity.service.js'))
 
 // Collection toggle button
 .directive('collectionToggleButton', require('./collection-toggle/collection-toggle-button.js'))
 
 // Not yet grouped
-.service('PostEntity', require('./not-grouped-yet/post-entity.service.js'))
 .service('PostEditService', require('./not-grouped-yet/post-edit.service.js'))
 .service('PostSurveyService', require('./not-grouped-yet/post-survey.service.js'))
 
