@@ -1,4 +1,6 @@
-module.exports = [
+angular.module('ushahidi.data.routes', [])
+
+.config([
     '$stateProvider',
     '$urlMatcherFactoryProvider',
 function (
@@ -81,4 +83,4 @@ function (
             template: require('./post-create/main.html')
         }
     )
-}];
+}]);

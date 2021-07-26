@@ -26,7 +26,7 @@ window.ushahidi = window.ushahidi || {};
 require('./map/map-module.js');
 require('./common/common-module.js');
 require('./main/main-module.js');
-require('./data/data-module.js');
+require('./data/data-routes.js');
 require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
 import ravenModule from './common/raven/raven';
@@ -88,7 +88,7 @@ angular
         'ushahidi.map',
         'ushahidi.common',
         'ushahidi.main',
-        'ushahidi.data',
+        'ushahidi.data.routes',
         'ushahidi.settings.routes',
         'ushahidi.activity.routes',
         'ui.bootstrap.dropdown',

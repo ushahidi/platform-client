@@ -1,4 +1,4 @@
-angular.module('ushahidi.data', [])
+export const DATA_MODULE = angular.module('ushahidi.data', [])
 
 // Post-view-data
 .directive('postViewData', require('./post-view-data.directive.js'))
@@ -43,5 +43,3 @@ angular.module('ushahidi.data', [])
 // Not yet grouped
 .service('PostEditService', require('./not-grouped-yet/post-edit.service.js'))
 .service('PostSurveyService', require('./not-grouped-yet/post-survey.service.js'))
-
-.config(require('./data-routes.js'))
