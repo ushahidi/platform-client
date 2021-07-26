@@ -38,7 +38,13 @@ function (
                         $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
                     }
                 }
-            }]
+            }],
+            lazyLoad: function ($transition$) {
+                const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
+                return System.import('/data.js').then(mod => {
+                    $ocLazyLoad.load(mod.DATA_MODULE);
+                });
+            }
         }
     )
     .state(
