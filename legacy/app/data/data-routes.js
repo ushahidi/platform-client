@@ -86,7 +86,13 @@ function (
             name: 'postCreate',
             url: '/posts/create/:id',
             controller: require('./post-create/post-create.controller.js'),
-            template: require('./post-create/main.html')
+            template: require('./post-create/main.html'),
+            lazyLoad: function ($transition$) {
+                const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
+                return System.import('/data.js').then(mod => {
+                    $ocLazyLoad.load(mod.DATA_MODULE);
+                });
+            }
         }
     )
 }]);
