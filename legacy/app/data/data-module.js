@@ -12,7 +12,6 @@ export const DATA_MODULE = angular.module('ushahidi.data', [])
 .directive('postVideoView', require('./post-detail/post-video-value.directive.js'))
 .directive('postAddForm', require('./post-detail/post-add-form.directive.js'))
 // Post Locking
-.service('PostLockService', require('./post-detail/post-lock.service.js'))
 .directive('postLock', require('./post-detail/post-lock.directive.js'))
 
 // Post Edit
@@ -42,4 +41,3 @@ export const DATA_MODULE = angular.module('ushahidi.data', [])
 
 // Not yet grouped
 .service('PostEditService', require('./not-grouped-yet/post-edit.service.js'))
-.service('PostSurveyService', require('./not-grouped-yet/post-survey.service.js'))

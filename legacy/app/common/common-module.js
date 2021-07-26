@@ -7,6 +7,10 @@ angular
         'ushahidi.user-profile'
     ])
 
+    //From data module
+    .service('PostSurveyService', require('./services/post-survey.service.js'))
+    .service('PostLockService', require('./services/post-lock.service.js'))
+
     // Authentication
     .service('Authentication', require('./auth/authentication.service.js'))
     .service('Registration', require('./auth/registration.service.js'))
