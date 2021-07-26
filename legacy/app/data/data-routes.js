@@ -9,6 +9,11 @@ function (
 ) {
     $urlMatcherFactoryProvider.strictMode(false);
 
+    /* =================================================
+    Lazy load data module depending on where user goes to 
+    first views/data, post-create (and postcards)
+     ==================================================*/
+
     $stateProvider
     .state(
         {
@@ -79,8 +84,6 @@ function (
             }
         }
     )
-
-    // Add post create route here for now
     .state(
         {
             name: 'postCreate',
