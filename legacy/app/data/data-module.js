@@ -39,3 +39,7 @@ export const DATA_MODULE = angular.module('ushahidi.data', [])
 
 // Collection toggle button
 .directive('collectionToggleButton', require('./collection-toggle/collection-toggle-button.js'))
+
+// Post view service
+.service('PostViewService', require('./post-view.service.js'))
+.directive('addPostTextButton', require('./add-post-text-button.directive.js'))

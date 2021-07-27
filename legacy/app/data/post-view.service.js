@@ -30,9 +30,9 @@ function (
     };
 
     function getScope() {
-        /*if (scope) {
+        if (scope) {
             scope.$destroy();
-        }*/
+        }
         scope = $rootScope.$new();
         return scope;
     }

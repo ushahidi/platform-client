@@ -1,9 +1,5 @@
 angular.module('ushahidi.posts', [])
 
-// Post view service
-.service('PostViewService', require('./post-view.service.js'))
-.directive('addPostTextButton', require('./add-post-text-button.directive.js'))
-
 // Post editing workflows
 .directive('filterPostSortingOptions', require('./filters/filter-post-sorting-options.directive.js'))
 .directive('filterPostOrderAscDesc', require('./filters/filter-post-order-asc-desc.directive.js'))
