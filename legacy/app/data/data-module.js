@@ -33,11 +33,9 @@ export const DATA_MODULE = angular.module('ushahidi.data', [])
 .directive('postValueEdit', require('./common/post-edit-create/post-value-edit.directive.js'))
 .directive('postCategoryEditor', require('./common/post-edit-create/post-category-editor.js'))
 .directive('postTabs', require('./common/post-edit-create/post-tabs.directive.js'))
+.service('PostEditService', require('./common/post-edit-create/post-edit.service.js'))
 .directive('surveyLanguageSelector', require('./common/post-edit-detail-create/survey-language-selector.directive.js'))
 .service('PostEntity', require('./common/post-edit-detail-create/post-entity.service.js'))
 
 // Collection toggle button
 .directive('collectionToggleButton', require('./collection-toggle/collection-toggle-button.js'))
-
-// Not yet grouped
-.service('PostEditService', require('./not-grouped-yet/post-edit.service.js'))
