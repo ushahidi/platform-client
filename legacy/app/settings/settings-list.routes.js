@@ -74,12 +74,6 @@ module.exports = [
                 template: require('./surveys/targeted-surveys/targeted-survey-edit.html')
             })
             .state({
-                name: 'settings.surveys.id',
-                url: '/:action/:id',
-                controller: require('./surveys/edit.controller.js'),
-                template: require('./surveys/survey-edit.html')
-            })
-            .state({
                 name: 'settings.categories',
                 url: '/settings/categories',
                 controller: require('./categories/categories.controller.js'),

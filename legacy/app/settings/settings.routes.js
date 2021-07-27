@@ -47,5 +47,17 @@ angular.module('ushahidi.settings.routes', [])
                     });
                 }
             })
+            .state({
+                name: 'settings.surveys.id',
+                url: '/:action/:id',
+                controller: require('./surveys/edit.controller.js'),
+                template: require('./surveys/survey-edit.html'),
+                lazyLoad: function ($transition$) {
+                    const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
+                    return System.import('/settings.js').then(mod => {
+                        $ocLazyLoad.load(mod.SETTINGS_MODULE);
+                    });
+                }
+            })
     }
 ]);
