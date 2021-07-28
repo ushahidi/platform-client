@@ -31,5 +31,3 @@ export const POSTS_MODULE = angular.module('ushahidi.posts', [])
 .directive('collectionModeContext', require('./collections/mode-context.directive.js'))
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
-
-.config(require('./posts-routes.js'))
