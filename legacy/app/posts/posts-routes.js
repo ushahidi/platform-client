@@ -1,4 +1,7 @@
-module.exports = [
+
+angular.module('ushahidi.posts.routes', [])
+
+.config([
     '$stateProvider',
     '$urlMatcherFactoryProvider',
 function (
@@ -182,4 +185,4 @@ function (
     // )
     ;
 
-}];
+}]);

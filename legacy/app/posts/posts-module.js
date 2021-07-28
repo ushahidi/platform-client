@@ -1,4 +1,4 @@
-angular.module('ushahidi.posts', [])
+export const POSTS_MODULE = angular.module('ushahidi.posts', [])
 
 // Post editing workflows
 .directive('filterPostSortingOptions', require('./filters/filter-post-sorting-options.directive.js'))
@@ -28,7 +28,6 @@ angular.module('ushahidi.posts', [])
 
 .directive('savedSearchModeContext', require('./savedsearches/mode-context.directive.js'))
 
-.service('CollectionsService', require('./collections/collections.service.js'))
 .directive('collectionModeContext', require('./collections/mode-context.directive.js'))
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
