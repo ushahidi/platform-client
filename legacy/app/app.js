@@ -26,7 +26,6 @@ window.ushahidi = window.ushahidi || {};
 require('./map/map-module.js');
 require('./common/common-module.js');
 require('./main/main-module.js');
-require('./posts/posts-routes.js');
 require('./data/data-routes.js');
 require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
@@ -89,7 +88,6 @@ angular
         'ushahidi.map',
         'ushahidi.common',
         'ushahidi.main',
-        'ushahidi.posts.routes',
         'ushahidi.data.routes',
         'ushahidi.settings.routes',
         'ushahidi.activity.routes',
