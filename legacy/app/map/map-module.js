@@ -1,4 +1,6 @@
-angular.module('ushahidi.map', [])
+angular.module('ushahidi.map', [
+    //'ushahidi.posts'
+])
 
 // Map view
 .directive('postViewMap', require('./post-view-map.directive.js'))
@@ -36,3 +38,5 @@ angular.module('ushahidi.map', [])
 .run(['Leaflet', function (L) {
     L.Icon.Default.imagePath = '/img';
 }]);
+
+//require('./posts/posts-module.js');

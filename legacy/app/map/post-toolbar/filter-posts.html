@@ -28,6 +28,7 @@
                     ng-click="toggleDropdown($event)"
                     ng-keyup="toggleDropdown($event)"
                     ng-keypress="toggleDropdown($event)"
+                    ng-focus="lazyLoadPostsRemnant()"
                 />
                 <svg
                     class="iconic"
@@ -56,7 +57,7 @@
 
     <!-- Toggle Filters show/hide -->
     <div uib-dropdown-toggle class="searchbar-options">
-        <button class="searchbar-options-filter button">
+        <button class="searchbar-options-filter button" ng-click="lazyLoadPostsRemnant()">
             <sort-and-filter-counter></sort-and-filter-counter>
         </button>
     </div>

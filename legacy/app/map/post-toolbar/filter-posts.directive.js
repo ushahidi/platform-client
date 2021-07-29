@@ -34,6 +34,11 @@ function FilterPostsController(
     $element,
     FocusTrap
 ) {
+
+    $scope.lazyLoadPostsRemnant = function () {
+        return System.import('/posts-remnant.js').then(mod => { mod.POSTS_MODULE });
+    }
+
     function dropdownContainerLink() {
         let container = document.querySelector('#dropdown-window');
         let trap = FocusTrap.createFocusTrap('#dropdown-window');

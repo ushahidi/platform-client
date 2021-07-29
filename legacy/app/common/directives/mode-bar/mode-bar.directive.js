@@ -27,6 +27,11 @@ function (
         },
         template: require('./mode-bar.html'),
         link: function ($scope, $element, $attrs) {
+
+            $scope.lazyLoadPostsRemnant = function () {
+                return System.import('/posts-remnant.js').then(mod => { mod.POSTS_MODULE });
+            }
+            
             $scope.moreActive = false;
             $scope.isActivityAvailable = false;
             $scope.canRegister = false;
