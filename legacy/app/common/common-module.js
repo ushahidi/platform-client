@@ -4,7 +4,8 @@ angular
         'ushahidi.common.dropdown',
         'ushahidi.common.modal',
         'ushahidi.common.custom-on-change',
-        'ushahidi.user-profile'
+        'ushahidi.user-profile',
+        'ushahidi.donation'
     ])
 
     //From posts module
@@ -277,3 +278,4 @@ require('./directives/dropdown.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./user-profile/user-profile-module.js');
+require('./donation/donation-module.js');
