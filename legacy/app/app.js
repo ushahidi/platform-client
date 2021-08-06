@@ -29,6 +29,7 @@ require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
 import ravenModule from './common/raven/raven';
 import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
+
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
@@ -229,4 +230,12 @@ angular
         function (VerifierService) {
             VerifierService.debugModeCheck();
         }
-    ]);
+    ])
+    .run(['$rootScope',function ($rootScope) {
+        let event = new CustomEvent('newTitle', { title: '' });
+        $rootScope.$on('setPageTitle', function (ev, title) {
+            // Sending the page-title to the newTitle-event to be consumed by root-application
+            event.title = title;
+            window.dispatchEvent(event);
+        });
+    }]);
