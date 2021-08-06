@@ -198,7 +198,6 @@ angular
     .directive('modalBody', require('./directives/modal-body.directive.js'))
     .directive('layoutClass', require('./directives/layout-class.directive.js'))
     .directive('embedOnly', require('./directives/embed-only.directive.js'))
-    .directive('ushLogo', require('./directives/ush-logo.directive.js'))
     .directive(
         'filterSearchbar',
         require('./directives/filter-system/filter-searchbar.js')
@@ -255,15 +254,6 @@ angular
     // Use language settings from config
     .run(require('./global/language-settings.js'))
 
-    .run([
-        '$templateCache',
-        function ($templateCache) {
-            $templateCache.put(
-                'common/directives/mode-bar/ushahidi-logo.html',
-                require('../mode-bar/ushahidi-logo.html')
-            );
-        }
-    ])
     .factory('Verifier', function () {
         return require('./verifier/verifier.js');
     });
