@@ -212,10 +212,6 @@ angular
         require('./directives/filter-system/overflow-toggle.js')
     )
     .directive('focus', require('./directives/focus.js'))
-    .directive(
-        'modeBar',
-        require('./directives/mode-bar/mode-bar.directive.js')
-    )
     .directive('fileUpload', require('./directives/file-upload.directive.js'))
     .directive(
         'roleSelector',
@@ -264,7 +260,7 @@ angular
         function ($templateCache) {
             $templateCache.put(
                 'common/directives/mode-bar/ushahidi-logo.html',
-                require('./directives/mode-bar/ushahidi-logo.html')
+                require('../mode-bar/ushahidi-logo.html')
             );
         }
     ])

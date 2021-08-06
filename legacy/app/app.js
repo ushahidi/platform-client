@@ -23,6 +23,7 @@ require('oclazyload');
 window.ushahidi = window.ushahidi || {};
 
 // Load ushahidi modules
+require('./mode-bar/mode-bar.module.js');
 require('./map/map-module.js');
 require('./common/common-module.js');
 require('./posts/posts-routes.js');
@@ -85,6 +86,7 @@ angular
         'angular-cache',
         'linkify',
         ravenModule,
+        'ushahidi.modebar',
         'ushahidi.map',
         'ushahidi.common',
         'ushahidi.posts.routes',
