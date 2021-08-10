@@ -6,7 +6,7 @@ function (
     $urlMatcherFactoryProvider
 ) {
     $urlMatcherFactoryProvider.strictMode(false);
-
+    
     let resolveCollection = ['$transition$', 'CollectionEndpoint', 'PostFilters', function ($transition$, CollectionEndpoint, PostFilters) {
         if ($transition$.params().collectionId) {
             return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
@@ -77,37 +77,6 @@ function (
             }]
         }
     )
-    .state(
-        {
-            url: '/views/data',
-            name: 'posts.data',
-            params: {
-                filterState: {value: null, squash: true},
-                activeCol: {value: 'timeline', squash: true}
-            },
-            component: 'postViewData',
-            resolve: {
-                /**
-                 * This is enabling the feature of loading with a selectedPost "selected" in the data mode left side.
-                 * Nothing happens if there no postId except for not having a selectedPost.
-                  */
-                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    if ($transition$.params().postId) {
-                        return PostsSdk.findPost($transition$.params().postId)
-                    }
-                }]
-            },
-            onEnter: ['$state', 'PostFilters', 'post', function ($state, PostFilters, post) {
-                if (!post) {
-                    if (PostFilters.getMode() === 'savedsearch') {
-                        $state.go('posts.data.savedsearch', {savedSearchId: PostFilters.getModeId()});
-                    } else if (PostFilters.getMode() === 'collection') {
-                        $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
-                    }
-                }
-            }]
-        }
-    )
 
     /**
      * @uirouter-refactor
@@ -158,32 +127,6 @@ function (
     )
     .state(
         {
-            name: 'posts.map',
-            abstract: true,
-            component: 'postViewMap',
-            params: {
-                filterState: {value: null, squash: true}
-            }
-        }
-    )
-    .state(
-        {
-            url: '/views/map',
-            name: 'posts.map.all',
-            views: {
-                'mode-context': 'modeContext'
-            },
-            onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
-                if (PostFilters.getMode() === 'savedsearch') {
-                    $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
-                } else if (PostFilters.getMode() === 'collection') {
-                    $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
-                }
-            }]
-        }
-    )
-    .state(
-        {
             url: '^/savedsearches/{savedSearchId:int}/map',
             name: 'posts.map.savedsearch',
             views: {
@@ -229,57 +172,6 @@ function (
             }
         }
     )
-    .state(
-        {
-            name: 'posts.data.detail',
-            url: '^/posts/:postId',
-            component: 'postDetailData',
-            params: {
-                activeCol: {value: 'post', squash: true}
-            },
-            resolve: {
-                //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    return PostsSdk.findPost($transition$.params().postId);
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            name: 'posts.data.edit',
-            url: '^/posts/:postId/edit',
-            component: 'postDataEditor',
-            params: {
-                activeCol: {value: 'post', squash: true}
-            },
-            resolve: {
-                //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
-                    return PostsSdk.findPost($transition$.params().postId);
-                }]
-            }
-        }
-    )
-    .state(
-        {
-            name: 'posts.noui',
-            url: '/map/noui',
-            controller: require('./views/post-view-noui.controller.js'),
-            template: require('./views/post-view-noui.html'),
-            params: {
-                view: {value: 'noui', squash: true}
-            }
-        }
-    )
-    .state(
-        {
-            name: 'postCreate',
-            url: '/posts/create/:id',
-            controller: require('./modify/post-create.controller.js'),
-            template: require('./modify/main.html')
-        }
-    )
     // .state(
     //     {
     //         name: 'postEdit',
@@ -288,6 +180,45 @@ function (
     //         template: require('./modify/main.html')
     //     }
     // )
-    ;
+    
+    
+    // Post view map route(s)
 
+    .state(
+        {
+            name: 'posts.map',
+            abstract: true,
+            component: 'postViewMap',
+            params: {
+                filterState: {value: null, squash: true}
+            }
+        }
+    )
+    .state(
+        {
+            url: '/views/map',
+            name: 'posts.map.all',
+            views: {
+                'mode-context': 'modeContext'
+            },
+            onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
+                if (PostFilters.getMode() === 'savedsearch') {
+                    $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                } else if (PostFilters.getMode() === 'collection') {
+                    $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
+                }
+            }]
+        }
+    )
+    .state(
+        {
+            name: 'posts.noui',
+            url: '/map/noui',
+            controller: require('./post-view-noui.controller.js'),
+            template: require('./post-view-noui.html'),
+            params: {
+                view: {value: 'noui', squash: true}
+            }
+        }
+    );
 }];
