@@ -4,7 +4,8 @@ angular
         'ushahidi.common.dropdown',
         'ushahidi.common.modal',
         'ushahidi.common.custom-on-change',
-        'ushahidi.user-profile'
+        'ushahidi.user-profile',
+        'ushahidi.donation'
     ])
 
     //From posts module
@@ -175,7 +176,6 @@ angular
     .directive('modalBody', require('./directives/modal-body.directive.js'))
     .directive('layoutClass', require('./directives/layout-class.directive.js'))
     .directive('embedOnly', require('./directives/embed-only.directive.js'))
-    .directive('ushLogo', require('./directives/ush-logo.directive.js'))
     .directive(
         'filterSearchbar',
         require('./directives/filter-system/filter-searchbar.js')
@@ -189,10 +189,6 @@ angular
         require('./directives/filter-system/overflow-toggle.js')
     )
     .directive('focus', require('./directives/focus.js'))
-    .directive(
-        'modeBar',
-        require('./directives/mode-bar/mode-bar.directive.js')
-    )
     .directive('fileUpload', require('./directives/file-upload.directive.js'))
     .directive(
         'roleSelector',
@@ -236,15 +232,6 @@ angular
     // Use language settings from config
     .run(require('./global/language-settings.js'))
 
-    .run([
-        '$templateCache',
-        function ($templateCache) {
-            $templateCache.put(
-                'common/directives/mode-bar/ushahidi-logo.html',
-                require('./directives/mode-bar/ushahidi-logo.html')
-            );
-        }
-    ])
     .factory('Verifier', function () {
         return require('./verifier/verifier.js');
     });
@@ -255,3 +242,4 @@ require('./directives/dropdown.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./user-profile/user-profile-module.js');
+require('./donation/donation-module.js');
