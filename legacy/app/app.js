@@ -25,6 +25,7 @@ window.ushahidi = window.ushahidi || {};
 // Load ushahidi modules
 require('./map/map-module.js');
 require('./common/common-module.js');
+require('./auth/auth-module.js');
 require('./main/main-module.js');
 require('./data/data-routes.js');
 require('./settings/settings.routes.js');
@@ -87,6 +88,7 @@ angular
         ravenModule,
         'ushahidi.map',
         'ushahidi.common',
+        'ushahidi.auth',
         'ushahidi.main',
         'ushahidi.data.routes',
         'ushahidi.settings.routes',
