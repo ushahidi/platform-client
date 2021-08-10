@@ -19,6 +19,7 @@
     "lint:legacy": "cd legacy && npm run lint",
     "lint:root": "cd root && npm run lint",
     "lint:utilities": "cd utilities && npm run lint",
+    "install": "cd api && npm install && cd .. && cd root && npm install && cd .. && cd legacy && npm install && cd .. && cd utilities && npm install && cd ..",
     "serve": "node ./server/scripts/start.js && concurrently \"yarn serve:apps\" \"yarn serve:base-wait\" \"yarn show-ready\"",
     "serve:apps": "concurrently \"yarn serve:modules\" \"yarn watch:legacy\"",
     "serve:modules": "concurrently \"yarn serve:api\" \"yarn serve:utilities\"",

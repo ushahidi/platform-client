@@ -26,7 +26,8 @@ window.ushahidi = window.ushahidi || {};
 require('./mode-bar/mode-bar.module.js');
 require('./map/map-module.js');
 require('./common/common-module.js');
-require('./posts/posts-routes.js');
+require('./auth/auth-module.js');
+require('./main/main-module.js');
 require('./data/data-routes.js');
 require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
@@ -89,7 +90,8 @@ angular
         'ushahidi.modebar',
         'ushahidi.map',
         'ushahidi.common',
-        'ushahidi.posts.routes',
+        'ushahidi.auth',
+        'ushahidi.main',
         'ushahidi.data.routes',
         'ushahidi.settings.routes',
         'ushahidi.activity.routes',

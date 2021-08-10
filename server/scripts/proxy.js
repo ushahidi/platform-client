@@ -34,7 +34,6 @@ app.use(
             "/0.ushahidi-legacy-app.js",
             "/1.ushahidi-legacy-app.js",
             "/data.js",
-            "/posts",
             "/activity.js",
             "/settings.js"
         ],

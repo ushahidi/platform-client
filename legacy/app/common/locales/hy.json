@@ -24,6 +24,10 @@
         },
         "donate": "Նվիրաբերել",
         "donation": "Նվիրաբերություն",
+        "disable_monetization": "Disable Monetization",
+        "enable_monetization": "Enable Monetization",
+        "enable_monetization_error": "Fill in required fields above before enabling monetization.",
+        "enable_monetization_info": "Monetization is currently disabled.",
         "intercom": {
             "intercom": "Intercom",
             "description": "Կապ հաստատել «Ushahidi»-ի անձնակազմի հետ չատով օգնություն ստանալու համար"
