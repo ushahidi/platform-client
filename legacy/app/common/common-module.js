@@ -4,30 +4,15 @@ angular
         'ushahidi.common.dropdown',
         'ushahidi.common.modal',
         'ushahidi.common.custom-on-change',
-        'ushahidi.user-profile'
+        'ushahidi.user-profile',
+        'ushahidi.donation'
     ])
 
-    // Authentication
-    .service('Authentication', require('./auth/authentication.service.js'))
-    .service('Registration', require('./auth/registration.service.js'))
-    .service('Session', require('./auth/session.service.js'))
-    .service('PasswordReset', require('./auth/password-reset.service.js'))
-    .service('TermsOfService', require('./auth/tos.service.js'))
-    .service(
-        'DemoDeploymentService',
-        require('./auth/demo-deployment.service.js')
-    )
-    .directive('login', require('./auth/login.directive.js'))
-    .directive('register', require('./auth/register.directive.js'))
-    .directive('passwordReset', require('./auth/password-reset.directive.js'))
-    .directive(
-        'passwordResetConfirm',
-        require('./auth/password-reset-confirm.directive.js')
-    )
-    .directive('termsOfService', require('./auth/tos.directive.js'))
-    .directive('demoDeployment', require('./auth/demo-deployment.directive.js'))
-    .config(require('./auth/authentication-interceptor.config.js'))
-    .run(require('./auth/authentication-events.run.js'))
+    //From posts module
+    .service('PostSurveyService', require('./services/post-survey.service.js'))
+    .service('PostLockService', require('./services/post-lock.service.js'))
+    .service('PostFilters', require('./services/post-filters.service.js'))
+    .service('CollectionsService', require('./services/collections.service.js'))
 
     // Notifications
     .service('Notify', require('./notifications/notify.service.js'))
@@ -191,7 +176,6 @@ angular
     .directive('modalBody', require('./directives/modal-body.directive.js'))
     .directive('layoutClass', require('./directives/layout-class.directive.js'))
     .directive('embedOnly', require('./directives/embed-only.directive.js'))
-    .directive('ushLogo', require('./directives/ush-logo.directive.js'))
     .directive(
         'filterSearchbar',
         require('./directives/filter-system/filter-searchbar.js')
@@ -205,10 +189,6 @@ angular
         require('./directives/filter-system/overflow-toggle.js')
     )
     .directive('focus', require('./directives/focus.js'))
-    .directive(
-        'modeBar',
-        require('./directives/mode-bar/mode-bar.directive.js')
-    )
     .directive('fileUpload', require('./directives/file-upload.directive.js'))
     .directive(
         'roleSelector',
@@ -252,15 +232,6 @@ angular
     // Use language settings from config
     .run(require('./global/language-settings.js'))
 
-    .run([
-        '$templateCache',
-        function ($templateCache) {
-            $templateCache.put(
-                'common/directives/mode-bar/ushahidi-logo.html',
-                require('./directives/mode-bar/ushahidi-logo.html')
-            );
-        }
-    ])
     .factory('Verifier', function () {
         return require('./verifier/verifier.js');
     });
@@ -271,3 +242,4 @@ require('./directives/dropdown.js');
 require('./directives/modal.js');
 require('./directives/custom-on-change.js');
 require('./user-profile/user-profile-module.js');
+require('./donation/donation-module.js');

@@ -55,19 +55,6 @@ module.exports = [
                     exportJob: null
                 }
             })
-
-            .state({
-                name: 'settings.surveys',
-                url: '/settings/surveys',
-                controller: require('./surveys/surveys.controller.js'),
-                template: require('./surveys/surveys.html')
-            })
-            .state({
-                name: 'settings.surveys.create',
-                url: '/create',
-                controller: require('./surveys/edit.controller.js'),
-                template: require('./surveys/survey-edit.html')
-            })
             .state({
                 name: 'settings.surveys.targeted',
                 url: '/targeted-survey'
@@ -84,12 +71,6 @@ module.exports = [
                 url: '/targeted-survey/published/:id',
                 controller: require('./surveys/targeted-surveys/targeted-edit.controller.js'),
                 template: require('./surveys/targeted-surveys/targeted-survey-edit.html')
-            })
-            .state({
-                name: 'settings.surveys.id',
-                url: '/:action/:id',
-                controller: require('./surveys/edit.controller.js'),
-                template: require('./surveys/survey-edit.html')
             })
             .state({
                 name: 'settings.categories',
@@ -162,12 +143,6 @@ module.exports = [
                 url: '/:id',
                 controller: require('./webhooks/webhooks.controller.js'),
                 template: require('./webhooks/webhooks-edit.html')
-            })
-            .state({
-                name: 'settings.datasources',
-                url: '/settings/datasources',
-                controller: require('./datasources/datasources.controller.js'),
-                template: require('./datasources/datasources.html')
             })
             .state({
                 name: 'settings.plan',
