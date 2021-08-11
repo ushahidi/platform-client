@@ -52,10 +52,6 @@ angular.module('ushahidi.map', [])
 
 // Saved search
 .directive('savedSearchEditor', require('./savedsearches/editor-directive.js'))
-.directive('savedSearchCreate', require('./savedsearches/create-directive.js'))
-.directive('savedSearchUpdate', require('./savedsearches/update-directive.js'))
-.directive('savedSearchModal', require('./savedsearches/saved-search-modal.directive.js'))
-.directive('savedSearchListEditorModal', require('./savedsearches/saved-search-list-editor-modal.directive.js'))
 .directive('savedSearchModeContext', require('./savedsearches/mode-context.directive.js'))
 
 // Collection
