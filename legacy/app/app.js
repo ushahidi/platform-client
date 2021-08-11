@@ -27,7 +27,6 @@ require('./mode-bar/mode-bar.module.js');
 require('./map/map-module.js');
 require('./common/common-module.js');
 require('./auth/auth-module.js');
-require('./main/main-module.js');
 require('./data/data-routes.js');
 require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
@@ -91,7 +90,6 @@ angular
         'ushahidi.map',
         'ushahidi.common',
         'ushahidi.auth',
-        'ushahidi.main',
         'ushahidi.data.routes',
         'ushahidi.settings.routes',
         'ushahidi.activity.routes',
