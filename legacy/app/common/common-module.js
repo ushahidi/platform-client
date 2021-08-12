@@ -196,10 +196,6 @@ angular
     )
     .directive('addCategory', require('./directives/add-category.directive.js'))
     .directive(
-        'categorySelector',
-        require('./directives/category-selector.directive.js')
-    )
-    .directive(
         'languageSwitch',
         require('./directives/language-switch.directive.js')
     )

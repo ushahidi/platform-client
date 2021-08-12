@@ -54,5 +54,9 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
 
     //From common module
     .directive('loadingDots', require('./directives/loading-dots.directive.js'))
-
+    .directive(
+        'categorySelector',
+        require('./directives/category-selector.directive.js')
+    )
+    
     .config(require('./settings-list.routes.js'))
