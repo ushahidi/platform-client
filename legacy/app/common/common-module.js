@@ -207,7 +207,6 @@ angular
         'loadingDotsButton',
         require('./directives/loading-dots-button.directive.js')
     )
-    .directive('loadingDots', require('./directives/loading-dots.directive.js'))
     .directive('addLanguage', require('./directives/add-language.directive.js'))
     .directive(
         'translationsSwitch',
