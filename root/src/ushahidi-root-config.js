@@ -42,3 +42,11 @@ getPageMetadata().then(data => {
     window.addEventListener('newTitle', evt =>  {
         document.title = generatePageTitle(evt.title)
     });
+
+// Watching for startup of monetization
+window.addEventListener('setPaymentPointer', evt =>  {
+    if (evt.pointer && evt.pointer.length) {
+        let donations = document.querySelector('[name="monetization"]');
+        donations.content = evt.pointer;
+    }
+});
