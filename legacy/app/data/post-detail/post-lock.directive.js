@@ -1,7 +1,7 @@
 module.exports = PostLockDirective;
 
-PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', 'Notify', '$rootScope'];
-function PostLockDirective(UserEndpoint, PostLockService, Notify, $rootScope) {
+PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope'];
+function PostLockDirective(UserEndpoint, PostLockService, $rootScope) {
     return {
         restrict: 'E',
         replace: true,

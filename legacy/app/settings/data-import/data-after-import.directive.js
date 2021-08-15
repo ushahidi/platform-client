@@ -2,13 +2,11 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
-    'Notify',
     'Features',
 function (
     $rootScope,
     $translate,
     $location,
-    Notify,
     Features
 ) {
     return {

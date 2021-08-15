@@ -2,12 +2,10 @@ module.exports = [
     'FontAwesomeIcons',
     'Util',
     '_',
-    'Notify',
 function (
     FontAwesomeIcons,
     Util,
-    _,
-    Notify
+    _
 ) {
 
     var iconSets = {

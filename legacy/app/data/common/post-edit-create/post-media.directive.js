@@ -3,7 +3,6 @@ module.exports = [
     'MediaEndpoint',
     'MediaEditService',
     'Util',
-    'Notify',
     '$q',
     '_',
 function (
@@ -11,7 +10,6 @@ function (
     MediaEndpoint,
     MediaEditService,
     Util,
-    Notify,
     $q,
     _
 ) {

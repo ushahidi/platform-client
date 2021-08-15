@@ -2,12 +2,10 @@ module.exports = [
     '_',
     'Util',
     '$translate',
-    'Notify',
 function (
     _,
     Util,
-    $translate,
-    Notify
+    $translate
 ) {
     var PostEditService = {
         cleanTagValues: function (post) {

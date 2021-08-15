@@ -4,7 +4,6 @@ module.exports = [
     '$location',
     '$translate',
     '$q',
-    'Notify',
     '_',
 function (
     $scope,
@@ -12,7 +11,6 @@ function (
     $location,
     $translate,
     $q,
-    Notify,
     _
 ) {
 
