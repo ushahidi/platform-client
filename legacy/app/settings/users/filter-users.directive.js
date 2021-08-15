@@ -11,16 +11,12 @@ function (
         '$rootScope',
         '$translate',
         '$timeout',
-        'RoleEndpoint',
-        'UserEndpoint',
         '_',
         function (
             $scope,
             $rootScope,
             $translate,
             $timeout,
-            RoleEndpoint,
-            UserEndpoint,
             _
         ) {
             $scope.filtersMenuOpen = false;

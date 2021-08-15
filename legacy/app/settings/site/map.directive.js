@@ -1,12 +1,10 @@
 module.exports = [
     '$q',
-    'ConfigEndpoint',
     'Leaflet',
     'Maps',
     'Features',
 function (
     $q,
-    ConfigEndpoint,
     L,
     Maps,
     Features

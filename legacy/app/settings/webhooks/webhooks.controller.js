@@ -3,13 +3,11 @@ module.exports = [
     '$translate',
     '$rootScope',
     '$location',
-    'WebhookEndpoint',
 function (
     $scope,
     $translate,
     $rootScope,
-    $location,
-    WebhookEndpoint
+    $location
 ) {
 
     // Redirect to home if not authorized

@@ -3,15 +3,11 @@ module.exports = [
     '$translate',
     '$rootScope',
     '$location',
-    'RoleEndpoint',
-    'PermissionEndpoint',
 function (
     $scope,
     $translate,
     $rootScope,
-    $location,
-    RoleEndpoint,
-    PermissionEndpoint
+    $location
 ) {
 
     // Redirect to home if not authorized

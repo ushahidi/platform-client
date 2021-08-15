@@ -9,7 +9,6 @@ function (
     $rootScope,
     $translate,
     TranslationService,
-    ConfigEndpoint,
     Languages
 ) {
 
