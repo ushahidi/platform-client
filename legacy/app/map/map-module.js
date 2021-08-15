@@ -59,6 +59,9 @@ angular.module('ushahidi.map', [])
 .directive('collectionEditor', require('./collections/editor.directive.js'))
 .directive('collectionListing', require('./collections/listing.directive.js'))
 
+//From common module
+.directive('overflowToggle', require('./directives/overflow-toggle.js'))
+
 
 .config(require('./map-routes.js'))
 

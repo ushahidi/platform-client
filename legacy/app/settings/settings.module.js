@@ -58,5 +58,14 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
         'categorySelector',
         require('./directives/category-selector.directive.js')
     )
+    .directive(
+        'filterSearchbar',
+        require('./directives/filter-system/filter-searchbar.js')
+    )
+    .directive(
+        'filterRole',
+        require('./directives/filter-system/filter-role.js')
+    )
+    .directive('colorPicker', require('./directives/color-picker.js'))
     
     .config(require('./settings-list.routes.js'))
