@@ -2,12 +2,10 @@ module.exports = [
     '$rootScope',
     '$translate',
     '$location',
-    'Features',
 function (
     $rootScope,
     $translate,
-    $location,
-    Features
+    $location
 ) {
     return {
         restrict: 'A',

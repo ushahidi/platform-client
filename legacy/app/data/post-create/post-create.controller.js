@@ -6,7 +6,6 @@ module.exports = [
     '$transition$',
     'PostEntity',
     'PostEndpoint',
-    'SurveysSdk',
 function (
     $scope,
     $translate,
@@ -14,8 +13,7 @@ function (
     $controller,
     $transition$,
     postEntity,
-    PostEndpoint,
-    SurveysSdk
+    PostEndpoint
 ) {
     $translate('post.create_post').then(function (title) {
         $scope.title = title;

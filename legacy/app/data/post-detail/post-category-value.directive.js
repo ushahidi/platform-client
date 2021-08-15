@@ -13,9 +13,9 @@ function PostCategoryValue() {
         template: require('./post-category-value.html')
     };
 }
-PostCategoryValueController.$inject = ['$scope', '_', 'CategoriesSdk'];
+PostCategoryValueController.$inject = ['$scope', '_'];
 
-function PostCategoryValueController($scope, _, CategoriesSdk) {
+function PostCategoryValueController($scope, _) {
     // Make a list of parent category ids referenced by categories in the list
     let parent_ids = _.uniq(_.without(_.pluck($scope.categories, 'parent_id'), null));
     $scope.display = $scope.categories.filter(f => {

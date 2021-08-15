@@ -9,7 +9,6 @@ module.exports = [
     'Notify',
     'DataImport',
     'Features',
-    'CollectionEndpoint',
     'moment',
     '_',
 function (
@@ -23,7 +22,6 @@ function (
     Notify,
     DataImport,
     Features,
-    CollectionEndpoint,
     moment,
     _
 ) {

@@ -1,4 +1,4 @@
-module.exports = ['PostEndpoint', 'moment', '_','PostsSdk', function (PostEndpoint, moment, _, PostsSdk) {
+module.exports = ['moment', '_','PostsSdk', function (moment, _, PostsSdk) {
     return {
         restrict: 'E',
         replace: true,

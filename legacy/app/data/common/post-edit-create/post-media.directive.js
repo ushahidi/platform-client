@@ -2,14 +2,12 @@ module.exports = [
     '$http',
     'MediaEndpoint',
     'MediaEditService',
-    'Util',
     '$q',
     '_',
 function (
     $http,
     MediaEndpoint,
     MediaEditService,
-    Util,
     $q,
     _
 ) {

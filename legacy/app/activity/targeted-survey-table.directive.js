@@ -11,8 +11,8 @@ function TargetedSurveyTable() {
     };
 }
 
-TargetedSurveyTableController.$inject = ['$rootScope', '$scope', '$translate', 'FormEndpoint', 'FormStatsEndpoint', 'PostEndpoint', '_', 'PostFilters', 'Session'];
-function TargetedSurveyTableController($rootScope, $scope, $translate, FormEndpoint, FormStatsEndpoint, PostEndpoint, _, PostFilters, Session) {
+TargetedSurveyTableController.$inject = ['$rootScope', '$scope', '$translate', 'FormEndpoint', 'FormStatsEndpoint', '_', 'PostFilters', 'Session'];
+function TargetedSurveyTableController($rootScope, $scope, $translate, FormEndpoint, FormStatsEndpoint, _, PostFilters, Session) {
     $scope.targetedSurveyStatsByForm = [];
     $scope.totalResponses = 0;
     $scope.totalMessagesSent = 0;
