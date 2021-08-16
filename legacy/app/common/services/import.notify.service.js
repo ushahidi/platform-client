@@ -2,8 +2,8 @@ module.exports = ImportNotify;
 
 var scope;
 
-ImportNotify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
-function ImportNotify(_, $q, $rootScope, $translate, SliderService, ModalService) {
+ImportNotify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService'];
+function ImportNotify(_, $q, $rootScope, $translate, SliderService) {
     return {
         importComplete: importComplete
     };

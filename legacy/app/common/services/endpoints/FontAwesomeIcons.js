@@ -1,8 +1,6 @@
 module.exports = [
-    'Util',
     '$q',
 function (
-    Util,
     $q
 ) {
 

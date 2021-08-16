@@ -2,8 +2,8 @@ module.exports = SurveyNotify;
 
 var scope;
 
-SurveyNotify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
-function SurveyNotify(_, $q, $rootScope, $translate, SliderService, ModalService) {
+SurveyNotify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService'];
+function SurveyNotify(_, $q, $rootScope, $translate, SliderService) {
     return {
         success: success
     };

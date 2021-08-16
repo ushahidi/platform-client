@@ -29,7 +29,6 @@ PostDataEditorController.$inject = [
     '$transitions',
     'LoadingProgress',
     'SurveysSdk',
-    'TranslationService',
     'PostsSdk',
     'moment'
 ];
@@ -49,7 +48,6 @@ function PostDataEditorController(
     $transitions,
     LoadingProgress,
     SurveysSdk,
-    TranslationService,
     PostsSdk,
     moment
     ) {

@@ -3,7 +3,6 @@ module.exports = [
     '$rootScope',
     '_',
     'ConfigEndpoint',
-    'Languages',
     'Features',
     '$scope',
     function (
@@ -11,7 +10,6 @@ module.exports = [
         $rootScope,
         _,
         ConfigEndpoint,
-        Languages,
         Features,
         $scope
     ) {
