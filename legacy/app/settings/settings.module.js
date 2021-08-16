@@ -49,7 +49,22 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
         'customWebhooksEditor',
         require('./webhooks/editor.directive.js')
     )
-
     .directive('setupDonation', require('./donation/donation.directive.js'))
+
+    //Api services and endpoint wrappers from common module
+    .service('ApiKeyEndpoint', require('./services/endpoints/apikey.js'))
+    .service('UserSettingsEndpoint', require('./services/endpoints/user-settings.js'))
+    .service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
+    .service('FormStageEndpoint', require('./services/endpoints/form-stages.js'))
+    .service('FormContactEndpoint', require('./services/endpoints/form-contact.js'))
+    .service('WebhookEndpoint', require('./services/endpoints/webhooks.js'))
+    .service('PermissionEndpoint', require('./services/endpoints/permission.js'))
+    .service('DataProviderEndpoint', require('./services/endpoints/data-providers.js'))
+    .service('CountryCodeEndpoint', require('./services/endpoints/country-code-endpoint.js'))
+    .service('HxlLicenseEndpoint', require('./services/endpoints/hxl-license-endpoint.js'))
+    .service('HxlMetadataEndpoint', require('./services/endpoints/hxl-metadata-endpoint.js'))
+    .service('HxlOrganisationsEndpoint', require('./services/endpoints/hxl-organisations-endpoint.js'))
+    .service('AccessibilityService', require('./services/accessibility.service.js'))
+    .service('HxlExport', require('./services/hxl-export.service.js'))
 
     .config(require('./settings-list.routes.js'))
