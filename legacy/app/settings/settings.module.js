@@ -52,4 +52,20 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
 
     .directive('setupDonation', require('./donation/donation.directive.js'))
 
+    //From common module
+    .directive('loadingDots', require('./directives/loading-dots.directive.js'))
+    .directive(
+        'categorySelector',
+        require('./directives/category-selector.directive.js')
+    )
+    .directive(
+        'filterSearchbar',
+        require('./directives/filter-system/filter-searchbar.js')
+    )
+    .directive(
+        'filterRole',
+        require('./directives/filter-system/filter-role.js')
+    )
+    .directive('colorPicker', require('./directives/color-picker.js'))
+    
     .config(require('./settings-list.routes.js'))
