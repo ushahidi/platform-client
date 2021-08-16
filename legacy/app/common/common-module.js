@@ -43,7 +43,6 @@ angular
     .service('TagEndpoint', require('./services/endpoints/tag.js'))
     .service('RoleEndpoint', require('./services/endpoints/role.js'))
     .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
-    .service('MessageEndpoint', require('./services/endpoints/message.js'))
     .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
     .service(
         'PostLockEndpoint',
@@ -61,10 +60,6 @@ angular
     .service(
         'NotificationEndpoint',
         require('./services/endpoints/notification.js')
-    )
-    .service(
-        'TermsOfServiceEndpoint',
-        require('./services/endpoints/terms-of-service-endpoint.js')
     )
     .service(
         'ExportJobEndpoint',
@@ -85,7 +80,6 @@ angular
     .service('PostsSdk', require('./services/endpoints/sdk/PostsSdk.js'))
 
     // Other services
-    .service('ViewHelper', require('./services/view-helper.js'))
     .service('Features', require('./services/features.js'))
     .service('Util', require('./services/util.js'))
     .service('Maps', require('./services/maps.js'))

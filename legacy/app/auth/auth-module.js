@@ -19,6 +19,10 @@ angular.module('ushahidi.auth', [])
 )
 .directive('termsOfService', require('./tos.directive.js'))
 .directive('demoDeployment', require('./demo-deployment.directive.js'))
+
+// From common module
+.service('TermsOfServiceEndpoint', require('./services/terms-of-service-endpoint.js'))
+
 .config(require('./authentication-interceptor.config.js'))
 .run(require('./authentication-events.run.js'))
 
