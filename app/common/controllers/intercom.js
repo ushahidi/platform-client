@@ -82,7 +82,7 @@ function (
                   s.src = `https://widget.intercom.io/widget/${getAppId()}`;
                   var x = d.getElementsByTagName('script')[0];
                   x.parentNode.insertBefore(s, x);
-                  $window.Intercom('boot', intercomSettings);
+                  $window.Intercom('boot', intercomOptions);
                 }
                 l();
               }
@@ -106,7 +106,6 @@ function (
                     let intercomOptions = {
                       app_id: $window.ushahidi.intercomAppId,
                       custom_launcher_selector: '#intercom_custom_launcher',
-                      hide_default_launcher: true,
                       email: user.email,
                       created_at: user.created,
                       user_id: domain + '_' + user.id,
