@@ -1,10 +1,8 @@
 module.exports = [
     '$rootScope',
-    'UserEndpoint',
     'ModalService',
     function (
         $rootScope,
-        UserEndpoint,
         ModalService
     ) {
         return {

@@ -11,8 +11,8 @@ function LayoutClassDirective() {
     };
 }
 
-LayoutClassController.$inject = ['$scope', '$rootScope', '$window', 'Util'];
-function LayoutClassController($scope, $rootScope, $window, Util) {
+LayoutClassController.$inject = ['$scope', '$rootScope', '$window'];
+function LayoutClassController($scope, $rootScope, $window) {
     var isEmbed = ($window.self !== $window.top) ? true : false;
     if (!isEmbed) {
         $rootScope.setLayout('layout-' + $scope.layout);

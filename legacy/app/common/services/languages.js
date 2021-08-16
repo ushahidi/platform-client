@@ -1,8 +1,6 @@
 module.exports = [
-    'Util',
     '$http',
 function (
-    Util,
     $http
 ) {
 

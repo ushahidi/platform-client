@@ -18,7 +18,6 @@ PostToolbarController.$inject = [
     '$scope',
     '$rootScope',
     '$window',
-    'Notify',
     'PostLockService',
     '$state',
     'LoadingProgress'
@@ -27,7 +26,6 @@ function PostToolbarController(
     $scope,
     $rootScope,
     $window,
-    Notify,
     PostLockService,
     $state,
     LoadingProgress

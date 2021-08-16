@@ -29,7 +29,6 @@ PostEditorController.$inject = [
     '$state',
     'SurveysSdk',
     'TranslationService',
-    'CategoriesSdk',
     'PostsSdk'
   ];
 
@@ -48,7 +47,6 @@ function PostEditorController(
     $state,
     SurveysSdk,
     TranslationService,
-    CategoriesSdk,
     PostsSdk
   ) {
 

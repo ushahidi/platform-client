@@ -11,14 +11,12 @@ function (
         '$scope',
         '$rootScope',
         '$translate',
-        'Notify',
         'RoleEndpoint',
         '_',
         function (
             $scope,
             $rootScope,
             $translate,
-            Notify,
             RoleEndpoint,
             _
         ) {

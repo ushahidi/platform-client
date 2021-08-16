@@ -14,7 +14,6 @@ TosController.$inject = [
     '$scope',
     'Authentication',
     'TermsOfService',
-    'ModalService',
     'TermsOfServiceEndpoint',
     'Session',
     'CONST'
@@ -23,7 +22,6 @@ function TosController(
     $scope,
     Authentication,
     TermsOfService,
-    ModalService,
     TermsOfServiceEndpoint,
     Session,
     CONST

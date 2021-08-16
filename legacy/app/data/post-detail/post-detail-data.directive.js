@@ -23,8 +23,7 @@ PostDetailDataController.$inject = [
     'PostSurveyService',
     '$state',
     'PostsSdk',
-    'SurveysSdk',
-    'TranslationService'
+    'SurveysSdk'
 ];
 function PostDetailDataController(
     $scope,
@@ -35,8 +34,7 @@ function PostDetailDataController(
     PostSurveyService,
     $state,
     PostsSdk,
-    SurveysSdk,
-    TranslationService
+    SurveysSdk
 ) {
     $scope.$watch('post', function (post, oldVal) {
         if (post !== oldVal) {

@@ -11,8 +11,8 @@ function CrowdsourcedSurveyTable() {
     };
 }
 
-CrowdsourcedSurveyTableController.$inject = ['$scope', '$translate', 'FormEndpoint', 'FormStatsEndpoint', 'FormContactEndpoint', 'PostEndpoint', '_', 'PostFilters', 'Session'];
-function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, FormStatsEndpoint, FormContactEndpoint, PostEndpoint, _, PostFilters, Session) {
+CrowdsourcedSurveyTableController.$inject = ['$scope', '$translate', 'FormEndpoint', 'FormStatsEndpoint', 'PostEndpoint', '_', 'PostFilters', 'Session'];
+function CrowdsourcedSurveyTableController($scope, $translate, FormEndpoint, FormStatsEndpoint, PostEndpoint, _, PostFilters, Session) {
     $scope.crowdsourcedSurveyStatsByForm = [];
     $scope.totalAll = 0;
     $scope.totalWeb = 0;

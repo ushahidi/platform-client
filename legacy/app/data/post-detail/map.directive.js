@@ -1,7 +1,7 @@
 module.exports = PostDetailMap;
 
-PostDetailMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile'];
-function PostDetailMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile) {
+PostDetailMap.$inject = ['PostEndpoint', 'Maps', '_', 'Leaflet', '$q', '$rootScope', '$compile'];
+function PostDetailMap(PostEndpoint, Maps, _, L, $q, $rootScope, $compile) {
     return {
         restrict: 'E',
         scope: {
