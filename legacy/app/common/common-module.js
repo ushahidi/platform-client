@@ -158,10 +158,7 @@ angular
     .service('ImportNotify', require('./services/import.notify.service.js'))
     .service('VerifierService', require('./verifier/verifier.service.js'))
     // Global directives
-    .directive('publishSelector', require('./directives/publish-selector.js'))
-
     .directive('listingToolbar', require('./directives/list-toolbar.js'))
-    .directive('iconPicker', require('./directives/iconpicker.js'))
     .directive('firstTimeConfig', require('./directives/first-time-config.js'))
     .directive(
         'ushMainsheetContainer',
@@ -180,7 +177,6 @@ angular
         'roleSelector',
         require('./directives/role-selector.directive.js')
     )
-    .directive('addCategory', require('./directives/add-category.directive.js'))
     .directive(
         'languageSwitch',
         require('./directives/language-switch.directive.js')
