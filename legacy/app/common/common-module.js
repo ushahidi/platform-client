@@ -188,7 +188,7 @@ angular
     .directive('addLanguage', require('./directives/add-language.directive.js'))
     .directive(
         'translationsSwitch',
-        require('./directives/translation-switch.directive.js')
+        require('./directives/translations-switch.directive.js')
     )
     // Event actions
     .constant('EVENT', {
