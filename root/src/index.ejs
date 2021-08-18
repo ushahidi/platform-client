@@ -48,6 +48,55 @@
   </script>
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script">
 
+  <script>
+  // Loading Google Analytics
+  if(window.ushahidi && window.ushahidi.gaEnabled) {
+      
+      (function (i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+          i[r] ||
+          function () {
+              (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+  })(
+      window,
+      document,
+      "script",
+      "//www.google-analytics.com/analytics.js",
+      "ga"
+  );
+
+  ga("create", window.ushahidi.gaKey, "auto");
+  ga("send", "pageview");
+  
+  // Loading Google-Maps to enable use of Places-API
+  if (window.ushahidi && window.ushahidi.googleMapsApiKey) {
+      (function (d, t, c, s) {
+          var g = d.createElement(t);
+          g.id = "mapsApi";
+          g.type = "text/javascript";
+          g.async = true;
+          g.src =
+              "https://maps.googleapis.com/maps/api/js?key=" +
+              window.ushahidi.googleMapsApiKey +
+              "&libraries=places";
+          g.onload = c;
+          g.onreadystatechange = c;
+          s = d.getElementsByTagName(t)[0];
+          s.parentNode.insertBefore(g, s);
+      })(document, "script", function () {
+          var e = document.createElement("div");
+          e.style.display = "none";
+          window.googlePlaces = new google.maps.places.PlacesService(e);
+      });
+  }
+}</script>
   <!-- Add your organization's prod import map URL to this script's src  -->
   <!-- <script type="systemjs-importmap" src="/importmap.json"></script> -->
 

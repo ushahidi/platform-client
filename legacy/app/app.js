@@ -212,7 +212,7 @@ angular
         function ($rootScope, LoadingProgress, $transitions, $uiRouter) {
             // this handles the loading-state app-wide
             LoadingProgress.watchTransitions();
-            if (window.ushahidi.gaEnabled) {
+            if (window.ushahidi.gaEnabled && window.ga) {
                 $transitions.onSuccess({}, function (transition) {
                     window.ga('send', 'pageview', $uiRouter.urlRouter.location);
                 });
