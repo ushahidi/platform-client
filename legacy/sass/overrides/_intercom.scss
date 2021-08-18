@@ -1,3 +1,11 @@
-#intercom-container .intercom-launcher {
-	right: 60px !important;
+
+.intercom-launcher-frame, .intercom-lightweight-app-launcher {
+	right: 13px !important;
+	@media (max-width: 1150px) {
+		bottom: 120px !important;
+	}
+}
+
+.intercom-messenger-frame {
+	right: 100px !important;
 }
