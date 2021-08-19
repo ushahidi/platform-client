@@ -31,6 +31,9 @@
     "serve:root": "cd root && npm start",
     "serve:utilities": "cd utilities && npm start",
     "show-ready": "wait-on http://0.0.0.0:9090 && node ./server/scripts/ready.js",
+    "test": "npm run test:legacy",
+    "test:legacy": " cd legacy && npm run test",
+
     "watch:legacy": "cd legacy && concurrently \"npm run watch\""
   },
   "repository": {
