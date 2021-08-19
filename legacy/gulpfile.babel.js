@@ -66,6 +66,7 @@ function clean(done) {
 }
 
 // Copy config.js into dist
+// TODO: Check if this is needed?!
 function distConfig() {
     return src(paths.config)
         .pipe(dest(paths.dest));
@@ -74,7 +75,7 @@ function distConfig() {
 // Build webpack for production
 function distWebpack(done) {
     const config = require('./webpack.dist.config');
-    config.entry.app = paths.entry;
+    config.entry = paths.entry;
     config.output.path = paths.dest;
     webpack(config, (err, stats) => {
         if (err) {
@@ -134,7 +135,7 @@ function downloadLanguages(done) {
 */
 
 // use webpack.config.js to build modules
-task('dist', series(clean, distWebpack, /** distConfig, **/ downloadLanguages, copyLanguages));
+task('dist', series(clean, distWebpack, downloadLanguages, copyLanguages));
 task('build', series('dist'));
 
 /**
