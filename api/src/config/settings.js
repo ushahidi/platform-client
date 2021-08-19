@@ -7,9 +7,7 @@ export const getBackendUrl = function () {
     } else {
         backendUrl = BACKEND_URL;
     }
-    
+
     // REGEX to format the url correctly
     return backendUrl.replace(/\/$/, "");
-  
 };
-

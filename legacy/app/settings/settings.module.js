@@ -67,5 +67,5 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
         require('./directives/filter-system/filter-role.js')
     )
     .directive('colorPicker', require('./directives/color-picker.js'))
-    
+
     .config(require('./settings-list.routes.js'))

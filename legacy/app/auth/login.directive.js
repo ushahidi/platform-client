@@ -14,7 +14,7 @@ LoginController.$inject = [
     'Authentication',
     'PasswordReset',
     '$location',
-    'ConfigEndpoint',
+    'ConfigEndpoint'
 ];
 function LoginController(
     $scope,

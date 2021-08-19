@@ -22,12 +22,12 @@ applications.forEach(registerApplication);
 layoutEngine.activate();
 
 start();
-let siteTitle = '';
-function generatePageTitle (pageTitle = '') {
+let siteTitle = "";
+function generatePageTitle(pageTitle = "") {
     return `${pageTitle} - ${siteTitle}`;
 }
 // Setting initial page-metadata
-getPageMetadata().then(data => {
+getPageMetadata().then((data) => {
     // Setting page-metadata that does not change
     siteTitle = data.title;
     let description = document.querySelector('[name="description"]');
@@ -39,12 +39,12 @@ getPageMetadata().then(data => {
 });
 
 // Watching for changes in page-title due to route-changes in legacy-app (this needs to be handled differently once we start moving UI)
-    window.addEventListener('newTitle', evt =>  {
-        document.title = generatePageTitle(evt.title)
-    });
+window.addEventListener("newTitle", (evt) => {
+    document.title = generatePageTitle(evt.title);
+});
 
 // Watching for startup of monetization
-window.addEventListener('setPaymentPointer', evt =>  {
+window.addEventListener("setPaymentPointer", (evt) => {
     if (evt.pointer && evt.pointer.length) {
         let donations = document.querySelector('[name="monetization"]');
         donations.content = evt.pointer;

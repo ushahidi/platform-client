@@ -10,7 +10,7 @@ function (
     $urlMatcherFactoryProvider.strictMode(false);
 
     /* =================================================
-    Lazy load data module depending on where user goes to 
+    Lazy load data module depending on where user goes to
     first views/data, post-create (and postcards)
      ==================================================*/
 
