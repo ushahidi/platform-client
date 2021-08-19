@@ -142,7 +142,6 @@ angular
     .service('ModalService', require('./services/modal.service.js'))
     .service('TranslationService', require('./services/translation.service.js'))
     .controller('navigation', require('./controllers/navigation.js'))
-    .controller('PageMetadata', require('./controllers/page-metadata.js'))
     .controller('intercom', require('./controllers/intercom.js'))
     .service(
         'LoadingProgress',
