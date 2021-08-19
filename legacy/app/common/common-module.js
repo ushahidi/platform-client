@@ -133,11 +133,6 @@ angular
     .service('Maps', require('./services/maps.js'))
     .service('Geocoding', require('./services/geocoding.js'))
     .service('Languages', require('./services/languages.js'))
-    .service('IconManager', require('./services/icon-manager.js'))
-    .service(
-        'FontAwesomeIcons',
-        require('./services/endpoints/FontAwesomeIcons.js')
-    )
     .service('MainsheetService', require('./services/mainsheet.service.js'))
     .service('ModalService', require('./services/modal.service.js'))
     .service('TranslationService', require('./services/translation.service.js'))
