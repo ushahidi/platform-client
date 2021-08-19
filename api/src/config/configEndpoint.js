@@ -1,5 +1,5 @@
 import * as UshahidiSdk from "ushahidi-platform-sdk/build/src/index";
-import { getBackendUrl } from "@ushahidi/utilities";
+import { getBackendUrl } from "./settings.js";
 
 const backendUrl = getBackendUrl();
 const ushahidi = new UshahidiSdk.Config(backendUrl);
