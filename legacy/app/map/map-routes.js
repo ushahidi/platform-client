@@ -6,7 +6,7 @@ function (
     $urlMatcherFactoryProvider
 ) {
     $urlMatcherFactoryProvider.strictMode(false);
-    
+
     let resolveCollection = ['$transition$', 'CollectionEndpoint', 'PostFilters', function ($transition$, CollectionEndpoint, PostFilters) {
         if ($transition$.params().collectionId) {
             return CollectionEndpoint.get({collectionId: $transition$.params().collectionId}).$promise;
@@ -180,8 +180,8 @@ function (
     //         template: require('./modify/main.html')
     //     }
     // )
-    
-    
+
+
     // Post view map route(s)
 
     .state(

@@ -10,7 +10,6 @@ module.exports = [
     '_',
     'Notify',
     'Util',
-    'Languages',
 function (
     $q,
     $http,
@@ -18,8 +17,7 @@ function (
     ConfigEndpoint,
     _,
     Notify,
-    Util,
-    Languages
+    Util
 ) {
     return {
         restrict: 'E',

@@ -66,5 +66,20 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
     .service('HxlOrganisationsEndpoint', require('./services/endpoints/hxl-organisations-endpoint.js'))
     .service('AccessibilityService', require('./services/accessibility.service.js'))
     .service('HxlExport', require('./services/hxl-export.service.js'))
-
     .config(require('./settings-list.routes.js'))
+
+//From common module
+    .directive('loadingDots', require('./directives/loading-dots.directive.js'))
+    .directive(
+        'categorySelector',
+        require('./directives/category-selector.directive.js')
+    )
+    .directive(
+        'filterSearchbar',
+        require('./directives/filter-system/filter-searchbar.js')
+    )
+    .directive(
+        'filterRole',
+        require('./directives/filter-system/filter-role.js')
+    )
+    .directive('colorPicker', require('./directives/color-picker.js'))

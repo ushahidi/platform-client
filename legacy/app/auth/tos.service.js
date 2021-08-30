@@ -1,7 +1,5 @@
 module.exports = [
     '$http',
-    'Util',
-    'ModalService',
     'Session',
     'TermsOfServiceEndpoint',
     'CONST',
@@ -12,8 +10,6 @@ module.exports = [
 
 function (
     $http,
-    Util,
-    ModalService,
     Session,
     TermsOfServiceEndpoint,
     CONST,

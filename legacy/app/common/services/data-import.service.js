@@ -11,7 +11,6 @@ DataImport.$inject = [
     '$q',
     '_',
     'ImportNotify',
-    'CollectionEndpoint',
     'moment'
 ];
 function DataImport(
@@ -25,7 +24,6 @@ function DataImport(
     $q,
     _,
     ImportNotify,
-    CollectionEndpoint,
     moment
 ) {
     var importJobs = [];

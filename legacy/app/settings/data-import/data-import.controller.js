@@ -4,7 +4,6 @@ module.exports = [
     '$location',
     '$translate',
     'FormEndpoint',
-    'Notify',
     '_',
     function (
         $scope,
@@ -12,7 +11,6 @@ module.exports = [
         $location,
         $translate,
         FormEndpoint,
-        Notify,
         _
     ) {
         // Redirect to home if not authorized

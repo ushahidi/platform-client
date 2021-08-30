@@ -3,7 +3,6 @@ module.exports = [
     '$rootScope',
     '$location',
     'WebhookEndpoint',
-    'Notify',
     '_',
     'Features',
 function (
@@ -11,7 +10,6 @@ function (
     $rootScope,
     $location,
     WebhookEndpoint,
-    Notify,
     _,
     Features
 ) {

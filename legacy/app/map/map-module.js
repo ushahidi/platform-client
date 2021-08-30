@@ -61,6 +61,8 @@ angular.module('ushahidi.map', [])
 
 // From common module
 .service('ViewHelper', require('./services/view-helper.js'))
+//From common module
+.directive('overflowToggle', require('./directives/overflow-toggle.js'))
 
 .config(require('./map-routes.js'))
 

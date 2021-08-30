@@ -12,11 +12,12 @@ try {
 
 module.exports = {
     devtool: 'source-map',
-    entry: {
-        'app': [
-            'babel-polyfill'
-        ]
-    },
+    output: {
+        filename: '[name].js',
+        publicPath: '/',
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'system'
+},
     module: {
         rules: [
             {

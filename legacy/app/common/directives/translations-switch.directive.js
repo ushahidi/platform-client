@@ -11,7 +11,7 @@ function TranslationSwitchDirective() {
             removeLanguage:'&'
         },
         controller: TranslationSwitchController,
-        template: require('./translation-switch.html')
+        template: require('./translations-switch.html')
     };
 }
 TranslationSwitchController.$inject = ['$scope', 'ModalService'];

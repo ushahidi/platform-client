@@ -8,7 +8,6 @@ module.exports = [
     '_',
     'Notify',
     'ViewHelper',
-    'RoleEndpoint',
     'PostFilters',
 function (
     $q,
@@ -20,7 +19,6 @@ function (
     _,
     Notify,
     ViewHelper,
-    RoleEndpoint,
     PostFilters
 ) {
     return {

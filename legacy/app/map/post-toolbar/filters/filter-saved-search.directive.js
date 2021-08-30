@@ -1,7 +1,7 @@
 module.exports = FilterSavedSearch;
 
-FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope', 'ModalService', 'PostFilters'];
-function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, ModalService, PostFilters) {
+FilterSavedSearch.$inject = ['SavedSearchEndpoint', '_', '$rootScope', 'PostFilters'];
+function FilterSavedSearch(SavedSearchEndpoint, _,  $rootScope, PostFilters) {
     return {
         restrict: 'E',
         require: 'ngModel',

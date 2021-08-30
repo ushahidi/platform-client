@@ -1,8 +1,8 @@
 module.exports = DonationService;
 
-DonationService.$inject = ['$rootScope', 'Util', 'Notify', 'ModalService'];
+DonationService.$inject = ['$rootScope', 'Notify', 'ModalService'];
 
-function DonationService($rootScope, Util, Notify, ModalService) {
+function DonationService($rootScope, Notify, ModalService) {
     let total = 0;
     let scale;
 

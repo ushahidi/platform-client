@@ -42,11 +42,11 @@ module.exports = (webpackConfigEnv, argv) => {
             }),
             new CopyPlugin({
                 patterns: [
-                  {
-                    from: path.resolve(__dirname, "src/config.js"),
-                  },
+                    {
+                        from: path.resolve(__dirname, "src/config.js"),
+                    },
                 ],
-              }),
+            }),
         ],
     });
 };

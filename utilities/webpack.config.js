@@ -5,9 +5,6 @@ const singleSpaDefaults = require("webpack-config-single-spa");
 dotenv.config({ silent: true });
 
 module.exports = (webpackConfigEnv, argv) => {
-    console.log(webpackConfigEnv);
-    console.log(argv);
-
     const defaultConfig = singleSpaDefaults({
         orgName: "ushahidi",
         projectName: "utilities",

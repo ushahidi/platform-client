@@ -3,14 +3,11 @@ module.exports = [
     '$rootScope',
     '$translate',
     'TranslationService',
-    'Languages',
 function (
     // $scope,
     $rootScope,
     $translate,
-    TranslationService,
-    ConfigEndpoint,
-    Languages
+    TranslationService
 ) {
 
     $rootScope.rtlEnabled = false;

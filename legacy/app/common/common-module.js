@@ -85,16 +85,10 @@ angular
     .service('Maps', require('./services/maps.js'))
     .service('Geocoding', require('./services/geocoding.js'))
     .service('Languages', require('./services/languages.js'))
-    .service('IconManager', require('./services/icon-manager.js'))
-    .service(
-        'FontAwesomeIcons',
-        require('./services/endpoints/FontAwesomeIcons.js')
-    )
     .service('MainsheetService', require('./services/mainsheet.service.js'))
     .service('ModalService', require('./services/modal.service.js'))
     .service('TranslationService', require('./services/translation.service.js'))
     .controller('navigation', require('./controllers/navigation.js'))
-    .controller('PageMetadata', require('./controllers/page-metadata.js'))
     .controller('intercom', require('./controllers/intercom.js'))
     .service(
         'LoadingProgress',
@@ -105,12 +99,7 @@ angular
     .service('ImportNotify', require('./services/import.notify.service.js'))
     .service('VerifierService', require('./verifier/verifier.service.js'))
     // Global directives
-    .directive('publishSelector', require('./directives/publish-selector.js'))
-
     .directive('listingToolbar', require('./directives/list-toolbar.js'))
-    .directive('iconPicker', require('./directives/iconpicker.js'))
-
-    .directive('colorPicker', require('./directives/color-picker.js'))
     .directive('firstTimeConfig', require('./directives/first-time-config.js'))
     .directive(
         'ushMainsheetContainer',
@@ -123,28 +112,11 @@ angular
     .directive('modalBody', require('./directives/modal-body.directive.js'))
     .directive('layoutClass', require('./directives/layout-class.directive.js'))
     .directive('embedOnly', require('./directives/embed-only.directive.js'))
-    .directive(
-        'filterSearchbar',
-        require('./directives/filter-system/filter-searchbar.js')
-    )
-    .directive(
-        'filterRole',
-        require('./directives/filter-system/filter-role.js')
-    )
-    .directive(
-        'overflowToggle',
-        require('./directives/filter-system/overflow-toggle.js')
-    )
     .directive('focus', require('./directives/focus.js'))
     .directive('fileUpload', require('./directives/file-upload.directive.js'))
     .directive(
         'roleSelector',
         require('./directives/role-selector.directive.js')
-    )
-    .directive('addCategory', require('./directives/add-category.directive.js'))
-    .directive(
-        'categorySelector',
-        require('./directives/category-selector.directive.js')
     )
     .directive(
         'languageSwitch',
@@ -154,11 +126,10 @@ angular
         'loadingDotsButton',
         require('./directives/loading-dots-button.directive.js')
     )
-    .directive('loadingDots', require('./directives/loading-dots.directive.js'))
     .directive('addLanguage', require('./directives/add-language.directive.js'))
     .directive(
         'translationsSwitch',
-        require('./directives/translation-switch.directive.js')
+        require('./directives/translations-switch.directive.js')
     )
     // Event actions
     .constant('EVENT', {

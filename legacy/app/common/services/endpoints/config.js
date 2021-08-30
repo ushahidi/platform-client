@@ -4,7 +4,6 @@ module.exports = [
     '_',
     'CacheFactory',
     '$rootScope',
-    'UserEndpoint',
     'Authentication',
     'Session',
     '$q',
@@ -14,7 +13,6 @@ function (
     _,
     CacheFactory,
     $rootScope,
-    UserEndpoint,
     Authentication,
     Session,
     $q

@@ -55,11 +55,9 @@ function DonationController(
                 $scope.donationFeatureEnabled &&
                 $scope.donationDeploymentEnabled
             ) {
-                $rootScope.$emit(
-                    'setPaymentPointer',
-                    $rootScope.donation.wallet
-                );
-
+                let event = new CustomEvent('setPaymentPointer');
+                event.pointer = $rootScope.donation.wallet;
+                window.dispatchEvent(event);
                 DonationService.setupMonetization();
             }
 
