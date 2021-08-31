@@ -43,3 +43,6 @@ export const DATA_MODULE = angular.module('ushahidi.data', [])
 // Post view service
 .service('PostViewService', require('./post-view.service.js'))
 .directive('addPostTextButton', require('./add-post-text-button.directive.js'))
+
+// From common module
+.service('MessageEndpoint', require('./services/message.js'))
