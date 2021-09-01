@@ -176,7 +176,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, Chart, _,
     }
 
     function updateAxisLabel(cumulative) {
-        if ($scope.timeChart) {
+        if ($scope.timeChart && $scope.timeChart.config) {
             $scope.timeChart.config.options.scales.y.title.text =  cumulative ? yAxisLabelCumulative : yAxisLabel;
             $scope.timeChart.update();
         }

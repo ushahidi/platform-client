@@ -43,8 +43,8 @@ describe('post view chart directive', function () {
         expect(isolateScope.data[0].values).toEqual([1,2,3,4,5]);
         expect(isolateScope.filters).toEqual({});
         expect(isolateScope.isLoading).toBe(false);
-        expect(isolateScope.groupBy.value).toBe('tags');
-        expect(isolateScope.groupByOptions.tags).toBe('nav.categories');
+        expect(isolateScope.groupBy.value).toBe('status');
+        expect(isolateScope.groupByOptions.status).toBe('post.status');
     });
 
     it('should have loaded posts', function () {
