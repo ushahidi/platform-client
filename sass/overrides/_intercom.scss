@@ -1,8 +1,19 @@
 
-.intercom-launcher-frame, .intercom-lightweight-app-launcher {
-	right: 13px !important;
-	@media (max-width: 1150px) {
-		bottom: 120px !important;
+.layout-a {
+	.intercom-launcher-frame, .intercom-lightweight-app-launcher {
+		right: 13px !important;
+		@media (max-width: 1150px) {
+			bottom: 120px !important;
+		}
+	}
+}
+.layout-d {
+	.intercom-launcher-frame, .intercom-lightweight-app-launcher {
+		right: 13px !important;
+		bottom: 80px !important;
+		@media (max-width: 1023px) {
+			bottom: 120px !important;
+		}
 	}
 }
 
