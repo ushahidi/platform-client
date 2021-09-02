@@ -129,9 +129,6 @@ angular.module('app',
     .factory('_', function () {
         return require('underscore/underscore');
     })
-    .factory('d3', function () {
-        return {};
-    })
     .factory('moment', function () {
         return moment;
     })
