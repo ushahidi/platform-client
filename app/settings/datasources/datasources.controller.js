@@ -182,6 +182,8 @@ function (
         return $http.post(Util.url('/plugins/gmail/authorize'), payload).then(
             function(response) {
                 Notify.notify(response.data.message);
+                $scope.$parent.settings.gmail.email = '';
+
                 toggleGmailConnectionButton();
             },
             function (errorResponse) { // error
