@@ -11,6 +11,7 @@ config.resolve = {
         'node_modules'
     ]
 };
+config.output = {};
 config.mode = 'development';
 
 
