@@ -28,44 +28,21 @@ angular
     )
 
     // API Endpoint wrappers
-    .service('ApiKeyEndpoint', require('./services/endpoints/apikey.js'))
+    .service('DataImportEndpoint', require('./services/endpoints/data-import.js'))
     .service('ConfigEndpoint', require('./services/endpoints/config.js'))
     .service('UserEndpoint', require('./services/endpoints/user-endpoint.js'))
-    .service(
-        'UserSettingsEndpoint',
-        require('./services/endpoints/user-settings.js')
-    )
     .service('FormEndpoint', require('./services/endpoints/form.js'))
     .service(
         'FormAttributeEndpoint',
         require('./services/endpoints/form-attributes.js')
     )
-    .service('FormRoleEndpoint', require('./services/endpoints/form-roles.js'))
-    .service(
-        'FormStageEndpoint',
-        require('./services/endpoints/form-stages.js')
-    )
     .service(
         'FormStatsEndpoint',
         require('./services/endpoints/form-stats-endpoint.js')
     )
-    .service(
-        'FormContactEndpoint',
-        require('./services/endpoints/form-contact.js')
-    )
     .service('TagEndpoint', require('./services/endpoints/tag.js'))
     .service('RoleEndpoint', require('./services/endpoints/role.js'))
-    .service('WebhookEndpoint', require('./services/endpoints/webhooks.js'))
-    .service(
-        'PermissionEndpoint',
-        require('./services/endpoints/permission.js')
-    )
-    .service(
-        'DataProviderEndpoint',
-        require('./services/endpoints/data-providers.js')
-    )
     .service('MediaEndpoint', require('./services/endpoints/MediaEndpoint.js'))
-    .service('MessageEndpoint', require('./services/endpoints/message.js'))
     .service('PostEndpoint', require('./services/endpoints/post-endpoint.js'))
     .service(
         'PostLockEndpoint',
@@ -79,42 +56,18 @@ angular
         'SavedSearchEndpoint',
         require('./services/endpoints/savedsearch.js')
     )
-    .service(
-        'DataImportEndpoint',
-        require('./services/endpoints/data-import.js')
-    )
     .service('ContactEndpoint', require('./services/endpoints/contact.js'))
     .service(
         'NotificationEndpoint',
         require('./services/endpoints/notification.js')
     )
     .service(
-        'TermsOfServiceEndpoint',
-        require('./services/endpoints/terms-of-service-endpoint.js')
-    )
-    .service(
         'ExportJobEndpoint',
         require('./services/endpoints/export-jobs.js')
     )
     .service(
-        'CountryCodeEndpoint',
-        require('./services/endpoints/country-code-endpoint.js')
-    )
-    .service(
         'HxlTagEndpoint',
         require('./services/endpoints/hxl-tag-endpoint.js')
-    )
-    .service(
-        'HxlLicenseEndpoint',
-        require('./services/endpoints/hxl-license-endpoint.js')
-    )
-    .service(
-        'HxlMetadataEndpoint',
-        require('./services/endpoints/hxl-metadata-endpoint.js')
-    )
-    .service(
-        'HxlOrganisationsEndpoint',
-        require('./services/endpoints/hxl-organisations-endpoint.js')
     )
 
     //UshahidiSDK-wrappers
@@ -127,17 +80,11 @@ angular
     .service('PostsSdk', require('./services/endpoints/sdk/PostsSdk.js'))
 
     // Other services
-    .service('ViewHelper', require('./services/view-helper.js'))
     .service('Features', require('./services/features.js'))
     .service('Util', require('./services/util.js'))
     .service('Maps', require('./services/maps.js'))
     .service('Geocoding', require('./services/geocoding.js'))
     .service('Languages', require('./services/languages.js'))
-    .service('IconManager', require('./services/icon-manager.js'))
-    .service(
-        'FontAwesomeIcons',
-        require('./services/endpoints/FontAwesomeIcons.js')
-    )
     .service('MainsheetService', require('./services/mainsheet.service.js'))
     .service('ModalService', require('./services/modal.service.js'))
     .service('TranslationService', require('./services/translation.service.js'))
@@ -148,19 +95,11 @@ angular
         require('./services/loadingProgress.service.js')
     )
     .service('DataExport', require('./services/data-export.service.js'))
-    .service(
-        'AccessibilityService',
-        require('./services/accessibility.service.js')
-    )
-    .service('HxlExport', require('./services/hxl-export.service.js'))
     .service('DataImport', require('./services/data-import.service.js'))
     .service('ImportNotify', require('./services/import.notify.service.js'))
     .service('VerifierService', require('./verifier/verifier.service.js'))
     // Global directives
-    .directive('publishSelector', require('./directives/publish-selector.js'))
-
     .directive('listingToolbar', require('./directives/list-toolbar.js'))
-    .directive('iconPicker', require('./directives/iconpicker.js'))
     .directive('firstTimeConfig', require('./directives/first-time-config.js'))
     .directive(
         'ushMainsheetContainer',
@@ -179,7 +118,6 @@ angular
         'roleSelector',
         require('./directives/role-selector.directive.js')
     )
-    .directive('addCategory', require('./directives/add-category.directive.js'))
     .directive(
         'languageSwitch',
         require('./directives/language-switch.directive.js')
@@ -191,7 +129,7 @@ angular
     .directive('addLanguage', require('./directives/add-language.directive.js'))
     .directive(
         'translationsSwitch',
-        require('./directives/translation-switch.directive.js')
+        require('./directives/translations-switch.directive.js')
     )
     // Event actions
     .constant('EVENT', {
