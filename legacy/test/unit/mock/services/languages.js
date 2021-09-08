@@ -1,13 +1,14 @@
 module.exports = [
 function () {
-            return {then: function (successCallback, failCallback) {
-                    successCallback([
-                    {
+            return {
+                getLanguages: function() {
+                    return [{
                         'rtl': false,
                         'pluralequation': 'language.pluralequation',
                         'code': 'en',
                         'name': 'English',
                         'nplurals': 2
-                    }]);
-                }};
+                    }]
+                }
+            }
         }];
