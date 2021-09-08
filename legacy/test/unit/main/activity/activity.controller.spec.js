@@ -17,7 +17,7 @@ describe('activity activity controller', function () {
             };
         });
 
-        testApp.controller('activityController', require('app/main/activity/activity.controller.js'));
+        testApp.controller('activityController', require('app/activity/activity.controller.js'));
 
         angular.mock.module('testApp');
     });

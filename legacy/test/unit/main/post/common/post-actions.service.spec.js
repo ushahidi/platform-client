@@ -12,7 +12,7 @@ describe('Post Actions Service', function () {
         fixture.setBase('mocked_backend/api/v3');
 
         var testApp = makeTestApp();
-        testApp.service('PostActionsService', require('app/main/posts/common/post-actions.service.js'))
+        testApp.service('PostActionsService', require('app/map/post-card/post-actions.service.js'))
         .value('$filter', function () {
             return function () {};
         }).service('$state', function () {

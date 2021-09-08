@@ -22,10 +22,10 @@ describe('post filters-dropdown directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
-        testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
-        .directive('filtersDropdown', require('app/main/posts/views/filters/filters-dropdown.directive'))
-        .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
-        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
+        testApp.directive('postActiveSearchFilters', require('app/map/post-toolbar/filters/active-search-filters.directive'))
+        .directive('filtersDropdown', require('app/map/post-toolbar/filters/filters-dropdown.directive'))
+        .service('FilterTransformers', require('app/map/post-toolbar/filters/filter-transformers.service.js'))
+        .service('PostFilters', require('app/common/services/post-filters.service.js'))
         .service('$state', function () {
             return mockState;
         });

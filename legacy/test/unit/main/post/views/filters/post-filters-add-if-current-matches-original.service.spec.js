@@ -8,7 +8,7 @@ describe('filters with saved search', function () {
 
         var testApp = makeTestApp();
 
-        testApp.service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        testApp.service('PostFilters', require('app/common/services/post-filters.service.js'));
 
         angular.mock.module('testApp');
     });

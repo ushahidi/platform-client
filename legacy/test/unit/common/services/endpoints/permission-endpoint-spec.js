@@ -15,7 +15,7 @@ describe('PermissionEndpoint', function () {
 
         testApp.requires.push('ngResource', 'angular-cache');
         testApp
-        .service('PermissionEndpoint', require('app/common/services/endpoints/permission.js'))
+        .service('PermissionEndpoint', require('app/settings/services/endpoints/permission.js'))
         .config(require('app/common/configs/cache-config.js'));
 
 

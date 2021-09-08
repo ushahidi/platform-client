@@ -29,7 +29,7 @@ describe('post location directive', function () {
         };
         var testApp = makeTestApp();
 
-        testApp.directive('postLocation', require('app/main/posts/modify/location.directive'))
+        testApp.directive('postLocation', require('app/data/common/post-edit-create/location.directive'))
         .service('Leaflet', () => {
             return L;
         })

@@ -13,9 +13,9 @@ describe('post active search filters directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postActiveSearchFilters', require('app/main/posts/views/filters/active-search-filters.directive'))
-        .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
-        .service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
+        testApp.directive('postActiveSearchFilters', require('app/map/post-toolbar/filters/active-search-filters.directive'))
+        .service('FilterTransformers', require('app/map/post-toolbar/filters/filter-transformers.service.js'))
+        .service('PostFilters', require('app/common/services/post-filters.service.js'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';

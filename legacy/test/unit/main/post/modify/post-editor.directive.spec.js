@@ -12,7 +12,7 @@ describe('post editor directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postEditor', require('app/main/posts/modify/post-editor.directive'))
+        testApp.directive('postEditor', require('app/data/post-create/post-editor.directive'))
         .value('$filter', function () {
             return function () {};
         })

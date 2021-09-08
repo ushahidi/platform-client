@@ -12,10 +12,10 @@ describe('post video directive', function () {
         var testApp = makeTestApp();
 
         testApp
-        .directive('postVideo', require('app/main/posts/modify/post-video.directive'))
+        .directive('postVideo', require('app/data/common/post-edit-create/post-video.directive'))
         .value('Util', {
             simpluUUID: function () {
-                return 'abc123';
+            return 'abc123';
                 },
             bindAllFunctionsToSelf: function () {
                 return {};

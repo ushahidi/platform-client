@@ -37,7 +37,7 @@ describe('Authentication', function () {
 
             };
         })
-        .service('Authentication', require('app/common/auth/authentication.service.js'));
+        .service('Authentication', require('app/auth/authentication.service.js'));
 
 
 

@@ -22,7 +22,7 @@ describe('login directive', function () {
         };
 
         makeTestApp()
-        .directive('loginForm', require('app/common/auth/login.directive.js'))
+        .directive('loginForm', require('app/auth/login.directive.js'))
         .service('Authentication', function () {
             return mockAuthenticationService;
         })

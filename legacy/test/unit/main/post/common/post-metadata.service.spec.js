@@ -10,7 +10,7 @@ describe('Post Metadata Service', function () {
         fixture.setBase('mocked_backend/api/v3');
 
         var testApp = makeTestApp();
-        testApp.service('PostMetadataService', require('app/main/posts/common/post-metadata.service.js'))
+        testApp.service('PostMetadataService', require('app/map/post-card/post-metadata.service.js'))
         .value('$filter', function () {
             return function () {};
         });

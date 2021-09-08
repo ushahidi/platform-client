@@ -13,7 +13,7 @@ describe('Data View directive', function () {
     beforeEach(function () {
         let testApp = makeTestApp();
 
-        testApp.directive('postViewData', require('app/main/posts/views/post-view-data.directive.js'))
+        testApp.directive('postViewData', require('app/data/post-view-data.directive.js'))
          .service('$state', function () {
             return {
                 go: function () {

@@ -19,7 +19,7 @@ describe('Post detail directive', function () {
     beforeEach(function () {
         let testApp = makeTestApp();
 
-        testApp.directive('postDetailData', require('app/main/posts/detail/post-detail-data.directive.js'))
+        testApp.directive('postDetailData', require('app/data/post-detail/post-detail-data.directive.js'))
          .service('$state', function () {
             return {
                 'go': function () {

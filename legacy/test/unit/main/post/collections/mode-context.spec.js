@@ -13,7 +13,7 @@ describe('collections mode context directive', function () {
         var testApp = makeTestApp();
 
         testApp
-        .directive('collectionsModeContext', require('app/main/posts/collections/mode-context.directive'))
+        .directive('collectionsModeContext', require('app/map/collections/mode-context.directive'))
         .service('CollectionsService', function () {
             return {};
         })

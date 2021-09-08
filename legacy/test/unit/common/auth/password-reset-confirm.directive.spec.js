@@ -20,7 +20,7 @@ describe('common password reset confirm controller', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('passwordResetConfirm', require('app/common/auth/password-reset-confirm.directive.js'))
+        testApp.directive('passwordResetConfirm', require('app/auth/password-reset-confirm.directive.js'))
         .service('PasswordReset', function () {
             return mockPasswordReset;
         });

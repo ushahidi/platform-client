@@ -12,7 +12,7 @@ describe('post view chart directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('activityBarChart', require('app/main/activity/bar-chart.directive.js'))
+        testApp.directive('activityBarChart', require('app/activity/bar-chart.directive.js'))
         .value('$filter', function () {
             return function () {};
         })

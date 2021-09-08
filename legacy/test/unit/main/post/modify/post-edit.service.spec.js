@@ -11,7 +11,7 @@ describe('Post Edit Service', function () {
         fixture.setBase('mocked_backend/api/v3');
 
         var testApp = makeTestApp();
-        testApp.service('PostEditService', require('app/main/posts/modify/post-edit.service.js'))
+        testApp.service('PostEditService', require('app/data/common/post-edit-create/post-edit.service.js'))
         .value('$filter', function () {
             return function () {};
         });

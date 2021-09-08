@@ -13,7 +13,7 @@ describe('post export directive', function () {
 
     beforeEach(function () {
         var testApp = makeTestApp();
-        testApp.directive('postExport', require('app/main/posts/views/share/post-export.directive'));
+        testApp.directive('postExport', require('app/map/post-toolbar/share/post-export.directive'));
         angular.mock.module('testApp');
     });
 

@@ -13,7 +13,7 @@ describe('post preview media directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postPreviewMedia', require('app/main/posts/views/post-preview-media.directive'))
+        testApp.directive('postPreviewMedia', require('app/map/post-card/post-preview-media.directive'))
         .value('$filter', function () {
             return function () {};
         });

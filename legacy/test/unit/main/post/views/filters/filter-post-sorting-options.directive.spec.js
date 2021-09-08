@@ -29,8 +29,8 @@ describe('filter post sorting options on top directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
-        testApp.directive('filterPostSortingOptions', require('app/main/posts/views/filters/filter-post-sorting-options.directive'))
-            .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        testApp.directive('filterPostSortingOptions', require('app/map/post-toolbar/filters/filter-post-sorting-options.directive'))
+            .service('PostFilters', require('app/common/services/post-filters.service.js'));
         angular.mock.module('testApp');
     });
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostFilters_) {

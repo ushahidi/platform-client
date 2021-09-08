@@ -13,7 +13,7 @@ describe('savedsearch mode context directive', function () {
         var testApp = makeTestApp();
 
         testApp
-        .directive('savedSearchModeContext', require('app/main/posts/savedsearches/mode-context.directive'))
+        .directive('savedSearchModeContext', require('app/map/savedsearches/mode-context.directive'))
         .service('$state', () => {
             return {
                 go: () => {}

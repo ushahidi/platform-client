@@ -12,7 +12,7 @@ describe('post view timeline directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('activityTimeChart', require('app/main/activity/time-chart.directive.js'))
+        testApp.directive('activityTimeChart', require('app/activity/time-chart.directive.js'))
         .value('$filter', function () {
             return function () {};
         })

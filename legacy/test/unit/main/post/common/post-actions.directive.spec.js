@@ -25,7 +25,7 @@ describe('post actions directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postActions', require('app/main/posts/common/post-actions.directive'))
+        testApp.directive('postActions', require('app/map/post-card/post-actions.directive'))
         .value('$filter', function () {
             return function () {};
         })

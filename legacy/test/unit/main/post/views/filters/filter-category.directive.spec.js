@@ -12,8 +12,8 @@ describe('Category Directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('filterCategory', require('app/main/posts/views/filters/filter-category.directive'))
-            .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        testApp.directive('filterCategory', require('app/map/post-toolbar/filters/filter-category.directive'))
+            .service('PostFilters', require('app/common/services/post-filters.service.js'));
         angular.mock.module('testApp');
     });
 

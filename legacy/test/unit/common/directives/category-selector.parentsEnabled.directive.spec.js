@@ -8,7 +8,7 @@ describe('category-selector directive with enableParents=true', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
-        testApp.directive('categorySelector', require('app/common/directives/category-selector.directive.js'));
+        testApp.directive('categorySelector', require('app/settings/directives/category-selector.directive.js'));
         angular.mock.module('testApp');
     });
     beforeEach(inject(function (_$rootScope_, _$compile_) {

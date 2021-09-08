@@ -90,7 +90,7 @@ describe('global event handlers', function () {
         .service('DemoDeploymentService', function () {
             return mockedDemoDeploymentService;
         })
-        .run(require('app/common/auth/authentication-events.run.js'))
+        .run(require('app/auth/authentication-events.run.js'))
         .service('$state', function () {
             return mockState;
         })

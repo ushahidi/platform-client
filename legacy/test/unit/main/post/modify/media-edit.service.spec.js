@@ -9,7 +9,7 @@ describe('Media Edit Service', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
-        testApp.service('MediaEditService', require('app/main/posts/modify/media-edit.service.js'))
+        testApp.service('MediaEditService', require('app/data/common/post-edit-create/media-edit.service.js'))
         .value('$filter', function () {
             return function () {};
         });

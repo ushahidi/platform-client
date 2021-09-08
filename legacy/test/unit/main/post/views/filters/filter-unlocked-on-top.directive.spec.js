@@ -11,9 +11,9 @@ describe('filter unlocked on top directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
-        testApp.directive('filterUnlockedOnTop', require('app/main/posts/views/filters/filter-unlocked-on-top.directive'))
-                .service('FilterTransformers', require('app/main/posts/views/filters/filter-transformers.service.js'))
-                .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        testApp.directive('filterUnlockedOnTop', require('app/map/post-toolbar/filters/filter-unlocked-on-top.directive'))
+                .service('FilterTransformers', require('app/map/post-toolbar/filters/filter-transformers.service.js'))
+                .service('PostFilters', require('app/common/services/post-filters.service.js'));
         angular.mock.module('testApp');
     });
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _FilterTransformers_, _PostFilters_) {

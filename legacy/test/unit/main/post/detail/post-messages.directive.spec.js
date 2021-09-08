@@ -23,7 +23,7 @@ describe('Post messages directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postMessages', require('app/main/posts/detail/post-messages.directive.js'))
+        testApp.directive('postMessages', require('app/data/common/post-edit-detail/post-messages.directive.js'))
         .service('ModalService', function () {
             this.close = function () {};
         })

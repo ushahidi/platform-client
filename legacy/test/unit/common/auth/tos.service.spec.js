@@ -22,7 +22,7 @@ describe('TermsOfService', function () {
             };
         })
 
-        .service('TermsOfService', require('app/common/auth/tos.service.js'));
+        .service('TermsOfService', require('app/auth/tos.service.js'));
 
         angular.mock.module('testApp');
     });

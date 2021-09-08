@@ -12,7 +12,7 @@ describe('post media directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postMedia', require('app/main/posts/modify/post-media.directive'))
+        testApp.directive('postMedia', require('app/data/common/post-edit-create/post-media.directive'))
         .value('$filter', function () {
             return function () {};
         });

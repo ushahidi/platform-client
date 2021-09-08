@@ -13,7 +13,7 @@ describe('post value directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postValue', require('app/main/posts/detail/post-value.directive'))
+        testApp.directive('postValue', require('app/data/post-detail/post-value.directive'))
         .value('$filter', function () {
             return function () {};
         });

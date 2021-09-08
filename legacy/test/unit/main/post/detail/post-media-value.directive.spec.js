@@ -12,7 +12,7 @@ describe('post media value directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postMediaValue', require('app/main/posts/detail/post-media-value.directive'))
+        testApp.directive('postMediaValue', require('app/data/post-detail/post-media-value.directive'))
         .value('$filter', function () {
             return function () {};
         });

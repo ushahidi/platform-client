@@ -4,7 +4,7 @@ describe('view helper', function () {
 
     beforeEach(function () {
         makeTestApp()
-        .service('ViewHelper', require('app/common/services/view-helper.js'))
+        .service('ViewHelper', require('app/map/services/view-helper.js'))
         .service('ConfigEndpoint', function () {
             return {
                 get : function () {}

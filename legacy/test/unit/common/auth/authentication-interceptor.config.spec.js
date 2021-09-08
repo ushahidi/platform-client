@@ -52,7 +52,7 @@ describe('authentication interceptor', function () {
         .service('DemoDeploymentService', function () {
             return mockedDemoDeploymentService;
         })
-        .config(require('app/common/auth/authentication-interceptor.config.js'));
+        .config(require('app/auth/authentication-interceptor.config.js'));
 
 
 

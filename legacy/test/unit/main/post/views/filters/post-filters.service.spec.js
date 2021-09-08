@@ -10,7 +10,7 @@ describe('Post Filters Service', function () {
 
         var testApp = makeTestApp();
 
-        testApp.service('PostFilters', require('app/main/posts/views/post-filters.service.js'))
+        testApp.service('PostFilters', require('app/common/services/post-filters.service.js'))
         .value('$filter', function () {
             return function () {
                 return 'Feb 17, 2016';

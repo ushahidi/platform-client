@@ -13,7 +13,7 @@ describe('post card directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postCard', require('app/main/posts/views/post-card.directive'))
+        testApp.directive('postCard', require('app/map/post-card/post-card.directive'))
         .value('$filter', function () {
             return function () {};
         });

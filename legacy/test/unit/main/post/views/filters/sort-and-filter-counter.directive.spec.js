@@ -29,8 +29,8 @@ describe('filter unlocked on top directive', function () {
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
         var testApp = makeTestApp();
-        testApp.directive('sortAndFilterCounter', require('app/main/posts/views/filters/sort-and-filter-counter.directive'))
-            .service('PostFilters', require('app/main/posts/views/post-filters.service.js'));
+        testApp.directive('sortAndFilterCounter', require('app/map/post-toolbar/sort-and-filter-counter.directive'))
+            .service('PostFilters', require('app/common/services/post-filters.service.js'));
         angular.mock.module('testApp');
     });
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _PostFilters_) {

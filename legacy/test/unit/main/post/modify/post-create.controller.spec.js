@@ -8,7 +8,7 @@ describe('Post create controller', function () {
         .value('PostEntity', function () {
             return fixture.load('posts/120.json');
         })
-        .controller('postCreateController', require('app/main/posts/modify/post-create.controller.js'))
+        .controller('postCreateController', require('app/data/post-create/post-create.controller.js'))
         .service('$transition$', function () {
             return {
                 'params': function () {

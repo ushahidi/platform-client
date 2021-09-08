@@ -11,7 +11,7 @@ describe('filter by datasource directive', function () {
         var testApp;
         fixture.setBase('mocked_backend/api/v3');
         testApp = makeTestApp();
-        testApp.directive('filterByDatasource', require('app/main/posts/views/filter-by-datasource.directive.js'));
+        testApp.directive('filterByDatasource', require('app/map/mode-context/filter-by-datasource.directive.js'));
         angular.mock.module('testApp');
     });
 

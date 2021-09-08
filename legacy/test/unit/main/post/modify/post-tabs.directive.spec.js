@@ -12,7 +12,7 @@ describe('post vertical tabs directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postTabs', require('app/main/posts/modify/post-tabs.directive'))
+        testApp.directive('postTabs', require('app/data/common/post-edit-create/post-tabs.directive'))
         .value('$filter', function () {
             return function () {};
         })

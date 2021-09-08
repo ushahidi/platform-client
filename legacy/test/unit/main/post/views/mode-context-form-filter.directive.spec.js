@@ -12,7 +12,7 @@ describe('mode-context-form-filter directive', function () {
         var testApp;
         fixture.setBase('mocked_backend/api/v3');
         testApp = makeTestApp();
-        testApp.directive('modeContextFormFilter', require('app/main/posts/views/mode-context-form-filter.directive.js'));
+        testApp.directive('modeContextFormFilter', require('app/map/mode-context/mode-context-form-filter.directive.js'));
         angular.mock.module('testApp');
     });
 

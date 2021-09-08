@@ -38,7 +38,7 @@ describe('Session', function () {
                 }
             };
         })
-        .service('Session', require('app/common/auth/session.service.js'));
+        .service('Session', require('app/auth/session.service.js'));
 
 
 

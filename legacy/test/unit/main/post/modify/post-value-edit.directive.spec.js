@@ -13,7 +13,7 @@ describe('post value edit directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postValueEdit', require('app/main/posts/modify/post-value-edit.directive'))
+        testApp.directive('postValueEdit', require('app/data/common/post-edit-create/post-value-edit.directive'))
         .value('$filter', function () {
             return function () {};
         })

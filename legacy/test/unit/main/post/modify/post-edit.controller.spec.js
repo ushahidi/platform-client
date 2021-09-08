@@ -37,7 +37,7 @@ describe('Post edit controller', function () {
 
     beforeEach(function () {
         makeTestApp()
-        .controller('postEditController', require('app/main/posts/modify/post-edit.controller.js'))
+        .controller('postEditController', require('app/data/common/post-edit-create/post-edit.controller.js'))
         .service('$transition$', function () {
             return {
                 'params': function () {

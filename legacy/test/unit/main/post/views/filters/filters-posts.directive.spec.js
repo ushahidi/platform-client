@@ -21,11 +21,11 @@ describe('filters-posts directive', function () {
         testApp
             .directive(
                 'filterPosts',
-                require('app/main/posts/views/filters/filter-posts.directive')
+                require('app/map/post-toolbar/filter-posts.directive')
             )
             .service(
                 'PostFilters',
-                require('app/main/posts/views/post-filters.service.js')
+                require('app/common/services/post-filters.service.js')
             )
             .service('$state', function () {
                 return mockState;

@@ -13,7 +13,7 @@ describe('post relation directive', function () {
 
         var testApp = makeTestApp();
 
-        testApp.directive('postRelation', require('app/main/posts/modify/post-relation.directive'))
+        testApp.directive('postRelation', require('app/data/common/post-edit-create/post-relation.directive'))
         .value('$filter', function () {
             return function () {};
         });
