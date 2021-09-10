@@ -22,6 +22,12 @@
             "title": "Dokumentation",
             "description": "Erfahren Sie, wie Sie Ihre Ushahidi-Umgebung einrichten, konfigurieren und verwalten."
         },
+        "donate": "Donate",
+        "donation": "Donation",
+        "disable_monetization": "Disable Monetization",
+        "enable_monetization": "Enable Monetization",
+        "enable_monetization_error": "Fill in required fields above before enabling monetization.",
+        "enable_monetization_info": "Monetization is currently disabled.",
         "intercom": {
             "intercom": "Intercom",
             "description": "Contact Ushahidi staff for chat support"
@@ -180,6 +186,7 @@
         "add_field_instructions_placeholder": "Explain this field...",
         "add_post_type": "Umfrage hinzufügen",
         "add_step": "Aufgabe hinzufügen",
+        "add_language": "Add language",
         "added_form_stage_attribute": "Gespeichertes Feld",
         "field_allowed_relation_post_type": "Zulässige Umfragen",
         "choose_order_message": "Wählen und sortieren Sie die Felder, die in dieser Umfrage enthalten sein sollen",
@@ -221,6 +228,7 @@
         "save_post_type": "Umfrage speichern",
         "save_post_step": "Aufgabe speichern",
         "saved_form": "Umfrage wurde gespeichert.",
+        "select_language": "Select languages",
         "step_delete": "Löschen",
         "step_name": "Name der Aufgabe",
         "step_rename": "Umbenennen",
@@ -286,8 +294,8 @@
         "tasks": "Aufgaben",
         "task_visible_when_published": "This task will be visible when post is published.",
         "show_field_description": "Add field description (optional):",
-        "add_field": "Feld hinzufügen",
-        "edit_field": "Feld bearbeiten",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "Build",
         "configure": "Konfigurieren",
         "require_section": "Festlegen, dass diese Aufgabe abgeschlossen sein muss, bevor ein Beitrag öffentlich sichtbar sein kann",
@@ -311,6 +319,7 @@
         "response_private_desc": "Only people with permission to edit responses can see responses to this field",
         "require_task_desc": "Festlegen, dass diese Aufgabe abgeschlossen sein muss, bevor ein Beitrag öffentlich sichtbar sein kann",
         "survey_permissions": "Umfrageberechtigungen",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "Wer zu dieser Umfrage beitragen darf",
         "survey_field": "Umfragefeld",
         "choose_survey_field": "Choose what should be assigned to each survey field",
@@ -339,6 +348,11 @@
                 "desc": "<strong>Wenn Sie diese Aufgabe löschen</strong>, werden alle zugehörigen Daten ebenfalls gelöscht. Seien Sie bitte vorsichtig.",
                 "delete": "Aufgabe löschen",
                 "delete_this": "Diese Aufgabe löschen"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -635,6 +649,8 @@
         "see_more_singular": "See {{newPostsCount}} new post",
         "add_to_form": "Zu {{form}} hinzufügen",
         "posts": "Beiträge",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "Es sind keine Beiträge vorhanden",
         "in_this_deployment": "in dieser Bereitstellung.",
         "posts_total": "{{posts}} von {{total_nb}} Beiträgen",
@@ -803,7 +819,8 @@
         "valid": {
             "no_changes": "You haven’t made any changes",
             "invalid_state": "Dieser Beitrag befindet sich zurzeit in einem ungültigen Zustand. Sie müssen alle erforderlichen Aufgaben abschließen, bevor Sie diesen Beitrag erneut veröffentlichen können. Sie können entweder die erforderlichen Aufgaben abschließen oder Ihrem Beitrag auf einen anderen Status setzen, z. B. \"Wird geprüft\".",
-            "validation_fail": "Pflichtfelder sind nicht ausgefüllt (unten mit einem * gekennzeichnet).",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "Ein Titel ist erforderlich",
                 "minlength": "Der Titel ist zu kurz",
@@ -822,7 +839,8 @@
                 "required": "\"{{label}}\" ist erforderlich",
                 "parse": "\"{{label}}\" konnte nicht geparsed werden",
                 "date": "\"{{label}}\" muss ein Datum sein",
-                "number": "\"{{label}}\" muss eine Zahl sein"
+                "number": "\"{{label}}\" muss eine Zahl sein",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": "Name ist zu lang"
@@ -939,6 +957,7 @@
         "delete_category_desc": "<strong>If you delete this category</strong>, it will no longer be associated with any posts. Proceed with caution.",
         "show_categories": "Show available categories",
         "child_permissions": "Permissions for this category are managed by the parent category.",
+        "which_categories": "Which categories should be available",
         "select_all": "Alle wählen",
         "choose_roles": "Rollen auswählen",
         "create_tag": "Kategorie erstellen",
@@ -1017,7 +1036,9 @@
             "webhooks": "Webhooks",
             "webhooks_desc": "Webhooks erstellen, die Daten der Ushahidi-Plattform an externe Anwendungen senden, wenn bestimmte Ereignisse ausgelöst werden.",
             "plans": "Tarife",
-            "plan_desc": "Der derzeitige Tarif Ihrer Bereitstellung ist <strong>{{current_plan}}</strong>."
+            "plan_desc": "Der derzeitige Tarif Ihrer Bereitstellung ist <strong>{{current_plan}}</strong>.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1130,6 +1151,16 @@
                 "search_terms_desc": "Add search terms separated with commas"
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "Member",
             "admin": "Admin",
@@ -1168,6 +1199,8 @@
         "site_language": "Website-Sprache",
         "site_private": "Diese Bereitstellung als privat festlegen",
         "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "Bild auswählen",
         "saved_settings": "Bereitstellungseinstellungen wurden gespeichert.",
         "saved_map_settings": "Karteneinstellungen wurden gespeichert.",
@@ -1430,6 +1463,10 @@
         "general_settings": {
             "save_success": "Allgemeine Einstellungen gespeichert"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "Karteneinstellungen gespeichert"
         },
@@ -1528,6 +1565,7 @@
             "delete_attribute_confirm": "Möchten Sie dieses Feld wirklich löschen?",
             "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
             "destroy_attribute_success": "Feld \"{{name}}\" wurde gelöscht",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "A survey-name is needed",
@@ -1644,6 +1682,30 @@
         "terms_of_service": "We have updated our <a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\">Terms and Conditions</a> and <a href=\"https://www.ushahidi.com/privacy-policy\" target=\"_blank\">Privacy Policy</a>. Please review these documents carefully and accept the terms in order to continue to use Ushahidi's services.",
         "agree": "I agree to Ushahidi's Terms of Service.",
         "accept_and_continue": "Accept and Continue"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "Acoli",
@@ -1771,6 +1833,7 @@
         "en-CH": "Englisch (Schweiz)",
         "en-GB": "Englisch (Großbritannien)",
         "en-US": "Englisch (USA)",
+        "en-EN": "English",
         "myv": "Ersjanisch",
         "eo": "Esperanto",
         "et": "Estnisch",

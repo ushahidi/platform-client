@@ -22,6 +22,12 @@
             "title": "مستندات",
             "description": "نحوه راه اندازی، پیکربندی و مدیریت گسترش Ushahidi را یاد بگیرید."
         },
+        "donate": "Donate",
+        "donation": "Donation",
+        "disable_monetization": "Disable Monetization",
+        "enable_monetization": "Enable Monetization",
+        "enable_monetization_error": "Fill in required fields above before enabling monetization.",
+        "enable_monetization_info": "Monetization is currently disabled.",
         "intercom": {
             "intercom": "ارتباط داخلی",
             "description": "تماس با کارمندان Ushahidi برای پشتیبانی از طریق چت"
@@ -180,6 +186,7 @@
         "add_field_instructions_placeholder": "توضیح این فیلد...",
         "add_post_type": "افزودن نظرسنجی",
         "add_step": "افزودن وظیفه",
+        "add_language": "Add language",
         "added_form_stage_attribute": "فیلد ذخیره شده",
         "field_allowed_relation_post_type": "نظرسنجی های مجاز",
         "choose_order_message": "فیلدهای مورد نظر خود را در این نظرسنجی انتخاب کنید و سفارش دهید",
@@ -221,6 +228,7 @@
         "save_post_type": "ذخیره نظرسنجی",
         "save_post_step": "ذخیره وظیفه",
         "saved_form": "نظرسنجی ذخیره شد.",
+        "select_language": "Select languages",
         "step_delete": "حذف",
         "step_name": "نام وظیفه",
         "step_rename": "تغییر نام",
@@ -286,8 +294,8 @@
         "tasks": "وظایف",
         "task_visible_when_published": "این وظیفه هنگامی که نوشته منتشر می شود قابل مشاهده خواهد بود.",
         "show_field_description": "Add field description (optional):",
-        "add_field": "افزودن فیلد",
-        "edit_field": "ویرایش فیلد",
+        "add_field": "Add {{fieldType | lowercase}} field",
+        "edit_field": "Edit {{fieldType | lowercase}} field",
         "build": "ساختن",
         "configure": "پیکربندی",
         "require_section": "پیش از این که نوشته بتواند برای عموم قابل مشاهده باشد، این وظیفه باید کامل شود",
@@ -311,6 +319,7 @@
         "response_private_desc": "فقط افرادی که مجوز ویرایش پاسخ ها را دارند می توانند پاسخ های این فیلد را ببینند",
         "require_task_desc": "پیش از این که نوشته بتواند برای عموم قابل مشاهده باشد، این وظیفه باید کامل شود",
         "survey_permissions": "دسترسی های نظرسنجی",
+        "only_edit": "Only people with permission to edit responses will be able to see responses to this field.",
         "who_can_add": "چه کسی می تواند به این نظرسنجی اضافه کند",
         "survey_field": "فیلد نظرسنجی",
         "choose_survey_field": "انتخاب کنید چه چیزی باید به هر فیلد مورد نظر اختصاص داده شود",
@@ -339,6 +348,11 @@
                 "desc": "<strong> اگر این وطیفه را حذف کنید </ strong>، تمام داده های جمع آوری شده در آن نیز حذف خواهند شد. با احتیاط ادامه بدهید.",
                 "delete": "حذف وظیفه",
                 "delete_this": "حذف این وظیفه"
+            }
+        },
+        "fields": {
+            "validation": {
+                "required": "Required fields are missing, these fields are marked with an *."
             }
         },
         "targeted_survey": {
@@ -635,6 +649,8 @@
         "see_more_singular": "{{newPostsCount}} نوشته جدید را ببینید",
         "add_to_form": "افزودن به {{form}}",
         "posts": "نوشته ها",
+        "post_title": "Post title",
+        "post_desc": "Post description",
         "there_are_no_posts": "هنوز در این توسعه",
         "in_this_deployment": "نوشته جدیدی وجود ندارد.",
         "posts_total": "{{posts}} of {{total_nb}} posts",
@@ -803,7 +819,8 @@
         "valid": {
             "no_changes": "شما هیچ تغییری انجام نداده اید",
             "invalid_state": "این نوشته در حال حاضر در حالت نامعتبر است قبل از اینکه بتوانید این نوشته را دوباره منتشر کنید، باید تمام وظایف مورد نیاز را کامل کنید. شما می توانید وظایف لازم را کامل کنید یا نوشته خود را در یک وضعیت دیگر مانند \"تحت بررسی\" قرار دهید.",
-            "validation_fail": "فیلدهای اجباری پر نشده اند، این فیلدها با * در زیر مشخص شده اند.",
+            "validation_fail": "Required fields are missing, these fields are marked with an *.",
+            "validation_fail_other": "There was an error validating the data. Fields failing validation will display an error.",
             "title": {
                 "required": "عنوان نمی تواند خالی باشد",
                 "minlength": "عنوان خیلی کوتاه است",
@@ -822,7 +839,8 @@
                 "required": "«{{label}}» مورد نیاز است",
                 "parse": "«{{label}}» نمی تواند تجزیه شود",
                 "date": "«{{label}}» باید یک تاریخ باشد",
-                "number": "«{{label}}» باید یک عدد باشد"
+                "number": "«{{label}}» باید یک عدد باشد",
+                "step": "\"{{label}}\" must be an integer"
             },
             "author_name": {
                 "maxlength": "نام بیش از حد طولانی است"
@@ -939,6 +957,7 @@
         "delete_category_desc": "<strong> اگر این دسته بندی را حذف کنید </ strong>، دیگر با هیچ پستی مرتبط نخواهد بود. با احتیاط ادامه بدهید.",
         "show_categories": "نمایش دسته بندی های موجود",
         "child_permissions": "مجوزهای این دسته بندی توسط دسته بندی والد مدیریت می شود.",
+        "which_categories": "Which categories should be available",
         "select_all": "انتخاب همه",
         "choose_roles": "انتخاب نقش ها",
         "create_tag": "ایجاد دسته بندی",
@@ -1017,7 +1036,9 @@
             "webhooks": "وب هوک ها",
             "webhooks_desc": "وب هوک هایی ایجاد  کنید که هنگام وقوع رویداهای خاص، داده های پلتفرم Ushahidi را به طرح های خارجی ارسال می کند.",
             "plans": "طرح ها",
-            "plan_desc": "طرح فعلی حوزه شما <strong>{{current_plan}}</strong> است."
+            "plan_desc": "طرح فعلی حوزه شما <strong>{{current_plan}}</strong> است.",
+            "donation": "Donation",
+            "donation_desc": "Create and manage the donations people can make towards your organisation."
         },
         "user_settings": {
             "user_settings_desc_1": "Here you can add your unique API key for your Humanitarian Data Exchange (HDX) account.",
@@ -1130,6 +1151,16 @@
                 "search_terms_desc": "کلمات جستجو را با کاما از هم جدا کنید."
             }
         },
+        "donation": {
+            "title": {
+                "label": "Donation title",
+                "placeholder": "Enter the title of your donation",
+                "required": "Donation title is required"
+            },
+            "wallet": {
+                "required": "Donation wallet address is required"
+            }
+        },
         "roles": {
             "member": "عضو",
             "admin": "مدیر",
@@ -1168,6 +1199,8 @@
         "site_language": "زبان سایت",
         "site_private": "این گسترش را خصوصی کنید",
         "site_private_desc": "Enabling this option makes your deployment and it’s data only accessible to registered users with the correct privileges, who must sign in for access",
+        "site_disable_registration": "Disable user sign up?",
+        "site_disable_registration_desc": "Checking this disables the registration feature. Admins will have to manually add users.",
         "select_image": "انتخاب تصویر",
         "saved_settings": "تنظیمات گسترش ذخیره شد!",
         "saved_map_settings": "تنظیمات نقشه ذخیره شد!",
@@ -1430,6 +1463,10 @@
         "general_settings": {
             "save_success": "تنظیمات عمومی ذخیره شد"
         },
+        "donation_settings": {
+            "save_success": "Donation settings saved",
+            "delete_question": "Are you sure you want to delete this {{name}}."
+        },
         "map_settings": {
             "save_success": "تنظیمات مپ (نگاشت) ذخیره شد"
         },
@@ -1528,6 +1565,7 @@
             "delete_attribute_confirm": "آیا از حذف این فیلد مطمئن هستید؟",
             "delete_attribute_confirm_desc": "این کار قابل بازگشت نیست. با حذف این فیلد، داده های آن از همه پست های موجود حذف می شود.",
             "destroy_attribute_success": "فیلد {{name}} حذف شد",
+            "survey_name_required": "Survey-name is required",
             "validation": {
                 "name": {
                     "required": "نام نظر سنجی مورد نیاز است",
@@ -1644,6 +1682,30 @@
         "terms_of_service": "<a href=\"https://www.ushahidi.com/terms-of-service\" target=\"_blank\"> Terms and Conditions </a> ما و <a href=\"https://www. ushahidi.com/privacy-policy \"target =\" _ blank \"> Privacy Policy </a> بروزرسانی شد. لطفا این اسناد را به دقت بررسی کرده و شرایط را بپزیرید تا بتوانید کماکان از خدمات Ushahidi استفاده کنید.",
         "agree": "شرایط خدمات Ushahidi را قبول می کنم.",
         "accept_and_continue": "پذیرفتن و ادامه"
+    },
+    "translations": {
+        "languages": "Languages",
+        "language": "Language",
+        "default": "default",
+        "translate_field": "Translate field",
+        "survey_select_default": "Select default language for this survey",
+        "category_select_default": "Select default language for this category",
+        "error_translation_exists": "You cannot select this language since there is already a translation for it.",
+        "edit_default_text": "Text in default language",
+        "edit_placeholder": "Write your translation here",
+        "add_translation": "Add your translation below:",
+        "survey_name_required": "Translation for survey-name is required",
+        "field_add_translation": "Fields (click to add translation):",
+        "add_translation_lang": "Add translation",
+        "translate_field_name": "Translate field name",
+        "translate_field_desc": "Translate field description",
+        "category_translations_link": "Please note, to add translations to category-names, head over to <a href=\"/settings/categories\" class=\"link-blue\" target=\"_blank\">Category Settings</a>",
+        "parent_child_lang": "Please note that the selected default language for this child-category is different from its parent",
+        "post_title_required": "Translation for post-title is required",
+        "add_a_language": "Add a language",
+        "error_no_default": "You need to specify a default language before adding a new translation.",
+        "select_language": "Select a language to add translation for",
+        "default_lang_info": "This is the language that will be used if no translations are available for the language the user has set for the deployment."
     },
     "languages": {
         "ach": "آکولی",
@@ -1771,6 +1833,7 @@
         "en-CH": "انگلیسی (سوئیس)",
         "en-GB": "انگلیسی (انگلستان)",
         "en-US": "انگلیسی (ایالات متحده)",
+        "en-EN": "English",
         "myv": "ارزیا",
         "eo": "اسپرانتو",
         "et": "استونیایی",
