@@ -57,6 +57,7 @@
                             <div>
                                 <div class="form-field">
                                     <label for="donation-title"
+                                        class="required"
                                         ng-class="{'success': !form.title.$invalid && form.title.$dirty, 'error' : form.title.$invalid && form.title.$dirty }"
                                         translate>
                                         settings.donation.title.label
@@ -125,7 +126,7 @@
 
                             <div>
                                 <div class="form-field">
-                                    <label for="donation-wallet">Wallet address </label>
+                                    <label for="donation-wallet" class="required">Wallet address </label>
                                     <input name="wallet" id="donation-wallet" type="text" ng-model="site.donation.wallet"
                                         ng-required="true" placeholder="Enter a wallet address e.g $ilp.uphold.com/example" />
                                     <div class="alert error" ng-repeat="(error, value) in form.wallet.$error"
@@ -147,21 +148,19 @@
                         </div>
 
                         <div class="form-field">
-                            <label>
-                                Disable Monetization
-                                <input id="donations-disable" type="checkbox"
-                                    class="ng-pristine ng-untouched ng-valid ng-empty" ng-model="site.donation.enabled"
-                                    ng-true-value="false" ng-false-value="true">
-                            </label>
+                            <div ng-if="site.donation.enabled">
+                                <button class="button-destructive"  translate="app.disable_monetization" ng-click="toggleMonetization()">Disable Monetization</button>
+                            </div>
+                            <div class="alert error" ng-if="showMessage && form.$invalid" translate="app.enable_monetization_error">Fill in required fields above before enabling monetization.</div>
+                            <div ng-if="!site.donation.enabled" >
+                                <div class="alert">
+                                    <p translate="app.enable_monetization_info">Monetization is currently disabled.</p>
+                                </div>
+                                <div>
+                                    <button class="button-alpha" translate="app.enable_monetization" ng-click="toggleMonetization()">Enable Monetization</button>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- <div class="form-field switch">
-                            <label translate>Enable Monetization</label>
-                            <div class="toggle-switch">
-                                <input class="tgl" id="donation_enable" type="checkbox">
-                                <label class="tgl-btn" for="donation_enable"></label>
-                           </div>
-                        </div> -->
                     </div>
                 </div>
             </div>

@@ -24,6 +24,10 @@
         },
         "donate": "Darujte",
         "donation": "Dary",
+        "disable_monetization": "Zakázat zpeněžení",
+        "enable_monetization": "Povolit zpeněžení",
+        "enable_monetization_error": "Před povolením zpeněžení vyplňte výše uvedená povinná pole.",
+        "enable_monetization_info": "Monetizace je v současné době vypnutá.",
         "intercom": {
             "intercom": "Intercom",
             "description": "Kontaktovat pracovníky Ushahidi pro podporu chatu"
