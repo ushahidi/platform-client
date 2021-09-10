@@ -196,6 +196,7 @@
         "custom_structure": "Custom Structure",
         "default_date_placeholder": "Default date",
         "default_default_placeholder": "Default value",
+        "default_number_placeholder": "Default value e.g 8",
         "default_location_placeholder": "Nairobi, Kenya",
         "delete_post_type": "Delete this survey",
         "deleted_form": "Deleted Survey",
