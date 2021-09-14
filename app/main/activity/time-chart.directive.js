@@ -11,8 +11,8 @@ function ActivityTimeChart() {
     };
 }
 
-ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'Chart', '_', 'PostFilters', 'moment'];
-function ActivityTimeChartController($scope, $translate, PostEndpoint, Chart, _, PostFilters, moment) {
+ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'Chart', '_', 'PostFilters', 'dayjs'];
+function ActivityTimeChartController($scope, $translate, PostEndpoint, Chart, _, PostFilters, dayjs) {
     var yAxisLabelCumulative = $translate.instant('graph.cumulative_post_count'),
         yAxisLabel = $translate.instant('graph.new_post_count'),
         xAxisLabel = $translate.instant('graph.post_date');
@@ -133,7 +133,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, Chart, _,
                                 return context[0].dataset.label
                             },
                             label: function (context) {
-                                let date = moment(new Date(context.parsed.x * 1000)).format('Do MMM YY');
+                                let date = dayjs(new Date(context.parsed.x * 1000)).format('DD MM YY');
                                 let text = context.parsed.y > 1 ? 'posts on' : 'post on';
                                 return `${context.parsed.y} ${text} ${date}`;
                             }
@@ -148,7 +148,7 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, Chart, _,
                             // setting unit-labels for x-axis
                             callback: function(value) {
                             let d = new Date(value * 1000)
-                                return moment(d).format('Do MMM YY')
+                                return dayjs(d).format('D MMM YY')
                             }
                         },
                         // setting label for x-axis

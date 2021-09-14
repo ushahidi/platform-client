@@ -22,11 +22,10 @@ require('./settings/settings.module.js');
 import ravenModule from './common/raven/raven';
 import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 
-import moment from 'moment';
 import { Chart, registerables } from 'chart.js';
 
 // Change to https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/tree/master once moment is exchanged to dayjs
-import 'chartjs-adapter-moment';
+import 'chartjs-adapter-dayjs';
 
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
@@ -128,9 +127,6 @@ angular.module('app',
 
     .factory('_', function () {
         return require('underscore/underscore');
-    })
-    .factory('moment', function () {
-        return moment;
     })
     .factory('Chart', function () {
         Chart.register(...registerables);

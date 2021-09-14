@@ -103,7 +103,7 @@
     "angular-translate-loader-static-files": "^2.11.0",
     "angular-ui-bootstrap": "^2.5.0",
     "chart.js": "^3.5.0",
-    "chartjs-adapter-moment": "^1.0.0",
+    "chartjs-adapter-dayjs": "^1.0.0",
     "checklist-model": "~0.11.0",
     "cross-fetch": "^3.0.4",
     "dayjs": "^1.10.5",
