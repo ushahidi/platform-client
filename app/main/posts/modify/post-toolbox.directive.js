@@ -3,13 +3,13 @@ module.exports = PostToolboxDirective;
 PostToolboxDirective.$inject = [
     'PostActionsService',
     'PostMetadataService',
-    'moment',
+    'dayjs',
     '$rootScope'
 ];
 function PostToolboxDirective(
     PostActionsService,
     PostMetadataService,
-    moment,
+    dayjs,
     $rootScope
 ) {
     return {
@@ -85,10 +85,10 @@ function PostToolboxDirective(
         }
 
         function formatDates() {
-            $scope.displayCreated = moment($scope.post.created).format('LLL');
+            $scope.displayCreated = dayjs($scope.post.created).format('LLL');
 
             if ($scope.post.updated) {
-                $scope.displayUpdated = moment($scope.post.updated).format('LLL');
+                $scope.displayUpdated = dayjs($scope.post.updated).format('LLL');
             }
         }
     }
