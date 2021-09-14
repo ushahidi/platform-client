@@ -17,5 +17,6 @@
         </div>
     </fieldset>
 
-    <nvd3 options='options' data='data'></nvd3>
+    <p translate ng-show="!data || data.length < 1"> graph.no_data</p>
+    <canvas ng-show="data.length > 0" id="bar-chart"></canvas>
 </div>

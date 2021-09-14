@@ -10,7 +10,10 @@ describe('post view timeline directive', function () {
         fixture.setBase('mocked_backend/api/v3');
 
 
-        var testApp = makeTestApp();
+        var testApp = makeTestApp()
+        .factory('dayjs', function () {
+            return require('dayjs');
+        });
 
         testApp.directive('activityTimeChart', require('app/activity/time-chart.directive.js'))
         .value('$filter', function () {

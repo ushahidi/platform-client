@@ -20,7 +20,7 @@ PostEditorController.$inject = [
     '$filter',
     '$translate',
     '$timeout',
-    'moment',
+    'dayjs',
     'PostEditService',
     'Notify',
     '_',
@@ -38,7 +38,7 @@ function PostEditorController(
     $filter,
     $translate,
     $timeout,
-    moment,
+    dayjs,
     PostEditService,
     Notify,
     _,
@@ -119,11 +119,11 @@ function PostEditorController(
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
                         if (attr.value.value) {
-                            attr.value.value = moment(attr.value.value).toDate();
+                            attr.value.value = dayjs(attr.value.value).toDate();
                         } else if (attr.default) {
                             attr.value.value = new Date(attr.default);
                         } else {
-                            attr.value.value = attr.required ? moment(new Date()).toDate() : null;
+                            attr.value.value = attr.required ? dayjs(new Date()).toDate() : null;
                         }
                     }
                 });

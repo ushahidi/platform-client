@@ -16,7 +16,7 @@ DemoDeploymentController.$inject = [
     '$location',
     'ConfigEndpoint',
     'PostEndpoint',
-    'moment'
+    'dayjs'
 ];
 function DemoDeploymentController(
     $scope,
@@ -24,7 +24,7 @@ function DemoDeploymentController(
     $location,
     ConfigEndpoint,
     PostEndpoint,
-    moment
+    dayjs
 ) {
 
     var USHAHIDI = 'Ushahidi';
@@ -44,9 +44,9 @@ function DemoDeploymentController(
     function activate() {
         ConfigEndpoint.get({id: 'site'}).$promise.then(function (site) {
             $scope.site_name = site.name ? site.name : USHAHIDI;
-            var expiration_date = moment(site.expiration_date);
-            var extension_date = site.extension_date ? moment(site.extension_date) : null;
-            var now = moment();
+            var expiration_date = dayjs(site.expiration_date);
+            var extension_date = site.extension_date ? dayjs(site.extension_date) : null;
+            var now = dayjs();
 
             $scope.expired = now > expiration_date;
 

@@ -11,9 +11,6 @@ require('angular-local-storage');
 require('checklist-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown');
-window.d3 = require('d3'); // Required for nvd3
-require('./common/wrapper/nvd3-wrapper');
-require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
@@ -32,6 +29,11 @@ require('./settings/settings.routes.js');
 require('./activity/activity-routes.js');
 import ravenModule from './common/raven/raven';
 import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
+
+import { Chart, registerables } from 'chart.js';
+
+// Change to https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/tree/master once moment is exchanged to dayjs
+import 'chartjs-adapter-dayjs';
 
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
@@ -83,7 +85,6 @@ angular
         'angular.filter',
         'ng-showdown',
         'ngGeolocation',
-        'nvd3',
         'angular-cache',
         'linkify',
         ravenModule,
@@ -164,8 +165,9 @@ angular
     .factory('_', function () {
         return require('underscore/underscore');
     })
-    .factory('d3', function () {
-        return window.d3;
+    .factory('Chart', function () {
+        Chart.register(...registerables);
+        return Chart;
     })
     .factory('URI', function () {
         return require('URIjs/src/URI.js');
@@ -178,8 +180,20 @@ angular
         require('imports-loader?L=leaflet!leaflet-easybutton');
         return L;
     })
-    .factory('moment', function () {
-        return require('moment');
+    .factory('dayjs', function () {
+        return require('dayjs');
+    })
+    .factory('relativeTime', function () {
+        return require('dayjs/plugin/relativeTime');
+    })
+    .factory('localizedFormat', function () {
+        return require('dayjs/plugin/localizedFormat');
+    })
+    .factory('utc', function () {
+        return require('dayjs/plugin/utc');
+    })
+    .factory('isSameOrBefore', function () {
+        return require('dayjs/plugin/isSameOrBefore');
     })
     .factory('BootstrapConfig', [
         '_',

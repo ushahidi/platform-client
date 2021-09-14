@@ -8,7 +8,7 @@ module.exports = [
     'Authentication',
     'UserEndpoint',
     'ConfigEndpoint',
-    'moment',
+    'dayjs',
 function (
     $rootScope,
     $q,
@@ -19,7 +19,7 @@ function (
     Authentication,
     UserEndpoint,
     ConfigEndpoint,
-    moment
+    dayjs
 ) {
     var translate = function (lang) {
         if (lang) {
@@ -40,16 +40,16 @@ function (
                         }
                 }
             });
-            moment.locale('en');
+            dayjs.locale('en');
 
             // Load locale
-            require(['moment/locale/' + lang + '.js'], function () {
-                // And then set moment locale
-                moment.locale(lang.toLowerCase());
+            require(['dayjs/locale/' + lang + '.js'], function () {
+                // And then set dayjs locale
+                dayjs.locale(lang.toLowerCase());
             }, function() { // if it fails attempt using the 2 letter language code
                 var shortCode = lang.substr(0,2).toLowerCase();
-                require(['moment/locale/' + shortCode + '.js'], function () {
-                    moment.locale(shortCode);
+                require(['dayjs/locale/' + shortCode + '.js'], function () {
+                    dayjs.locale(shortCode);
                 }, () => { console.error('Failed to load locale: ' + shortCode) });
             });
 

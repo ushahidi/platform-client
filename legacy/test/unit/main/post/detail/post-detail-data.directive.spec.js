@@ -8,7 +8,7 @@ describe('Post detail directive', function () {
        $compile,
        element;
 
-    function moment() {
+    function dayjs() {
         return {
             isSame: function () {},
             fromNow: function () {},
@@ -70,7 +70,7 @@ describe('Post detail directive', function () {
             }
         };
 
-        $scope.moment = moment;
+        $scope.dayjs = dayjs;
         element = '<post-detail-data post="post"></post-detail-data>';
         element = $compile(element)($scope);
         $rootScope.$digest();

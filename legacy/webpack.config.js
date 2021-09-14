@@ -117,7 +117,7 @@ module.exports = {
     },
     plugins: [
         // Skip locales
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /dayjs$/),
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify(process.env.BACKEND_URL || 'http://backend.url.undefined'),
             ENVIRONMENT: JSON.stringify(process.env.ENVIRONMENT || 'dev'),

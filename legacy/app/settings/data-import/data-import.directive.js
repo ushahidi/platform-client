@@ -9,7 +9,6 @@ module.exports = [
     'Notify',
     'DataImport',
     'Features',
-    'moment',
     '_',
 function (
     $translate,
@@ -22,7 +21,6 @@ function (
     Notify,
     DataImport,
     Features,
-    moment,
     _
 ) {
     return {

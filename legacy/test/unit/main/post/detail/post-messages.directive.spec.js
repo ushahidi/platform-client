@@ -5,19 +5,6 @@ describe('Post messages directive', function () {
         MessageEndpoint,
         element;
 
-    var momentMock = function () {
-        return {
-            isSame: function () {
-                return true;
-            },
-            fromNow: function () {
-                return '2 hours';
-            },
-            format: function () {
-                return 'March 21, 2015';
-            }
-        };
-    };
 
     beforeEach(function () {
 
@@ -27,9 +14,14 @@ describe('Post messages directive', function () {
         .service('ModalService', function () {
             this.close = function () {};
         })
-        .value('moment', momentMock)
         .value('$filter', function () {
             return function () {};
+        })
+        .factory('dayjs', function () {
+            return require('dayjs');
+        })
+        .factory('relativeTime', function () {
+            return require('dayjs/plugin/relativeTime');
         });
 
         angular.mock.module('testApp');
@@ -50,6 +42,7 @@ describe('Post messages directive', function () {
         element = $compile(element)($scope);
         $rootScope.$digest();
         isolateScope = element.isolateScope();
+        isolateScope.messages[0].displayTime = '2 hours';
         MessageEndpoint = _MessageEndpoint_;
     }));
 

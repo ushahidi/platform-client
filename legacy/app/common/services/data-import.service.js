@@ -11,7 +11,7 @@ DataImport.$inject = [
     '$q',
     '_',
     'ImportNotify',
-    'moment'
+    'CollectionEndpoint'
 ];
 function DataImport(
     $rootScope,
@@ -24,7 +24,7 @@ function DataImport(
     $q,
     _,
     ImportNotify,
-    moment
+    CollectionEndpoint
 ) {
     var importJobs = [];
 

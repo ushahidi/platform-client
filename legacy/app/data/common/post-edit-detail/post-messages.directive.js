@@ -6,7 +6,8 @@ module.exports = [
     'Notify',
     'UserEndpoint',
     '_',
-    'moment',
+    'dayjs',
+    'relativeTime',
     'ModalService',
 function (
     $rootScope,
@@ -16,7 +17,8 @@ function (
     Notify,
     UserEndpoint,
     _,
-    moment,
+    dayjs,
+    relativeTime,
     ModalService
 ) {
     return {
@@ -143,8 +145,10 @@ function (
             };
 
             function formatDate(date) {
-                var now = moment();
-                date = moment(date);
+                var now = dayjs();
+                date = dayjs(date);
+
+                dayjs.extend(relativeTime);
 
                 if (now.isSame(date, 'day')) {
                     return date.fromNow();

@@ -1,22 +1,8 @@
 module.exports = ActivityController;
 
-ActivityController.$inject = [
-    '$rootScope',
-    '$scope',
-    '$translate',
-    'moment',
-    'Features',
-    'Flatpickr'
-];
+ActivityController.$inject = ['$rootScope', '$scope', '$translate', 'dayjs', 'utc', 'Features', 'Flatpickr'];
 
-function ActivityController(
-    $rootScope,
-    $scope,
-    $translate,
-    moment,
-    Features,
-    Flatpickr
-) {
+function ActivityController($rootScope, $scope, $translate, dayjs, utc, Features, Flatpickr) {
     // Initial values
     $scope.isActivityAvailable = false;
     $scope.currentInterval = 'all';
@@ -72,6 +58,8 @@ function ActivityController(
         setDateRange($scope.currentInterval);
     }
 
+    dayjs.extend(utc);
+
     /**
      * Util func to get date range when given an interval like
      * @param  {String} interval month|week|all
@@ -80,12 +68,8 @@ function ActivityController(
     function setDateRange(interval) {
         switch (interval) {
             case 'month':
-                $scope.filters.created_after = moment(
-                    moment().startOf('month').toDate()
-                )
-                    .utc()
-                    .format();
-                $scope.filters.created_before = null;
+                $scope.filters.created_after = dayjs(dayjs().startOf('month').toDate()).utc().format();
+                $scope.filters.created_before =  null;
                 break;
             case 'all':
                 $scope.filters.created_after = null;
@@ -99,41 +83,21 @@ function ActivityController(
                         $scope.createdBefore.toDateString()
                 ) {
                     // Do nothing?
-                    $scope.filters.created_after = moment(
-                        moment($scope.createdAfter).utc()
-                    )
-                        .startOf('day')
-                        .format();
-                    $scope.filters.created_before = moment(
-                        moment($scope.createdBefore).utc()
-                    )
-                        .endOf('day')
-                        .format();
+                    $scope.filters.created_after = dayjs(dayjs($scope.createdAfter).utc()).startOf('day').format();
+                    $scope.filters.created_before = dayjs(dayjs($scope.createdBefore).utc()).endOf('day').format();
                 }
                 if ($scope.createdAfter) {
-                    $scope.filters.created_after = moment(
-                        moment($scope.createdAfter).utc()
-                    )
-                        .startOf('day')
-                        .format();
+                    $scope.filters.created_after = dayjs(dayjs($scope.createdAfter).utc()).startOf('day').format();
                 }
                 if ($scope.createdBefore) {
-                    $scope.filters.created_before = moment(
-                        moment($scope.createdBefore).utc()
-                    )
-                        .startOf('day')
-                        .format();
+                    $scope.filters.created_before = dayjs(dayjs($scope.createdBefore).utc()).startOf('day').format();
                 }
                 break;
             // case 'week':
             default:
                 // Default to this week
-                $scope.filters.created_after = moment(
-                    moment().startOf('week').toDate()
-                )
-                    .utc()
-                    .format();
-                $scope.filters.created_before = null;
+                $scope.filters.created_after = dayjs(dayjs().startOf('week').toDate()).utc().format();
+                $scope.filters.created_before =  null;
         }
         return $scope.filters;
     }
