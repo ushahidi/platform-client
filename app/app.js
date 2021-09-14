@@ -11,9 +11,6 @@ require('angular-local-storage');
 require('checklist-model');
 require('ngGeolocation/ngGeolocation');
 require('ng-showdown');
-window.d3 = require('d3'); // Required for nvd3
-require('./common/wrapper/nvd3-wrapper');
-require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
 require('ngtweet');
@@ -24,10 +21,18 @@ require('./main/main-module.js');
 require('./settings/settings.module.js');
 import ravenModule from './common/raven/raven';
 import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
+
+import moment from 'moment';
+import { Chart, registerables } from 'chart.js';
+
+// Change to https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/tree/master once moment is exchanged to dayjs
+import 'chartjs-adapter-moment';
+
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
 require('../sass/vendor.scss');
+
 
 // Make sure we have a window.ushahidi object
 window.ushahidi = window.ushahidi || {};
@@ -73,7 +78,6 @@ angular.module('app',
         'angular.filter',
         'ng-showdown',
         'ngGeolocation',
-        'nvd3',
         'angular-cache',
         'linkify',
         ravenModule,
@@ -125,8 +129,12 @@ angular.module('app',
     .factory('_', function () {
         return require('underscore/underscore');
     })
-    .factory('d3', function () {
-        return window.d3;
+    .factory('moment', function () {
+        return moment;
+    })
+    .factory('Chart', function () {
+        Chart.register(...registerables);
+        return Chart;
     })
     .factory('URI', function () {
         return require('URIjs/src/URI.js');

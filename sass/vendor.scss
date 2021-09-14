@@ -11,7 +11,6 @@
 @import "~leaflet.markercluster/dist/MarkerCluster";
 @import "~leaflet.markercluster/dist/MarkerCluster.Default";
 @import "~leaflet.locatecontrol/src/L.Control.Locate";
-@import "~nvd3/build/nv.d3";
 @import '~@toast-ui/editor/dist/toastui-editor-viewer.css'; // editor's ui
 @import '~@toast-ui/editor/dist/toastui-editor.css'; // editor's content
 @import '~flatpickr/dist/flatpickr.min.css'; 
@@ -21,6 +20,5 @@
 @import "overrides/leaflet";
 @import "overrides/filters";
 @import "overrides/modal";
-@import "overrides/charts";
 @import "overrides/intercom";
 @import "overrides/tui-markdown";
