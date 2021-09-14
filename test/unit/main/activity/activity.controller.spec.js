@@ -9,6 +9,12 @@ describe('activity activity controller', function () {
     beforeEach(function () {
 
         var testApp = makeTestApp()
+        .factory('dayjs', function () {
+            return require('dayjs');
+        })
+        .factory('utc', function () {
+            return require('dayjs/plugin/utc');
+        })
         .service('ViewHelper', function () {
             return {
                 isViewAvailable: function (view) {
