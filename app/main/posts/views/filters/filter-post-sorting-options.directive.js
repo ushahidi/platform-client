@@ -1,11 +1,10 @@
 module.exports = FilterPostSortingOptionsDirective;
 
 FilterPostSortingOptionsDirective.$inject = [
-    'moment',
     '$rootScope',
     '_'
 ];
-function FilterPostSortingOptionsDirective(moment, $rootScope, _) {
+function FilterPostSortingOptionsDirective($rootScope, _) {
     return {
         restrict: 'E',
         require: 'ngModel',
