@@ -1,4 +1,4 @@
-module.exports = ['moment', 'Flatpickr', '_', function (moment, Flatpickr, _) {
+module.exports = ['dayjs', 'Flatpickr', '_', function (dayjs, Flatpickr, _) {
     return {
         restrict: 'E',
         replace: true,
@@ -30,7 +30,7 @@ module.exports = ['moment', 'Flatpickr', '_', function (moment, Flatpickr, _) {
             // Render ngModel viewValue into scope
             function render() {
                 if (ngModel.$viewValue !== null) {
-                    $scope.model = moment(ngModel.$viewValue).toDate();
+                    $scope.model = dayjs(ngModel.$viewValue).toDate();
                 }            }
 
             // Save model value
