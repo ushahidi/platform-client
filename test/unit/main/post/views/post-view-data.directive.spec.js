@@ -35,10 +35,18 @@ describe('Data View directive', function () {
                 }
             };
         })
-        .factory('moment', function () {
-            return require('moment');
-        });
-
+        .factory('dayjs', function () {
+            return require('dayjs');
+        })
+        .factory('utc', function () {
+            return require('dayjs/plugin/utc');
+        })
+        .factory('relativeTime', function () {
+            return require('dayjs/plugin/relativeTime');
+        })
+        .factory('isSameOrBefore', function () {
+            return require('dayjs/plugin/isSameOrBefore');
+        })
         angular.mock.module('testApp');
     });
 

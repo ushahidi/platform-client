@@ -35,6 +35,9 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         $scope.searchResults = [];
         $scope.showCurrentPositionControl = false;
         $scope.updateMapFromLatLon = updateMapFromLatLon;
+        $scope.isLatitude = isLatitude;
+        $scope.isLongitude = isLongitude;
+        $scope.showUpdateButton = showUpdateButton;
         activate();
 
         function activate() {
@@ -108,15 +111,40 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             updateManualLatLon(lat, lon);
         }
 
+        function isLatitude(lat) {
+            return isFinite(lat) && Math.abs(lat) <= 90;
+        }
+        function isLongitude(lon) {
+            return isFinite(lon) && Math.abs(lon) <= 180;
+        }
+
+        function showUpdateButton() {
+            // Do not show button if there are no values in the fields
+            if (!$scope.manualModel.lat || !$scope.manualModel.lon) {
+                return false;
+            }
+            // Only show button if the field is dirty
+            if ($scope.manualPos.$dirty) {
+                // if no ngModel but valid values in the fields, show button
+                if (!ngModel.$viewValue || !ngModel.$viewValue.lat || !ngModel.$viewValue.lon) {
+                    return isLatitude($scope.manualModel.lat) && isLongitude($scope.manualModel.lon)
+                }
+                // if valid values in the field that is different to ngModel, show button
+            return isLatitude($scope.manualModel.lat) && isLongitude($scope.manualModel.lon) && $scope.manualModel.lat !== ngModel.$viewValue.lat || $scope.manualModel.lon !== ngModel.$viewValue.lon;
+        }
+    }
+
         function updateManualLatLon(lat, lon) {
             $scope.manualModel.lat = lat;
             $scope.manualModel.lon = lon;
         }
 
         function updateMapFromLatLon(lat, lon) {
-            updateMarkerPosition(lat, lon);
-            centerMapTo(lat, lon);
-            updateModelLatLon(lat, lon);
+            if (isLatitude(lat) && isLongitude(lon)) {
+                updateMarkerPosition(lat, lon);
+                centerMapTo(lat, lon);
+                updateModelLatLon(lat, lon);
+            };
         }
 
         function updateMarkerPosition(lat, lon) {

@@ -139,8 +139,20 @@ angular.module('app',
         require('imports-loader?L=leaflet!leaflet-easybutton');
         return L;
     })
-    .factory('moment', function () {
-        return require('moment');
+    .factory('dayjs', function () {
+        return require('dayjs');
+    })
+    .factory('relativeTime', function () {
+        return require('dayjs/plugin/relativeTime');
+    })
+    .factory('localizedFormat', function () {
+        return require('dayjs/plugin/localizedFormat');
+    })
+    .factory('utc', function () {
+        return require('dayjs/plugin/utc');
+    })
+    .factory('isSameOrBefore', function () {
+        return require('dayjs/plugin/isSameOrBefore');
     })
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
