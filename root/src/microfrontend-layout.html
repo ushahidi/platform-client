@@ -13,8 +13,28 @@
   </route>
 
   -->
+  
+    <div id="bootstrap-loading">
+    <!-- loading the document -->
+            <div class="loading">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+    </div>
+    <div id="bootstrap-error" class="hidden">
+        <div class="wrapper">
+            <main class="page-content">
+                <div class="alert error">
+                    <p id="bootstrap-error-message">Sorry, something went wrong. Try reloading the page.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
     <nav></nav>
     <main>
+
         <route default>
             <application name="@ushahidi/legacy-app"></application>
         </route>

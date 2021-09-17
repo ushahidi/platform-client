@@ -35,8 +35,8 @@
 }
 
 #bootstrap-error {
-    .alert{
-        .error {
+    .alert {
+        &.error {
             background-color: #fac4cb;
             border-left: 2px solid #b00f23;
             display: inline-block;

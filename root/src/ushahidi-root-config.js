@@ -14,7 +14,6 @@ require("ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css");
 setBootstrapConfig();
 
 const routes = constructRoutes(microfrontendLayout);
-
 const applications = constructApplications({
     routes,
     loadApp({ name }) {
@@ -26,13 +25,27 @@ const layoutEngine = constructLayoutEngine({ routes, applications });
 applications.forEach(registerApplication);
 layoutEngine.activate();
 
-start();
+const showError = function (show) {
+    const element = document.querySelector('#bootstrap-error');
+    show ? element.classList.remove('hidden') : element.classList.add('hidden') ;
+}
+
+const showLoading = function (show) {
+    const element = document.querySelector('#bootstrap-loading')
+    show ? element.classList.remove("hidden") : element.classList.add("hidden");
+}
+
 let siteTitle = "";
+
 function generatePageTitle(pageTitle = "") {
     return `${pageTitle} - ${siteTitle}`;
 }
+
+
 // Setting initial page-metadata
 getPageMetadata().then((data) => {
+    start();
+
     // Setting page-metadata that does not change
     siteTitle = data.title;
     let description = document.querySelector('[name="description"]');
@@ -41,7 +54,20 @@ getPageMetadata().then((data) => {
         let appleStore = document.querySelector('[name="apple-itunes-app"]');
         appleStore.content = `app-id=${data.appleId}, app-argument=${document.location.href}`;
     }
+}, err => {
+    if (err.response.data.errors[0].message) {
+        document.getElementById('bootstrap-error-message').innerHTML = err.response.data.errors[0].message;
+    }
+    // showing errorMessage
+    showError(true);
+    // hiding spinner
+    showLoading(false);
 });
+
+window.addEventListener('single-spa:before-first-mount', () => {
+    // hiding loading-spinner
+    showLoading("false");
+  });
 
 // Watching for changes in page-title due to route-changes in legacy-app (this needs to be handled differently once we start moving UI)
 window.addEventListener("newTitle", (evt) => {
