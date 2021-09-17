@@ -5,9 +5,14 @@ import {
     constructLayoutEngine,
 } from "single-spa-layout";
 import microfrontendLayout from "./microfrontend-layout.html";
-import { getPageMetadata } from "@ushahidi/utilities";
+import { getPageMetadata, setBootstrapConfig } from "@ushahidi/utilities";
+
+
 
 require("ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css");
+
+setBootstrapConfig();
+
 const routes = constructRoutes(microfrontendLayout);
 
 const applications = constructApplications({
