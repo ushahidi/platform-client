@@ -7,7 +7,7 @@ import {
 import microfrontendLayout from "./microfrontend-layout.html";
 import { getPageMetadata, setBootstrapConfig } from "@ushahidi/utilities";
 
-
+require("./loading.scss");
 
 require("ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css");
 

@@ -29,6 +29,15 @@ module.exports = (webpackConfigEnv, argv) => {
                     test: /\.ttf|\.eot/,
                     use: "file-loader",
                 },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        // MiniCssExtractPlugin.loader,
+                        'style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                },
             ],
         },
         plugins: [
