@@ -56,22 +56,31 @@
             </div>
         </div>
     </form>
-    <p translate>location.click_map</p>
+    <form name="manualPos">
+        <p translate>location.click_map</p>
+        <div class="form-field">
+        <label for="lat">Lat</label>
+        <input name="lat" id="lat" type="text" ng-model="manualModel.lat">
+        <div class="alert error" role="alert" ng-show="manualPos.lat.$dirty && !isLatitude(manualModel.lat)">
+            <p translate>location.invalid_lat</p>
+        </div>
+    </div>
     <div class="form-field">
-      <label for="lat">Lat</label>
-      <input id="lat" type="text" ng-model="manualModel.lat">
-   </div>
-   <div class="form-field">
-      <label for="long">Long</label>
-      <input id="long" type="text" ng-model="manualModel.lon">
-   </div>
-   <button type="button" class="button-primary" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
-        <svg class="iconic" role="img">
-       <use
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
-                                xlink:href="/img/iconic-sprite.svg#location">
-                            </use>
-        </svg>
-        <span class="button-label" translate>location.update_map</span>
-    </button>
+        <label for="long">Long</label>
+        <input name="long" id="long" type="text" ng-model="manualModel.lon">
+        <div class="alert error" role="alert" ng-show="manualPos.long.$dirty && !isLongitude(manualModel.lon)">
+            <p translate>location.invalid_lon</p>
+        </div>
+    </div>
+    
+    <button type="button" class="button-primary" ng-show="showUpdateButton()" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
+            <svg class="iconic" role="img">
+                <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xlink:href="/img/iconic-sprite.svg#location">
+                </use>
+            </svg>
+            <span class="button-label" translate>location.update_map</span>
+        </button>   
+    </form>
 </div>
