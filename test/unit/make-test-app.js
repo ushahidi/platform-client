@@ -29,6 +29,16 @@ module.exports = function () {
         .factory('Flatpickr', function () {
             return function () {};
         })
+        .factory('dayjs', function () {
+            return function() {};
+        })
+        .factory('Chart', function () {
+            return function () {
+                return {
+                    destroy: function () {}
+                };
+            }
+        })
         .constant('CONST', {
             'BACKEND_URL'         : backendUrl,
             'API_URL'             : backendUrl + '/api/v2',
