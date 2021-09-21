@@ -1633,7 +1633,9 @@
         "error": "Sorry we could not find a location matching your search",
         "my_location_error": "Sorry we could not find your location",
         "update_map": "地図を更新",
-        "no_matching_locations": "No matching locations"
+        "no_matching_locations": "No matching locations",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Notifications",

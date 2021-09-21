@@ -1633,7 +1633,9 @@
         "error": "Geen locatie gevonden op basis van de zoekopdracht",
         "my_location_error": "Geen locatie gevonden",
         "update_map": "Kaart wijzigen",
-        "no_matching_locations": "Geen overeenkomstige locaties"
+        "no_matching_locations": "Geen overeenkomstige locaties",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Notificaties",
