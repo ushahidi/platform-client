@@ -16,6 +16,7 @@ yarn-error.log*
 
 # build
 /build
+/tmp
 
 # local configuratinon
 .env.*.local
