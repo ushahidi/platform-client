@@ -1,8 +1,8 @@
 {
     "name": "@ushahidi/utilities",
     "scripts": {
-        "start": "webpack serve --port 9094",
-        "start:standalone": "webpack serve --env standalone",
+        "start": "env-cmd -f ../.env webpack serve --port 9094",
+        "start:standalone": "env-cmd -f ../.env webpack serve --env standalone",
         "build": "webpack --mode=production",
         "analyze": "webpack --mode=production --env analyze",
         "lint": "eslint src --ext js",
@@ -42,7 +42,6 @@
     },
     "dependencies": {
         "@types/jest": "^26.0.16",
-        "@types/systemjs": "^6.1.0",
-        "dotenv": "^10.0.0"
+        "@types/systemjs": "^6.1.0"
     }
 }

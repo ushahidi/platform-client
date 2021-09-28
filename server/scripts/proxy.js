@@ -1,4 +1,3 @@
-require("dotenv-flow").config();
 const path = require("path");
 var express = require("express");
 var { createProxyMiddleware } = require("http-proxy-middleware");

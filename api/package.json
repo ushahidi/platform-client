@@ -1,8 +1,8 @@
 {
     "name": "@ushahidi/api",
     "scripts": {
-        "start": "webpack serve --port 9093",
-        "start:standalone": "webpack serve --env standalone",
+        "start": "env-cmd -f ../.env webpack serve --port 9093",
+        "start:standalone": "env-cmd -f ../.env webpack serve --env standalone",
         "build": "webpack --mode=production",
         "analyze": "webpack --mode=production --env analyze",
         "lint": "eslint src --ext js",
