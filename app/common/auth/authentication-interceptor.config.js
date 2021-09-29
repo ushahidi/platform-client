@@ -16,6 +16,7 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         responseError: responseError
     };
 
+    // TODO: tokenless requests cleanup
     function getClientCredsToken(config) {
         var
         deferred = $q.defer(),
@@ -54,6 +55,7 @@ function AuthInterceptor($rootScope, $injector, $q, CONST, Session, _) {
         return deferred.promise;
     }
 
+    // TODO: tokenless requests cleanup
     function concurrentGetClientCredsToken(config) {
         // concurrency-safe getClientCredsToken
         // sends token request only if there's no ongoing request in this interceptor

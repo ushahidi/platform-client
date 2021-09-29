@@ -27,16 +27,26 @@ function (
     // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
     let loginStatus = false;
     if (!!Session.getSessionDataEntry('accessToken') &&
-        Session.getSessionDataEntry('grantType') === 'password' &&
+        Session.getSessionDataEntry('grantType') === 'password' &&      // TODO: tokenless requests cleanup
         !!Session.getSessionDataEntry('userId')
     ) {
         // If the access token is expired
         if (Session.getSessionDataEntry('accessTokenExpires') <= Math.floor(Date.now() / 1000)) {
+            /*
+             * TODO: if there's a refresh token in the session, we should attempt obtaining a new
+             *       access token. BUT should we intercept and defer other requests until we obtain
+             *       the token?
+             */
             // Clear any login state
             setToLogoutState();
         } else {
             // Otherwise mark as logged in
             loginStatus = true;
+
+            // Kick-off refresh schedule
+            if (Session.getSessionDataEntry('refreshToken')) {
+                scheduleRefreshAuth(Session.getSessionDataEntry('refreshToken'));
+            }
         }
     }
 
@@ -76,9 +86,10 @@ function (
         }
         // Setting a timer to refresh the session if a refresh-token is available
         if (authResponse.data.refresh_token) {
+            Session.setSessionDataEntry('refreshToken', authResponse.data.refresh_token);
             scheduleRefreshAuth(authResponse.data.refresh_token);
         }
-        Session.setSessionDataEntry('grantType', 'password');
+        Session.setSessionDataEntry('grantType', 'password'); // TODO: tokenless requests cleanup
     }
 
     function handleRequestError () {
@@ -95,6 +106,8 @@ function (
             const timeToRefresh = timeToExpire - minutesBefore;
             // Setting the timer to refresh token
             setTimeout(function () {
+                //TODO: avoid sending the request if the token is no longer about to expire?
+                // i.e. renewed in another tab
                 let payload = {
                     refresh_token: refreshToken,
                     grant_type: 'refresh_token',
@@ -103,9 +116,9 @@ function (
                     scope: CONST.CLAIMED_USER_SCOPES.join(' ')
                 };
                 //TODO: If we want to show the login-box if the refresh-token is invalid, use error-handler
+                //TODO: handle transient errors? would we still have time for retrying?
                 $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, handleRequestError);
-
-            }, timeToRefresh);
+            }, timeToRefresh * 1000);
         }
     }
 
