@@ -11,8 +11,8 @@ function ActivityTimeChart() {
     };
 }
 
-ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'd3', '_', 'PostFilters'];
-function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, PostFilters) {
+ActivityTimeChartController.$inject = ['$scope', '$translate', 'PostEndpoint', 'Chart', '_', 'PostFilters', 'dayjs'];
+function ActivityTimeChartController($scope, $translate, PostEndpoint, Chart, _, PostFilters, dayjs) {
     var yAxisLabelCumulative = $translate.instant('graph.cumulative_post_count'),
         yAxisLabel = $translate.instant('graph.new_post_count'),
         xAxisLabel = $translate.instant('graph.post_date');
@@ -34,46 +34,6 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
 
     $scope.groupBy = {
         value: ''
-    };
-
-    $scope.options = {
-        chart: {
-            type: 'lineChart',
-            height: 450,
-            margin: {
-                top: 0,
-                right: 65,
-                bottom: 40,
-                left: 65
-            },
-            showControls: false,
-            x: function (d) {
-                return new Date(parseInt(d.label) * 1000);
-            },
-            y: function (d) {
-                return d[$scope.showCumulative ? 'cumulative_total' : 'total'];
-            },
-            transitionDuration: 500,
-            xAxis: {
-                axisLabel: xAxisLabel,
-                tickFormat: function (d) {
-                    //uses unambiguous time format ex: 8 Sep 2014
-                    return d3.time.format('%e %b %Y')(new Date(d));
-                }
-            },
-            yAxis: {
-                axisLabel: yAxisLabel,
-                tickFormat: d3.format('d')
-            },
-            forceY: 0,
-            tooltip : {
-                contentGenerator: function (data) {
-                    return '<h3>' + data.series[0].key + '</h3>' +
-                        '<p>' +  data.point.y + ' posts at ' + d3.time.format('%e %b %Y')(new Date(data.point.x)) + '</p>';
-                }
-            },
-            noData: $translate.instant('graph.no_data')
-        }
     };
 
     $scope.reload = getPostStats;
@@ -102,21 +62,123 @@ function ActivityTimeChartController($scope, $translate, PostEndpoint, d3, _, Po
         PostEndpoint.stats(postQuery).$promise.then(function (results) {
             if (!results.totals.length || _.chain(results.totals).pluck('values').pluck('length').max().value() < 3) {
                 // Don't render a time chart with less than 3 points
-                $scope.data = [{
-                    values: []
-                }];
+                $scope.data = [];
             } else {
                 $scope.data = results.totals;
             }
+            generateGraph();
             $scope.isLoading = false;
         });
     }
 
+    function getRandomColour() {
+        let letters = '0123456789ABCDEF'.split('');
+        let colour = '#';
+        for (let i = 0; i < 6; i++) {
+            colour += letters[Math.floor(Math.random() * 16)];
+        }
+        return colour;
+    }
+
+    function extractDatasets () {
+        // defining colours for known datasets (corresponds to the pattern-library basic colours)
+        let colours = {
+            all: '#2274b4',
+            draft: '#2274b4',
+            published: '#4fab2f',
+            archived: '#de0000'
+        };
+
+        // extracting data from response
+        return _.map($scope.data, data => {
+            let values = _.map(data.values, value => {
+                return $scope.showCumulative ?  {x: value.label, y: value.cumulative_total} : {x: value.label, y: value.total} ;
+            });
+            // setting the colour
+            let colour = colours[data.key] ? colours[data.key] : getRandomColour();
+
+            return {
+                label: data.key,
+                data: values,
+                borderColor: colour,
+                backgroundColor: colour
+            };
+        });
+    }
+
+    function generateGraph() {
+        if ($scope.timeChart) {
+            $scope.timeChart.destroy();
+        }
+
+        if ($scope.data.length > 0) {
+        let el = document.getElementById('time-chart');
+
+        let config = {
+            type: 'line',
+            data: {datasets: extractDatasets()},
+            options: {
+                plugins: {
+                    tooltip:{
+                        enabled: true,
+                        // colours corresponds to Pattern Library basic colours.
+                        backgroundColor: '#FAFAFA',
+                        borderColor: '#1D232A',
+                        titleColor: '#1D232A',
+                        bodyColor: '#1D232A',
+                        displayColors: false,
+                        // creating tooltip-content
+                        callbacks: {
+                            title: function(context) {
+                                return context[0].dataset.label
+                            },
+                            label: function (context) {
+                                let date = dayjs(new Date(context.parsed.x * 1000)).format('DD MM YY');
+                                let text = context.parsed.y > 1 ? 'posts on' : 'post on';
+                                return `${context.parsed.y} ${text} ${date}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'linear',
+                        ticks: {
+                            source: 'data',
+                            // setting unit-labels for x-axis
+                            callback: function(value) {
+                            let d = new Date(value * 1000)
+                                return dayjs(d).format('D MMM YY')
+                            }
+                        },
+                        // setting label for x-axis
+                        title: {
+                            display: true,
+                            text: xAxisLabel
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            precision: 0
+                        },
+                        beginAtZero : true,
+                        // setting label for y-axis
+                        title: {
+                            display: true,
+                            text: $scope.showCumulative ? yAxisLabelCumulative : yAxisLabel
+                        }
+                    }
+                }
+            }
+        };
+            $scope.timeChart = new Chart(el, config);
+        }
+    }
+
     function updateAxisLabel(cumulative) {
-        if (cumulative) {
-            $scope.options.chart.yAxis.axisLabel = yAxisLabelCumulative;
-        } else {
-            $scope.options.chart.yAxis.axisLabel = yAxisLabel;
+        if ($scope.timeChart && $scope.timeChart.config) {
+            $scope.timeChart.config.options.scales.y.title.text =  cumulative ? yAxisLabelCumulative : yAxisLabel;
+            $scope.timeChart.update();
         }
     }
 }

@@ -1633,7 +1633,9 @@
         "error": "Lo sentimos, no pudimos hallar una ubicación que corresponda a su búsqueda",
         "my_location_error": "Lo sentimos, no pudimos encontrar su ubicación",
         "update_map": "Actualizar mapa",
-        "no_matching_locations": "Sin ubicaciones coincidentes"
+        "no_matching_locations": "Sin ubicaciones coincidentes",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Notificaciones",

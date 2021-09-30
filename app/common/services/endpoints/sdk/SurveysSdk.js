@@ -56,7 +56,7 @@ function (
                 return ushahidi()
                     .getSurveys(
                         [
-                            'name', 'description', 'targeted_survey', 'everyone_can_create', 'can_create', 'id'
+                            'name', 'description', 'color', 'targeted_survey', 'everyone_can_create', 'can_create', 'id'
                         ],
                         [
                             'translations', 'enabled_languages'

@@ -1633,7 +1633,9 @@
         "error": "متأسفانه نتوانستیم مکان مورد نظر شما را پیدا کنیم",
         "my_location_error": "متأسفانه نتوانستیم مکان شما را پیدا کنیم",
         "update_map": "نقشه بروز رسانی شده",
-        "no_matching_locations": "هیچ مکانی یافت نشد"
+        "no_matching_locations": "هیچ مکانی یافت نشد",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "اعلان ها",
