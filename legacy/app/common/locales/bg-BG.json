@@ -1633,7 +1633,9 @@
         "error": "Съжалявам, но не успяхме да намерим местоположение въз основа на търсенето",
         "my_location_error": "Съжалявам, но не откривам вашето местоположение.",
         "update_map": "Обнови картата",
-        "no_matching_locations": "Няма пасващи местоположения"
+        "no_matching_locations": "Няма пасващи местоположения",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Известия",

@@ -29,6 +29,9 @@ module.exports = function () {
         .factory('Flatpickr', function () {
             return function () {};
         })
+        .factory('dayjs', function () {
+            return function() {};
+        })
         .factory('Chart', function () {
             return function () {
                 return {

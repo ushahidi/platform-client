@@ -1633,7 +1633,9 @@
         "error": "Désolé nous ne trouvons pas de lieu correspondant à votre recherche",
         "my_location_error": "Désolé nous ne trouvons pas votre lieu",
         "update_map": "Modifier la carte",
-        "no_matching_locations": "Pas de lieu trouvé"
+        "no_matching_locations": "Pas de lieu trouvé",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Notifications",
