@@ -27,7 +27,7 @@ const argv = minimist(process.argv.slice(2));
 let root = 'app';
 
 // Load .env file
-dotenv.config({ silent: true });
+dotenv.config({ path: '../.env' });
 
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
@@ -157,6 +157,7 @@ function devServer() {
     const config = require('./webpack.dev.config');
     const port = process.env.PORT || 3000;
     config.entry = paths.entry;
+
     var compiler = webpack(config);
     new WebpackDevServer(compiler, config.devServer).listen(port, 'localhost',
         (err) => {
