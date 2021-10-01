@@ -6,7 +6,7 @@ module.exports = [
     '$location',
     '$translate',
     '$window',
-    'moment',
+    'dayjs',
     'Util',
     'ConfigEndpoint',
     'DataProviderEndpoint',
@@ -24,7 +24,7 @@ function (
     $location,
     $translate,
     $window,
-    moment,
+    dayjs,
     Util,
     ConfigEndpoint,
     DataProviderEndpoint,
@@ -263,7 +263,7 @@ function (
                 $scope.setSelectedForm(form, name);
             }
             if (provider.date) {
-                $scope.settings[name].date = moment(provider.date).toDate();
+                $scope.settings[name].date = dayjs(provider.date).toDate();
             }
         });
         // Keep track of providers with saved settings
