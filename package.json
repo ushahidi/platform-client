@@ -24,7 +24,7 @@
     "format:root": "cd root && npm run format",
     "format:legacy": "cd legacy && npm run eslintfix",
     "format:utilities": "cd utilities && npm run format",
-    "install": "npm install && cd api && npm install && cd .. && cd root && npm install && cd .. && cd legacy && npm install && cd .. && cd utilities && npm install && cd ..",
+    "install": "cd api && npm install && cd .. && cd root && npm install && cd .. && cd legacy && npm install && cd .. && cd utilities && npm install && cd ..",
     "serve": "env-cmd node ./server/scripts/start.js && concurrently \"npm run serve:apps\" \"npm run serve:base-wait\" \"npm run show-ready\"",
     "serve:apps": "concurrently \"npm run watch:legacy\" \"npm run serve:modules\"",
     "serve:modules": "concurrently \"npm run serve:api\" \"npm run serve:utilities\"",
