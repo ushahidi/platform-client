@@ -1,0 +1,76 @@
+<!--// Who can add //-->
+<fieldset ng-if="roles.length">
+    <legend translate="{{title}}"></legend>
+    <div
+        class="form-field radio icon-input"
+        ng-class="{ 'checked': !model.role.length }"
+    >
+        <label for="add_everyone">
+            <svg class="iconic" role="img">
+                <use xlink:href="/img/iconic-sprite.svg#globe"></use>
+            </svg>
+            <input
+                name="add"
+                id="add_everyone"
+                ng-value="true"
+                checked=""
+                type="radio"
+                ng-model="everyone"
+                ng-click="setEveryone()"
+            />
+            <span
+                class="label"
+                tabindex="0"
+                ng-keyup="$event.keyCode === 13 && setEveryone()"
+                translate="nav.everyone"
+                >Everyone</span
+            >
+        </label>
+    </div>
+
+    <div
+        class="form-field radio icon-input"
+        ng-class="{ 'checked': model.role.length }"
+    >
+        <label for="add_roles">
+            <svg class="iconic" role="img">
+                <use xlink:href="/img/iconic-sprite.svg#people"></use>
+            </svg>
+            <input
+                class="init"
+                name="add"
+                id="add_roles"
+                ng-value="false"
+                ng-modaldata-fieldgroup-toggle="add_roles"
+                type="radio"
+                ng-model="everyone"
+                ng-click="setAdmin()"
+            />
+            <span
+                translate="app.specific_roles"
+                tabindex="0"
+                ng-keyup="$event.keyCode === 13 && setAdmin()"
+                >Specific roles...</span
+            >
+        </label>
+
+        <div
+            class="form-fieldgroup init"
+            data-fieldgroup-target="add_roles"
+            ng-class="{true:'', false:'active'}[everyone]"
+        >
+            <div class="form-field checkbox" ng-repeat="role in roles">
+                <label>
+                    <input
+                        type="checkbox"
+                        checklist-model="model.role"
+                        checklist-value="role.name"
+                        ng-disabled="role.name === 'admin'"
+                        ng-selected="role.name === 'admin' || model.role.indexOf(role.name) > -1"
+                    />
+                    {{role.display_name | translate}}
+                </label>
+            </div>
+        </div>
+    </div>
+</fieldset>

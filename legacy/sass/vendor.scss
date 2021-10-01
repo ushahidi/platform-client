@@ -1,0 +1,24 @@
+/**
+ * Combined vendor stylesheets
+ */
+
+// the 'gulp rename' task is a workaround that duplicates the .css file and
+// renames it to .scss, allowing us to essentially import vendor .css.
+//
+// these files are imported via the 'node-modules include path' in gulpfile.js
+//
+@import "~leaflet/dist/leaflet";
+@import "~leaflet.markercluster/dist/MarkerCluster";
+@import "~leaflet.markercluster/dist/MarkerCluster.Default";
+@import "~leaflet.locatecontrol/src/L.Control.Locate";
+@import '~@toast-ui/editor/dist/toastui-editor-viewer.css'; // editor's ui
+@import '~@toast-ui/editor/dist/toastui-editor.css'; // editor's content
+@import '~flatpickr/dist/flatpickr.min.css'; 
+
+
+// Custom overrides
+@import "overrides/leaflet";
+@import "overrides/filters";
+@import "overrides/modal";
+@import "overrides/intercom";
+@import "overrides/tui-markdown";

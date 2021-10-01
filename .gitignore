@@ -1,27 +1,27 @@
-.idea
-.sass-cache
-bower_components
-node_modules
-npm-debug.log
-.gulpconfig.json
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# dotrun package
+.docker-project
+.yarn.*.hash
+.dotrun.json
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# build
+/build
+
+# local configuratinon
+.env.*.local
+.env.local
 .env
-test/coverage/
-build/*
-dist/*
-.DS_Store
-server/www/locales/
-*.aes
-*.swp
-*.swo
-buildargs.env
-deployment.env
-docker.env
-vault.txt
-*.swo
-*.swp
-*.svg
-server/www/img/icons/
-server/www/
-app/locales/
-package-lock.json
-app/stats.html
+
+# junk
+*.DS_Store
+*.fuse*
