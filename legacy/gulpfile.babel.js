@@ -198,7 +198,7 @@ function serveStatic() {
         server: {
             baseDir: paths.dest
         },
-        port: process.env.PORT || 3000,
+        port: 9090,
         ui: false,
         codeSync: false,
         open: false,
