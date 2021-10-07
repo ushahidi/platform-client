@@ -32,7 +32,6 @@ module.exports = (webpackConfigEnv, argv) => {
                 {
                     test: /\.scss$/,
                     use: [
-                        // MiniCssExtractPlugin.loader,
                         'style-loader',
                         'css-loader',
                         'sass-loader'
