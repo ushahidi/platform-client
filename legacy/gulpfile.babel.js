@@ -155,7 +155,7 @@ task('release', series('dist', 'tar'));
 // Starting the dev-server
 function devServer() {
     const config = require('./webpack.dev.config');
-    const port = process.env.PORT || 3000;
+    const port = 9090;
     config.entry = paths.entry;
 
     var compiler = webpack(config);
@@ -174,7 +174,7 @@ task('default', devServer);
 // Starting the dev-server and running analyzis
 function analyzeBundle() {
     const config = require('./webpack.dev.config');
-    const port = process.env.PORT || 3000;
+    const port = 9090;
     config.entry = paths.entry;
     config.plugins.push(
         new BundleAnalyzerPlugin()
