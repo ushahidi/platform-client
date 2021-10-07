@@ -3,8 +3,8 @@
  * Based on the Angular Bootstrap Modal directive
  */
 module.exports = Slider;
-Slider.$inject = ['$timeout', '$compile', 'SliderService', 'ModalService'];
-function Slider($timeout, $compile, SliderService, ModalService) {
+Slider.$inject = ['$timeout', '$compile', 'SliderService', 'ModalService', '$sce'];
+function Slider($timeout, $compile, SliderService, ModalService, $sce) {
     return {
         restrict: 'E',
         template: require('./slider.html'),
@@ -23,7 +23,7 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         $scope.closeOnNavigate = false;
         // Callbacks
         $scope.closeButtonClicked = closeButtonClicked;
-
+        $scope.trustSrc = trustSrc;
         var templateScope;
         var closeTimeout = null;
         var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
@@ -39,6 +39,10 @@ function Slider($timeout, $compile, SliderService, ModalService) {
         // Bind to modal service open/close events
         SliderService.onOpen(open, $scope);
         SliderService.onClose(close, $scope);
+
+        function trustSrc(src) {
+            return $sce.trustAsResourceUrl(src);
+        }
 
         function open(ev, template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading) {
             $scope.loading = false;

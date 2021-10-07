@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Ushahidi Platform Official Web Client",
   "scripts": {
-    "start": "http-server ./build -c-1",
-    "build": "npm install && npm run build:api  && npm run build:utilities  &&  npm run build:legacy && npm run build:root && npm run copy",
+    "build": "npm run install:prod && npm run build:api && npm run build:utilities && npm run build:legacy && npm run build:root && npm run copy",
     "build:api": "cd api && npm install && npm run build",
     "build:root": "cd root && npm install && npm run build",
     "build:legacy": "cd legacy && npm install && npm run build",
@@ -24,18 +23,20 @@
     "format:root": "cd root && npm run format",
     "format:legacy": "cd legacy && npm run eslintfix",
     "format:utilities": "cd utilities && npm run format",
-    "install": "cd api && npm install && cd .. && cd root && npm install && cd .. && cd legacy && npm install && cd .. && cd utilities && npm install && cd ..",
-    "serve": "env-cmd node ./server/scripts/start.js && concurrently \"npm run serve:apps\" \"npm run serve:base-wait\" \"npm run show-ready\"",
+    "install:dev": " npm install && cd api && npm install && cd .. && cd root && npm install && cd .. && cd legacy && npm install && cd .. && cd utilities && npm install && cd ..",
+    "install:prod": "cd api && npm install && cd .. && cd root && npm install && cd .. && cd legacy && npm install && cd .. && cd utilities && npm install && cd ..",
+    "serve": "node ./server/scripts/start.js && concurrently \"npm run serve:apps\" \"npm run serve:base-wait\" \"npm run show-ready\"",
     "serve:apps": "concurrently \"npm run watch:legacy\" \"npm run serve:modules\"",
     "serve:modules": "concurrently \"npm run serve:api\" \"npm run serve:utilities\"",
     "serve:base": "concurrently \"npm run serve:root\" \"npm run serve:proxy\"",
     "serve:base-wait": "wait-on http://0.0.0.0:9093 && wait-on http://0.0.0.0:9094 && npm run serve:base",
-    "serve:proxy": "node ./server/scripts/proxy.js",
+    "serve:proxy": "env-cmd node ./server/scripts/proxy.js",
     "serve:api": "cd api && npm start",
     "serve:legacy": "cd legacy && npm start",
     "serve:root": "cd root && npm start",
     "serve:utilities": "cd utilities && npm start",
-    "show-ready": "wait-on http://0.0.0.0:9090 && node ./server/scripts/ready.js",
+    "show-ready": "wait-on http://0.0.0.0:3000 && node ./server/scripts/ready.js",
+    "start": "http-server ./build -c-1",
     "test": "npm run test:legacy",
     "test:legacy": " cd legacy && npm run test",
     "watch:legacy": "cd legacy && concurrently \"npm run watch\""
@@ -59,7 +60,6 @@
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.0",
     "http-server": "^0.12.3",
-    "wait-on": "^5.3.0",
-    "webpack-dev-server": "^3.11.2"
+    "wait-on": "^5.3.0"
   }
 }
