@@ -45,7 +45,7 @@ jobs:
         set -e;
 
         npm install -g gulp;
-        npm run install;
+        npm run install:prod;
 
     - name: List installed dependencies
       run: |
@@ -56,17 +56,17 @@ jobs:
       run: |
         cd legacy ;
         TEST_SUITE="lint" test/test.sh ;
-    
+
     - name: Run tests
       run: |
         npm run test;
-        
+
   ship:
     needs: [ test ]
     if: github.event_name == 'push'   # not on PRs
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    
+
     steps:
     - uses: actions/checkout@v2
 
@@ -81,7 +81,7 @@ jobs:
         aws-region: eu-west-1
 
     - name: Login to AWS Container Registry
-      uses: docker/login-action@v1 
+      uses: docker/login-action@v1
       with:
         registry: 513259414768.dkr.ecr.eu-west-1.amazonaws.com
 
