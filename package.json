@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Ushahidi Platform Official Web Client",
   "scripts": {
-    "start": "http-server ./build -c-1",
-    "build": "npm install && npm run build:api  && npm run build:utilities  &&  npm run build:legacy && npm run build:root && npm run copy",
+    "build": "npm run install:prod && npm run build:api && npm run build:utilities && npm run build:legacy && npm run build:root && npm run copy",
     "build:api": "cd api && npm install && npm run build",
     "build:root": "cd root && npm install && npm run build",
     "build:legacy": "cd legacy && npm install && npm run build",
@@ -37,6 +36,7 @@
     "serve:root": "cd root && npm start",
     "serve:utilities": "cd utilities && npm start",
     "show-ready": "wait-on http://0.0.0.0:3000 && node ./server/scripts/ready.js",
+    "start": "http-server ./build -c-1",
     "test": "npm run test:legacy",
     "test:legacy": " cd legacy && npm run test",
     "watch:legacy": "cd legacy && concurrently \"npm run watch\""
