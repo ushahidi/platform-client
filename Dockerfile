@@ -2,13 +2,15 @@ FROM ushahidi/node-ci:node-10-gulp-4
 
 RUN mkdir -p /var/app
 WORKDIR /var/app
-COPY package.json .
-RUN npm-install-silent.sh
+COPY ./package.json ./
+COPY ./root/package.json ./root/package.json
+COPY ./legacy/package.json ./legacy/package.json
+COPY ./utilities/package.json ./utilities/package.json
+COPY ./api/package.json ./api/package.json
+RUN npm run install:prod
 
 COPY . ./
-ARG TX_USERNAME
-ARG TX_PASSWORD
-RUN TX_USERNAME="${TX_USERNAME}" TX_PASSWORD="${TX_PASSWORD}" gulp build
+RUN npm run build
 
 
 FROM nginx
@@ -22,7 +24,7 @@ RUN apt update && \
 ARG HTTP_PORT=8080
 
 WORKDIR /usr/share/nginx/html
-COPY --from=0 /var/app/server/www/ /var/app/app/config.js.j2 /var/app/app/config.json.j2 ./
+COPY --from=0 /var/app/build /var/app/app/config.js.j2 /var/app/app/config.json.j2 ./
 COPY docker/nginx.default.conf /etc/nginx/conf.d/default.conf
 COPY docker/nginx.run.sh /nginx.run.sh
 RUN sed -i 's/$HTTP_PORT/'$HTTP_PORT'/' /etc/nginx/conf.d/default.conf && \

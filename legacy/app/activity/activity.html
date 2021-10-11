@@ -1,0 +1,334 @@
+<div>
+    <layout-class layout="a"></layout-class>
+    <div class="mode-context init" ng-controller="navigation as nav" dropdown>
+        <header
+            class="mode-context-header"
+            ng-class="{ 'has-logo' : nav.site.image_header }"
+        >
+            <h1 class="mode-context-title">
+                <a href="/" ng-bind="nav.site.name"></a>
+            </h1>
+            <img
+                ng-if="nav.site.image_header"
+                ng-src="{{ nav.site.image_header }}"
+                class="deployment-logo"
+                alt="Deployment-logo"
+            />
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic" role="img">
+                <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+
+        <div class="mode-context-body">
+            <p
+                ng-if="nav.site.description"
+                markdown-to-html="nav.site.description"
+            ></p>
+        </div>
+    </div>
+
+    <main role="main">
+        <div class="toolbar" ng-show="isActivityAvailable">
+            <div class="button-group">
+                <donation></donation>
+            </div>
+
+            <form
+                role="search"
+                class="searchbar"
+                name="searchForm"
+                ng-submit="saveFilters()"
+            >
+                <div class="searchbar-options">
+                    <fieldset
+                        class="custom-fieldset init"
+                        data-fieldset-type="date-range"
+                        dropdown
+                        auto-close="disabled"
+                        is-open="filtersMenuOpen"
+                    >
+                        <legend class="dropdown-trigger init" dropdown-toggle>
+                            <span
+                                class="legend-label"
+                                ng-show="currentInterval !== 'custom'"
+                                translate="{{'graph.' + currentInterval }}"
+                                >Date range</span
+                            >
+                            <span
+                                class="legend-label"
+                                ng-show="currentInterval == 'custom'"
+                                translate="graph.custom_display"
+                                translate-values="{
+                                    start: (filters.created_after | date:'shortDate'),
+                                    end: (filters.created_before | date:'shortDate') }"
+                                translate-compile
+                                >Date range</span
+                            >
+                            <svg class="iconic chevron">
+                                <use
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/img/iconic-sprite.svg#chevron-bottom"
+                                ></use>
+                            </svg>
+                        </legend>
+
+                        <div class="dropdown-menu init" dropdown-menu>
+                            <div class="form-field radio">
+                                <label>
+                                    <input
+                                        ng-model="editableInterval"
+                                        type="radio"
+                                        name="editableInterval"
+                                        value="all"
+                                    />
+                                    <span translate="graph.all">All time</span>
+                                </label>
+                            </div>
+                            <div class="form-field radio">
+                                <label>
+                                    <input
+                                        ng-model="editableInterval"
+                                        type="radio"
+                                        name="editableInterval"
+                                        value="week"
+                                    />
+                                    <span translate="graph.week"
+                                        >This week</span
+                                    >
+                                </label>
+                            </div>
+                            <div class="form-field radio">
+                                <label>
+                                    <input
+                                        ng-model="editableInterval"
+                                        type="radio"
+                                        name="editableInterval"
+                                        value="month"
+                                    />
+                                    <span translate="graph.month"
+                                        >This month</span
+                                    >
+                                </label>
+                            </div>
+
+                            <div class="form-field radio">
+                                <label>
+                                    <input
+                                        ng-model="editableInterval"
+                                        type="radio"
+                                        name="editableInterval"
+                                        value="custom"
+                                    />
+                                    <span translate="graph.custom"
+                                        >Custom date range</span
+                                    >
+                                </label>
+
+                                <!-- todo: reuse filter-date -->
+                                <div class="form-fieldgroup">
+                                    <div
+                                        class="form-field date"
+                                        ng-show="editableInterval == 'custom'"
+                                    >
+                                        <label
+                                            for="date"
+                                            class="hidden"
+                                            translate="global_filter.filter_tabs.created_after"
+                                            >Start date</label
+                                        >
+                                        <div class="input-with-icon">
+                                            <svg class="iconic" role="img">
+                                                <use
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    xlink:href="/img/iconic-sprite.svg#calendar"
+                                                ></use>
+                                            </svg>
+                                            <input
+                                                id="date"
+                                                type="date"
+                                                class="flatpickr"
+                                                placeholder="{{ 'global_filter.filter_tabs.created_after' | translate }}"
+                                                ng-model="createdAfter"
+                                            />
+                                        </div>
+                                        <span class="date-joiner">to</span>
+                                    </div>
+
+                                    <div
+                                        class="form-field date"
+                                        ng-show="editableInterval == 'custom'"
+                                    >
+                                        <label
+                                            for="date"
+                                            class="hidden"
+                                            translate="global_filter.filter_tabs.created_before"
+                                            >End date</label
+                                        >
+                                        <div class="input-with-icon">
+                                            <svg class="iconic" role="img">
+                                                <use
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                    xlink:href="/img/iconic-sprite.svg#calendar"
+                                                ></use>
+                                            </svg>
+                                            <input
+                                                id="date"
+                                                type="date"
+                                                class="flatpickr"
+                                                placeholder="{{ 'global_filter.filter_tabs.created_before' | translate }}"
+                                                ng-model="createdBefore"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <button
+                                    type="button"
+                                    class="button-beta"
+                                    ng-click="cancelChangeFilters()"
+                                    translate="app.cancel"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    class="button-alpha"
+                                    translate="app.apply_filters"
+                                >
+                                    Apply filter
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+
+        <!-- <img ng-hide="isActivityAvailable" src/img/activity-page.png" style="opacity: 0.4; filter: blur(1px);" /> -->
+
+        <div ng-show="isActivityAvailable" class="main-col">
+            <div class="listing card init">
+                <div class="listing-item active">
+                    <div class="listing-item-secondary">
+                        <button
+                            ng-show="todo"
+                            type="button"
+                            class="button-beta button-flat"
+                        >
+                            <svg class="iconic" role="img">
+                                <use
+                                    xlink:href="/img/iconic-sprite.svg#share"
+                                ></use>
+                            </svg>
+                            <span class="hidden" translate="app.share"
+                                >Share</span
+                            >
+                        </button>
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2
+                            class="listing-item-title"
+                            translate="activity.activity_over_time"
+                        >
+                            Activity over time
+                        </h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <!-- <dc-chart-by-volume date-range="dateRange"></dc-chart-by-volume> -->
+                        <activity-time-chart
+                            filters="filters"
+                        ></activity-time-chart>
+                    </div>
+                </div>
+            </div>
+            <div class="listing card init">
+                <div class="listing-item active">
+                    <div class="listing-item-secondary">
+                        <button
+                            ng-show="todo"
+                            type="button"
+                            class="button-beta button-flat"
+                        >
+                            <svg class="iconic" role="img">
+                                <use
+                                    xlink:href="/img/iconic-sprite.svg#share"
+                                ></use>
+                            </svg>
+                            <span class="hidden" translate="app.share"
+                                >Share</span
+                            >
+                        </button>
+                    </div>
+
+                    <div class="listing-item-primary">
+                        <h2
+                            class="listing-item-title"
+                            translate="activity.activity_by_volume"
+                        >
+                            Activity by volume
+                        </h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <!-- <dc-chart-by-time date-range="dateRange"></dc-chart-by-time> -->
+                        <activity-bar-chart
+                            filters="filters"
+                        ></activity-bar-chart>
+                    </div>
+                </div>
+            </div>
+            <div
+                ng-if="targetedSurveysEnabled && loggedIn"
+                class="listing card init"
+            >
+                <div class="listing-item active">
+                    <div class="listing-item-primary">
+                        <h2
+                            class="listing-item-title"
+                            translate="activity.targeted_activity"
+                        >
+                            Tageted Survey Activity
+                        </h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <targeted-survey-table
+                            filters="filters"
+                        ></targeted-survey-table>
+                    </div>
+                </div>
+            </div>
+            <div class="listing card init" ng-if="loggedIn">
+                <div class="listing-item active">
+                    <div class="listing-item-primary">
+                        <h2
+                            class="listing-item-title"
+                            translate="activity.crowdsourced_activity"
+                        >
+                            Crowdsourced Survey Activity
+                        </h2>
+                    </div>
+
+                    <div class="listing-item-body">
+                        <crowdsourced-survey-table
+                            filters="filters"
+                        ></crowdsourced-survey-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end main column-->
+
+        <aside class="secondary-col" role="complementary">
+            <!-- <activity-timeline></activity-timeline> -->
+        </aside>
+    </main>
+</div>
