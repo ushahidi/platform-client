@@ -31,9 +31,9 @@ app.use(
             "/ushahidi-legacy-app.js",
             "/0.ushahidi-legacy-app.js",
             "/1.ushahidi-legacy-app.js",
-            "/data.js",
-            "/activity.js",
-            "/settings.js"
+            "/ushahidi-data.js",
+            "/ushahidi-activity.js",
+            "/ushahidi-settings.js"
         ],
         {
             target: `http://localhost:${LEGACY_PORT}/`,
