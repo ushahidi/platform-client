@@ -1,4 +1,3 @@
-var path    = require('path');
 var config  = require('./webpack.config');
 
 config.mode = 'development';
