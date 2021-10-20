@@ -36,10 +36,7 @@
         "webpack-cli": "^4.2.0",
         "webpack-config-single-spa": "^2.0.0",
         "webpack-dev-server": "^4.0.0-beta.0",
-        "webpack-import-map-plugin": "^1.0.0-alpha0",
-        "webpack-manifest-plugin": "^4.0.2",
-        "webpack-merge": "^5.4.0",
-        "webpack-nano": "^1.1.1"
+        "webpack-merge": "^5.4.0"
     },
     "dependencies": {
         "@types/jest": "^26.0.16",
