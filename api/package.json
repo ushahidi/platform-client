@@ -1,10 +1,10 @@
 {
     "name": "@ushahidi/api",
     "scripts": {
-        "start": "env-cmd -f ../.env webpack serve --port 9093",
-        "start:standalone": "env-cmd -f ../.env webpack serve --env standalone",
-        "build": "env-cmd -f ../.env webpack --mode=production",
-        "analyze": "env-cmd -f ../.env webpack --mode=production --env analyze",
+        "start": "env-cmd --silent -f ../.env webpack serve --port 9093",
+        "start:standalone": "env-cmd --silent -f ../.env webpack serve --env standalone",
+        "build": "env-cmd --silent -f ../.env webpack --mode=production",
+        "analyze": "env-cmd --silent -f ../.env webpack --mode=production --env analyze",
         "lint": "eslint src --ext js",
         "format": "prettier --write .",
         "check-format": "prettier --check .",
