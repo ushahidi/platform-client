@@ -45,7 +45,7 @@ jobs:
         set -e;
 
         npm install -g gulp;
-        npm run install:prod;
+        npm run install:all;
 
     - name: List installed dependencies
       run: |
