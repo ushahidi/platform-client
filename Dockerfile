@@ -7,7 +7,7 @@ COPY ./root/package.json ./root/package.json
 COPY ./legacy/package.json ./legacy/package.json
 COPY ./utilities/package.json ./utilities/package.json
 COPY ./api/package.json ./api/package.json
-RUN npm run install:prod
+RUN npm run install:all
 
 COPY . ./
 RUN npm run build
