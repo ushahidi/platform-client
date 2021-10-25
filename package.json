@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Ushahidi Platform Official Web Client",
   "scripts": {
-    "build": "npm run build:api && npm run build:utilities && npm run build:legacy && npm run build:root && generate:import-map && npm run copy",
+    "build": "npm run build:api && npm run build:utilities && npm run build:legacy && npm run build:root && npm run generate:import-map && npm run copy",
     "build:api": "cd api && npm run build",
     "build:root": "cd root && npm run build",
     "build:legacy": "cd legacy && npm run build",
