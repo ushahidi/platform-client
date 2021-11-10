@@ -1,5 +1,3 @@
-const { lang } = require('moment');
-
 module.exports = LanguageSwitchDirective;
 
 LanguageSwitchDirective.$inject = [];

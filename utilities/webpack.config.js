@@ -1,8 +1,6 @@
 const { merge } = require("webpack-merge");
 const webpack = require("webpack");
-const dotenv = require("dotenv");
 const singleSpaDefaults = require("webpack-config-single-spa");
-dotenv.config({ silent: true });
 
 module.exports = (webpackConfigEnv, argv) => {
     const defaultConfig = singleSpaDefaults({

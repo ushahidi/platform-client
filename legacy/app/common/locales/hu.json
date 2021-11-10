@@ -1633,7 +1633,9 @@
         "error": "Sajnáljuk, nem találtunk a keresésednek megfelelő helyszínt",
         "my_location_error": "Sajnáljuk, nem találtuk a megadott helyet",
         "update_map": "Térkép frissítése",
-        "no_matching_locations": "Nincs ilyen helyszín"
+        "no_matching_locations": "Nincs ilyen helyszín",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Értesítések",

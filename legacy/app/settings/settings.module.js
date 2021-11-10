@@ -6,7 +6,7 @@ export const SETTINGS_MODULE = angular.module('ushahidi.settings', [])
     )
     .directive('importerCsv', require('./data-import/data-import.directive.js'))
     .directive('hdxDetails', require('./data-export/hdx-details.directive.js'))
-
+    .directive('gmailAuth', require('./datasources/gmail-auth.directive.js'))
     .directive('surveyEditor', require('./surveys/survey-editor.directive.js'))
     .directive(
         'surveyTranslationEditor',

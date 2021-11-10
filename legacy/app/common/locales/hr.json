@@ -1633,7 +1633,9 @@
         "error": "Isprika, nismo uspjeli pronaći lokaciju koja odgovara Vašoj pretrazi",
         "my_location_error": "Isprika, nismo mogli pronaći Vašu lokaciju",
         "update_map": "Ažuriraj kartu",
-        "no_matching_locations": "Nema odgovarajućih lokacija"
+        "no_matching_locations": "Nema odgovarajućih lokacija",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Obavijesti",

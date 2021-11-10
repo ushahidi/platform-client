@@ -27,7 +27,7 @@ const argv = minimist(process.argv.slice(2));
 let root = 'app';
 
 // Load .env file
-dotenv.config({ silent: true });
+dotenv.config({ path: '../.env' });
 
 // Grab backend-url from gulp options
 process.env.BACKEND_URL = argv['backend-url'] || process.env.BACKEND_URL;
@@ -155,8 +155,9 @@ task('release', series('dist', 'tar'));
 // Starting the dev-server
 function devServer() {
     const config = require('./webpack.dev.config');
-    const port = process.env.PORT || 3000;
+    const port = 9090;
     config.entry = paths.entry;
+
     var compiler = webpack(config);
     new WebpackDevServer(compiler, config.devServer).listen(port, 'localhost',
         (err) => {
@@ -173,7 +174,7 @@ task('default', devServer);
 // Starting the dev-server and running analyzis
 function analyzeBundle() {
     const config = require('./webpack.dev.config');
-    const port = process.env.PORT || 3000;
+    const port = 9090;
     config.entry = paths.entry;
     config.plugins.push(
         new BundleAnalyzerPlugin()
@@ -197,7 +198,7 @@ function serveStatic() {
         server: {
             baseDir: paths.dest
         },
-        port: process.env.PORT || 3000,
+        port: 9090,
         ui: false,
         codeSync: false,
         open: false,

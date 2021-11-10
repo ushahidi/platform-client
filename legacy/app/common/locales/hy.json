@@ -1633,7 +1633,9 @@
         "error": "Ներողություն, մենք չկարողացանք գտնել Ձեր որոնմանը համապատասխանող վայրեր",
         "my_location_error": "Ներողություն, մենք չկարողացանք գտնել Ձեր գտնվելու վայրը",
         "update_map": "Թարմացնել քարտեզը",
-        "no_matching_locations": "Համապատասխանող վայրեր չկան"
+        "no_matching_locations": "Համապատասխանող վայրեր չկան",
+        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
         "title": "Ծանուցումներ",

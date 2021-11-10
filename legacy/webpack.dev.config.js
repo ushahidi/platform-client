@@ -8,6 +8,8 @@ config.devtool = 'sourcemap'
 config.devServer = {
   headers: {
     'Access-Control-Allow-Origin': '*'
-  }
+  },
+  stats: 'errors-only'
+
 }
 module.exports = config;

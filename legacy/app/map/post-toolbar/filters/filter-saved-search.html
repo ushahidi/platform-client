@@ -11,7 +11,7 @@
             <option value="" translate="app.select_one">Select one</option>
         </select>
     </div>
-    <a class="button button-beta" ng-show="selectedSavedSearch" ng-click="$parent.editSavedSearchModal('edit')">Edit</a>
+    <button type="button" class="button button-beta" ng-show="selectedSavedSearch" ng-click="$parent.editSavedSearchModal('edit')">Edit</button>
 </fieldset>
 <fieldset ng-show="loading">
     <label translate="app.saved_search"></label>
