@@ -61,8 +61,14 @@
                             </p>
                         </div>
 
-                        <div class="form-field" ng-if="authenticable_providers[provider.id]">
+                        <!-- Gmail Authentication Button -->
+                        <div class="form-field" ng-if="authenticable_providers[provider.id] && forms[provider.id].$valid">
                             <div ng-if="!settings[provider.id]['authenticated']">
+                                <div class="alert">
+                                    <p translate>
+                                        You should configure this data source using your gmail credentials, before you connect an account to it.
+                                    </p>
+                                </div>
                                 <button type="button" ng-click="initializeProvider(provider.id)" class="button-alpha">
                                     <div class="loading" ng-show="processing">
                                         <div class="line"></div>
@@ -71,13 +77,13 @@
                                     </div>
                                     <span ng-hide="processing" translate>Connect your gmail account</span>
                                 </button>
-
                             </div>
+
                             <div ng-if="settings[provider.id]['authenticated']">
-                                <div class="alert">
+                                <div class="alert" ng-show="!isGmailSupportEnabled">
                                     <p translate>
-                                        Disconnecting your Gmail account will stop all Gmail emails from being fetched,
-                                        but it will not delete pre-fetched emails
+                                        Disconnecting your Gmail account will stop all emails from being fetched,
+                                        but it will not delete pre-fetched emails.
                                     </p>
                                 </div>
                                 <button type="button" ng-click="disconnectProvider(provider.id)" class="button-alpha">
@@ -115,6 +121,7 @@
                                         ng-click="toggleFormAssociation(provider.id)" />
                                     <label class="tgl-btn" for="{{provider.id}}_form_enable"></label>
                                 </div>
+
                                 <div data-fieldgroup-target="import_to_survey-survey" class="init active">
                                     <p data-fieldgroup-target="hide-author-message" class="init"
                                         ng-class="{'active' : formEnabled[provider.id]}"
@@ -219,8 +226,11 @@
                             </div>
 
                             <div ng-repeat="(option_key, option) in provider.options track by option_key"
-                                ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid, 'form-field' : option.input !== 'radio', 'required' : option.rules.indexOf('required') > -1 }"
-                                ng-show="option.is_gmail_support !== isGmailSupportEnabled">
+                                 ng-class="{ error : formsSubmitted[provider.id] && forms[provider.id][option_key].$invalid,
+                                    'form-field' : option.input !== 'radio',
+                                    'required' : option.rules.indexOf('required') > -1 }"
+                                 ng-show="option.is_gmail_support !== isGmailSupportEnabled">
+
                                 <div class="" ng-if="option.input == 'read-only-text'">
                                     <label ng-if="option.label" ng-bind-html="option.label" class="input-label"></label>
                                     <p ng-bind-html="option.description"></p>

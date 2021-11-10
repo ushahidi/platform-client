@@ -183,7 +183,7 @@ function (
             function(response) {
                 toggleGmailConnectionButton();
 
-                $scope.settings.gmail.email = '';
+                $scope.settings.gmail.email = response.data.data.email || '';
 
                 Notify.notify(response.data.message);
 
@@ -250,8 +250,6 @@ function (
         $scope.surveys = response[2];
         $scope.authenticable_providers = response[1]['authenticable-providers'];
         $scope.available_providers = response[3]['data-providers'];
-
-        console.log($scope.forms);
 
         // Enable form elements as appropriate
         _.forEach($scope.settings, function (provider, name) {
