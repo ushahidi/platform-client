@@ -16,8 +16,8 @@ RUN npm run build
 FROM nginx
 
 RUN apt update && \
-    apt install --no-install-recommends -y python python-pip python-setuptools python-yaml && \
-    pip install 'jinja2-cli[yaml]==0.6.0' && \
+    apt install --no-install-recommends -y python3-pip python3-setuptools python3-yaml && \
+    pip install 'jinja-cli==1.2.1' && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
