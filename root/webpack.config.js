@@ -13,11 +13,17 @@ module.exports = (webpackConfigEnv, argv) => {
         argv,
         disableHtmlGeneration: true,
     });
+    let filename = defaultConfig.mode === 'development' ? 'ushahidi-root-config.js' : 'ushahidi-root-config.[chunkhash].js';
+
 
     return merge(defaultConfig, {
         devServer: {
             hot: false,
             static: "./src",
+        },
+        output: {
+            filename,
+            clean: true
         },
         module: {
             rules: [
@@ -53,6 +59,10 @@ module.exports = (webpackConfigEnv, argv) => {
                     {
                         from: path.resolve(__dirname, "src/config.js"),
                     },
+                    {
+                        from: path.resolve(__dirname, "src/importmap.json"),
+                    }
+
                 ],
             }),
         ],

@@ -13,7 +13,7 @@ angular.module('ushahidi.settings.routes', [])
                 template: require('./settings.html'),
                 lazyLoad: function ($transition$) {
                     const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-                    return System.import('/settings.js').then(mod => {
+                    return System.import('@ushahidi/legacy-settings').then(mod => {
                         $ocLazyLoad.load(mod.SETTINGS_MODULE);
                     });
                 }

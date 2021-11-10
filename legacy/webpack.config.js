@@ -2,6 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 var imgPath = path.resolve('node_modules/ushahidi-platform-pattern-library/assets/');
 
+
 var GIT_COMMIT;
 // Try to get the current GIT COMMIT
 try {
@@ -13,7 +14,6 @@ try {
 module.exports = {
     devtool: 'source-map',
     output: {
-        filename: '[name].js',
         publicPath: '/',
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'system'

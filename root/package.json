@@ -7,12 +7,12 @@
     "author": "Ushahidi",
     "license": "AGPL-3.0",
     "scripts": {
-        "start": "env-cmd -f ../.env webpack serve --port 9091 --env isLocal",
+        "start": "env-cmd --silent -f ../.env webpack serve --port 9091 --env isLocal",
         "lint": "eslint src --ext js",
         "test": "cross-env BABEL_ENV=test jest --passWithNoTests",
         "format": "prettier --write .",
         "check-format": "prettier --check .",
-        "build": "webpack --mode=production"
+        "build": "env-cmd --silent -f ../.env webpack --mode=production"
     },
     "husky": {
         "hooks": {}
