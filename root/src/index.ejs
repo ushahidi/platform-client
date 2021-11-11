@@ -47,20 +47,9 @@
     }
   </script>
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script">
+  
+  <script type="systemjs-importmap" src="/importmap.json"></script>
 
-<!-- Add your organization's prod import map URL to this script's src  -->
-<!-- <script type="systemjs-importmap" src="/importmap.json"></script> -->
-
-  <script type="systemjs-importmap">
-    {
-      "imports": {
-        "@ushahidi/root-config": "/ushahidi-root-config.js",
-        "@ushahidi/legacy-app": "/ushahidi-legacy-app.js",
-        "@ushahidi/utilities": "/ushahidi-utilities.js",
-        "@ushahidi/api": "/ushahidi-api.js"
-      }
-    }
-  </script>
 
   <!--
     If you need to support Angular applications, uncomment the script tag below to ensure only one instance of ZoneJS is loaded
@@ -135,6 +124,8 @@
   }
 }
 </script>
+
+
 
 <script>
 if(window.ushahidi && window.ushahidi.googleTagManager) {

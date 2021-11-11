@@ -17,7 +17,7 @@ angular.module('ushahidi.activity.routes', [])
             template: require('./activity.html'),
             lazyLoad: function ($transition$) {
                 const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-                return System.import('/activity.js').then(mod => {
+                return System.import('@ushahidi/legacy-activity').then(mod => {
                     $ocLazyLoad.load(mod.ACTIVITY_MODULE);
                 });
             }

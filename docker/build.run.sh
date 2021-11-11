@@ -33,9 +33,8 @@ sync() {
 
 # Build the client
 build() {
-  npm-install-silent.sh
-  # gulp transifex-download
-  gulp build
+  npm run install
+  npm run build
 }
 
 # export the build files to a shared folder
@@ -45,15 +44,19 @@ export_build() {
   if [ ! -d /vols/out/last_build ]; then
     mkdir /vols/out/last_build
   fi
-  rsync -ar --delete-during ./server/www/ /vols/out/last_build/
+  rsync -ar --delete-during ./build/ /vols/out/last_build/
 }
 
 # Bundle the build into a tarball
 bundle() {
   check_vols_out
   local version=${GITHUB_VERSION:-${CI_BRANCH:-v0.0.0}}
-  cp ./server/rewrite.htaccess ./server/www/
-  gulp tar --version-suffix=${version} --dest-dir=/vols/out/release
+  cp ./server/rewrite.htaccess ./build/
+  ##
+  local bname="ushahidi-platform-client-bundle-${version}"
+  mkdir -p /vols/out/release /tmp/release
+  ln -s `pwd`/build /tmp/release/${bname}
+  tar -C /tmp/release -cvhz -f /vols/out/release/${bname}.tar.gz ${bname}
 }
 
 watch() {
