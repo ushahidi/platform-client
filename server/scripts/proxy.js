@@ -8,6 +8,7 @@ const API_PORT = 9093;
 const UTILITIES_PORT = 9094;
 const LEGACY_PORT = 9090;
 const ROOT_PORT = 9091;
+const MODE_BAR_REACT = 9095;
 
 // Proxy to the single-spa api module.
 app.use(
@@ -20,6 +21,13 @@ app.use(
 app.use(
     createProxyMiddleware("/ushahidi-utilities.js", {
         target: `http://localhost:${UTILITIES_PORT}/`,
+    })
+);
+
+// Proxy to the single-spa modebar-react module.
+app.use(
+    createProxyMiddleware("/ushahidi-modebar-react.js", {
+        target: `http://localhost:${MODE_BAR_REACT}/`,
     })
 );
 
