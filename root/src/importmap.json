@@ -7,7 +7,7 @@
       "@ushahidi/legacy-settings": "/ushahidi-settings.js",
       "@ushahidi/legacy-data": "/ushahidi-data.js",
       "@ushahidi/legacy-activity": "/ushahidi-activity.js",
-      "@ushahidi/modebar-react": "/ushahidi-modebar-react.js"
-            
+      "@ushahidi/modebar-react": "/ushahidi-modebar-react.js",
+      "@ushahidi/modebar-vue": "/ushahidi-modebar-vue.js"
     }
   }
