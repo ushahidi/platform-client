@@ -46,7 +46,7 @@ function (
             }],
             lazyLoad: function ($transition$) {
                 const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-                return System.import('/data.js').then(mod => {
+                return System.import('@ushahidi/legacy-data').then(mod => {
                     $ocLazyLoad.load(mod.DATA_MODULE);
                 });
             }
@@ -92,7 +92,7 @@ function (
             template: require('./post-create/main.html'),
             lazyLoad: function ($transition$) {
                 const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
-                return System.import('/data.js').then(mod => {
+                return System.import('@ushahidi/legacy-data').then(mod => {
                     $ocLazyLoad.load(mod.DATA_MODULE);
                 });
             }

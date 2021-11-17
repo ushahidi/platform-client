@@ -27,20 +27,35 @@ app.use(
 app.use(
     createProxyMiddleware(
         [
-            "/locales",
             "/ushahidi-legacy-app.js",
             "/0.ushahidi-legacy-app.js",
             "/1.ushahidi-legacy-app.js",
-            "/data.js",
-            "/activity.js",
-            "/settings.js"
+            "/ushahidi-data.js",
+            "/ushahidi-activity.js",
+            "/ushahidi-settings.js",
+            '/legacy-modules'
         ],
         {
             target: `http://localhost:${LEGACY_PORT}/`,
         }
     )
 );
+app.use(
+    createProxyMiddleware(
+        ["/locales"],
+        {target: `http://localhost:${LEGACY_PORT}/app/common`}
+    )
+);
 
+app.use(
+    createProxyMiddleware(
+        [
+        ],
+        {
+            target: `http://localhost:${LEGACY_PORT}/`,
+        }
+    )
+);
 // Proxy the WebSocket API endpoint to the Legacy.
 app.use(
     createProxyMiddleware(`/ws`, {

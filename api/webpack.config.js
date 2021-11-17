@@ -9,9 +9,13 @@ module.exports = (webpackConfigEnv, argv) => {
         webpackConfigEnv,
         argv,
     });
+    let filename = defaultConfig.mode === 'development' ? 'ushahidi-api.js' : 'ushahidi-api.[chunkhash].js';
 
     return merge(defaultConfig, {
-        // modify the webpack config however you'd like to by adding to this object
+        output: {
+            filename,
+            clean: true
+        },
         plugins: [
             new webpack.DefinePlugin({
                 BACKEND_URL: JSON.stringify(

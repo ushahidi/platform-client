@@ -47,11 +47,37 @@
     }
   </script>
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script">
+  
+  <script type="systemjs-importmap" src="/importmap.json"></script>
 
+
+  <!--
+    If you need to support Angular applications, uncomment the script tag below to ensure only one instance of ZoneJS is loaded
+    Learn more about why at https://single-spa.js.org/docs/ecosystem-angular/#zonejs
+  -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/zone.js@0.11.3/dist/zone.min.js"></script> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+  <% if (isLocal) { %>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
+  <% } else { %>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+  <% } %>
+
+</head>
+<body>
   <script>
+    System.import('@ushahidi/root-config');
+    System.import('@ushahidi/api');
+    System.import('@ushahidi/utilities');
+    System.import('@ushahidi/legacy-app');
+  </script>
+
+<script>
   // Loading Google Analytics
   if(window.ushahidi && window.ushahidi.gaEnabled) {
-      
       (function (i, s, o, g, r, a, m) {
       i["GoogleAnalyticsObject"] = r;
       (i[r] =
@@ -96,44 +122,22 @@
           window.googlePlaces = new google.maps.places.PlacesService(e);
       });
   }
-}</script>
-  <!-- Add your organization's prod import map URL to this script's src  -->
-  <!-- <script type="systemjs-importmap" src="/importmap.json"></script> -->
+}
+</script>
 
-  <script type="systemjs-importmap">
-    {
-      "imports": {
-        "@ushahidi/root-config": "/ushahidi-root-config.js",
-        "@ushahidi/legacy-app": "/ushahidi-legacy-app.js",
-        "@ushahidi/utilities": "/ushahidi-utilities.js",
-        "@ushahidi/api": "/ushahidi-api.js"
-      }
-    }
-  </script>
 
-  <!--
-    If you need to support Angular applications, uncomment the script tag below to ensure only one instance of ZoneJS is loaded
-    Learn more about why at https://single-spa.js.org/docs/ecosystem-angular/#zonejs
-  -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/zone.js@0.11.3/dist/zone.min.js"></script> -->
 
-  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
-  <% if (isLocal) { %>
-  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
-  <% } else { %>
-  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
-  <% } %>
+<script>
+if(window.ushahidi && window.ushahidi.googleTagManager) {
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer', window.ushahidi.googleTagManager);
+}
+</script>
+<!-- End Google Tag Manager -->
 
-</head>
-<body>
-  <script>
-    System.import('@ushahidi/root-config');
-    System.import('@ushahidi/api');
-    System.import('@ushahidi/utilities');
-    System.import('@ushahidi/legacy-app');
-  </script>
   <import-map-overrides-full show-when-local-storage="devtools" dev-libs></import-map-overrides-full>
 </body>
 </html>

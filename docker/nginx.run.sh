@@ -12,18 +12,18 @@ if [ -z "$BACKEND_URL" ]; then
   exit 1
 fi
 
-if [ -n "`which jinja2`" ]; then
+if [ -n "`which jinja`" ]; then
 	if [ -f config.js.j2 ]; then
 		echo "- Generating config.js from template:"
-		python -c 'import os, json ; print(json.dumps(dict(os.environ)))' | \
-			jinja2 --format=json config.js.j2 | \
+		python3 -c 'import os, json ; print(json.dumps(dict(os.environ)))' | \
+			jinja -d - -f json config.js.j2 | \
 			tee config.js
 	fi
 
 	if [ -f config.json.j2 ]; then
 		echo "- Generating config.json from template:"
-		python -c 'import os, json ; print(json.dumps(dict(os.environ)))' | \
-			jinja2 --format=json config.json.j2 | \
+		python3 -c 'import os, json ; print(json.dumps(dict(os.environ)))' | \
+			jinja -d - -f json config.json.j2 | \
 			tee config.json
 	fi
 fi
