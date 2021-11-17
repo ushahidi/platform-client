@@ -27,7 +27,6 @@ function (
     // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
     let loginStatus = false;
     if (!!Session.getSessionDataEntry('accessToken') &&
-        Session.getSessionDataEntry('grantType') === 'password' &&      // TODO: tokenless requests cleanup
         !!Session.getSessionDataEntry('userId')
     ) {
         // If the access token is expired
@@ -45,7 +44,7 @@ function (
 
             // Kick-off refresh schedule
             if (Session.getSessionDataEntry('refreshToken')) {
-                scheduleRefreshAuth(Session.getSessionDataEntry('refreshToken'));
+                scheduleRefreshAuth();
             }
         }
     }
@@ -71,6 +70,16 @@ function (
     }
 
     function setToLogoutState() {
+         let refreshToken = Session.getSessionDataEntry('refreshToken');
+
+         let payload = {
+             refresh_token: refreshToken,
+             client_id: CONST.OAUTH_CLIENT_ID,
+             client_secret: CONST.OAUTH_CLIENT_SECRET
+         };
+         // Do we need to cancel the scheduled refresh?
+         $http.post(Util.url('/oauth/revoke'), payload);
+
         Session.clearSessionData();
         UserEndpoint.invalidateCache();
         loginStatus = false;
@@ -87,9 +96,8 @@ function (
         // Setting a timer to refresh the session if a refresh-token is available
         if (authResponse.data.refresh_token) {
             Session.setSessionDataEntry('refreshToken', authResponse.data.refresh_token);
-            scheduleRefreshAuth(authResponse.data.refresh_token);
+            scheduleRefreshAuth();
         }
-        Session.setSessionDataEntry('grantType', 'password'); // TODO: tokenless requests cleanup
     }
 
     function handleRequestError () {
@@ -97,7 +105,7 @@ function (
         $rootScope.$broadcast('event:authentication:login:failed');
     };
 
-    function scheduleRefreshAuth (refreshToken) {
+    function scheduleRefreshAuth () {
         if (Session.getSessionDataEntry('accessTokenExpires')) {
             /* Getting a random number between 5 minutes and 11 minutes before the expiry time.
             (to avoid simultanous requests if the user has 2 or more tabs open)*/
@@ -106,6 +114,7 @@ function (
             const timeToRefresh = timeToExpire - minutesBefore;
             // Setting the timer to refresh token
             setTimeout(function () {
+                let refreshToken = Session.getSessionDataEntry('refreshToken');
                 //TODO: avoid sending the request if the token is no longer about to expire?
                 // i.e. renewed in another tab
                 let payload = {
@@ -123,7 +132,6 @@ function (
     }
 
     return {
-
         login: function (username, password) {
             var payload = {
                 username: username,
@@ -173,8 +181,6 @@ function (
         },
 
         logout: function (silent) {
-            //TODO: ASK THE BACKEND TO DESTROY SESSION
-
             // Release all locks owned by the user
             // TODO: At present releasing locks should not prevent users from logging out
             // in future this should be expanded to include an error state
@@ -193,7 +199,6 @@ function (
         },
 
         openLogin: function () {
-
             ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
         }
     };
