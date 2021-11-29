@@ -9,153 +9,155 @@ module.exports = [
     'dayjs',
     'relativeTime',
     'ModalService',
-function (
-    $rootScope,
-    $translate,
-    ContactEndpoint,
-    MessageEndpoint,
-    Notify,
-    UserEndpoint,
-    _,
-    dayjs,
-    relativeTime,
-    ModalService
-) {
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: {
-            post: '='
-        },
-        template: require('./post-messages.html'),
-        link: function ($scope) {
+    function (
+        $rootScope,
+        $translate,
+        ContactEndpoint,
+        MessageEndpoint,
+        Notify,
+        UserEndpoint,
+        _,
+        dayjs,
+        relativeTime,
+        ModalService
+    ) {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                post: '='
+            },
+            template: require('./post-messages.html'),
+            link: function ($scope) {
+                $scope.$watch('post.contact.id', function (contactId, oldContactId) {
+                    if (contactId !== oldContactId) {
+                        activate();
+                    }
+                });
 
-            $scope.$watch('post.contact.id', function (contactId, oldContactId) {
-                if (contactId !== oldContactId) {
-                    activate();
+                console.log($scope.post);
+
+                // Pagination
+                $scope.currentPage = 1;
+                $scope.itemsPerPage = 5;
+                $scope.totalItems = $scope.itemsPerPage;
+                $scope.pageChanged = getMessagesForPagination;
+                $scope.showPagination = false;
+                $scope.getContactDisplay = getContactDisplay;
+
+                function activate() {
+                    // Can't activate if we don't have a contact
+                    if (!$scope.post.contact || !$scope.post.contact.id) {
+                        return;
+                    }
+
+                    $scope.messages = []; // init to blank
+                    // Initialize
+                    if ($scope.post.contact && $scope.post.contact.contact) {
+                        $scope.contact = $scope.post.contact;
+                        // Set contact user is available
+                        setContactUser($scope.contact);
+                    } else {
+                        ContactEndpoint.get({ id: $scope.post.contact.id })
+                            .$promise.then(function (contact) {
+                                $scope.contact = contact;
+                                // Set contact user is available
+                                setContactUser($scope.contact);
+                            });
+                    }
+
+                    getMessagesForPagination();
                 }
-            });
 
-            // Pagination
-            $scope.currentPage = 1;
-            $scope.itemsPerPage = 5;
-            $scope.totalItems = $scope.itemsPerPage;
-            $scope.pageChanged = getMessagesForPagination;
-            $scope.showPagination = false;
-            $scope.getContactDisplay = getContactDisplay;
+                activate();
 
-            function activate() {
-                // Can't activate if we don't have a contact
-                if (!$scope.post.contact || !$scope.post.contact.id) {
-                    return;
+                function getContactDisplay() {
+                    if ($scope.contact.user && $scope.contact.user.realname) {
+                        return $scope.contact.user.realname;
+                    }
+
+                    return $scope.contact.contact;
                 }
 
-                $scope.messages = []; // init to blank
-                // Initialize
-                if ($scope.post.contact && $scope.post.contact.contact) {
-                    $scope.contact = $scope.post.contact;
-                    // Set contact user is available
-                    setContactUser($scope.contact);
-                } else {
-                    ContactEndpoint.get({ id: $scope.post.contact.id })
-                        .$promise.then(function (contact) {
-                            $scope.contact = contact;
-                            // Set contact user is available
-                            setContactUser($scope.contact);
+                function setContactUser(contact) {
+                    if ($scope.contact.user) {
+                        UserEndpoint.get({ id: $scope.contact.user.id })
+                            .$promise.then(function (user) {
+                                $scope.contact.user = user;
+                            });
+                    }
+                }
+
+                function getMessagesForPagination() {
+
+                    if ($scope.post.contact.id) {
+                        MessageEndpoint.allInThread({
+                            contact: $scope.post.contact.id,
+                            offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
+                            limit: $scope.itemsPerPage
+                        }).$promise.then(function (response) {
+
+                            var created,
+                                messages = response.results;
+
+                            $scope.messages = messages;
+                            _.each(messages, function (message, index) {
+                                if (message.user) {
+                                    message.user = UserEndpoint.get({ id: message.user.id });
+                                }
+
+                                // Format update time for display
+                                created = message.updated || message.created;
+                                message.displayTime = formatDate(created);
+                            });
+
+                            $scope.totalItems = response.total_count;
+                            $scope.showPagination = $scope.totalItems > 0 ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
+
                         });
+                    }
                 }
 
-                getMessagesForPagination();
-            }
+                $scope.sendMessage = function () {
+                    ModalService.close();
 
-            activate();
+                    var reply = {
+                        message: $scope.message.reply_text,
+                        direction: 'outgoing',
+                        contact_id: $scope.post.contact.id,
+                        parent_id: $scope.messages[$scope.messages.length - 1].id
+                    };
 
-            function getContactDisplay() {
-                if ($scope.contact.user && $scope.contact.user.realname) {
-                    return $scope.contact.user.realname;
-                }
+                    var request = MessageEndpoint.save(reply);
 
-                return $scope.contact.contact;
-            }
+                    request.$promise.then(function (response) {
+                        // Update listing with new messages
+                        getMessagesForPagination();
 
-            function setContactUser(contact) {
-                if ($scope.contact.user) {
-                    UserEndpoint.get({ id: $scope.contact.user.id })
-                        .$promise.then(function (user) {
-                            $scope.contact.user = user;
-                        });
-                }
-            }
-
-            function getMessagesForPagination() {
-
-                if ($scope.post.contact.id) {
-                    MessageEndpoint.allInThread({
-                        contact: $scope.post.contact.id,
-                        offset: ($scope.currentPage - 1) * $scope.itemsPerPage,
-                        limit: $scope.itemsPerPage
-                    }).$promise.then(function (response) {
-
-                        var created,
-                            messages = response.results;
-
-                        $scope.messages = messages;
-                        _.each(messages, function (message, index) {
-                            if (message.user) {
-                                message.user = UserEndpoint.get({id: message.user.id});
-                            }
-
-                            // Format update time for display
-                            created = message.updated || message.created;
-                            message.displayTime = formatDate(created);
-                        });
-
-                        $scope.totalItems = response.total_count;
-                        $scope.showPagination = $scope.totalItems > 0  ? $scope.totalItems / $scope.itemsPerPage > 1 : false;
-
+                        Notify.notify('notify.message.sent_to', { contact: $scope.contact.contact });
+                    }, function (errorResponse) {
+                        Notify.apiErrors(errorResponse);
                     });
-                }
-            }
-
-            $scope.sendMessage = function () {
-                ModalService.close();
-
-                var reply = {
-                    message: $scope.message.reply_text,
-                    direction: 'outgoing',
-                    contact_id: $scope.post.contact.id,
-                    parent_id: $scope.messages[$scope.messages.length - 1].id
                 };
 
-                var request = MessageEndpoint.save(reply);
+                $scope.reply = function () {
+                    $scope.message = {};
+                    ModalService.openTemplate(require('./post-messages-reply.html'), 'post.messages.send', false, $scope, true, true);
+                };
 
-                request.$promise.then(function (response) {
-                    // Update listing with new messages
-                    getMessagesForPagination();
+                function formatDate(date) {
+                    var now = dayjs();
+                    date = dayjs(date);
 
-                    Notify.notify('notify.message.sent_to', {contact: $scope.contact.contact});
-                }, function (errorResponse) {
-                    Notify.apiErrors(errorResponse);
-                });
-            };
+                    dayjs.extend(relativeTime);
 
-            $scope.reply = function () {
-                $scope.message = {};
-                ModalService.openTemplate(require('./post-messages-reply.html'), 'post.messages.send', false, $scope, true, true);
-            };
+                    if (now.isSame(date, 'day')) {
+                        return date.fromNow();
+                    }
 
-            function formatDate(date) {
-                var now = dayjs();
-                date = dayjs(date);
-
-                dayjs.extend(relativeTime);
-
-                if (now.isSame(date, 'day')) {
-                    return date.fromNow();
+                    return date.format('LLL');
                 }
-
-                return date.format('LLL');
             }
-        }
-    };
-}];
+        };
+    }
+];
