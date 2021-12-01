@@ -47,10 +47,6 @@ function DonationController(
                 'donation'
             );
 
-            console.log($scope.donationClientEnabled);
-            console.log($scope.donationFeatureEnabled);
-            console.log($scope.donationDeploymentEnabled);
-
             if (
                 $scope.donationFeatureEnabled &&
                 $scope.donationDeploymentEnabled
