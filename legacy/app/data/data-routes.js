@@ -62,7 +62,7 @@ function (
             },
             resolve: {
                 //change to selectedPost and refactor the selectedposts in general
-                post: ['$transition$', 'PostsSdk', 'PostEndpoint', function ($transition$, PostsSdk) {
+                post: ['$transition$', 'PostsSdk', function ($transition$, PostsSdk) {
                     return PostsSdk.findPost($transition$.params().postId);
                 }]
             }

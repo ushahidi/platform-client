@@ -35,8 +35,6 @@ module.exports = [
                     }
                 });
 
-                console.log($scope.post);
-
                 // Pagination
                 $scope.currentPage = 1;
                 $scope.itemsPerPage = 5;
