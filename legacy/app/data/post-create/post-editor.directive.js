@@ -135,7 +135,8 @@ function PostEditorController(
                                 attr.value.value = new Date(attr.default).format('YYYY-MM-DD');
                             } catch (err) {
                                 // What do do if the default-value is in the wrong format? Probably validate that field in the first place?
-                            }                        } else {
+                            }
+                        } else {
                             attr.value.value = attr.required ? new Date().format('YYYY-MM-DD') : null;
                         }
                     }
@@ -155,7 +156,6 @@ function PostEditorController(
     }
 
     function savePost() {
-        console.log($scope.post)
         $scope.saving_post = true;
         if (!$scope.canSavePost()) {
             if ($scope.postForm.$error.required) {
