@@ -115,7 +115,7 @@ function PostEditorController(
                             attr.value.value = parseInt(attr.default);
                         }
                     }
-                    if (attr.input === 'date' || attr.input === 'datetime') {
+                    if (attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
                         if (attr.value.value) {
@@ -124,6 +124,19 @@ function PostEditorController(
                             attr.value.value = new Date(attr.default);
                         } else {
                             attr.value.value = attr.required ? dayjs(new Date()).toDate() : null;
+                        }
+                    }
+                    if (attr.input === 'date') {
+                        // We are only interested in year-month-day for date-fields
+                        if (attr.value.value) {
+                            attr.value.value = dayjs(attr.value.value).format('YYYY-MM-DD');
+                        } else if (attr.default) {
+                            try {
+                                attr.value.value = new Date(attr.default).format('YYYY-MM-DD');
+                            } catch (err) {
+                                // What do do if the default-value is in the wrong format? Probably validate that field in the first place?
+                            }                        } else {
+                            attr.value.value = attr.required ? new Date().format('YYYY-MM-DD') : null;
                         }
                     }
                 });
@@ -142,6 +155,7 @@ function PostEditorController(
     }
 
     function savePost() {
+        console.log($scope.post)
         $scope.saving_post = true;
         if (!$scope.canSavePost()) {
             if ($scope.postForm.$error.required) {
