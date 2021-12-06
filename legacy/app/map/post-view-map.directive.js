@@ -39,11 +39,10 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
-            }).then(function (data) {
-               posts = loadPosts();
-            }).then(function (data) {
-                watchFilters();
-            })
+                posts = loadPosts().then(() => {
+                    watchFilters();
+                });
+            });
 
             // Change state on mode change
             $scope.$watch(() => {
@@ -139,7 +138,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function reloadMapPosts(query) {
-            loadPosts(query)
+            loadPosts(query);
         }
 
         function getStats () {
