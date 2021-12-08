@@ -33,7 +33,7 @@ sync() {
 
 # Build the client
 build() {
-  npm run install
+  npm run install:all
   npm run build
 }
 
