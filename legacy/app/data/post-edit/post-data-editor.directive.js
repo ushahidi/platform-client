@@ -318,10 +318,10 @@ function PostDataEditorController(
                 ignoreCancelEvent = true;
                 $state.go('posts.data.detail', {view: 'data', postId: response.data.result.id});
 
-                Notify.notify(success_message, { name: $scope.post.title });
+                Notify.notify(success_message, { name: post.title });
 
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
-                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
+                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response.data.result});
             }, function (errorResponse) { // errors
                 Notify.sdkErrors(errorResponse);
                 $rootScope.$broadcast('event:edit:post:data:mode:saveError');
