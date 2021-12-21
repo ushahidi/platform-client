@@ -6,7 +6,7 @@ module.exports = [
         return {
             restrict: 'E',
             replace: true,
-            scope: {},
+            scope: {addMeta: '='},
             require: 'ngModel',
             template: require('./post-datetime-value.html'),
             link: function ($scope, element, attrs, ngModel) {
@@ -25,13 +25,18 @@ module.exports = [
                 Flatpickr('#flatpickr', {
                     enableTime: true,
                     altInput: true,
-                    altFormat: 'Y-m-d h:i K'
+                    altFormat: 'Y-m-d h:i'
                 });
 
                 // Render ngModel viewValue into scope
                 function render() {
-                    if (ngModel.$viewValue.value !== null) {
+                    // If we are dealing with a field-value
+                    if ($scope.addMeta && ngModel.$viewValue.value !== null) {
                         $scope.model = dayjs(ngModel.$viewValue.value).toDate();
+                    }
+                    // if we are dealing with another date
+                    if (!$scope.addMeta && ngModel.$viewValue !== null) {
+                        $scope.model = dayjs(ngModel.$viewValue).toDate();
                     }
                 }
 
@@ -39,14 +44,14 @@ module.exports = [
                 // Only runs when modal closes, this avoids overwriting the time
                 // and rounding it to 15mins, even when the user never changed it
                 function save() {
-                    let valueObject = {
-                        value: dayjs($scope.model).toDate(),
-                        value_meta: {
-                            from_tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                            offset: dayjs($scope.model).toDate().getTimezoneOffset()
-                        }
-                    }
-                    ngModel.$setViewValue(valueObject);
+                    let values = $scope.addMeta ? {
+                            value: dayjs($scope.model).toDate(),
+                            value_meta: {
+                                from_tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                                offset: dayjs($scope.model).toDate().getTimezoneOffset()
+                            }
+                        } : dayjs($scope.model).toDate();
+                    ngModel.$setViewValue(values);
                 }
             }
         };
