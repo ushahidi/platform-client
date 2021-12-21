@@ -44,7 +44,9 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     angular.element(document).ready(function () {
         Flatpickr('#date', {
             onChange: function() {
-                $scope.attribute.value.value_meta = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                $scope.attribute.value.value_meta = {
+                    from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
+                };
             }});
     });
     $scope.$watch('activeSurveyLanguage', () => {
