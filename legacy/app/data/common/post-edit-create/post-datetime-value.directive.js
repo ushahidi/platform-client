@@ -20,23 +20,18 @@ module.exports = [
                 // Update models on render
                 ngModel.$render = render;
 
-                $scope.$watch('model', function() {
-                    console.log($scope.model)
-                    save()
-                });
+                $scope.$watch('model', save);
 
                 Flatpickr('#flatpickr', {
                     enableTime: true,
-                    dateFormat: 'Z',
                     altInput: true,
                     altFormat: 'Y-m-d h:i K'
-
                 });
 
                 // Render ngModel viewValue into scope
                 function render() {
-                    if (ngModel.$viewValue !== null) {
-                        $scope.model = dayjs(ngModel.$viewValue).toDate();
+                    if (ngModel.$viewValue.value !== null) {
+                        $scope.model = dayjs(ngModel.$viewValue.value).toDate();
                     }
                 }
 
@@ -44,7 +39,14 @@ module.exports = [
                 // Only runs when modal closes, this avoids overwriting the time
                 // and rounding it to 15mins, even when the user never changed it
                 function save() {
-                    ngModel.$setViewValue($scope.model);
+                    let valueObject = {
+                        value: dayjs($scope.model).toDate(),
+                        value_meta: {
+                            from_tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                            offset: dayjs($scope.model).toDate().getTimezoneOffset()
+                        }
+                    }
+                    ngModel.$setViewValue(valueObject);
                 }
             }
         };
