@@ -20,11 +20,17 @@ module.exports = [
                 // Update models on render
                 ngModel.$render = render;
 
-                $scope.$watch('model', save);
+                $scope.$watch('model', function() {
+                    console.log($scope.model)
+                    save()
+                });
 
                 Flatpickr('#flatpickr', {
                     enableTime: true,
-                    dateFormat: 'Y-m-d H:i'
+                    dateFormat: 'Z',
+                    altInput: true,
+                    altFormat: 'Y-m-d h:i K'
+
                 });
 
                 // Render ngModel viewValue into scope
