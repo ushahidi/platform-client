@@ -42,12 +42,7 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
     angular.element(document).ready(function () {
-        Flatpickr('#date', {
-            onChange: function() {
-                $scope.attribute.value.value_meta = {
-                    from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
-                };
-            }});
+        Flatpickr('#date', {});
     });
     $scope.$watch('activeSurveyLanguage', () => {
         if ($scope.form.title && !$scope.form.title.$dirty) {
@@ -57,6 +52,13 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
 
     function activate() {
         addDefaultValue();
+        if (isDate($scope.attribute)) {
+            $scope.$watch('attribute.value.value', () => {
+                $scope.attribute.value.value_meta = {
+                    from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
+                };
+            });
+        }
     }
 
     function addDefaultValue() {
