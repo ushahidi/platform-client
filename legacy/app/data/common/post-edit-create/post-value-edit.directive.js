@@ -49,7 +49,7 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
         addDefaultValue();
         if (isDate($scope.attribute)) {
             $scope.$watch('attribute.value.value', (newValue, oldValue) => {
-                if (newValue !== oldValue) {
+                if (newValue && newValue !== oldValue) {
                     $scope.attribute.value.value_meta = {
                         from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
                     };
