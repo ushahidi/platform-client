@@ -229,7 +229,7 @@ function PostDataEditorController(
                         }
                     }
 
-                    if (attr.input === 'date' || attr.input === 'datetime') {
+                    if (attr.input === 'datetime') {
                         // Date picker requires date object
                         // ensure that dates are preserved in UTC
                         if (attr.value.value) {
@@ -238,6 +238,20 @@ function PostDataEditorController(
                             attr.value.value = new Date(attr.default);
                         } else {
                             attr.value.value = attr.required ? dayjs(new Date()).toDate() : null;
+                        }
+                    }
+                    if (attr.input === 'date') {
+                        // We are only interested in year-month-day for date-fields
+                        if (attr.value.value) {
+                            attr.value.value = dayjs(attr.value.value).format('YYYY-MM-DD');
+                        } else if (attr.default) {
+                            try {
+                                attr.value.value = dayjs(new Date(attr.default)).format('YYYY-MM-DD');
+                            } catch (err) {
+                                // What do do if the default-value is in the wrong format? Probably validate that field in the first place?
+                            }
+                        } else {
+                            attr.value.value = attr.required ? dayjs(new Date()).format('YYYY-MM-DD') : null;
                         }
                     }
                 }
@@ -304,10 +318,10 @@ function PostDataEditorController(
                 ignoreCancelEvent = true;
                 $state.go('posts.data.detail', {view: 'data', postId: response.data.result.id});
 
-                Notify.notify(success_message, { name: $scope.post.title });
+                Notify.notify(success_message, { name: post.title });
 
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
-                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});
+                $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response.data.result});
             }, function (errorResponse) { // errors
                 Notify.sdkErrors(errorResponse);
                 $rootScope.$broadcast('event:edit:post:data:mode:saveError');
