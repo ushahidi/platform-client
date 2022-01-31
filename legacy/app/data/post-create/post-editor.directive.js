@@ -132,8 +132,11 @@ function PostEditorController(
                             attr.value.value = dayjs(attr.value.value).format('YYYY-MM-DD');
                         } else if (attr.default) {
                             try {
-                                attr.value.value = dayjs(new Date(attr.default).format('YYYY-MM-DD'));
-                            } catch (err) {
+                                let defaultValue = dayjs(new Date(attr.default)).format('YYYY-MM-DD');
+                                // Safeguarding against invalid default dates below. We should add validation in the survey setup instead
+                                if (defaultValue !== 'Invalid Date') {
+                                    attr.value.value = defaultValue;
+                                }                            } catch (err) {
                                 // What do do if the default-value is in the wrong format? Probably validate that field in the first place?
                             }
                         } else {
