@@ -144,9 +144,7 @@ angular
     .config([
         '$ocLazyLoadProvider',
         function ($ocLazyLoadProvider) {
-        $ocLazyLoadProvider.config({
-            debug: true
-        });
+        $ocLazyLoadProvider.config({});
     }])
     .config([
         '$showdownProvider',
