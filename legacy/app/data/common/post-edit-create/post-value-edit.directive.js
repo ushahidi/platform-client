@@ -42,12 +42,20 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
     angular.element(document).ready(function () {
-        Flatpickr('#date', {});
+        if (isDate($scope.attribute) || isDateTime($scope.attribute)) {
+            let config = isDate($scope.attribute) ? {} : {
+                altFormat: 'Y-m-d H:i',
+                altInput: true,
+                dateFormat: 'Z',
+                enableTime: true
+            };
+            Flatpickr(`#values_${$scope.attribute.id}`, config);
+        }
     });
 
     function activate() {
         addDefaultValue();
-        if (isDate($scope.attribute)) {
+        if (isDate($scope.attribute) || isDateTime($scope.attribute)) {
             $scope.$watch('attribute.value.value', (newValue, oldValue) => {
                 if (newValue && newValue !== oldValue) {
                     $scope.attribute.value.value_meta = {
