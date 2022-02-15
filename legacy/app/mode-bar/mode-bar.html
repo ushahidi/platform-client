@@ -65,7 +65,7 @@
             </li>
 
             <li ng-hide="currentUser">
-                <button ng-click="login()" data-modal="login">
+                <button ng-click="login()" data-modal="login" data-cy="login-page">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
                     </svg>
@@ -81,7 +81,7 @@
             </li>
 
             <li ng-show="!currentUser && canRegister">
-                <button ng-click="register()" data-modal="signup">
+                <button ng-click="register()" data-modal="signup" data-cy="signup-page">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#person"></use>
                     </svg>
