@@ -36,7 +36,7 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     $scope.isCheckbox = isCheckbox;
 
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
-
+    let flatpickr;
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
@@ -49,7 +49,7 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
                 dateFormat: 'Z',
                 enableTime: true
             };
-            Flatpickr(`#values_${$scope.attribute.id}`, config);
+            flatpickr = Flatpickr(`#values_${$scope.attribute.id}`, config);
         }
     });
 
@@ -61,6 +61,9 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
                     $scope.attribute.value.value_meta = {
                         from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
                     };
+                } else if (oldValue && newValue === '') {
+                    // Removing timezone if the value is deleted
+                    $scope.attribute.value.value_meta = null;
                 }
             });
         }
