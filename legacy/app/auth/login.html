@@ -6,19 +6,19 @@
 
         <div class="form-field">
             <label for="email" translate>user.email</label>
-            <input type="email" id="email" ng-model="email" ng-disabled="processing" placeholder="name@domain.com" required>
+            <input type="email" id="email" ng-model="email" ng-disabled="processing" placeholder="name@domain.com" required data-cy="login-email-field">
         </div>
 
         <div class="form-field">
             <label for="password" translate>user.password</label>
-            <input id="password" type="password" ng-model="password" ng-disabled="processing" required>
+            <input id="password" type="password" ng-model="password" ng-disabled="processing" required data-cy="login-password-field">
             <p><a ng-click="forgotPassword()" translate>nav.forgotyourpassword</a></p>
         </div>
     </div>
     <div class="modal-actions">
         <div class="form-field">
             <button type="button" class="button-link" ng-click="cancel()" ng-show="showCancel" translate="app.cancel" aria-label="cancel">Cancel</button>
-            <button type="submit" class="button-alpha" ng-disabled="loginForm.$invalid || processing" translate="nav.login">Login</button>
+            <button type="submit" class="button-alpha" ng-disabled="loginForm.$invalid || processing" translate="nav.login" data-cy="login-complete-button">Login</button>
         </div>
     </div>
 </form>
