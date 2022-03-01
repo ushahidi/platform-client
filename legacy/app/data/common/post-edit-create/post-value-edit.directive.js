@@ -36,23 +36,34 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     $scope.isCheckbox = isCheckbox;
 
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
-
+    let flatpickr;
     $scope.isAdmin = $rootScope.isAdmin;
     $scope.duplicatePresent = duplicatePresent;
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
     angular.element(document).ready(function () {
-        Flatpickr('#date', {});
+        if (isDate($scope.attribute) || isDateTime($scope.attribute)) {
+            let config = isDate($scope.attribute) ? {} : {
+                altFormat: 'Y-m-d H:i',
+                altInput: true,
+                dateFormat: 'Z',
+                enableTime: true
+            };
+            flatpickr = Flatpickr(`#values_${$scope.attribute.id}`, config);
+        }
     });
 
     function activate() {
         addDefaultValue();
-        if (isDate($scope.attribute)) {
+        if (isDate($scope.attribute) || isDateTime($scope.attribute)) {
             $scope.$watch('attribute.value.value', (newValue, oldValue) => {
                 if (newValue && newValue !== oldValue) {
                     $scope.attribute.value.value_meta = {
                         from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
                     };
+                } else if (oldValue && newValue === '') {
+                    // Removing timezone if the value is deleted
+                    $scope.attribute.value.value_meta = null;
                 }
             });
         }
