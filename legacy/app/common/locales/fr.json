@@ -4,7 +4,7 @@
         "support": "Assistance Ushahidi",
         "by": "de",
         "submit": "Soumettre",
-        "anonymous": "Anonymous",
+        "anonymous": "Anonyme",
         "submitting": "Soumission",
         "submit_another": "Soumettre et ajouter autre",
         "submit_response": "Soumettre une réponse au sondage",
@@ -22,7 +22,7 @@
             "title": "Documentation",
             "description": "Apprendre comment paramétrer, configurer et gérer votre déploiement Ushahidi."
         },
-        "donate": "Donate",
+        "donate": "Donner",
         "donation": "Donation",
         "disable_monetization": "Disable Monetization",
         "enable_monetization": "Enable Monetization",
@@ -169,8 +169,8 @@
         "responders": "Unique Responders to Targeted Survey",
         "all_targeted": "All Targeted Surveys",
         "no_targeted": "You don't have any Targeted Survey data to show.",
-        "all_sources": "All Data Souces",
-        "web_mobile": "Web and Mobile",
+        "all_sources": "Toutes les sources de données",
+        "web_mobile": "Web et mobile",
         "email": "email",
         "sms": "sms",
         "twitter": "twitter",
@@ -183,10 +183,10 @@
         "add_field": "Ajouter un champ",
         "add_field_instructions": "Ajouter une instruction au Champ",
         "add_field_instructions_info": "Ces instructions seront présentés comme sous forme d'infobulle à un utilisateur lors du remplissage dans ce champ.",
-        "add_field_instructions_placeholder": "Explain this field...",
+        "add_field_instructions_placeholder": "Expliquer ce champ",
         "add_post_type": "Ajouter Enquête",
         "add_step": "Ajouter Tâche",
-        "add_language": "Add language",
+        "add_language": "Ajouter une langue",
         "added_form_stage_attribute": "Champ sauvegardé",
         "field_allowed_relation_post_type": "Enquêtes permises",
         "choose_order_message": "Choisir et commander les champs que vous souhaitez inclure dans cette enquête",
@@ -239,11 +239,11 @@
     },
     "survey": {
         "delete_task": "Supprimer cette tâche",
-        "duplicate_survey": "Duplicate",
+        "duplicate_survey": "Dupliquer",
         "internal_use_task": "Task is only for internal use",
         "internal_use_task_desc": "This task will only be visible to User who have Manage Post permission.",
         "duplicate_task": "Dupliquer cette tâche",
-        "duplicate_option": "Duplicate option is present",
+        "duplicate_option": "L'option dupliquer est présente",
         "show_this_task_to": "Afficher cette tâche à tous lorsqu'elle est publiée",
         "show_this_task_to_desc": "Lorsqu'une réponse à l'enquête est publiée, les données de cette tâche seront affichées.",
         "survey_name": "Nom du sondage",
@@ -446,38 +446,38 @@
         },
         "sort": {
             "order": {
-                "filter_type_tag": "Order",
+                "filter_type_tag": "Trier",
                 "desc": "Newest first",
-                "asc": "Oldest first"
+                "asc": "Anciens avant"
             },
             "orderby": {
-                "post_date": "Post Date",
-                "created": "Date created",
-                "updated": "Date updated"
+                "post_date": "Date de publication",
+                "created": "Date de création",
+                "updated": "Date de mise à jour"
             },
             "unlockedOnTop": {
                 "filter_type_tag": "Unlocked posts on top"
             }
         },
         "filter_tabs": {
-            "order": "Order",
+            "order": "Trier",
             "order_group": {
                 "orderby": {
-                    "post_date": "Post Date",
-                    "created": "Date created",
+                    "post_date": "Date de publication",
+                    "created": "Date de création",
                     "updated": "Date updated"
                 },
                 "order": {
-                    "desc": "Newest first",
+                    "desc": "Récent avant",
                     "asc": "Oldest first"
                 },
                 "unlocked_on_top_yes": "Yes",
                 "unlocked_on_top_no": "No"
             },
-            "orderby": "Order by",
-            "order_unlocked_on_top": "Unlocked posts on top",
+            "orderby": "Trier par",
+            "order_unlocked_on_top": "Publications déverrouillées en haut",
             "savedsearch": "Saved Search",
-            "saved_search": "Saved Search",
+            "saved_search": "Recherche sauvegardée",
             "q": "Mot-clé",
             "created_after": "Date de démarrage",
             "created_before": "Date d'expiration",
@@ -498,9 +498,9 @@
             "mapped": "Afficher les publications avec localisation ",
             "source": "Source"
         },
-        "unmapped_start_one": "There is",
-        "unmapped_start_many": "There are",
-        "unmapped_one": "{{post_nb}} post",
+        "unmapped_start_one": "Il y a ",
+        "unmapped_start_many": "Il y a ",
+        "unmapped_one": "{{post_nb}} publication",
         "unmapped_many": "{{post_nb}} posts",
         "unmapped_end": "not shown here because they don't include location information.",
         "more": "plus",
@@ -642,15 +642,15 @@
         "map": "Plan",
         "list": "Calendrier",
         "activity": "Activité",
-        "data": "Data"
+        "data": "Données"
     },
     "post": {
-        "see_more_plural": "See {{newPostsCount}} new posts",
-        "see_more_singular": "See {{newPostsCount}} new post",
+        "see_more_plural": "Voir {{newPostsCount}} publications récentes",
+        "see_more_singular": "Voir {{newPostsCount}} nouvelles publications",
         "add_to_form": "Ajouter à {{form}}",
         "posts": "Publications",
-        "post_title": "Post title",
-        "post_desc": "Post description",
+        "post_title": "Titre de la publication",
+        "post_desc": "Description de la publication",
         "there_are_no_posts": "Aucune publication",
         "in_this_deployment": "dans ce déploiement, encore.",
         "posts_total": "{{posts}} sur {{total_nb}} publications",
