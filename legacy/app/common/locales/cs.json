@@ -1634,8 +1634,8 @@
         "my_location_error": "Litujeme, ale nemůžeme najít vaši polohu",
         "update_map": "Aktualizovat mapu",
         "no_matching_locations": "Žádné odpovídající umístění",
-        "invalid_lat": "The value given is not a valid latitude.",
-        "invalid_lon": "The value given is not a valid longitude."
+        "invalid_lat": "Uvedená hodnota není platná zeměpisná šířka.",
+        "invalid_lon": "Zadaná hodnota není platná zeměpisná délka."
     },
     "notification": {
         "title": "Oznamování",
