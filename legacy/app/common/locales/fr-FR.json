@@ -22,7 +22,7 @@
             "title": "Documentation",
             "description": "Apprendre à configurer, administrer le déploiement Ushahidi"
         },
-        "donate": "Donate",
+        "donate": "Donner",
         "donation": "Donation",
         "disable_monetization": "Disable Monetization",
         "enable_monetization": "Enable Monetization",
@@ -186,7 +186,7 @@
         "add_field_instructions_placeholder": "Détailler ce champ...",
         "add_post_type": "Ajouter un témoignage",
         "add_step": "Ajouter une tâche",
-        "add_language": "Add language",
+        "add_language": "Ajouter une langue",
         "added_form_stage_attribute": "Champ sauvegardé",
         "field_allowed_relation_post_type": "Témoignages autorisés",
         "choose_order_message": "Choisissez et ordonnez les champs que vous voulez ajouter à ce temoignage",
@@ -243,7 +243,7 @@
         "internal_use_task": "Tâche seulement pour utilisation interne",
         "internal_use_task_desc": "Cette tâche va être visible pour les utilisateurs ayant des droits d'édition de publications.",
         "duplicate_task": "Dupliquer la tâche",
-        "duplicate_option": "Duplicate option is present",
+        "duplicate_option": "Option de dupliquer présent",
         "show_this_task_to": "Afficher cette tâche pour tout le monde après publication",
         "show_this_task_to_desc": "Quand une réponse d'un témoignage va être donnée, les données liées à la tâche vont être affichées.",
         "survey_name": "Nom du témoignage",
@@ -649,13 +649,13 @@
         "see_more_singular": "Voir {{newPostsCount}} nouvelle publication",
         "add_to_form": "Ajouter à {{form}}",
         "posts": "Publications",
-        "post_title": "Post title",
-        "post_desc": "Post description",
+        "post_title": "Titre de publication",
+        "post_desc": "Description de publication",
         "there_are_no_posts": "Il n'y a aucune publication",
         "in_this_deployment": "dans cette version.",
         "posts_total": "{{posts}} sur {{total_nb}} publications",
         "posts_total_map": "Displaying {{posts}} of {{total_nb}} posts with location information on the map.",
-        "search_results": "Results:",
+        "search_results": "Résultats:",
         "by": "par",
         "duplicate_option": "There's a problem with the configuration of this field because of duplicates, please go to the survey-settings and fix it.",
         "task_completed": "Tâche terminée",
@@ -686,7 +686,7 @@
         "message_thread": "Fille de messages",
         "all_posts": "Toutes les publications",
         "no_search_results": "Votre recherche ne correspond à aucune publication",
-        "no_search_results_location": "Your search didn't match any posts with location information",
+        "no_search_results_location": "Votre recherche ne correspond à aucune publication contenant des informations de localisation",
         "no_posts_yet": "Il n'y a pas encore de publication!",
         "no_posts_yet_location": "There are no posts with location information yet!",
         "add_first_post": "Ajouter la première publication",
@@ -1465,7 +1465,7 @@
         },
         "donation_settings": {
             "save_success": "Donation settings saved",
-            "delete_question": "Are you sure you want to delete this {{name}}."
+            "delete_question": "Êtes-vous sûr de vouloir supprimer ce {{name}} ?"
         },
         "map_settings": {
             "save_success": "Paramètres de cartes sauvegardés"
@@ -1634,7 +1634,7 @@
         "my_location_error": "Désolé nous ne trouvons pas votre lieu",
         "update_map": "Modifier la carte",
         "no_matching_locations": "Pas de lieu trouvé",
-        "invalid_lat": "The value given is not a valid latitude.",
+        "invalid_lat": "La valeur donnée n'est pas une latitude valide.",
         "invalid_lon": "The value given is not a valid longitude."
     },
     "notification": {
@@ -1686,12 +1686,12 @@
         "accept_and_continue": "Accepter et continuer"
     },
     "translations": {
-        "languages": "Languages",
-        "language": "Language",
+        "languages": "Langues",
+        "language": "Langue",
         "default": "default",
-        "translate_field": "Translate field",
-        "survey_select_default": "Select default language for this survey",
-        "category_select_default": "Select default language for this category",
+        "translate_field": "Champ de traduction",
+        "survey_select_default": "Sélectionner la langue par défaut pour ce formulaire",
+        "category_select_default": "Sélectionner la langue par défaut pour cette catégorie",
         "error_translation_exists": "You cannot select this language since there is already a translation for it.",
         "edit_default_text": "Text in default language",
         "edit_placeholder": "Write your translation here",
@@ -2115,7 +2115,7 @@
         "yi": "Yiddish",
         "yo": "Yoruba",
         "zu": "Zulu",
-        "zu-ZA": "Zulu (South Africa)"
+        "zu-ZA": "Zulu (Afrique du Sud)"
     },
     "countries": {
         "Afghanistan": "Afghanistan",
