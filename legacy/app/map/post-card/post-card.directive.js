@@ -13,7 +13,7 @@ function PostCardDirective(PostLockService, $rootScope) {
             externalClickAction: '=clickAction',
             selectedPost: '='
         },
-        template: require('./card.html'),
+        template: require('./post-card.html'),
         link: function ($scope, $element) {
             $scope.isPostLocked = isPostLocked;
             $scope.clickAction = clickAction;

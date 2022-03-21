@@ -2,9 +2,10 @@
     <form class="panel-body" name="form" ng-submit="submit()">
         <div class="form-field">
             <label for="code" class="input-label" translate>
-              Auth Code
+                Auth Code
             </label>
-            <input type="text" id="code" name="code" ng-model="code" ng-disabled="processing" placeholder="Enter the authorization code" required>
+            <input type="text" id="code" name="code" ng-model="code" ng-disabled="processing"
+                placeholder="Enter the authorization code" required>
         </div>
 
         <div class="form-field">
@@ -12,6 +13,10 @@
 
             <p translate>
                 Select from which point in time it wants to retrieve messages from the inbox.
+            </p>
+
+            <p translate class="alert">
+                If no start date is specified, it will only get e-mails starting the current date not yesterday or further in the
             </p>
 
             <input type="date" id="date" name="date" pick-a-date="date" pick-a-date-options="{ format: 'yyyy-mm-dd' }"
