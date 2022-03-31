@@ -1,7 +1,7 @@
 module.exports = AuthenticationEvents;
 
-AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport', 'DemoDeploymentService', 'VerifierService'];
-function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport, DemoDeploymentService, VerifierService) {
+AuthenticationEvents.$inject = ['$rootScope', '$location', 'Authentication', 'Session', '_', '$state', 'TermsOfService', 'Notify', 'PostFilters', 'DataExport', 'DataImport', 'VerifierService'];
+function AuthenticationEvents($rootScope, $location, Authentication, Session, _, $state, TermsOfService, Notify, PostFilters, DataExport, DataImport, VerifierService) {
 
     let loginPath = null;
     $rootScope.currentUser = null;
@@ -95,7 +95,6 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
             .then(function () {
                 loadSessionData();
                 $rootScope.loggedin = true;
-                DemoDeploymentService.demoCheck();
                 VerifierService.debugModeCheck();
 
 
@@ -122,7 +121,6 @@ function AuthenticationEvents($rootScope, $location, Authentication, Session, _,
     function doLogout() {
         $rootScope.currentUser = null;
         $rootScope.loggedin = false;
-        DemoDeploymentService.demoCheck();
         // we don't want to reload until after filters are correctly set with
         // the backend default that the user would get when logged out
         PostFilters.resetDefaults().then(function () {

@@ -4,7 +4,6 @@ describe('global event handlers', function () {
         mockedSessionData,
         mockedAuthenticationData,
         mockedAuthenticationService,
-        mockedDemoDeploymentService,
         verifierService,
         mockTOS,
         $rootScope,
@@ -53,10 +52,6 @@ describe('global event handlers', function () {
             }
         };
 
-        mockedDemoDeploymentService =
-        {
-            demoCheck: function () {}
-        };
         verifierService =
         {
             debugModeCheck: function () {}
@@ -86,9 +81,6 @@ describe('global event handlers', function () {
         })
         .service('TermsOfService', function () {
             return mockTOS;
-        })
-        .service('DemoDeploymentService', function () {
-            return mockedDemoDeploymentService;
         })
         .run(require('app/auth/authentication-events.run.js'))
         .service('$state', function () {
