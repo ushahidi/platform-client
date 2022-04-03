@@ -17,6 +17,8 @@ function SliderService($rootScope, $q, $templateRequest) {
         deferredOpen.promise.then(function () {
             $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type);
         });
+
+        closeOnNavigationOrTimeout();
     }
 
     function close() {
@@ -39,5 +41,18 @@ function SliderService($rootScope, $q, $templateRequest) {
             scope.$on('$destroy', handler);
         }
         deferredClose.resolve();
+    }
+
+    function closeOnNavigationOrTimeout() {
+        setTimeout(() => {
+            close();
+            window.removeEventListener("popstate", sliderClose, false);
+        }, 6000);
+
+        let sliderClose = () => {
+            close();
+            window.removeEventListener("popstate", sliderClose, false);
+        }
+        window.addEventListener("popstate", sliderClose, false);
     }
 }
