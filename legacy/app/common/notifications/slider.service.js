@@ -46,13 +46,13 @@ function SliderService($rootScope, $q, $templateRequest) {
     function closeOnNavigationOrTimeout() {
         setTimeout(() => {
             close();
-            window.removeEventListener("popstate", sliderClose, false);
+            window.removeEventListener('popstate', sliderClose, false);
         }, 6000);
 
         let sliderClose = () => {
             close();
-            window.removeEventListener("popstate", sliderClose, false);
+            window.removeEventListener('popstate', sliderClose, false);
         }
-        window.addEventListener("popstate", sliderClose, false);
+        window.addEventListener('popstate', sliderClose, false);
     }
 }
