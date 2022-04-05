@@ -89,7 +89,7 @@
             <div class="listing-item" ng-if="posts.length > 0 || isLoading()">
 
                 <div class="listing-item-primary">
-                    <button ng-disabled="isLoading()" ng-hide="( isLoading() || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
+                    <button ng-hide="( isLoading() || posts.length >= totalItems)" class="button-gamma button-flat" ng-click="loadMore()" translate="app.load_more">Load more
                     </button>
                      <loading-dots-button button-class="'button-gamma button-flat'" label="'app.loading'" ng-show="isLoading()"></loading-dots-button>
                 </div>
@@ -98,7 +98,7 @@
     </div>
     <div class="post-col" ng-class="{'active' : activeCol === 'post' }">
         <!-- Verify if we need all these bindings ie. parentForm savingPost -->
-        <div ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
+        <post-detail-data ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
     </div>
 </div>
 <ush-logo></ush-logo>
