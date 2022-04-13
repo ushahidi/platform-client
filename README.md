@@ -14,7 +14,7 @@ All our issues live in https://github.com/ushahidi/platform/issues .
 
 ## Try it out on Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/ushahidi/platform-client/tree/master)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/ushahidi/platform-client/tree/develop)
 
 You need to deploy the [Platform API](http://github.com/ushahidi/platform) first
 
