@@ -56,33 +56,13 @@ function PostValueEditController($rootScope, $scope, _, Flatpickr, SurveysSdk) {
     function activate() {
         addDefaultValue();
         if (isDate($scope.attribute) || isDateTime($scope.attribute)) {
-
             $scope.$watch('attribute.value.value', (newValue, oldValue) => {
-                let addTimezone = false;
-                // if the post is being created and is requred.
-                if ($scope.attribute.required &&  !$scope.attribute.value.value_meta) {
-                    addTimezone = true;
-                }
-
-                // if the post is being created and has a default value.
-                if ($scope.attribute.default &&  !$scope.attribute.value.value_meta) {
-                    addTimezone = true;
-                }
-
-                /* When adding a new value or editing an old. We only want to add/change the timezone if
-                * the value is changed. Converting to timestamp to ensure comparing the same thing */
-                if (newValue && new Date(newValue).valueOf() !== new Date(oldValue).valueOf()) {
-                    addTimezone = true;
-                }
-
-                if (addTimezone) {
+                if (newValue && newValue !== oldValue) {
                     $scope.attribute.value.value_meta = {
                         from_tz:Intl.DateTimeFormat().resolvedOptions().timeZone
                     };
-                }
-
-                // Removing timezone if the value is deleted
-                if (oldValue && newValue === '') {
+                } else if (oldValue && newValue === '') {
+                    // Removing timezone if the value is deleted
                     $scope.attribute.value.value_meta = null;
                 }
             });
