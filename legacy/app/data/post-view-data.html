@@ -98,7 +98,12 @@
     </div>
     <div class="post-col" ng-class="{'active' : activeCol === 'post' }">
         <!-- Verify if we need all these bindings ie. parentForm savingPost -->
-        <post-detail-data ui-view filters="filters" is-loading="isLoading" saving-post="savingPost"></post-detail-data>
+        <div
+          ui-view
+          filters="filters"
+          is-loading="isLoading"
+          saving-post="savingPost"
+        ></div>
     </div>
 </div>
 <ush-logo></ush-logo>
