@@ -148,8 +148,7 @@
                             ></use>
                         </svg>
                         <input
-                            type="date"
-                            id="date"
+                            id="values_{{attribute.id}}"
                             name="values_{{attribute.id}}"
                             ng-model="attribute.value.value"
                             ng-required="attribute.required"
@@ -158,12 +157,21 @@
                 </div>
                 <!-- type: datetime -->
                 <div ng-switch-when="datetime" class="input-with-icon">
-                    <post-datetime
-                        id="values{{attribute.id}}"
-                        name="values_{{attribute.id}}"
-                        ng-model="attribute.value.value"
-                        ng-required="attribute.required"
-                    ></post-datetime>
+                    <!-- Date icon -->
+                    <div class="input-with-icon">
+                        <svg class="iconic" role="img">
+                            <use
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                xlink:href="/img/iconic-sprite.svg#calendar"
+                            ></use>
+                        </svg>
+                        <input
+                            id="values_{{attribute.id}}"
+                            name="values_{{attribute.id}}"
+                            ng-model="attribute.value.value"
+                            ng-required="attribute.required"
+                        />
+                    </div>
                 </div>
                 <!-- type: select -->
                 <div ng-switch-when="select">

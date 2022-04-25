@@ -5,7 +5,7 @@
         <!-- main menu -->
         <ul class="deployment-menu">
             <li ui-sref-active="{ 'active' : 'posts.map' }">
-                <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" class="view-map">
+                <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" class="view-map" data-cy="mb-map-button">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#map-marker"></use>
                     </svg>
@@ -14,7 +14,7 @@
             </li>
 
             <li ui-sref-active="active">
-                <a ui-sref="posts.data" ui-sref-opts="{reload:true}" class="view-data">
+                <a ui-sref="posts.data" ui-sref-opts="{reload:true}" class="view-data" data-cy="mb-data-button">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
                     </svg>
@@ -22,7 +22,7 @@
                 </a>
             </li>
 
-            <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active" data-message="customize">
+            <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active" data-message="customize" data-cy="mb-activity-button">
                 <a ui-sref="activity">
                     <svg class="iconic" role="img">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pulse"></use>
@@ -39,7 +39,7 @@
                     <translate>nav.more</translate>
                 </button>
                 <ul>
-                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{active: $state.includes('settings')}">
+                    <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{active: $state.includes('settings')}" data-cy="mb-settings-button">
                         <a ui-sref="settings.list">
                             <svg class="iconic" role="img">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
@@ -56,7 +56,7 @@
         <!-- user account menu -->
 
             <li>
-                <button ng-click="viewCollectionListing()">
+                <button ng-click="viewCollectionListing()" data-cy="mb-collections-button">
                     <svg class="iconic">
                         <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
                     </svg>
@@ -65,7 +65,7 @@
             </li>
 
             <li ng-hide="currentUser">
-                <button ng-click="login()" data-modal="login">
+                <button ng-click="login()" data-modal="login" data-cy="mb-login-page-button">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
                     </svg>
@@ -74,14 +74,14 @@
             </li>
 
             <li ng-show="currentUser">
-                <button ng-click="viewAccountSettings()">
+                <button ng-click="viewAccountSettings()" data-cy="mb-account-settings-button"
                     <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="account_settings"/>
                     <span class="label" translate="nav.account_settings">Account Settings</span>
                 </button>
             </li>
 
             <li ng-show="!currentUser && canRegister">
-                <button ng-click="register()" data-modal="signup">
+                <button ng-click="register()" data-modal="signup" data-cy="mb-signup-page-button">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#person"></use>
                     </svg>
@@ -90,7 +90,7 @@
             </li>
 
             <li ng-show="currentUser">
-                <button ng-click="logout()" data-modal="login">
+                <button ng-click="logout()" data-modal="login" data-cy="mb-logout-button">
                     <svg class="iconic" role="img">
                         <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
                     </svg>
@@ -99,7 +99,7 @@
             </li>
 
             <li>
-                <button ng-click="viewSupportLinks()">
+                <button ng-click="viewSupportLinks()" data-cy="mb-ushahidi-support-button">
                     <ng-include src="'mode-bar/ushahidi-logo.html'"></ng-include>
                     <span class="label" translate>app.support</span>
                 </button>
