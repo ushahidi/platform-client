@@ -2,8 +2,8 @@ module.exports = Notify;
 
 var scope;
 var iconicSprite = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
-Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService', 'DemoSliderService'];
-function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, DemoSliderService) {
+Notify.$inject = ['_', '$q', '$rootScope', '$translate', 'SliderService', 'ModalService'];
+function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
     return {
         notify: notify,
         notifyAction,
@@ -22,7 +22,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
         adminUserSetupModal: adminUserSetupModal,
         infoModal: infoModal,
         confirmLeave: confirmLeave,
-        demo: demo,
         notifyPermanent: notifyPermanent,
         deleteWithInput: deleteWithInput
     };
@@ -220,11 +219,6 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService, Demo
 
     function adminUserSetupModal() {
         ModalService.openTemplate('<admin-user-setup><admin-user-setup/>', 'Change your email and password', false, false, false, false);
-    }
-
-    function demo() {
-        var scope = getScope();
-        DemoSliderService.openTemplate('<demo-deployment></demo-deployment>', 'star', false, scope, false);
     }
 
     function confirmTos() {
