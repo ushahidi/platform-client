@@ -3,12 +3,14 @@ module.exports = [
     'MediaEndpoint',
     'MediaEditService',
     '$q',
+    'Notify',
     '_',
 function (
     $http,
     MediaEndpoint,
     MediaEditService,
     $q,
+    Notify,
     _
 ) {
     return {
@@ -108,8 +110,10 @@ function (
             }
 
             function deleteMedia(mediaId) {
-                // Mark for deletion
-                $scope.media = {id: mediaId, changed: true, deleted: true};
+                Notify.confirmDelete("Are you sure you want to delete this?").then(() => {
+                    // Mark for deletion
+                    $scope.media = {id: mediaId, changed: true, deleted: true};
+                });
             }
         }
     };
