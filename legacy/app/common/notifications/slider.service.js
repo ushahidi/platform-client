@@ -17,6 +17,8 @@ function SliderService($rootScope, $q, $templateRequest) {
         deferredOpen.promise.then(function () {
             $rootScope.$emit('slider:open', template, icon, iconClass, scope, closeOnTimeout, showCloseButton, closeOnNavigate, loading, type);
         });
+
+        closeOnNavigation();
     }
 
     function close() {
@@ -39,5 +41,13 @@ function SliderService($rootScope, $q, $templateRequest) {
             scope.$on('$destroy', handler);
         }
         deferredClose.resolve();
+    }
+
+    function closeOnNavigation() {
+        let sliderClose = () => {
+            close();
+            window.removeEventListener('popstate', sliderClose, false);
+        }
+        window.addEventListener('popstate', sliderClose, false);
     }
 }
