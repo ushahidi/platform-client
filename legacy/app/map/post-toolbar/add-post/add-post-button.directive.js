@@ -30,8 +30,6 @@ function AddPostButtonController(
     $scope.forms = [];
     $scope.disabled = true;
     $scope.handleClick = handleClick;
-    // this is to add a class for adjustment of the fab-button in data-view when demo-bar is visible.
-    $scope.upgradeButton = $rootScope.demoBarVisible && $rootScope.loggedin;
 
     activate();
 

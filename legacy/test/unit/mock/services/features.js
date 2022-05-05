@@ -36,7 +36,6 @@ module.exports = [function () {
                             chart: true,
                             list: true,
                             map: true,
-                            plans: false,
                             timeline: true
                         }
                     });
@@ -79,7 +78,6 @@ module.exports = [function () {
                 chart: true,
                 list: true,
                 map: true,
-                plans: false,
                 timeline: true
             }
         }
