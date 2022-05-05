@@ -62,12 +62,6 @@ function (
             });
             return deferred.promise;
         },
-        confirmDelete: function(mediaId) {
-            let flag = confirm("Are you sure you want to delete this?");
-            if(flag) {
-                return this.deleteMedia(mediaId)
-            }
-        },
         deleteMedia: function (mediaId) {
             if (mediaId) {
                 return MediaEndpoint.delete({id: mediaId}).$promise;
