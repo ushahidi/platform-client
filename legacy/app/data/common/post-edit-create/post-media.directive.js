@@ -30,7 +30,6 @@ function (
             $scope.showAdd = showAdd;
             $scope.showReplace = showReplace;
             $scope.showDelete = showDelete;
-            $scope.confirmDelete = confirmDelete;
             $scope.deleteMedia = deleteMedia;
 
             activate();
@@ -72,7 +71,7 @@ function (
                     ngModel.$setDirty();
                 }
 
-            }
+            } 
 
             function handleMediaIdChange(id) {
                 if (id === 'changed') {
@@ -93,13 +92,6 @@ function (
 
             function showAdd() {
                 return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
-            }
-
-            function confirmDelete(){
-                let flag = confirm("Are you sure you want to delete this?");
-                if(flag) {
-                    return deleteMedia();
-                }
             }
             function showReplace() {
                 return $scope.media.dataURI || ($scope.media.id && !$scope.media.deleted);

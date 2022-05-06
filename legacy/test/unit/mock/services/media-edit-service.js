@@ -11,9 +11,6 @@ module.exports = [function () {
                     }
             };
         },
-        confirmDelete: function () {
-            return true;
-        },
         deleteMedia: function () {
             return true;
         },
