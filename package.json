@@ -48,7 +48,7 @@
   "author": "Ushahidi",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/ushahidi/platform-client/issues"
+    "url": "https://github.com/ushahidi/platform/issues"
   },
   "homepage": "https://github.com/ushahidi/platform-client#readme",
   "devDependencies": {
