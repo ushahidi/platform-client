@@ -75,8 +75,6 @@
                     ng-style="{backgroundColor: post.form.color}"
                 ></div>
 
-                <h1>HEJ</h1>
-
                 <!-- Start Post custom fields -->
                 <post-value-edit
                     ng-repeat="attribute in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by attribute.id"
