@@ -63,6 +63,9 @@
                     </div>
                 </button>
             </div>
+            <div class="progress-bar" ng-show="isLoading()">
+                <span> .. </span>
+            </div>
         </div>
 
         <div class="full-col">
@@ -71,6 +74,8 @@
                     class="post-band"
                     ng-style="{backgroundColor: post.form.color}"
                 ></div>
+
+                <h1>HEJ</h1>
 
                 <!-- Start Post custom fields -->
                 <post-value-edit

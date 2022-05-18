@@ -29,7 +29,8 @@ PostEditorController.$inject = [
     '$state',
     'SurveysSdk',
     'TranslationService',
-    'PostsSdk'
+    'PostsSdk',
+    'LoadingProgress'
   ];
 
 function PostEditorController(
@@ -47,7 +48,8 @@ function PostEditorController(
     $state,
     SurveysSdk,
     TranslationService,
-    PostsSdk
+    PostsSdk,
+    LoadingProgress
   ) {
 
     // Setup initial stages container
@@ -61,6 +63,8 @@ function PostEditorController(
     $scope.saving = $translate.instant('app.saving');
     $scope.submit = $translate.instant('app.submit');
     $scope.submitting = $translate.instant('app.submitting');
+    $scope.isLoading = LoadingProgress.getLoadingState;
+
     activate();
 
     function activate() {
