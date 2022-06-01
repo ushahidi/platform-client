@@ -143,12 +143,6 @@ module.exports = [
                 url: '/:id',
                 controller: require('./webhooks/webhooks.controller.js'),
                 template: require('./webhooks/webhooks-edit.html')
-            })
-            .state({
-                name: 'settings.plan',
-                url: '/settings/plan',
-                controller: require('./plans/plans.controller.js'),
-                template: require('./plans/plan.html')
             });
     }
 ];

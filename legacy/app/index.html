@@ -1,5 +1,5 @@
 <div
-    ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible, 'demo-visible' : demoBarVisible }"
+    ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }"
     class="{{ globalLayout }} ltr-namespace"
     canvas
 >
@@ -10,7 +10,6 @@
     <mode-bar current-user="currentUser"></mode-bar>
     <ui-view></ui-view>
     <ush-slider></ush-slider>
-    <ush-demo-slider></ush-demo-slider>
     <ush-modal-container></ush-modal-container>
     <ush-mainsheet-container></ush-mainsheet-container>
     <div ng-controller="intercom"></div>
