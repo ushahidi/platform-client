@@ -12,9 +12,6 @@ function (
 
     $rootScope.rtlEnabled = false;
 
-    $rootScope.switchRtl = function () {
-        $rootScope.rtlEnabled = !$rootScope.rtlEnabled;
-    };
     TranslationService.getLanguage().then(function (language) {
             translate(language);
         });

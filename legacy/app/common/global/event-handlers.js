@@ -7,6 +7,7 @@ function (
     $rootScope.globalLayout = 'layout-a';
     $rootScope.setLayout = function (layout) {
         $rootScope.globalLayout = layout;
+        $rootScope.$emit('layoutChange', layout);
     };
     // Setup PL modal visible and switching function
     $rootScope.modalVisible = false;

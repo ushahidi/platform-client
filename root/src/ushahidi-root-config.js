@@ -22,6 +22,7 @@ const applications = constructApplications({
 });
 const layoutEngine = constructLayoutEngine({ routes, applications });
 
+let globalLayout = 'layout-a';
 applications.forEach(registerApplication);
 layoutEngine.activate();
 
@@ -72,6 +73,29 @@ window.addEventListener('single-spa:before-first-mount', () => {
 // Watching for changes in page-title due to route-changes in legacy-app (this needs to be handled differently once we start moving UI)
 window.addEventListener("newTitle", (evt) => {
     document.title = generatePageTitle(evt.title);
+});
+// Watching for changes in page-title due to route-changes in legacy-app (this needs to be handled differently once we start moving UI)
+window.addEventListener("languageChange", (evt) => {
+    let rtlEnabled = evt.rtlEnabled;
+    let element = document.querySelector('.application-container');
+    if(rtlEnabled) {
+        if (!element.classList.contains('rtl-namespace')) {
+            element.classList.remove('ltr-namespace');
+            element.classList.add('rtl-namespace');
+        }
+    } else {
+        if (!element.classList.contains('ltr-namespace')) {
+            element.classList.remove('rtl-namespace');
+            element.classList.add('ltr-namespace');
+        }
+    }
+});
+
+window.addEventListener("layoutChange", (evt) => {
+        let element = document.querySelector('.application-container');
+        element.classList.remove(globalLayout);
+        element.classList.add(evt.layout);
+        globalLayout = evt.layout;
 });
 
 // Watching for startup of monetization

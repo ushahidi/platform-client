@@ -34,9 +34,9 @@ function (
                                     require('ushahidi-platform-pattern-library/assets/css/rtl-style.min.css');
                                     $rootScope.rtlEnabled = language.rtl;
                             } else {
-
                                 $rootScope.rtlEnabled = language.rtl;
                             }
+                            $rootScope.$emit('languageChange', $rootScope.rtlEnabled);
                         }
                 }
             });

@@ -31,12 +31,16 @@
             </main>
         </div>
     </div>
-
-    <nav></nav>
-    <main>
-
-        <route default>
-            <application name="@ushahidi/legacy-app"></application>
-        </route>
-    </main>
+    <div class="application-container ltr-namespace">
+        <main>
+            <div class="mode-bar">
+                <nav>
+                    <application name="@ushahidi/modebar"></application>
+                </nav>
+            </div>
+            <route default>
+                <application name="@ushahidi/legacy-app"></application>
+            </route>
+        </main>
+    </div>
 </single-spa-router>
