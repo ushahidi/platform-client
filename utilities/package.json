@@ -12,9 +12,6 @@
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "coverage": "cross-env BABEL_ENV=test jest --coverage"
     },
-    "husky": {
-        "hooks": {}
-    },
     "devDependencies": {
         "@babel/core": "^7.12.16",
         "@babel/eslint-parser": "^7.12.16",
@@ -40,6 +37,9 @@
     },
     "dependencies": {
         "@types/jest": "^26.0.16",
-        "@types/systemjs": "^6.1.0"
+        "@types/systemjs": "^6.1.0",
+        "file-loader": "^6.2.0",
+        "url-loader": "^4.1.1",
+        "ushahidi-platform-pattern-library": "^5.0.3"
     }
 }

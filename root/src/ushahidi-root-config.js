@@ -5,11 +5,11 @@ import {
     constructLayoutEngine,
 } from "single-spa-layout";
 import microfrontendLayout from "./microfrontend-layout.html";
-import { getPageMetadata, setBootstrapConfig } from "@ushahidi/utilities";
+import { getPageMetadata, setBootstrapConfig, getFonts } from "@ushahidi/utilities";
 
 require("./loading.scss");
 
-require("ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css");
+getFonts();
 
 setBootstrapConfig();
 

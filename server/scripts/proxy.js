@@ -23,6 +23,11 @@ app.use(
         target: `http://localhost:${UTILITIES_PORT}/`,
     })
 );
+app.use(
+    createProxyMiddleware(["/utilities"], {
+        target: `http://localhost:${UTILITIES_PORT}/`,
+    })
+);
 
 // Proxy to the single-spa modebar module.
 app.use(
