@@ -24,6 +24,10 @@ function (
     ModalService
 ) {
 
+    window.addEventListener('openLogin', function (event) {
+        openLogin();
+    });
+
     // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
     let loginStatus = false;
     if (!!Session.getSessionDataEntry('accessToken') &&
@@ -65,7 +69,9 @@ function (
         UserEndpoint.invalidateCache();
         loginStatus = false;
     }
-
+    function openLogin() {
+        ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
+    }
     return {
 
         login: function (username, password) {
@@ -140,10 +146,7 @@ function (
             return loginStatus;
         },
 
-        openLogin: function () {
-
-            ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
-        }
+        openLogin
     };
 
 }];
