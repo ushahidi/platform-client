@@ -4,12 +4,14 @@ on:
 - push
 - pull_request
 
+env:
+  CYPRESS_PROJECT_ID: "itz63b"
+
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    ## While tests are not fixed
-    continue-on-error: true
+    continue-on-error: false
 
     strategy:
       matrix:
@@ -61,9 +63,109 @@ jobs:
       run: |
         npm run test;
 
+  e2e-run:
+    if: github.event_name == 'push'   # not on fork PRs
+    continue-on-error: true     # while tests stabilizing
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/checkout@v3
+      with:
+        repository: ushahidi/platform-e2e-testing
+        ref: main
+        path: e2e-testing/
+
+    ## set up API endpoint
+    - name: Setup API endpoint
+      run: |
+        echo 'BACKEND_URL=https://master-api.staging.ush.zone' > .env
+
+    ## same as above step
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Get npm cache directory
+      id: npm-cache
+      run: |
+        echo "::set-output name=dir::$(npm config get cache)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.npm-cache.outputs.dir }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Install dependencies
+      run: |
+        set -e;
+
+        npm install -g gulp;
+        npm run install:all;
+
+    - name: Run server
+      run: |
+        npm run serve &
+
+    - name: Wait until all modules are being served
+      run: |
+        retry() {
+          local -r -i max_attempts="$1"; shift
+          local -r cmd="$@"
+          local -i attempt_num=1
+
+          until $cmd
+          do
+              if (( attempt_num == max_attempts ))
+              then
+                  echo "Attempt $attempt_num failed and there are no more attempts left!"
+                  return 1
+              else
+                  echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
+                  sleep $(( attempt_num++ ))
+              fi
+          done;
+        }
+
+        server='http://localhost:3000'
+        retry 60 timeout 1 curl --silent ${server}/importmap.json || { echo "Failed getting importmap!" && exit 1; }
+        
+        for js in $(curl --silent  ${server}/importmap.json | jq -r '.imports | .[]'); do
+          retry 60 timeout 1 curl --silent ${server}${js} || { echo "Failed waiting for module ${js}" && exit 1; }
+        done
+
+    - name: Patch cypress config
+      run: |
+        cd e2e-testing
+        jq '.projectId="'${CYPRESS_PROJECT_ID}'"' <<<$(cat cypress.json) > cypress.json
+        jq '.baseUrl="http://localhost:3000/"' <<<$(cat cypress.env.json) > cypress.env.json
+
+    - name: Cypress run
+      uses: cypress-io/github-action@v2
+
+      with:
+        browser: chrome
+        install-command: npm install
+        record: true
+        parallel: true
+        working-directory: e2e-testing
+
+      env:
+          CYPRESS_ush_admin_email: "${{secrets.e2e_ush_admin_email}}"
+          CYPRESS_ush_admin_pwd: "${{secrets.e2e_ush_admin_pwd}}"
+          CYPRESS_ush_user_name: "${{secrets.e2e_ush_user_name}}"
+          CYPRESS_ush_user_email: "${{secrets.e2e_ush_user_email}}"
+          CYPRESS_ush_user_pwd: "${{secrets.e2e_ush_user_pwd}}"
+          CYPRESS_RECORD_KEY: ${{ secrets.E2E_CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
   ship:
-    needs: [ test ]
-    if: github.event_name == 'push'   # not on PRs
+    needs: [ test, e2e-run ]
+    if: github.event_name == 'push'   # not PRs
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
