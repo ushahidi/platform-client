@@ -42,7 +42,9 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
+        "react": "https://unpkg.com/react@18/umd/react.production.min.js",
+        "react-dom": "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
       }
     }
   </script>
@@ -73,6 +75,7 @@
     System.import('@ushahidi/api');
     System.import('@ushahidi/utilities');
     System.import('@ushahidi/legacy-app');
+    System.import('@ushahidi/modebar');
   </script>
 
 <script>

@@ -6,7 +6,7 @@
       "@ushahidi/api": "/ushahidi-api.js",
       "@ushahidi/legacy-settings": "/ushahidi-settings.js",
       "@ushahidi/legacy-data": "/ushahidi-data.js",
-      "@ushahidi/legacy-activity": "/ushahidi-activity.js"
-            
+      "@ushahidi/legacy-activity": "/ushahidi-activity.js",
+      "@ushahidi/modebar": "/ushahidi-modebar.js"
     }
   }

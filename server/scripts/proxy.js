@@ -8,6 +8,7 @@ const API_PORT = 9093;
 const UTILITIES_PORT = 9094;
 const LEGACY_PORT = 9090;
 const ROOT_PORT = 9091;
+const MODEBAR_PORT=9095;
 
 // Proxy to the single-spa api module.
 app.use(
@@ -22,6 +23,19 @@ app.use(
         target: `http://localhost:${UTILITIES_PORT}/`,
     })
 );
+app.use(
+    createProxyMiddleware(["/utilities"], {
+        target: `http://localhost:${UTILITIES_PORT}/`,
+    })
+);
+
+// Proxy to the single-spa modebar module.
+app.use(
+    createProxyMiddleware("/ushahidi-modebar.js", {
+        target: `http://localhost:${MODEBAR_PORT}/`,
+    })
+);
+
 
 // Proxy endpoints to the Legacy angularjs client.
 app.use(

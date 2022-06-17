@@ -1,13 +1,12 @@
 <div
-    ng-class="{ 'rtl-namespace' : rtlEnabled, 'ltr-namespace' : !rtlEnabled, 'modal-visible': modalVisible }"
-    class="{{ globalLayout }} ltr-namespace"
+    ng-class="{ 'modal-visible': modalVisible }"
     canvas
 >
 
 <a href="#main-content" class="skip-to-content">Skip to content</a>
         
             
-    <mode-bar current-user="currentUser"></mode-bar>
+    <!-- <mode-bar current-user="currentUser"></mode-bar> -->
     <ui-view></ui-view>
     <ush-slider></ush-slider>
     <ush-modal-container></ush-modal-container>

@@ -33,7 +33,7 @@ import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 import { Chart, registerables } from 'chart.js';
 
 // Change to https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/tree/master once moment is exchanged to dayjs
-import 'chartjs-adapter-dayjs';
+import 'chartjs-adapter-dayjs-3';
 
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
@@ -251,6 +251,19 @@ angular
         $rootScope.$on('setPageTitle', function (ev, title) {
             // Sending the page-title to the newTitle-event to be consumed by root-application
             event.title = title;
+            window.dispatchEvent(event);
+        });
+    }])
+    .run(['$rootScope',function ($rootScope) {
+        let event = new CustomEvent('languageChange');
+        $rootScope.$on('languageChange', function (ev, rtlEnabled) {
+            event.rtlEnabled = rtlEnabled;
+            window.dispatchEvent(event);
+        });
+    }]).run(['$rootScope',function ($rootScope) {
+        let event = new CustomEvent('layoutChange');
+        $rootScope.$on('layoutChange', function (ev, layout) {
+            event.layout = layout;
             window.dispatchEvent(event);
         });
     }]);

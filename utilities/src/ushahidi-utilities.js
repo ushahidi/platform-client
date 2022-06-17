@@ -1,4 +1,14 @@
 import { getConfig } from "@ushahidi/api";
+import svg from "ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg";
+import fonts from "ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css";
+
+export const getSvgSprite = function () {
+    return svg;
+}
+
+export const getFonts = function () {
+    return fonts;
+}
 
 export const getPageMetadata = function () {
     return getConfig("site").then((config) => {
