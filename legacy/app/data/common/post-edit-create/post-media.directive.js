@@ -70,7 +70,7 @@ function (
                     ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
-            } 
+            }
 
             function handleMediaIdChange(id) {
                 if (id === 'changed') {
