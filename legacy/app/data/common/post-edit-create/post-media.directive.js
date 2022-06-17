@@ -70,7 +70,6 @@ function (
                     ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
-
             } 
 
             function handleMediaIdChange(id) {
@@ -102,7 +101,7 @@ function (
             }
 
             function deleteMedia(mediaId) {
-                Notify.confirmDelete("Are you sure you want to delete this?").then(() => {
+                Notify.confirmDelete('Are you sure you want to delete this?').then(() => {
                     // Mark for deletion
                     $scope.media = {id: mediaId, changed: true, deleted: true};
                 });
