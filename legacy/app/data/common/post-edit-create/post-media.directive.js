@@ -3,12 +3,14 @@ module.exports = [
     'MediaEndpoint',
     'MediaEditService',
     '$q',
+    'Notify',
     '_',
 function (
     $http,
     MediaEndpoint,
     MediaEditService,
     $q,
+    Notify,
     _
 ) {
     return {
@@ -68,7 +70,6 @@ function (
                     ngModel.$setViewValue($scope.mediaId);
                     ngModel.$setDirty();
                 }
-
             }
 
             function handleMediaIdChange(id) {
@@ -91,7 +92,6 @@ function (
             function showAdd() {
                 return (!$scope.media.id && !$scope.media.changed || $scope.media.deleted);
             }
-
             function showReplace() {
                 return $scope.media.dataURI || ($scope.media.id && !$scope.media.deleted);
             }
@@ -101,8 +101,10 @@ function (
             }
 
             function deleteMedia(mediaId) {
-                // Mark for deletion
-                $scope.media = {id: mediaId, changed: true, deleted: true};
+                Notify.confirmDelete('Are you sure you want to delete this?').then(() => {
+                    // Mark for deletion
+                    $scope.media = {id: mediaId, changed: true, deleted: true};
+                });
             }
         }
     };
