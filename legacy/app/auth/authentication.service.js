@@ -58,7 +58,7 @@ function (
             detail: {
                 event: 'user logged in',
                 event_type: 'user_interaction',
-                user_role: userData.role == 'admin' ? 'admin' : 'member'
+                user_role: userData.role === 'admin' ? 'admin' : 'member'
             }
         }));
     }

@@ -22,7 +22,7 @@ function ($q, ConfigEndpoint, UserEndpoint) {
             if (x.id && x.role) {
                 // According to data dictionary:
                 //   https://docs.google.com/document/d/1ulZerckIGun-mv4ASu2nEFGFTpqcYwBXd3HR95eKj68
-                x.role_level = x.role == 'admin' ? 'admin' : 'member';
+                x.role_level = x.role === 'admin' ? 'admin' : 'member';
             }
             user.resolve(x);
         }).catch(function () {
@@ -38,7 +38,7 @@ function ($q, ConfigEndpoint, UserEndpoint) {
             // in the analytics data warehouse
             var scopedUserId = undefined;
             if (user.id) {
-                scopedUserId = String(user.id) + "," + String(multisite.site_id || null);
+                scopedUserId = String(user.id) + ',' + String(multisite.site_id || null);
             }
 
             userProps.resolve({
@@ -65,10 +65,10 @@ function ($q, ConfigEndpoint, UserEndpoint) {
 
     // Initialize user properties along with this module
     triggerRefresh();
-    
+
     // Add event listener to refresh user properties on demand
     window.addEventListener('ush:analytics:refreshUserProperties', function () {
         triggerRefresh();
     });
-    
+
 }];
