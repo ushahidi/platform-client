@@ -6,7 +6,7 @@ import {
 } from "single-spa-layout";
 import microfrontendLayout from "./microfrontend-layout.html";
 import { getPageMetadata, setBootstrapConfig } from "@ushahidi/utilities";
-import { datalayer } from "./datalayer.js";
+// import { datalayer } from "./datalayer.js";
 
 require("./loading.scss");
 
@@ -25,7 +25,7 @@ const layoutEngine = constructLayoutEngine({ routes, applications });
 
 applications.forEach(registerApplication);
 layoutEngine.activate();
-datalayer.initialize();
+// datalayer.initialize();
 
 const showError = function (show) {
     const element = document.querySelector('#bootstrap-error');
