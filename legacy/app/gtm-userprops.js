@@ -9,14 +9,14 @@ function ($q, ConfigEndpoint, UserEndpoint) {
         var userProps = $q.defer();
 
         var site = $q.defer();
-        var multisite = $q.defer();
+        var deploymentId = $q.defer();
         var user = $q.defer();
 
         ConfigEndpoint.get({id: 'site'}).$promise.then(function (x) {
             site.resolve(x);
         });
-        ConfigEndpoint.get({id: 'multisite'}).$promise.then(function (x) {
-            multisite.resolve(x);
+        ConfigEndpoint.get({id: 'deployment_id'}).$promise.then(function (x) {
+            deploymentId.resolve(x);
         });
         UserEndpoint.get({id: 'me'}).$promise.then(function (x) {
             if (x.id && x.role) {
@@ -29,28 +29,39 @@ function ($q, ConfigEndpoint, UserEndpoint) {
             user.resolve(null);
         })
 
-        $q.all([site.promise, multisite.promise, user.promise]).then(function (results) {
+        $q.all([site.promise, deploymentId.promise, user.promise]).then(function (results) {
             var site = results[0] || {};
-            var multisite = results[1] || {};
+            var deploymentId = results[1] || {};
             var user = results[2] || {};
 
-            // This is a composition of the user id and deployment id, because each user must be unique
-            // in the analytics data warehouse
-            var scopedUserId = undefined;
-            if (user.id) {
-                scopedUserId = String(user.id) + ',' + String(multisite.site_id || null);
-            }
+            var multisite = deploymentId.multisite || {};
 
-            userProps.resolve({
-                deployment_url: multisite.site_fqdn || window.location.host ,
-                deployment_id: multisite.site_id || null,
-                deployment_name: site.name || undefined,
-                user_id: scopedUserId,
-                user_role: user.role_level || undefined,
-                browser_language: navigator.language
-                ? navigator.languages[0]
-                : (navigator.language || navigator.userLanguage)
-            });
+            // If deployment id is available, enable user properties analytics
+            var ids = deploymentId.analytics || {};
+            if (ids.prefix && ids.id) {
+                // Deployment id = prefix + deployment id
+                var depId = `${ids.prefix}-${ids.id}`;
+
+                // This is a composition of the user id and deployment id, because each user must be unique
+                // in the analytics data warehouse
+                var scopedUserId = undefined;
+                if (user.id) {
+                    scopedUserId = `${String(user.id)},${depId}`;
+                }
+
+                userProps.resolve({
+                    deployment_url: multisite.site_fqdn || window.location.host ,
+                    deployment_id: depId,
+                    deployment_name: site.name || undefined,
+                    user_id: scopedUserId,
+                    user_role: user.role_level || undefined,
+                    browser_language: navigator.language
+                        ? navigator.languages[0]
+                        : (navigator.language || navigator.userLanguage)
+                });
+            } else {
+                userProps.resolve({});
+            }
         });
 
         return userProps;
@@ -58,8 +69,10 @@ function ($q, ConfigEndpoint, UserEndpoint) {
 
     function triggerRefresh() {
         getUserPropertiesPromise().promise.then(function (userProps) {
-            let event = new CustomEvent('datalayer:userprops', { detail: userProps });
-            window.dispatchEvent(event);
+            if (userProps.deployment_id) {
+                let event = new CustomEvent('datalayer:userprops', { detail: userProps });
+                window.dispatchEvent(event);
+            }
         });
     }
 

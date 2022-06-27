@@ -253,5 +253,5 @@ angular
             event.title = title;
             window.dispatchEvent(event);
         });
-    }]);
-    // .run(require('./gtm-userprops.js'));
+    }])
+    .run(require('./gtm-userprops.js'));

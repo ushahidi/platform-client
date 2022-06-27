@@ -1,5 +1,6 @@
 class Datalayer {
     constructor() {
+        this.activated = false;
         this.pushQ = [];
         this.userProperties = {};
     }
@@ -7,10 +8,16 @@ class Datalayer {
     initialize() {
         // Listen to user property change events
         window.addEventListener("datalayer:userprops", ({detail}) => {
-           this.userProperties = detail;
+            // First user property push will enable the datalayer
+            this.activated = true;
+
+            this.userProperties = detail;
             if (this.pushQ.length > 0) {
                 for (var obj of this.pushQ) {
-                    obj.user_properties = this.userProperties;
+                    // Fill in user_properties where they were left empty
+                    if (obj.user_properties?._empty) {
+                        obj.user_properties = this.userProperties;
+                    }
                     this.push(obj);
                 }
                 this.pushQ = [];
@@ -34,18 +41,21 @@ class Datalayer {
                 if (Object.keys(this.userProperties).length > 0) {
                     this.push({'page_type': pageType, user_properties: this.userProperties});
                 } else {
-                    // If user properties have not been initialised yet, we should queue
-                    this.pushQ.push({'page_type': pageType});
+                    // If user properties have not been initialised yet, we should mark them as empty
+                    this.push({'page_type': pageType, user_properties: {_empty: true}});
                 }
             });
     }
 
     push(obj) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ ecommerce: null });
-        window.dataLayer.push(obj);
-        console.log("pushed");
-        console.log(obj);
+        // Corner case: push event before user properties set , defer to queue
+        if (!this.activated) {
+            this.pushQ.push(obj);
+        } else {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ ecommerce: null });
+            window.dataLayer.push(obj);
+        }
     }
 
     pathToPageType(path) {
