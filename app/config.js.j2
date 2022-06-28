@@ -9,6 +9,9 @@ window.ushahidi = {
 {% else %}
   gaEnabled: false,
 {% endif %}
+{% if GTM_CONTAINER_ID %}
+  googleTagManager: '{{ GTM_CONTAINER_ID }}',
+{% endif %}
   intercomAppId: '{{ INTERCOM_APPID }}',
   appStoreId: '{{ APP_STORE_ID }}',
   ravenUrl: '{{ RAVEN_URL }}',

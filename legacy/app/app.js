@@ -254,3 +254,4 @@ angular
             window.dispatchEvent(event);
         });
     }]);
+    // .run(require('./gtm-userprops.js'));
