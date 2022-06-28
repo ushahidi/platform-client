@@ -33,7 +33,7 @@ import * as UshahidiSdk from 'ushahidi-platform-sdk/build/src/index';
 import { Chart, registerables } from 'chart.js';
 
 // Change to https://gitlab.com/mmillerbkg/chartjs-adapter-dayjs/-/tree/master once moment is exchanged to dayjs
-import 'chartjs-adapter-dayjs';
+import 'chartjs-adapter-dayjs-3';
 
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
@@ -253,5 +253,5 @@ angular
             event.title = title;
             window.dispatchEvent(event);
         });
-    }])
-    .run(require('./gtm-userprops.js'));
+    }]);
+    // .run(require('./gtm-userprops.js'));

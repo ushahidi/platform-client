@@ -23,5 +23,4 @@ vault.txt
 server/www/img/icons/
 server/www/
 app/locales/
-package-lock.json
 app/stats.html
