@@ -57,7 +57,7 @@ function (
         window.dispatchEvent(new CustomEvent('datalayer:custom-event', {
             detail: {
                 event: 'user logged in',
-                event_type: 'user_interaction',
+                event_type: 'login',
                 user_role: userData.role === 'admin' ? 'admin' : 'member'
             }
         }));
