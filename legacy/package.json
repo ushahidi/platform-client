@@ -87,7 +87,6 @@
     "dependencies": {
         "@toast-ui/editor": "2.0.1",
         "@uirouter/angularjs": "^1.0.10",
-        "URIjs": "^1.14.1",
         "angular": "^1.5.6",
         "angular-cache": "^4.6.0",
         "angular-elastic": "^2.5.1",
@@ -100,8 +99,8 @@
         "angular-translate": "^2.11.0",
         "angular-translate-loader-static-files": "^2.11.0",
         "angular-ui-bootstrap": "^2.5.0",
-        "chart.js": "^3.5.0",
-        "chartjs-adapter-dayjs": "^1.0.0",
+        "chart.js": "^3.8.0",
+        "chartjs-adapter-dayjs-3": "^1.2.3",
         "checklist-model": "~0.11.0",
         "cross-fetch": "^3.0.4",
         "dayjs": "^1.10.5",
@@ -121,6 +120,7 @@
         "single-spa-angularjs": "^4.2.3",
         "sortablejs": "1.10.0",
         "underscore": "^1.7.0",
+        "URIjs": "^1.14.1",
         "ushahidi-platform-pattern-library": "5.0.3",
         "ushahidi-platform-sdk": "^0.6.2"
     },

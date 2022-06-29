@@ -95,7 +95,8 @@ function Maps(ConfigEndpoint, L, _, CONST) {
                 layers: [L.tileLayer(defaultLayer.url, defaultLayer.layerOptions)],
                 center: [config.default_view.lat, config.default_view.lon],
                 zoom: config.default_view.zoom,
-                clustering: config.clustering
+                clustering: config.clustering,
+                cluster_radius: Number(config.cluster_radius || 50)
             });
         });
     }

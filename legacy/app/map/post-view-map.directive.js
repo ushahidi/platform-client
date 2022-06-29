@@ -85,7 +85,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             if (map.options.clustering) {
 
-                markers = markers ? markers : L.markerClusterGroup();
+                markers = markers ? markers : L.markerClusterGroup({
+                    maxClusterRadius: map.options.cluster_radius
+                });
                 // This has to be done individually.
                 // Using clusterLayer.addLayers() breaks the clustering.
                 // Need to investigate as this should have been fixing in v1.0.0

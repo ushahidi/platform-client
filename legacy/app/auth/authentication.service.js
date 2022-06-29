@@ -51,6 +51,16 @@ function (
             language: userData.language
         });
         loginStatus = true;
+
+        // Refresh the user properties due to the change
+        window.dispatchEvent(new CustomEvent('ush:analytics:refreshUserProperties'));
+        window.dispatchEvent(new CustomEvent('datalayer:custom-event', {
+            detail: {
+                event: 'user logged in',
+                event_type: 'user_interaction',
+                user_role: userData.role === 'admin' ? 'admin' : 'member'
+            }
+        }));
     }
 
     function continueLogout(silent) {
