@@ -326,11 +326,12 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                 '<p><i translate="{{confirmWarningText}}"></i></p>' +
                 '    <button class="button-beta button-flat" ng-click="cancel()">Cancel</button>' +
                 '    <button class="button-destructive button-flat" ng-click="confirm()">' +
-                '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
+                '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use></svg>' +
                 '    <span translate="app.delete">Delete</span>' +
                 '    </button>' +
                 '</div>', confirmText, false, scope, false, false);
             }
+            // '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
         }
 
         return deferred.promise;
