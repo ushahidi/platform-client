@@ -29,7 +29,8 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
         });
 
         var templateScope;
-        var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
+        // var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
+
         // Modal content element
         var modalContent = $element.find('modal-content');
         let trap = FocusTrap.createFocusTrap('.modal-window');

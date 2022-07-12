@@ -26,7 +26,7 @@ function Slider($timeout, $compile, SliderService, ModalService, $sce) {
         $scope.trustSrc = trustSrc;
         var templateScope;
         var closeTimeout = null;
-        var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
+        // var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
         // content element
         var sliderContent = $element.find('slider-content');
 
