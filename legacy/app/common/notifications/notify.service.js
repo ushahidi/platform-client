@@ -307,7 +307,7 @@ function Notify(_, $q, $rootScope, $translate, SliderService, ModalService) {
                     '<p><i translate="{{confirmWarningText}}"></i></p>' +
                     '    <button class="button-flat" ng-click="$parent.cancel()" translate="message.button.cancel">Cancel</button>' +
                     '    <button class="button-destructive button-flat" ng-click="$parent.confirm()">' +
-                    '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="' + iconicSprite + '#trash"></use></svg>' +
+                    '    <svg class="iconic"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use></svg>' +
                     '    <span translate="app.delete">Delete</span>' +
                     '    </button>',
                 false, false, scope, false, false);
