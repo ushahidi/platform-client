@@ -4,13 +4,16 @@ function (
     localStorageService
 ) {
 
+    // TODO: watch changes in local storage performed from other tabs?
+
     this.clearedSessionData = {
         userId: undefined,
         realname: undefined,
         email: undefined,
         accessToken: undefined,
         accessTokenExpires: undefined,
-        grantType: undefined,
+        refreshToken: undefined,
+        grantType: undefined,   // TODO: tokenless requests cleanup
         role: undefined,
         permissions: undefined,
         gravatar: undefined,

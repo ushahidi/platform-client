@@ -27,16 +27,25 @@ function (
     // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
     let loginStatus = false;
     if (!!Session.getSessionDataEntry('accessToken') &&
-        Session.getSessionDataEntry('grantType') === 'password' &&
         !!Session.getSessionDataEntry('userId')
     ) {
         // If the access token is expired
         if (Session.getSessionDataEntry('accessTokenExpires') <= Math.floor(Date.now() / 1000)) {
+            /*
+             * TODO: if there's a refresh token in the session, we should attempt obtaining a new
+             *       access token. BUT should we intercept and defer other requests until we obtain
+             *       the token?
+             */
             // Clear any login state
             setToLogoutState();
         } else {
             // Otherwise mark as logged in
             loginStatus = true;
+
+            // Kick-off refresh schedule
+            if (Session.getSessionDataEntry('refreshToken')) {
+                scheduleRefreshAuth();
+            }
         }
     }
 
@@ -71,13 +80,68 @@ function (
     }
 
     function setToLogoutState() {
+         let refreshToken = Session.getSessionDataEntry('refreshToken');
+
+         let payload = {
+             refresh_token: refreshToken,
+             client_id: CONST.OAUTH_CLIENT_ID,
+             client_secret: CONST.OAUTH_CLIENT_SECRET
+         };
+         // Do we need to cancel the scheduled refresh?
+         $http.post(Util.url('/oauth/revoke'), payload);
+
         Session.clearSessionData();
         UserEndpoint.invalidateCache();
         loginStatus = false;
     }
 
-    return {
+    function handleRequestSuccess(authResponse) {
+        var accessToken = authResponse.data.access_token;
+        Session.setSessionDataEntry('accessToken', accessToken);
+        if (authResponse.data.expires_in) {
+            Session.setSessionDataEntry('accessTokenExpires', Math.floor(Date.now() / 1000) + authResponse.data.expires_in);
+        } else if (authResponse.data.expires) {
+            Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
+        }
+        // Setting a timer to refresh the session if a refresh-token is available
+        if (authResponse.data.refresh_token) {
+            Session.setSessionDataEntry('refreshToken', authResponse.data.refresh_token);
+            scheduleRefreshAuth();
+        }
+    }
 
+    function handleRequestError () {
+        setToLogoutState();
+        $rootScope.$broadcast('event:authentication:login:failed');
+    };
+
+    function scheduleRefreshAuth () {
+        if (Session.getSessionDataEntry('accessTokenExpires')) {
+            /* Getting a random number between 5 minutes and 11 minutes before the expiry time.
+            (to avoid simultanous requests if the user has 2 or more tabs open)*/
+            const minutesBefore = (Math.floor(Math.random() * 11) + 5) * 60;
+            const timeToExpire = Session.getSessionDataEntry('accessTokenExpires') - Date.now() / 1000;
+            const timeToRefresh = timeToExpire - minutesBefore;
+            // Setting the timer to refresh token
+            setTimeout(function () {
+                let refreshToken = Session.getSessionDataEntry('refreshToken');
+                //TODO: avoid sending the request if the token is no longer about to expire?
+                // i.e. renewed in another tab
+                let payload = {
+                    refresh_token: refreshToken,
+                    grant_type: 'refresh_token',
+                    client_id: CONST.OAUTH_CLIENT_ID,
+                    client_secret: CONST.OAUTH_CLIENT_SECRET,
+                    scope: CONST.CLAIMED_USER_SCOPES.join(' ')
+                };
+                //TODO: If we want to show the login-box if the refresh-token is invalid, use error-handler
+                //TODO: handle transient errors? would we still have time for retrying?
+                $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, handleRequestError);
+            }, timeToRefresh * 1000);
+        }
+    }
+
+    return {
         login: function (username, password) {
             var payload = {
                 username: username,
@@ -88,24 +152,13 @@ function (
                 scope: CONST.CLAIMED_USER_SCOPES.join(' ')
             },
 
-            deferred = $q.defer(),
+            deferred = $q.defer();
 
-            handleRequestError = function () {
-                deferred.reject();
-                setToLogoutState();
-                $rootScope.$broadcast('event:authentication:login:failed');
-            },
-
-            handleRequestSuccess = function (authResponse) {
-                var accessToken = authResponse.data.access_token;
-                Session.setSessionDataEntry('accessToken', accessToken);
-                if (authResponse.data.expires_in) {
-                    Session.setSessionDataEntry('accessTokenExpires', Math.floor(Date.now() / 1000) + authResponse.data.expires_in);
-                } else if (authResponse.data.expires) {
-                    Session.setSessionDataEntry('accessTokenExpires', authResponse.data.expires);
-                }
-                Session.setSessionDataEntry('grantType', 'password');
-
+            //Requesting tokens
+            $http.post(Util.url('/oauth/token'), payload).then(authResponse => {
+                //Setting required Sessions
+                handleRequestSuccess(authResponse);
+                // Fetching user-info
                 $http.get(Util.apiUrl('/users/me')).then(
                     function (userDataResponse) {
                         RoleEndpoint.query({name: userDataResponse.data.role}).$promise
@@ -118,21 +171,26 @@ function (
                             return userDataResponse;
                         })
                         .finally(function () {
+                            /* Adjusting the UI to logged-in state
+                            and runs the doLogin-function in Authentication-events */
                             setToLoginState(userDataResponse.data);
                             $rootScope.$broadcast('event:authentication:login:succeeded');
                             deferred.resolve();
                         });
-                    }, handleRequestError);
-            };
-
-            $http.post(Util.url('/oauth/token'), payload).then(handleRequestSuccess, handleRequestError);
+                        // Handling 2 potential errors below, both the token-request and the user-info-request
+                    }, () => {
+                        deferred.reject();
+                        handleRequestError();
+                    });
+                }, () => {
+                    deferred.reject();
+                    handleRequestError();
+                });
 
             return deferred.promise;
         },
 
         logout: function (silent) {
-            //TODO: ASK THE BACKEND TO DESTROY SESSION
-
             // Release all locks owned by the user
             // TODO: At present releasing locks should not prevent users from logging out
             // in future this should be expanded to include an error state
@@ -151,7 +209,6 @@ function (
         },
 
         openLogin: function () {
-
             ModalService.openTemplate('<login></login>', 'nav.login', false, false, false, false);
         }
     };
