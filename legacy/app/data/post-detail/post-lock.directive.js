@@ -39,6 +39,7 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope) {
             }
 
             function userHasUnlockPermission() {
+                console.log('Test: ', $scope.post.allowed_privileges.indexOf('update'));
                 return $scope.post.allowed_privileges.indexOf('update') !== -1;
             }
         }

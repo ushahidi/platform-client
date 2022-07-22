@@ -62,12 +62,17 @@ function PostActionsDirective(
 
         function openEditMode(postId) {
             // Ensure Post is not locked before proceeding
-            if (!postIsUnlocked()) {
+            if (!postIsUnlocked() && !$rootScope.isAdmin()) {
                 Notify.error('post.already_locked');
                 return;
             }
 
-            $state.go('posts.data.edit', {postId: postId});
+            try {
+                $state.go('posts.data.edit', {postId: postId});
+            } catch (err) {
+                console.log('ERROR: ', err);
+            }
+
         }
         //Depending on the new endpoint we might not need this
         function getCompletedTasks() {

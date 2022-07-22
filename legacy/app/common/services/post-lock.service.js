@@ -35,6 +35,7 @@ function PostLockService(
          * different from the currently logged in user
          * Anonymous users should not see lock information
          */
+        console.log('post.lock: ', post.locks)
         if (!$rootScope.loggedin) {
             return false;
         }
