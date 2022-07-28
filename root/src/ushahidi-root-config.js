@@ -7,6 +7,7 @@ import {
 import microfrontendLayout from "./microfrontend-layout.html";
 import { getPageMetadata, setBootstrapConfig } from "@ushahidi/utilities";
 import { datalayer } from "./datalayer.js";
+import { default as initTags } from "./tags.js";
 
 require("./loading.scss");
 
@@ -69,6 +70,7 @@ getPageMetadata().then((data) => {
 window.addEventListener('single-spa:before-first-mount', () => {
     // hiding loading-spinner
     showLoading("false");
+    initTags();
   });
 
 // Watching for changes in page-title due to route-changes in legacy-app (this needs to be handled differently once we start moving UI)
