@@ -57,6 +57,9 @@ function PostActionsDirective(
         }
 
         function postIsUnlocked() {
+            if ($rootScope.isAdmin()) {
+                return true;
+            }
             return !PostLockService.isPostLockedForCurrentUser($scope.post);
         }
 
