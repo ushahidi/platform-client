@@ -54,6 +54,8 @@ function FormSelectDirective($rootScope, SurveysSdk, TranslationService) {
         }
 
         function renderModelValue() {
+            console.log('scope.selectedForms: ', scope.selectedForms)
+            // console.log('ngModel.$viewValue: ', ngModel.$viewValue)
             // Update selectedForms w/o breaking references used by checklist-model
             Array.prototype.splice.apply(scope.selectedForms, [0, scope.selectedForms.length].concat(ngModel.$viewValue));
         }

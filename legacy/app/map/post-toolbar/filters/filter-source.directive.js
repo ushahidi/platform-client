@@ -25,6 +25,9 @@ function SourceSelectDirective($rootScope) {
 
         function renderModelValue() {
             // Update selectedSources w/o breaking references used by checklist-model
+            // scope.selectedSources.push('ussd');
+            console.log('scope.selectedSources: ', scope.selectedSources)
+            console.log('What happens?: ', Array.prototype.splice.apply(scope.selectedSources, [0, scope.selectedSources.length].concat(ngModel.$viewValue)))
             Array.prototype.splice.apply(scope.selectedSources, [0, scope.selectedSources.length].concat(ngModel.$viewValue));
         }
 
