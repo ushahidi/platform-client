@@ -25,10 +25,10 @@ function (
         },
 
         controller: ['$scope', '$attrs', '$parse', '$timeout', function ($scope, $attrs, $parse, $timeout) {
-            // $scope.iconPath = $scope.icon ? '/img/iconic-sprite.svg#' + $scope.icon : '';
+            $scope.iconPath = $scope.icon ? '#' + $scope.icon : '';
 
             var classChangePromise = null;
-            // $scope.iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg') + '#' + $scope.icon;
+            $scope.iconPath = '#' + $scope.icon;
             $scope.classVisible = false;
             $scope.modalOffset = 0;
             $scope.title = $translate.instant($scope.title);

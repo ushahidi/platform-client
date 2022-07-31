@@ -26,7 +26,7 @@ function Slider($timeout, $compile, SliderService, ModalService, $sce) {
         $scope.trustSrc = trustSrc;
         var templateScope;
         var closeTimeout = null;
-        // var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
+
         // content element
         var sliderContent = $element.find('slider-content');
 
@@ -63,7 +63,7 @@ function Slider($timeout, $compile, SliderService, ModalService, $sce) {
             sliderContent.html(template);
             $compile(sliderContent)(templateScope);
 
-            $scope.icon = icon ? iconPath + '#' + icon : icon;
+            $scope.icon = icon ? '#' + icon : icon;
             $scope.iconClass = {};
             if (iconClass) {
                 $scope.iconClass[iconClass] = true;
