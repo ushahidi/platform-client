@@ -82,7 +82,7 @@ describe('Post Filters Service', function () {
                 form: ['none'],
                 set: [],
                 user: false,
-                source: ['sms', 'twitter', 'web', 'email'],
+                source: [],
                 saved_search: '',
                 orderby: 'created',
                 order: 'desc',

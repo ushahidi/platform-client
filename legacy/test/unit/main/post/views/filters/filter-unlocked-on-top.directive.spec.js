@@ -40,7 +40,7 @@ describe('filter unlocked on top directive', function () {
             form: [],
             set: [],
             user: false,
-            source: ['sms', 'twitter','web', 'email']
+            source: []
         };
         // $scope.models = {};
         // $scope.models.modelUnlocked = 'true';
