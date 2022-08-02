@@ -13,6 +13,7 @@
 //  }
 // };
 window.ushahidi = {
+    backendUrl: "https://analytics-api.staging.ush.zone",
     googleTagManager: 'GTM-PS6B8C6',
     consentManagement: {
         enabled: true,
