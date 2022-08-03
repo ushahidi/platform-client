@@ -191,7 +191,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             return getFirstPostChunk.$promise.then(function (posts) {
                 // Adding the first 200 posts to map here and getting the totals
                 $scope.stats.filteredPosts = posts.total;
-                addPostsToMap(posts)
+                addPostsToMap(posts, true)
 
                 // Moving on to request rest of the posts
                 if (posts.total > limit) {
