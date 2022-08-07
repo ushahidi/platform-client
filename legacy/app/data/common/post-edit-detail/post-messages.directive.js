@@ -77,7 +77,7 @@ function (
                 if ($rootScope.isAdmin()) {
                     return $scope.contact.contact;
                 } else {
-                    return "(PII hidden)";
+                    return '(PII hidden)';
                 }
             }
 
