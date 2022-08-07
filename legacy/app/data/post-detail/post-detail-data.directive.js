@@ -23,7 +23,10 @@ PostDetailDataController.$inject = [
     'PostSurveyService',
     '$state',
     'PostsSdk',
-    'SurveysSdk'
+    'SurveysSdk',
+    'UnifiedScopeForShowingLockInMetadata',
+    'PostLockService',
+    '$stateParams'
 ];
 function PostDetailDataController(
     $scope,
@@ -34,7 +37,10 @@ function PostDetailDataController(
     PostSurveyService,
     $state,
     PostsSdk,
-    SurveysSdk
+    SurveysSdk,
+    UnifiedScopeForShowingLockInMetadata,
+    PostLockService,
+    $stateParams
 ) {
     $scope.$watch('post', function (post, oldVal) {
         if (post !== oldVal) {
@@ -42,6 +48,15 @@ function PostDetailDataController(
         }
     });
 
+    // broadcast is from Post Card directive
+    $scope.$on('postWithLock', function ($event, postFromCard) {
+        if (postFromCard.id === Number($stateParams.postId)) {
+            // Set method to the (post detail) transfer service (on load)
+            UnifiedScopeForShowingLockInMetadata.setPostForShowingLockInAnyView(postFromCard);
+        }
+    });
+
+    $scope.isPostLocked = isPostLocked;
     $scope.post = $scope.post.data.result;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
@@ -156,4 +171,9 @@ function PostDetailDataController(
         }
         $scope.$parent.deselectPost();
     };
+
+    function isPostLocked() {
+        let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+        return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
+    }
 }

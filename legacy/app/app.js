@@ -216,6 +216,18 @@ angular
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
+    .factory('UnifiedScopeForShowingLockInMetadata', function() {
+        let data = {};
+
+        return {
+             getPostFromPostCard: function () {
+                return data;
+            },
+            setPostForShowingLockInAnyView: function (post) {
+                data = post;
+            }
+        };
+    })
     .run([
         '$rootScope',
         'LoadingProgress',
