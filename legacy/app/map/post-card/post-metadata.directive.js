@@ -2,6 +2,7 @@ module.exports = PostMetadataDirective;
 
 PostMetadataDirective.$inject = [
     '$translate',
+    '$rootScope',
     '_',
     'dayjs',
     'relativeTime',
@@ -10,6 +11,7 @@ PostMetadataDirective.$inject = [
 ];
 function PostMetadataDirective(
     $translate,
+    $rootScope,
     _,
     dayjs,
     relativeTime,
@@ -30,6 +32,7 @@ function PostMetadataDirective(
             $scope.displayTimeFull = '';
             $scope.timeago = '';
             $scope.hideDateThisWeek = $scope.hideDateThisWeek || false;
+            $scope.isAdmin = $rootScope.isAdmin;
 
             $scope.$watch('post.id', function (postId, oldPostId) {
                 if (postId !== oldPostId) {

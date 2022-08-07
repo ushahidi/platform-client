@@ -19,7 +19,7 @@
       <li>
         <img alt="user avatar" src="//www.gravatar.com/avatar/{{ post.user.gravatar || '00000000000000000000000000000000' }}?d=retro&s=40" class="avatar">
         <strong class="label" ng-show="post.user && !post.author_realname">{{ post.user.realname }}</strong>
-        <strong class="label" ng-show="post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
+        <strong class="label" ng-show="isAdmin() && post.contact && !post.author_realname">{{ post.contact.contact}}</strong>
         <strong class="label" ng-show="post.author_realname">{{ post.author_realname}}</strong>
         <strong class="label" ng-show="!post.author_realname && !post.contact && !post.user" translate="app.anonymous">Anonymous</strong>
 

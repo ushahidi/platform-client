@@ -74,8 +74,11 @@ function (
                 if ($scope.contact.user && $scope.contact.user.realname) {
                     return $scope.contact.user.realname;
                 }
-
-                return $scope.contact.contact;
+                if ($rootScope.isAdmin()) {
+                    return $scope.contact.contact;
+                } else {
+                    return "(PII hidden)";
+                }
             }
 
             function setContactUser(contact) {
