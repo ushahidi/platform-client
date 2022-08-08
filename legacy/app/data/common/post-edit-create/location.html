@@ -19,7 +19,7 @@
                         <svg class="iconic" role="img">
                             <use
                                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                                xlink:href="/img/iconic-sprite.svg#location">
+                                xlink:href="#location">
                             </use>
                         </svg>
                         <span class="button-label" translate>location.use_current_location</span>
@@ -32,7 +32,7 @@
                             <svg class="iconic" role="img">
                                 <use
                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    xlink:href="/img/iconic-sprite.svg#map-marker">
+                                    xlink:href="#map-marker">
                                 </use>
                             </svg>
                             <em>{{result.display_name}}</em>
@@ -72,15 +72,15 @@
             <p translate>location.invalid_lon</p>
         </div>
     </div>
-    
+
     <button type="button" class="button-primary" ng-show="showUpdateButton()" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
             <svg class="iconic" role="img">
                 <use
                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xlink:href="/img/iconic-sprite.svg#location">
+                    xlink:href="#location">
                 </use>
             </svg>
             <span class="button-label" translate>location.update_map</span>
-        </button>   
+        </button>
     </form>
 </div>
