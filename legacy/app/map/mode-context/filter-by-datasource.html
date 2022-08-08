@@ -1,5 +1,5 @@
 <form class="survey-filter">
-    <div 
+    <div
         class="survey-filter-checkbox init"
         ng-class="{checked: (filters.source.indexOf(provider.label.toLowerCase()) !== -1)}"
         ng-repeat="provider in providers track by provider.label"
@@ -9,7 +9,7 @@
             <div class="survey-filter-label" ng-class="{'child-focused': isChildFocused(provider)}">
                 <span class="post-band" ng-style="{backgroundColor: '#00aced'}"></span>
                 <label>
-                    <input 
+                    <input
                         type="checkbox"
                         ng-checked="filters.source.indexOf(provider.label.toLowerCase()) !== -1"
                         translate
@@ -23,7 +23,7 @@
             <button class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
                 {{provider.total}}
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom"></use>
                 </svg>
             </button>
             <div class="dropdown-menu init" dropdown-menu>
@@ -36,7 +36,7 @@
                     <li>
                         <button
                             class="button-filter"
-                            translate="post.show_only_form" 
+                            translate="post.show_only_form"
                             translate-values="{form: provider.label}"
                             ng-click="showOnly(provider.label)"
                         ></button>
@@ -63,7 +63,7 @@
                         <div>
                             <a href="/settings/datasources">
                                 <svg class="iconic" role="img">
-                                    <use xlink:href="/img/iconic-sprite.svg#pencil"></use>
+                                    <use xlink:href="#pencil"></use>
                                 </svg>
                                 <span class="label">Edit {{provider.label}}</span>
                             </a>
