@@ -3,7 +3,7 @@
 	<p ng-if="model">{{ selectedPost.title }} ({{ model }})
 		<button class="button-secondary icon-only alt trash" type="button" ng-click="clearPost()" translate>
 			<svg class="iconic" role="img">
-				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+				<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
 			</svg>
 		</button>
 	</p>
@@ -21,7 +21,7 @@
 	</div>
 	<div class="alert error" ng-if="noResults">
 		<svg class="iconic" role="img">
-			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
 		</svg>
 		<p translate="post.no_search_results">Your search didn't match any posts</p>
 	</div>
@@ -29,7 +29,7 @@
 		<li ng-repeat="post in results">
 			<button type="button" class="button-beta" ng-click="selectPost(post)" translate>
 				<svg class="iconic" role="img">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#check"></use>
+					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check"></use>
 				</svg>
 			</button> {{ post.id + ' : ' + post.title }}
 		</li>
