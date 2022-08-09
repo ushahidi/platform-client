@@ -11,7 +11,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic" role="img">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -56,7 +56,7 @@
 
                          <div class="alert error" ng-repeat="(error, value) in form.name.$error" ng-show="form.name.$dirty" >
                             <svg class="iconic" role="img">
-                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
                             </svg>
                             <p>{{'settings.valid.name.' + error  | translate}}</p>
                         </div>
@@ -87,7 +87,7 @@
                             ng-show="form.email.$dirty"
                             class="alert error">
                             <svg class="iconic" role="img">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
                             </svg>
                             <p translate="{{'user.valid.email.' + error}}" translate-default="{{error}}"></p>
                         </div>
@@ -115,7 +115,7 @@
                       <p translate="settings.api_key_desc">The API Key is unique to your deployment, it can be used to allow third party systems to interact with your Ushahidi deployment.</p>
                       <button id="api-key" type="button" class="button-beta" ng-click="generateApiKey()">
                         <svg class="iconic" role="img">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#key"></use>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#key"></use>
                         </svg>
                         <span class="button-label hidden-when-small">
                           Generate API Key
@@ -141,7 +141,7 @@
 
                         <button class="button-destructive">
                             <svg class="iconic" role="img">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
                             </svg>
                             <span class="button-label" translate>settings.deployment_delete</span>
                         </button>
