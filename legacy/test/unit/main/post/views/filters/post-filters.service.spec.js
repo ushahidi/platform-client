@@ -26,6 +26,8 @@ describe('Post Filters Service', function () {
 
         PostFilters = _PostFilters_;
         Notify = _Notify_;
+
+        $rootScope.sources = ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd'];
     }));
 
     describe('test service functions', function () {
@@ -82,7 +84,7 @@ describe('Post Filters Service', function () {
                 form: ['none'],
                 set: [],
                 user: false,
-                source: [],
+                source: $rootScope.sources,
                 saved_search: '',
                 orderby: 'created',
                 order: 'desc',
@@ -111,7 +113,7 @@ describe('Post Filters Service', function () {
             var newFilters = {
                 status: ['archived', 'draft'],
                 tags: [1,3,4],
-                source: ['sms', 'twitter', 'web', 'email'],
+                source: $rootScope.sources,
                 form: ['testForm1', 'testForm2', 'testForm3']
             };
             PostFilters.setFilters(newFilters);

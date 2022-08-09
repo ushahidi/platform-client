@@ -20,10 +20,11 @@ describe('filter by datasource directive', function () {
         $scope = _$rootScope_.$new();
         $location = _$location_;
         ConfigEndpoint = _ConfigEndpoint_;
+        $rootScope.sources = ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd'];
         spyOn(ConfigEndpoint, 'get').and.callThrough();
 
         $scope.filters = {
-            source: ['sms', 'twitter', 'web', 'email'],
+            source: $rootScope.sources,
             form: [1, 2]
         };
         $scope.postStats = [
@@ -91,7 +92,7 @@ describe('filter by datasource directive', function () {
             expect($location.path()).toEqual('/views/data');
         });
         it('should toggle the filters based on if selected filter is activated or not', function () {
-            expect(isolateScope.filters.source).toEqual(['sms', 'twitter', 'web', 'email']);
+            expect(isolateScope.filters.source).toEqual($rootScope.sources);
             var filter = isolateScope.filters.source[Math.floor(Math.random() * isolateScope.filters.source.length)];
             isolateScope.toggleFilters(filter);
             expect(isolateScope.filters.source).not.toContain(filter);
