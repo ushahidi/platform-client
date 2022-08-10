@@ -21,7 +21,7 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
             });
 
             $scope.canUnlock = false;
-            $scope.user = undefined;
+            $scope.user = {};
 
             $scope.unlock = unlock;
 
@@ -33,9 +33,16 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
             function getUserDetails() {
                 try {
                     let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
-                    UserEndpoint.get({id: postFromPostCard.lock.user.id}).$promise.then(function (result) {
-                        $scope.user = result;
-                    });
+                    console.log('postFromPostCard.lock: ', postFromPostCard)
+                    if ($rootScope.isAdmin()) {
+                        UserEndpoint.get({id: postFromPostCard.lock.user.id}).$promise.then(function (result) {
+                            console.log('result: ', result);
+                            $scope.user = result;
+                        });
+                    } else {
+                        // Alternative for non-admin users, since they're not authorized for fetch
+                        $scope.user.realname = postFromPostCard.lock.owner_name;
+                    }
                 } catch (err) {}
             }
 
