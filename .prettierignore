@@ -1,0 +1,5 @@
+node_modules
+documentation
+e2e
+
+package-lock.json

@@ -1,140 +1,32 @@
-Ushahidi Platform Web Client
-============================
+# PlatformClient
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ushahidi/platform-client.svg)](https://greenkeeper.io/)
+After the `npm install` command, run the following command `npm run prepare` and configure Husky for your project
 
-[![Build Status](https://travis-ci.org/ushahidi/platform-client.svg?branch=master)](https://travis-ci.org/ushahidi/platform-client)
-[![Coverage Status](https://coveralls.io/repos/github/ushahidi/platform-client/badge.svg?branch=master)](https://coveralls.io/github/ushahidi/platform-client?branch=master)
-[![Dependency Status](https://david-dm.org/ushahidi/platform-client/dev-status.svg?style=flat)](https://david-dm.org/ushahidi/platform-client#info=devDependencies)
+>Every time we do a git-commit action, the Husky pre-commit gets triggered. Inside .husky/pre-commit we’ve defined that lint-staged gets run for every pre-commit action. Lint-staged will look for a .lintstagedrc.json file to know what scripts to run for each specified file type. The output of these scripts will be provided in the terminal by Lint-staged.
 
-___
-## Report and find Ushahidi Platform V3 issues
+----
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.1.
 
-All our issues live in https://github.com/ushahidi/platform/issues . 
+## Development server
 
-## Try it out on Heroku
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/ushahidi/platform-client/tree/master)
+## Code scaffolding
 
-You need to deploy the [Platform API](http://github.com/ushahidi/platform) first
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-# Platform Client installation
+## Build
 
-### What is the platform client?
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-The web client is the component that end users interact with when opening the Platform website with a web browser. The client interacts with the API in order to perform operations on the system \(i.e. submit posts, query posts\).
+## Running unit tests
 
-### Installation steps 
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-**Pre-requisite: Install the platform API by following one of the API setup guides**
+## Running end-to-end tests
 
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-**Pre-requisite: Install Node V6.x \(you might want to use NVM for this\) before continuing.**
+## Further help
 
-#### **Getting the platform-client code**
-
-Clone the repository \(this will create a directory named _platform-client\)_
-
-```bash
-git clone https://github.com/ushahidi/platform-client.git
-```
-
-Go into the platform directory
-
-```bash
-cd platform-client
-```
-
-Switch to the _develop_ branch
-
-```bash
-git checkout develop
-```
-
-**If you haven't used git before or need help with git specific issues, make sure to check out their docs here** [https://git-scm.com/doc](https://git-scm.com/doc)
-
-#### Install the platform-client dependencies.
-
-```text
-npm install
-```
-
-The client needs to point to the hostname where the backend expects to receive HTTP requests. This has to be set before building the client.
-
-**In order to set up all that, create a file at the location /var/www/platform-client/.env . Use the following contents as an example:**
-
-```text
-BACKEND_URL=http://192.168.33.110/
-PORT=8000
-APP_LANGUAGES=en
-OAUTH_CLIENT_ID=ushahidiui
-OAUTH_CLIENT_SECRET=35e7f0bca957836d05ca0492211b0ac707671261
-```
-
-
-To make it easy to call \`gulp\` when building and developing in the app, add **node\_modules/.bin** to your PATH in ~/_.bashrc_. Example PATH \(relevant part in bold\):
-
-export PATH=$HOME/bin:/usr/local/bin:**node\_modules/.bin**:$PATH
-
-```
-gulp
-```
-
-alternatively, if you haven't setup node\_modules in your PATH, run:
-
-### Running a local development server
-
-Run:
-
-```
-node_modules/gulp/bin/gulp.js
-```
-
-This will start the watcher for local development, and any changes you make to the code will be reflected in the application.
-
-### Building for production deployments
-
-Run:
-
-```
-gulp build
-```
-
-alternatively, if you haven't setup node\_modules in your PATH, run:
-
-```
-node_modules/gulp/bin/gulp.js build
-```
-
-This will start the process of generating the static site. Once the files are generated, you can host the **server/www** directory and load the site.
-
-In the **server** directory you will also find an example nginx and an example apache2 file to get you started on hosting the client.
-
-
-#### Running unit tests
-
-To run unit tests once, run:
-```
-gulp test
-```
-
-For test driven development we have a gulp task `gulp tdd`. This watches for JS changes and re-runs the unit tests.
-
-
-### Native Server (Apache or Nginx)
-
-If you are running the client with a native web server like Apache or nginx, you will need to use URL rewriting to point all non-existant files to `index.html`. There is a sample `.htaccess` file, which can be used with Apache:
-
-```
-% cp server/rewrite.htaccess server/www/.htaccess
-```
-
-Nginx users will have to manually configure rewriting in the site configuration file.
-
-### I'm a developer, should I contribute to Ushahidi 3.x?
-
-Yes! Development moves pretty quickly but the tech stack is getting more and more stable. If you're keen to help build something awesome, [jump on board](https://docs.ushahidi.com/platform-developer-documentation/). 
-
-[Code of Conduct](https://docs.ushahidi.com/platform-developer-documentation/code-of-conduct)
-
-
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

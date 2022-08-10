@@ -1,5 +1,0 @@
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^.*$ /index.html  [PT,L]
-
-Header set X-XSS-Protection "1; mode=block"

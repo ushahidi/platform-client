@@ -1,0 +1,8 @@
+node_modules
+dist
+e2e/**
+
+package.json
+package-lock.json
+karma.conf.js
+commitlint.config.js
