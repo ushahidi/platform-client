@@ -39,6 +39,12 @@ module.exports = function () {
                 };
             }
         })
+        .factory('UnifiedScopeForShowingLockInMetadata', function () {
+            return {
+                getPostFromPostCard: function () {},
+                setPostForShowingLockInAnyView: function () {}
+            };
+        })
         .constant('CONST', {
             BACKEND_URL: backendUrl,
             API_URL: backendUrl + '/api/v2',

@@ -48,6 +48,10 @@ function PostToolbarController(
             return false;
         }
 
+        if ($rootScope.isAdmin()) {
+            return true;
+        }
+
         return $scope.selectedPost
             ? !PostLockService.isPostLockedForCurrentUser($scope.selectedPost)
             : false;

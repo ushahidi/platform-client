@@ -216,6 +216,18 @@ angular
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
+    .factory('UnifiedScopeForShowingLockInMetadata', function() {
+        let data = {};
+
+        return {
+             getPostFromPostCard: function () {
+                return data;
+            },
+            setPostForShowingLockInAnyView: function (post) {
+                data = post;
+            }
+        };
+    })
     .run([
         '$rootScope',
         'LoadingProgress',
@@ -252,6 +264,15 @@ angular
             // Sending the page-title to the newTitle-event to be consumed by root-application
             event.title = title;
             window.dispatchEvent(event);
+        });
+    }])
+    .run(['$http', function($http) {
+        $http.get('https://github.ushahidi.org/platform-pattern-library/assets/img/iconic-sprite.svg').then(function(response) {
+            console.log('RESPONSE: ', response);
+            var div = document.createElement('div');
+            div.innerHTML = response.data;
+            div.setAttribute('style', 'position: absolute; z-index: -1');
+            document.body.insertBefore(div, document.body.childNodes[0]);
         });
     }]);
     // .run(require('./gtm-userprops.js'));
