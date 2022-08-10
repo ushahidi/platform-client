@@ -10,11 +10,11 @@
     <div class="toolbox" ng-if="languages.available.length > 1">
       <survey-language-selector title="'View this post in another language'" languages="languages"></survey-language-selector>
   </div>
-    <post-lock ng-if="post.lock" post="post"></post-lock>
+    <post-lock post="post"></post-lock>
     <div class="postcard-body">
       <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.active].name || post.form.name}}</h1>
       <p><bdi>{{post.form.translations[languages.active].description || post.form.description}}</bdi></p>
-      
+
       <h2 class="form-sheet-title survey-title">
         <bdi>{{post.translations[languages.active].title || post.title}}</bdi>
       </h2>
@@ -30,7 +30,7 @@
           <p ng-if="!post.translations[languages.active].content" markdown-to-html="post.content"></p>
           <p ng-if="post.translations[languages.active].content" markdown-to-html="post.translations[languages.active].content"></p>
       </div>
-      <span 
+      <span
       ng-repeat="field in post.post_content[0].fields | orderBy: 'priority' as filtered_result track by field.id"
       ng-if="showType(field.type) && field.value"
       >
@@ -55,7 +55,7 @@
     <nav class="tabs-menu" data-tabs="tasks-tabs" data-tabs-hash>
       <ul>
         <li
-        ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
+        ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length"
         ng-class="{'active': visibleTask == task.id}">
           <a ng-click="activateTaskTab(task.id)">
             <bdi>{{task.translations[languages.active].label || task.label}}</bdi>
@@ -68,12 +68,12 @@
     <div class="listing-item tasks-tabs tabs-target active" ng-show="post.post_content.length > 1"
       >
       <div class="alert"
-          ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length" 
+          ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length"
           ng-if="!taskHasValues(task)"
           ng-show="task.id === visibleTask">
         <p translate="post.modify.no_task_values">There are currently no saved values for this task.</p>
       </div>
-      
+
 <div ng-repeat="task in post.post_content | limitTo: 1 - post.post_content.length">
       <div
         ng-repeat="field in task.fields"
