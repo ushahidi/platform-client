@@ -4,6 +4,7 @@
     <form class="searchbar">
         <div class="searchbar-input init" role="search">
             <div class="form-field tooltip">
+                <p>Press Space Bar After Typing Location</p>
                 <input name="{{name}}"
                     type="search"
                     maxlength="250"
@@ -72,7 +73,7 @@
             <p translate>location.invalid_lon</p>
         </div>
     </div>
-    
+
     <button type="button" class="button-primary" ng-show="showUpdateButton()" ng-click="updateMapFromLatLon(manualModel.lat, manualModel.lon)">
             <svg class="iconic" role="img">
                 <use
@@ -81,6 +82,6 @@
                 </use>
             </svg>
             <span class="button-label" translate>location.update_map</span>
-        </button>   
+        </button>
     </form>
 </div>
