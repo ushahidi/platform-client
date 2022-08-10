@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['PostLockService', '$rootScope'];
-function PostCardDirective(PostLockService, $rootScope) {
+PostCardDirective.$inject = ['PostLockService', '$rootScope', 'UnifiedScopeForShowingLockInMetadata'];
+function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLockInMetadata) {
     return {
         restrict: 'E',
         replace: true,
@@ -15,6 +15,9 @@ function PostCardDirective(PostLockService, $rootScope) {
         },
         template: require('./card.html'),
         link: function ($scope, $element) {
+            // broadcast $scope.post from post card to be used in post detail data
+            $rootScope.$broadcast('postWithLock', $scope.post);
+
             $scope.isPostLocked = isPostLocked;
             $scope.clickAction = clickAction;
             activate();
@@ -42,6 +45,9 @@ function PostCardDirective(PostLockService, $rootScope) {
                 }
 
                 $scope.externalClickAction($scope.post);
+
+                 // Set method to the (post detail) transfer service (on post card click)
+                UnifiedScopeForShowingLockInMetadata.setPostForShowingLockInAnyView($scope.post);
             }
         }
     };
