@@ -55,7 +55,7 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
                         $state.go('posts.data.edit', {postId: postId});
                     },
                     showDivider: ($scope.post.allowed_privileges.indexOf('change_status') !== -1 || $scope.post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked(),
-                    showStatus: $scope.post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked(),
+                    // showStatus: $scope.post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked(), // can't tell why this doesn't respond here
                     showDelete: $scope.post.allowed_privileges.indexOf('delete') !== -1 && postIsUnlocked()
                 }
                 // console.log(data);

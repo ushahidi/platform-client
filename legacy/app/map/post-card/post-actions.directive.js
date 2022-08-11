@@ -7,6 +7,7 @@ PostActionsDirective.$inject = [
     '$location',
     '$state',
     'PostActionsService',
+    'PostLockService',
     '_'
     ];
 function PostActionsDirective(
@@ -16,6 +17,7 @@ function PostActionsDirective(
     $location,
     $state,
     PostActionsService,
+    PostLockService,
     _) {
     return {
         restrict: 'E',
@@ -30,7 +32,13 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
-        console.log(PostActionsService.getStatuses())
+        $scope.hasChangeStatusPrivilege = $scope.post.allowed_privileges.indexOf('change_status') !== -1;
+        $scope.postIsUnlocked = function() {
+            if ($rootScope.isAdmin()) {
+                return true;
+            }
+            return !PostLockService.isPostLockedForCurrentUser($scope.post);
+        };
 
         activate();
 

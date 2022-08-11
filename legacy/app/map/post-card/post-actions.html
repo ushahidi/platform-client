@@ -37,7 +37,7 @@
     <div class="divider" ng-show="$parent.checkPostAction().showDivider"></div>
     <ul>
       <li ng-repeat="status in statuses"
-          ng-show="$parent.checkPostAction().showStatus">
+          ng-show="hasChangeStatusPrivilege && postIsUnlocked()">
         <a ng-click="updateStatus(status)">
           <svg class="iconic" role="img">
             <use xlink:href="#globe" ng-if="status=='published'"></use>
