@@ -24,9 +24,6 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
             $scope.clickAction = clickAction;
             $scope.hasChangeStatusPrivilege = $scope.post.allowed_privileges.indexOf('change_status') !== -1;
             $scope.postIsUnlocked = function() {
-                if ($rootScope.isAdmin()) {
-                    return true;
-                }
                 return !PostLockService.isPostLockedForCurrentUser($scope.post);
             };
             activate();
@@ -42,14 +39,12 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
             console.log('POSTCARD POST: ', $scope.post)
 
             function postIsUnlocked() {
-                if ($rootScope.isAdmin()) {
-                    return true;
-                }
                 return !PostLockService.isPostLockedForCurrentUser($scope.post);
             }
 
             function checkPostAction() {
-                const data = {
+                let data;
+                data = {
                     showEdit: $scope.post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked(),
                     openEditMode: function(postId) {
                         console.log(postId);
@@ -64,6 +59,21 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
                     showDivider: ($scope.post.allowed_privileges.indexOf('change_status') !== -1 || $scope.post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked(),
                     // showStatus: $scope.post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked(), // can't tell why this doesn't respond here
                     showDelete: $scope.post.allowed_privileges.indexOf('delete') !== -1 && postIsUnlocked()
+                }
+
+                if ($rootScope.isAdmin() && $scope.post.lock) {
+                    data = {
+                        showEdit: false,
+                        openEditMode: function(postId) {
+                            // Ensure Post is not locked before proceeding
+                            if (!postIsUnlocked()) {
+                                Notify.error('post.already_locked');
+                                return;
+                            }
+                        },
+                        showDivider: false,
+                        showDelete: false
+                    }
                 }
                 // console.log(data);
                 return data;

@@ -38,9 +38,6 @@ function PostActionsDirective(
         $scope.updateStatus = updateStatus;
         $scope.hasChangeStatusPrivilege = $scope.post.allowed_privileges.indexOf('change_status') !== -1;
         $scope.postIsUnlocked = function() {
-            if ($rootScope.isAdmin()) {
-                return true;
-            }
             return !PostLockService.isPostLockedForCurrentUser($scope.post);
         };
         $scope.showStatus = showStatus;
