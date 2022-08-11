@@ -90,6 +90,7 @@ function PostViewDataController(
     $scope.activeCol = $state.params.activeCol;
     $scope.deselectPost = deselectPost;
     $scope.removePostThatDoesntMatchFilters = removePostThatDoesntMatchFilters;
+    $scope.showRefreshButton = false;
 
     var stopInterval;
     /**
@@ -106,6 +107,7 @@ function PostViewDataController(
     unbindFns.push($scope.$on('event:edit:post:data:mode:saveSuccess', function (event, args) {
         let post = args.post;
         $scope.removePostThatDoesntMatchFilters(post);
+        $scope.showRefreshButton = true;
     }));
 
 
