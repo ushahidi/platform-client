@@ -60,16 +60,15 @@ function PostDetailDataController(
 
     $scope.$on('action', function ($event, actionsList) {
         PostActionCheck.setState(actionsList);
-        // let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
-        // if (postFromPostCard.lock) {
-        //     checkPostAction().showEdit = false;
-        //     checkPostAction().openEditMode = function(postId) {
-        //         Notify.error('post.already_locked');
-        //         return;
-        //     };
-        //     // checkPostAction().showStatus = false;
-        //     checkPostAction().showDivider = false;
-        // }
+        let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+        if (!postFromPostCard.lock) {
+            checkPostAction().showEdit = true;
+            checkPostAction().openEditMode = function(postId) {
+                $state.go('posts.data.edit', {postId: postId});
+            };
+            checkPostAction().showDivider = true;
+            checkPostAction().showDelete = true;
+        }
     });
 
     $scope.isPostLocked = isPostLocked;
