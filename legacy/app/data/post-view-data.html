@@ -64,7 +64,7 @@
 
         </listing-toolbar>
         <div class="listing timeline init" id="main-content">
-
+        <button class="button">Refresh Posts</button>
         <div class="bulk-action" ng-if="posts.length > 0 || !isLoading()">
             <div class="bulk-action-primary" translate="post.posts_total" translate-values="{'posts': posts.length, 'total_nb': totalItems }"></div>
             <button id="bulk-action" ng-disabled="{{!totalItems}}" class="button-link bulk-action-secondary" ng-click="selectBulkActions()" ng-if="$root.loggedin" translate="post.modify.bulk_actions">Bulk Actions</button>
