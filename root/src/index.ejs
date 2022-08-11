@@ -90,16 +90,17 @@
       a.async = 1;
       a.src = g;
       m.parentNode.insertBefore(a, m);
-  })(
-      window,
-      document,
-      "script",
-      "//www.google-analytics.com/analytics.js",
-      "ga"
-  );
+    })(
+        window,
+        document,
+        "script",
+        "//www.google-analytics.com/analytics.js",
+        "ga"
+    );
 
-  ga("create", window.ushahidi.gaKey, "auto");
-  ga("send", "pageview");
+    ga("create", window.ushahidi.gaKey, "auto");
+    ga("send", "pageview");
+  }
   
   // Loading Google-Maps to enable use of Places-API
   if (window.ushahidi && window.ushahidi.googleMapsApiKey) {
@@ -122,7 +123,6 @@
           window.googlePlaces = new google.maps.places.PlacesService(e);
       });
   }
-}
 </script>
 
 
