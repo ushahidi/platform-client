@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['PostLockService', '$rootScope', 'UnifiedScopeForShowingLockInMetadata'];
-function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLockInMetadata) {
+PostCardDirective.$inject = ['PostLockService', '$rootScope', 'UnifiedScopeForShowingLockInMetadata', 'PostActionCheck', '$state', 'Notify'];
+function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLockInMetadata, PostActionCheck, $state, Notify) {
     return {
         restrict: 'E',
         replace: true,
@@ -15,8 +15,10 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
         },
         template: require('./card.html'),
         link: function ($scope, $element) {
-            // broadcast $scope.post from post card to be used in post detail data
+            $scope.checkPostAction = checkPostAction;
+            // broadcast $scope.post and action from post card to be used in post detail data
             $rootScope.$broadcast('postWithLock', $scope.post);
+            $rootScope.$broadcast('action', checkPostAction());
 
             $scope.isPostLocked = isPostLocked;
             $scope.clickAction = clickAction;
@@ -28,6 +30,36 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
 
             function isPostLocked() {
                 return PostLockService.isPostLockedForCurrentUser($scope.post);
+            }
+
+            console.log('POSTCARD POST: ', $scope.post)
+
+            function postIsUnlocked() {
+                if ($rootScope.isAdmin()) {
+                    return true;
+                }
+                return !PostLockService.isPostLockedForCurrentUser($scope.post);
+            }
+
+            function checkPostAction() {
+                const data = {
+                    showEdit: $scope.post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked(),
+                    openEditMode: function(postId) {
+                        console.log(postId);
+                        // Ensure Post is not locked before proceeding
+                        if (!postIsUnlocked()) {
+                            Notify.error('post.already_locked');
+                            return;
+                        }
+
+                        $state.go('posts.data.edit', {postId: postId});
+                    },
+                    showDivider: ($scope.post.allowed_privileges.indexOf('change_status') !== -1 || $scope.post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked(),
+                    showStatus: $scope.post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked(),
+                    showDelete: $scope.post.allowed_privileges.indexOf('delete') !== -1 && postIsUnlocked()
+                }
+                // console.log(data);
+                return data;
             }
 
             function activate() {
@@ -45,6 +77,8 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
                 }
 
                 $scope.externalClickAction($scope.post);
+
+                PostActionCheck.setState(checkPostAction());
 
                  // Set method to the (post detail) transfer service (on post card click)
                 UnifiedScopeForShowingLockInMetadata.setPostForShowingLockInAnyView($scope.post);

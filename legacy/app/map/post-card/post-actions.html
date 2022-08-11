@@ -9,8 +9,8 @@
     <ul>
 
 
-        <li ng-show="(post.allowed_privileges.indexOf('update') !== -1) && postIsUnlocked()">
-          <a ng-click="openEditMode(post.id)">
+        <li ng-show="$parent.checkPostAction().showEdit">
+          <a ng-click="$parent.checkPostAction().openEditMode(post.id)">
               <svg class="iconic" role="img">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pencil"></use>
               </svg>
@@ -34,10 +34,10 @@
       </li>
       -->
     </ul>
-    <div class="divider" ng-show="(post.allowed_privileges.indexOf('change_status') !== -1 || post.allowed_privileges.indexOf('update') !== -1 ) && postIsUnlocked()"></div>
+    <div class="divider" ng-show="$parent.checkPostAction().showDivider"></div>
     <ul>
       <li ng-repeat="status in statuses"
-          ng-show="post.allowed_privileges.indexOf('change_status') !== -1 && postIsUnlocked()">
+          ng-show="$parent.checkPostAction().showStatus">
         <a ng-click="updateStatus(status)">
           <svg class="iconic" role="img">
             <use xlink:href="#globe" ng-if="status=='published'"></use>
@@ -50,7 +50,7 @@
         </a>
       </li>
 
-      <li ng-show="post.allowed_privileges.indexOf('delete') !== -1 && postIsUnlocked()">
+      <li ng-show="$parent.checkPostAction().showDelete">
         <a ng-click="deletePost()">
           <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>

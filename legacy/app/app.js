@@ -228,6 +228,18 @@ angular
             }
         };
     })
+    .factory('PostActionCheck', function() {
+        let actions = {};
+
+        return {
+            getState: function () {
+                return actions;
+            },
+            setState: function (allActions) {
+                actions = allActions;
+            }
+        };
+    })
     .run([
         '$rootScope',
         'LoadingProgress',

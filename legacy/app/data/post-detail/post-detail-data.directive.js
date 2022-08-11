@@ -26,7 +26,8 @@ PostDetailDataController.$inject = [
     'SurveysSdk',
     'UnifiedScopeForShowingLockInMetadata',
     'PostLockService',
-    '$stateParams'
+    '$stateParams',
+    'PostActionCheck'
 ];
 function PostDetailDataController(
     $scope,
@@ -40,7 +41,8 @@ function PostDetailDataController(
     SurveysSdk,
     UnifiedScopeForShowingLockInMetadata,
     PostLockService,
-    $stateParams
+    $stateParams,
+    PostActionCheck
 ) {
     $scope.$watch('post', function (post, oldVal) {
         if (post !== oldVal) {
@@ -56,7 +58,22 @@ function PostDetailDataController(
         }
     });
 
+    $scope.$on('action', function ($event, actionsList) {
+        PostActionCheck.setState(actionsList);
+        let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+        if (postFromPostCard.lock) {
+            checkPostAction().showEdit = false;
+            checkPostAction().openEditMode = function(postId) {
+                Notify.error('post.already_locked');
+                return;
+            };
+            // checkPostAction().showStatus = false;
+            checkPostAction().showDivider = false;
+        }
+    });
+
     $scope.isPostLocked = isPostLocked;
+    $scope.checkPostAction = checkPostAction;
     $scope.post = $scope.post.data.result;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
@@ -175,5 +192,11 @@ function PostDetailDataController(
     function isPostLocked() {
         let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
         return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
+    }
+
+    function checkPostAction() {
+        if ($scope.post.id === Number($stateParams.postId)) {
+            return PostActionCheck.getState();
+        }
     }
 }

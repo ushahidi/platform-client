@@ -7,7 +7,6 @@ PostActionsDirective.$inject = [
     '$location',
     '$state',
     'PostActionsService',
-    'PostLockService',
     '_'
     ];
 function PostActionsDirective(
@@ -17,7 +16,6 @@ function PostActionsDirective(
     $location,
     $state,
     PostActionsService,
-    PostLockService,
     _) {
     return {
         restrict: 'E',
@@ -32,8 +30,7 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
-        $scope.openEditMode = openEditMode;
-        $scope.postIsUnlocked = postIsUnlocked;
+        console.log(PostActionsService.getStatuses())
 
         activate();
 
@@ -56,22 +53,6 @@ function PostActionsDirective(
             });
         }
 
-        function postIsUnlocked() {
-            if ($rootScope.isAdmin()) {
-                return true;
-            }
-            return !PostLockService.isPostLockedForCurrentUser($scope.post);
-        }
-
-        function openEditMode(postId) {
-            // Ensure Post is not locked before proceeding
-            if (!postIsUnlocked()) {
-                Notify.error('post.already_locked');
-                return;
-            }
-
-            $state.go('posts.data.edit', {postId: postId});
-        }
         //Depending on the new endpoint we might not need this
         function getCompletedTasks() {
              return _.chain($scope.post.completed_stages)
