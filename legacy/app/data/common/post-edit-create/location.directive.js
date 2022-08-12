@@ -195,7 +195,7 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
             // var del = event.keyCode === 8 || event.keyCode === 46;
             // var letter = event.keyCode > 47 && event.keyCode < 58;
             // var number = event.keyCode > 64 && event.keyCode < 91;
-            if (event.keyCode === 32) {
+            if (event.keyCode === 13) {
                 $scope.processing = true;
                 if ($scope.searchTimeout) {
                     clearTimeout($scope.searchTimeout);
