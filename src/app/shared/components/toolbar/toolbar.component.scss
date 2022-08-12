@@ -1,0 +1,72 @@
+.toolbar {
+  .fab {
+    display: block;
+    position: absolute;
+    left: 24px;
+    top: 40px;
+
+    &-button {
+      width: 54px;
+      height: 54px;
+      border-radius: 100%;
+      border: none;
+      box-shadow: 0 0 6px rgb(0 0 0 / 12%), 0 6px 6px rgb(0 0 0 / 24%);
+    }
+  }
+
+  .button {
+    &-alpha {
+      color: #2b323a;
+      background-color: #ffc334;
+      transition: 0.3s;
+      &:hover {
+        color: #2b323a;
+        background-color: #ffb401;
+      }
+    }
+
+    &-plus {
+      font-weight: bold;
+    }
+  }
+
+  mat-toolbar {
+    background-color: #373e46;
+    height: 68px;
+
+    .box {
+      margin-left: 100px;
+
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      mat-icon {
+        position: absolute;
+        left: 10px;
+        color: #fff;
+      }
+
+      input {
+        padding: 10px 8px 10px 38px;
+        width: 100%;
+        max-width: 450px;
+        color: #fff;
+        border-color: transparent;
+        background-color: #60646b;
+      }
+      input::placeholder {
+        color: #fff;
+      }
+      input:focus {
+        box-shadow: 0 0 2px 4px #ffc334, inset 0 1px 1px rgb(0 0 0 / 30%);
+        color: #222;
+        outline-color: #2b323a;
+        border: 1px solid #c8c8c8;
+        background-color: #fff;
+      }
+    }
+  }
+}

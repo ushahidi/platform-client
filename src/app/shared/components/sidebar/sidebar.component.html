@@ -1,0 +1,31 @@
+<div class="sidebar">
+  <div>
+    <div class="sidebar-icon-wrapper" routerLink="map" routerLinkActive="active">
+      <mat-icon>location_on</mat-icon>
+      <label class="sidebar-icon-label">Maps</label>
+    </div>
+    <div class="sidebar-icon-wrapper" routerLink="data" routerLinkActive="active">
+      <mat-icon>storage</mat-icon>
+      <label class="sidebar-icon-label">Data</label>
+    </div>
+    <div class="sidebar-icon-wrapper" routerLink="activity" routerLinkActive="active">
+      <mat-icon>monitoring</mat-icon>
+      <label class="sidebar-icon-label">Activity</label>
+    </div>
+    <div class="sidebar-icon-wrapper" routerLink="settings" routerLinkActive="active">
+      <mat-icon>settings</mat-icon>
+      <label class="sidebar-icon-label">Settings</label>
+    </div>
+  </div>
+  <div>
+    <div class="sidebar-icon-wrapper">
+      <mat-icon>apps</mat-icon>
+    </div>
+    <div class="sidebar-icon-wrapper">
+      <mat-icon>{{ isLogin ? 'logout' : 'login' }}</mat-icon>
+    </div>
+    <div class="sidebar-icon-wrapper">
+      <app-logo></app-logo>
+    </div>
+  </div>
+</div>
