@@ -33,6 +33,8 @@ module.exports = {
         },
       },
       rules: {
+        '@typescript-eslint/no-unused-expressions': 'off',
+        '@typescript-eslint/lines-between-class-members': 'off',
         'import/no-unresolved': 'off',
         'import/prefer-default-export': 'off',
         'class-methods-use-this': 'off',
@@ -79,7 +81,7 @@ module.exports = {
     {
       files: ['src/**/*.spec.ts', 'src/**/*.d.ts'],
       parserOptions: {
-        project: './src/tsconfig.spec.json',
+        project: './tsconfig.spec.json',
       },
       extends: ['plugin:jasmine/recommended'],
       plugins: ['jasmine'],
