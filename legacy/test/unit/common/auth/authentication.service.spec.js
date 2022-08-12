@@ -38,7 +38,16 @@ describe('Authentication', function () {
             };
         })
         .service('Authentication', require('app/auth/authentication.service.js'));
-
+        testApp.service('$state', function () {
+            return {
+                'go': function () {
+                    return {};
+                },
+                'current': {
+                    name: ''
+                }
+            };
+        });
 
 
         angular.mock.module('testApp');
