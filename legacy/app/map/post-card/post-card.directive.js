@@ -36,8 +36,6 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForControlli
                 return PostLockService.isPostLockedForCurrentUser($scope.post);
             }
 
-            console.log('POSTCARD POST: ', $scope.post)
-
             function postIsUnlocked() {
                 return !PostLockService.isPostLockedForCurrentUser($scope.post);
             }
@@ -47,7 +45,6 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForControlli
                 data = {
                     showEdit: $scope.post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked(),
                     openEditMode: function(postId) {
-                        console.log(postId);
                         // Ensure Post is not locked before proceeding
                         if (!postIsUnlocked()) {
                             Notify.error('post.already_locked');
@@ -75,7 +72,6 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForControlli
                         showDelete: false
                     }
                 }
-                // console.log(data);
                 return data;
             }
 
