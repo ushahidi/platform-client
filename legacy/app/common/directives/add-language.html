@@ -10,6 +10,7 @@
                                   ng-options="lang.code as lang.name for lang in languagesToSelect"
                                   ng-value="lang.code"
                                   ng-change="selectLanguage(selectedLanguage)"
+                                  data-cy="custom-select"
                               >
                                   <option value="" translate="app.select_language">Select language</option>
                               </select>
