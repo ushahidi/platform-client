@@ -33,13 +33,10 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
             function getUserDetails() {
                 try {
                     let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
-                    console.log('postFromPostCard: ', postFromPostCard)
-                    if ($rootScope.isAdmin()) {
-                        UserEndpoint.get({id: postFromPostCard.lock.user.id}).$promise.then(function (result) {
-                            console.log('result: ', result);
-                            $scope.user = result;
-                        });
-                    }
+                    $scope.user.realname = postFromPostCard.lock.owner_name;
+                    // UserEndpoint.get({id: postFromPostCard.lock.user.id}).$promise.then(function (result) {
+                    //     $scope.user = result;
+                    // });
                 } catch (err) {}
             }
 
