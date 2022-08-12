@@ -27,7 +27,8 @@ PostDetailDataController.$inject = [
     'UnifiedScopeForShowingLockInMetadata',
     'PostLockService',
     '$stateParams',
-    'PostActionCheck'
+    'PostActionCheck',
+    '$rootScope'
 ];
 function PostDetailDataController(
     $scope,
@@ -42,7 +43,8 @@ function PostDetailDataController(
     UnifiedScopeForShowingLockInMetadata,
     PostLockService,
     $stateParams,
-    PostActionCheck
+    PostActionCheck,
+    $rootScope
 ) {
     $scope.$watch('post', function (post, oldVal) {
         if (post !== oldVal) {
@@ -60,6 +62,7 @@ function PostDetailDataController(
 
     $scope.$on('action', function ($event, actionsList) {
         PostActionCheck.setState(actionsList);
+        // Show or hide post actions on load
         let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
         if (!postFromPostCard.lock) {
             checkPostAction().showEdit = true;
@@ -68,6 +71,18 @@ function PostDetailDataController(
             };
             checkPostAction().showDivider = true;
             checkPostAction().showDelete = true;
+        }
+        if (postFromPostCard.lock && $rootScope.isAdmin()) {
+            checkPostAction().showEdit = false;
+            checkPostAction().openEditMode = function(postId) {
+                // Ensure Post is not locked before proceeding
+                if (!postIsUnlocked()) {
+                    Notify.error('post.already_locked');
+                    return;
+                }
+            };
+            checkPostAction().showDivider = false;
+            checkPostAction().showDelete = false;
         }
     });
 
