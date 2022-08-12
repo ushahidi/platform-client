@@ -1,7 +1,7 @@
 module.exports = PostCardDirective;
 
-PostCardDirective.$inject = ['PostLockService', '$rootScope', 'UnifiedScopeForShowingLockInMetadata', 'PostActionCheck', '$state', 'Notify'];
-function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLockInMetadata, PostActionCheck, $state, Notify) {
+PostCardDirective.$inject = ['PostLockService', '$rootScope', 'UnifiedScopeForControllingLockInfos', 'PostActionCheck', '$state', 'Notify'];
+function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForControllingLockInfos, PostActionCheck, $state, Notify) {
     return {
         restrict: 'E',
         replace: true,
@@ -98,7 +98,7 @@ function PostCardDirective(PostLockService, $rootScope, UnifiedScopeForShowingLo
                 PostActionCheck.setState(checkPostAction());
 
                  // Set method to the (post detail) transfer service (on post card click)
-                UnifiedScopeForShowingLockInMetadata.setPostForShowingLockInAnyView($scope.post);
+                UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView($scope.post);
             }
         }
     };

@@ -21,7 +21,7 @@ PostToolbarController.$inject = [
     'PostLockService',
     '$state',
     'LoadingProgress',
-    'UnifiedScopeForShowingLockInMetadata',
+    'UnifiedScopeForControllingLockInfos',
     '$stateParams'
 ];
 function PostToolbarController(
@@ -31,7 +31,7 @@ function PostToolbarController(
     PostLockService,
     $state,
     LoadingProgress,
-    UnifiedScopeForShowingLockInMetadata,
+    UnifiedScopeForControllingLockInfos,
     $stateParams
 ) {
     $scope.setEditMode = setEditMode;
@@ -51,7 +51,7 @@ function PostToolbarController(
      $scope.$on('postWithLock', function ($event, postFromCard) {
         if (postFromCard.id === Number($stateParams.postId)) {
             // Set method to the (post detail) transfer service (on load)
-            UnifiedScopeForShowingLockInMetadata.setPostForShowingLockInAnyView(postFromCard);
+            UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView(postFromCard);
         }
     });
 
@@ -60,7 +60,7 @@ function PostToolbarController(
             return false;
         }
 
-        let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+        let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
         if (postFromPostCard.lock) {
             return false;
         }

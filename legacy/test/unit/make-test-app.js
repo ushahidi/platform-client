@@ -39,7 +39,7 @@ module.exports = function () {
                 };
             }
         })
-        .factory('UnifiedScopeForShowingLockInMetadata', function () {
+        .factory('UnifiedScopeForControllingLockInfos', function () {
             return {
                 getPostFromPostCard: function () {},
                 setPostForShowingLockInAnyView: function () {}

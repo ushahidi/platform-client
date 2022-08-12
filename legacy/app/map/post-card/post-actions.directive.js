@@ -8,7 +8,7 @@ PostActionsDirective.$inject = [
     '$state',
     'PostActionsService',
     'PostLockService',
-    'UnifiedScopeForShowingLockInMetadata',
+    'UnifiedScopeForControllingLockInfos',
     '$stateParams',
     '_'
     ];
@@ -20,7 +20,7 @@ function PostActionsDirective(
     $state,
     PostActionsService,
     PostLockService,
-    UnifiedScopeForShowingLockInMetadata,
+    UnifiedScopeForControllingLockInfos,
     $stateParams,
     _) {
     return {
@@ -43,7 +43,7 @@ function PostActionsDirective(
         $scope.showStatus = showStatus;
 
         function showStatus() {
-            let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+            let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
             if (postFromPostCard.lock && (postFromPostCard.id === Number($stateParams.postId))) {
                 return $scope.$parent.hasChangeStatusPrivilege && $scope.$parent.postIsUnlocked();
             }

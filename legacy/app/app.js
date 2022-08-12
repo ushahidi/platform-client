@@ -216,7 +216,7 @@ angular
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
-    .factory('UnifiedScopeForShowingLockInMetadata', function() {
+    .factory('UnifiedScopeForControllingLockInfos', function() {
         let data = {};
 
         return {

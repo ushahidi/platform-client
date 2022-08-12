@@ -24,7 +24,7 @@ PostDetailDataController.$inject = [
     '$state',
     'PostsSdk',
     'SurveysSdk',
-    'UnifiedScopeForShowingLockInMetadata',
+    'UnifiedScopeForControllingLockInfos',
     'PostLockService',
     '$stateParams',
     'PostActionCheck',
@@ -40,7 +40,7 @@ function PostDetailDataController(
     $state,
     PostsSdk,
     SurveysSdk,
-    UnifiedScopeForShowingLockInMetadata,
+    UnifiedScopeForControllingLockInfos,
     PostLockService,
     $stateParams,
     PostActionCheck,
@@ -56,14 +56,14 @@ function PostDetailDataController(
     $scope.$on('postWithLock', function ($event, postFromCard) {
         if (postFromCard.id === Number($stateParams.postId)) {
             // Set method to the (post detail) transfer service (on load)
-            UnifiedScopeForShowingLockInMetadata.setPostForShowingLockInAnyView(postFromCard);
+            UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView(postFromCard);
         }
     });
 
     $scope.$on('action', function ($event, actionsList) {
         PostActionCheck.setState(actionsList);
         // Show or hide post actions on load
-        let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+        let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
         if (!postFromPostCard.lock) {
             checkPostAction().showEdit = true;
             checkPostAction().openEditMode = function(postId) {
@@ -204,7 +204,7 @@ function PostDetailDataController(
     };
 
     function isPostLocked() {
-        let postFromPostCard = UnifiedScopeForShowingLockInMetadata.getPostFromPostCard();
+        let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
         return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
     }
 
