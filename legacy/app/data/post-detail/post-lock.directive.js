@@ -1,7 +1,7 @@
 module.exports = PostLockDirective;
 
-PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope', 'UnifiedScopeForShowingLockInMetadata', '$stateParams'];
-function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedScopeForShowingLockInMetadata, $stateParams) {
+PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope', 'UnifiedScopeForShowingLockInMetadata', '$stateParams', '$state'];
+function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedScopeForShowingLockInMetadata, $stateParams, $state) {
     return {
         restrict: 'E',
         replace: true,
@@ -57,6 +57,7 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
                 PostLockService.unlockByPost($scope.post).then(function () {
                     $scope.post.lock = undefined;
                 });
+                $state.reload();
             }
 
             function userHasUnlockPermission() {
