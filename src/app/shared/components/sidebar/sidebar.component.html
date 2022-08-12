@@ -21,8 +21,13 @@
     <div class="sidebar-icon-wrapper">
       <mat-icon>apps</mat-icon>
     </div>
-    <div class="sidebar-icon-wrapper">
+    <div class="sidebar-icon-wrapper" (click)="openLogin()">
       <mat-icon>{{ isLogin ? 'logout' : 'login' }}</mat-icon>
+      <label class="sidebar-icon-label">{{ isLogin ? 'Log out' : 'Log in' }}</label>
+    </div>
+    <div class="sidebar-icon-wrapper" *ngIf="!isLogin" (click)="openRegister()">
+      <mat-icon>person_add</mat-icon>
+      <label class="sidebar-icon-label">Sign up</label>
     </div>
     <div class="sidebar-icon-wrapper">
       <app-logo></app-logo>
