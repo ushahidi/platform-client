@@ -10,6 +10,7 @@ module.exports = [
     'PostLockEndpoint',
     '_',
     'ModalService',
+    '$state',
 function (
     $rootScope,
     $http,
@@ -21,7 +22,8 @@ function (
     UserEndpoint,
     PostLockEndpoint,
     _,
-    ModalService
+    ModalService,
+    $state
 ) {
 
     // check whether we have initially an valid access_token and assume that, if yes, we are still loggedin
@@ -131,19 +133,20 @@ function (
         },
 
         logout: function (silent) {
+            // Cancel edit on logout for user editing the post, that is if the post is not saved or canceled before attempting to log out.
+            // So that post is no more locked for other users seeing the lock status/infos on the post before
+            if ($state.current.name === 'posts.data.edit') {
+                $state.go('posts.data');
+            }
             //TODO: ASK THE BACKEND TO DESTROY SESSION
 
             // Release all locks owned by the user
             // TODO: At present releasing locks should not prevent users from logging out
             // in future this should be expanded to include an error state
             // Though ultinately unlocking should be handled solely API side
-            if ($rootScope.hasPermission('Manage Posts')) {
-                PostLockEndpoint.unlock().$promise.finally(function () {
-                    continueLogout(silent);
-                });
-            } else {
+            PostLockEndpoint.unlock().$promise.finally(function () {
                 continueLogout(silent);
-            }
+            });
         },
 
         getLoginStatus: function () {

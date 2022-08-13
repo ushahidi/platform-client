@@ -1,7 +1,7 @@
 module.exports = PostLockDirective;
 
-PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope'];
-function PostLockDirective(UserEndpoint, PostLockService, $rootScope) {
+PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope', 'UnifiedScopeForControllingLockInfos', '$stateParams', '$state'];
+function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedScopeForControllingLockInfos, $stateParams, $state) {
     return {
         restrict: 'E',
         replace: true,
@@ -11,8 +11,17 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope) {
         template: require('./post-lock.html'),
         link: function ($scope) {
 
+            // broadcast is from Post Card directive
+            $scope.$on('postWithLock', function ($event, postFromCard) {
+                if (postFromCard.id === Number($stateParams.postId)) {
+                    // Set method to the (post detail) transfer service (on load)
+                    UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView(postFromCard);
+                    getUserDetails();
+                }
+            });
+
             $scope.canUnlock = false;
-            $scope.user = undefined;
+            $scope.user = {};
 
             $scope.unlock = unlock;
 
@@ -21,21 +30,31 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope) {
 
             activate();
 
+            function getUserDetails() {
+                try {
+                    let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+                    $scope.user.realname = postFromPostCard.lock.owner_name;
+                    // UserEndpoint.get({id: postFromPostCard.lock.user.id}).$promise.then(function (result) {
+                    //     $scope.user = result;
+                    // });
+                } catch (err) {}
+            }
+
             function activate() {
                 $scope.canUnlock = userHasUnlockPermission();
-                UserEndpoint.get({id: $scope.post.lock.user.id}).$promise.then(function (result) {
-                    $scope.user = result;
-                });
+                getUserDetails();
             }
 
             function showLockMessage() {
-                return PostLockService.isPostLockedForCurrentUser($scope.post);
+                let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+                return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
             }
 
             function unlock() {
                 PostLockService.unlockByPost($scope.post).then(function () {
                     $scope.post.lock = undefined;
                 });
+                $state.reload();
             }
 
             function userHasUnlockPermission() {

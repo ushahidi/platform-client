@@ -39,6 +39,23 @@ module.exports = function () {
                 };
             }
         })
+        .factory('UnifiedScopeForControllingLockInfos', function () {
+            let data = {
+                lock: {}
+            };
+            return {
+                getPostFromPostCard: function () {
+                    return data;
+                },
+                setPostForShowingLockInAnyView: function () {}
+            };
+        })
+        .factory('PostActionCheck', function() {
+            return {
+                getState: function () {},
+                setState: function () {}
+            };
+        })
         .constant('CONST', {
             BACKEND_URL: backendUrl,
             API_URL: backendUrl + '/api/v2',

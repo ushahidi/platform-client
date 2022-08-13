@@ -32,7 +32,11 @@ describe('post actions directive', function () {
         .service('$state', function () {
             return mockState;
         });
-
+        testApp.service('$stateParams', function () {
+            return {
+                'id': '1'
+            };
+        });
         angular.mock.module('testApp');
     });
 

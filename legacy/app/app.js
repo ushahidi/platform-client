@@ -216,6 +216,30 @@ angular
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
+    .factory('UnifiedScopeForControllingLockInfos', function() {
+        let data = {};
+
+        return {
+             getPostFromPostCard: function () {
+                return data;
+            },
+            setPostForShowingLockInAnyView: function (post) {
+                data = post;
+            }
+        };
+    })
+    .factory('PostActionCheck', function() {
+        let actions = {};
+
+        return {
+            getState: function () {
+                return actions;
+            },
+            setState: function (allActions) {
+                actions = allActions;
+            }
+        };
+    })
     .run([
         '$rootScope',
         'LoadingProgress',

@@ -20,7 +20,9 @@ PostToolbarController.$inject = [
     '$window',
     'PostLockService',
     '$state',
-    'LoadingProgress'
+    'LoadingProgress',
+    'UnifiedScopeForControllingLockInfos',
+    '$stateParams'
 ];
 function PostToolbarController(
     $scope,
@@ -28,7 +30,9 @@ function PostToolbarController(
     $window,
     PostLockService,
     $state,
-    LoadingProgress
+    LoadingProgress,
+    UnifiedScopeForControllingLockInfos,
+    $stateParams
 ) {
     $scope.setEditMode = setEditMode;
     $scope.savePost = savePost;
@@ -43,8 +47,21 @@ function PostToolbarController(
     $scope.filtersActive = false;
     $scope.isEmbed = $window.self !== $window.top ? true : false;
 
+     // broadcast is from Post Card directive
+     $scope.$on('postWithLock', function ($event, postFromCard) {
+        if (postFromCard.id === Number($stateParams.postId)) {
+            // Set method to the (post detail) transfer service (on load)
+            UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView(postFromCard);
+        }
+    });
+
     function editEnabled() {
         if (!$scope.selectedPost || !$scope.hasPermission) {
+            return false;
+        }
+
+        let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+        if (postFromPostCard.lock) {
             return false;
         }
 
