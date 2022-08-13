@@ -124,9 +124,9 @@ function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurv
 
     function getSourceStats(stats) {
         var sourceStats = [];
-        var providers = ['email', 'sms', 'twitter', 'web'];
+
         // calculating stats for each datasource, based on the current form-filter
-        _.each(providers, function (provider) {
+        _.each($rootScope.sources, function (provider) {
             var posts = _.filter(stats.totals[0].values, function (value) {
                     // including posts without a form in the stats
                     var id = value.id === null ? 'none' : value.id;

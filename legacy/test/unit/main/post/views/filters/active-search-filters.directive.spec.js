@@ -42,7 +42,7 @@ describe('post active search filters directive', function () {
         form: [1, 2, 3, 4],
         set: [],
         user: false,
-        source: ['sms', 'twitter','web', 'email']
+        source: ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd']
     };
     beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _PostFilters_) {
         $compile = _$compile_;

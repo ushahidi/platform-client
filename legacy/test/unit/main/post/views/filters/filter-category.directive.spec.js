@@ -35,7 +35,7 @@ describe('Category Directive', function () {
         form: [1, 2, 3, 4],
         set: [],
         user: false,
-        source: ['sms', 'twitter','web', 'email']
+        source: ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd']
     };
 
     beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _Notify_, _PostFilters_) {

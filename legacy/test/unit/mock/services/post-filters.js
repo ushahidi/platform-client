@@ -8,7 +8,7 @@ module.exports = [function () {
         center_point: '',
         within_km: '1',
         current_stage: [],
-        source: ['sms', 'twitter', 'web', 'email'],
+        source: ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd'],
         tags: [],
         form: [],
         set: []
@@ -23,7 +23,7 @@ module.exports = [function () {
             has_location: 'all',
             within_km: '1',
             current_stage: [],
-            source: ['sms', 'twitter', 'web', 'email'],
+            source: ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd'],
             tags: [],
             form: [1, 2],
             set: [],

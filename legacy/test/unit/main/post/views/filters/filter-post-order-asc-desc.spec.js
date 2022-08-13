@@ -24,7 +24,7 @@ describe('filter post order ASC/DESC  directive', function () {
         form: [],
         set: [],
         user: false,
-        source: ['sms', 'twitter','web', 'email']
+        source: []
     };
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');

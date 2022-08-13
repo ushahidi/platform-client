@@ -223,7 +223,7 @@ function (
                     'orderby' : 'created',
                     'order' : 'desc',
                     'order_unlocked_on_top' : 'true',
-                    'source' : ['sms','twitter','web','email']
+                    'source' : $rootScope.sources
                 },
                 'send_to_hdx': sendToHDX,
                 'include_hxl': true,
