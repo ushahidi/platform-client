@@ -31,6 +31,9 @@ describe('Post messages directive', function () {
 
     beforeEach(angular.mock.inject(function (_$rootScope_, $compile, _MessageEndpoint_) {
         $rootScope = _$rootScope_;
+        $rootScope.isAdmin = function () {
+            return true;
+        };
         $scope = _$rootScope_.$new();
         $scope.post = {
             contact: {
