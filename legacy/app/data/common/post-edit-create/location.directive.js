@@ -186,12 +186,9 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         function hideSearchResults() {
             element[0].querySelector('#searchbar-results').classList.remove('active');
         }
-
+        
         function handleActiveSearch(event) {
-            var del = event.keyCode === 8 || event.keyCode === 46;
-            var letter = event.keyCode > 47 && event.keyCode < 58;
-            var number = event.keyCode > 64 && event.keyCode < 91;
-            if (del || letter || number) {
+            if (event.keyCode === 13) {
                 $scope.processing = true;
                 if ($scope.searchTimeout) {
                     clearTimeout($scope.searchTimeout);
