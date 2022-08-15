@@ -40,11 +40,12 @@ module.exports = function () {
             }
         })
         .factory('LockInfosTransferService', function () {
-            let data = {
-                lock: {}
-            };
+            let data = {};
             return {
                 getPostFromPostCard: function () {
+                    data = {
+                        lock: {}
+                    };
                     return data;
                 },
                 setPostForShowingLockInAnyView: function () {}
