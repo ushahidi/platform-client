@@ -56,7 +56,7 @@ function PostDetailDataController(
     $scope.$on('postWithLock', function ($event, postFromCard) {
         if (postFromCard.id === Number($stateParams.postId)) {
             // Set method to the (post detail) transfer service (on load)
-            LockInfosTransferService.setPostForShowingLockInAnyView(postFromCard);
+            LockInfosTransferService.setToPostFromCard(postFromCard);
         }
     });
 

@@ -223,7 +223,7 @@ angular
              getPostFromPostCard: function () {
                 return data;
             },
-            setPostForShowingLockInAnyView: function (post) {
+            setToPostFromCard: function (post) {
                 data = post;
             }
         };

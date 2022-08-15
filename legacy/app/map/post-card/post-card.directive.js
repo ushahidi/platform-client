@@ -94,7 +94,7 @@ function PostCardDirective(PostLockService, $rootScope, LockInfosTransferService
                 PostActionsTransferService.setPostActionsAccessibility(postActionsAcessibility());
 
                  // Set method to the (post detail) transfer service (on post card click)
-                LockInfosTransferService.setPostForShowingLockInAnyView($scope.post);
+                LockInfosTransferService.setToPostFromCard($scope.post);
             }
         }
     };

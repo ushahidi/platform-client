@@ -48,7 +48,7 @@ module.exports = function () {
                     };
                     return data;
                 },
-                setPostForShowingLockInAnyView: function () {}
+                setToPostFromCard: function () {}
             };
         })
         .factory('PostActionsTransferService', function() {
