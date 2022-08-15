@@ -60,34 +60,34 @@ function PostDetailDataController(
         }
     });
 
-    $scope.$on('action', function ($event, actionsList) {
+    $scope.$on('actionsAccessibility', function ($event, actionsList) {
         PostActionsTransferService.setPostActionsAccessibility(actionsList);
         // Show or hide post actions on load
         let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
         if (!postFromPostCard.lock) {
-            checkPostAction().showEdit = true;
-            checkPostAction().openEditMode = function(postId) {
+            postActionsAcessibility().showEdit = true;
+            postActionsAcessibility().openEditMode = function(postId) {
                 $state.go('posts.data.edit', {postId: postId});
             };
-            checkPostAction().showDivider = true;
-            checkPostAction().showDelete = true;
+            postActionsAcessibility().showDivider = true;
+            postActionsAcessibility().showDelete = true;
         }
         if (postFromPostCard.lock && $rootScope.isAdmin()) {
-            checkPostAction().showEdit = false;
-            checkPostAction().openEditMode = function(postId) {
+            postActionsAcessibility().showEdit = false;
+            postActionsAcessibility().openEditMode = function(postId) {
                 // Ensure Post is not locked before proceeding
                 if (!postIsUnlocked()) {
                     Notify.error('post.already_locked');
                     return;
                 }
             };
-            checkPostAction().showDivider = false;
-            checkPostAction().showDelete = false;
+            postActionsAcessibility().showDivider = false;
+            postActionsAcessibility().showDelete = false;
         }
     });
 
     $scope.isPostLocked = isPostLocked;
-    $scope.checkPostAction = checkPostAction;
+    $scope.postActionsAcessibility = postActionsAcessibility;
     $scope.post = $scope.post.data.result;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
@@ -208,7 +208,7 @@ function PostDetailDataController(
         return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
     }
 
-    function checkPostAction() {
+    function postActionsAcessibility() {
         if ($scope.post.id === Number($stateParams.postId)) {
             return PostActionsTransferService.getPostActionsAccessibility();
         }

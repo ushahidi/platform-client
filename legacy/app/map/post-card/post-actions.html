@@ -9,8 +9,8 @@
     <ul>
 
 
-        <li ng-show="$parent.checkPostAction().showEdit">
-          <a ng-click="$parent.checkPostAction().openEditMode(post.id)">
+        <li ng-show="$parent.postActionsAcessibility().showEdit">
+          <a ng-click="$parent.postActionsAcessibility().openEditMode(post.id)">
               <svg class="iconic" role="img">
                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pencil"></use>
               </svg>
@@ -34,7 +34,7 @@
       </li>
       -->
     </ul>
-    <div class="divider" ng-show="$parent.checkPostAction().showDivider"></div>
+    <div class="divider" ng-show="$parent.postActionsAcessibility().showDivider"></div>
     <ul>
       <li ng-repeat="status in statuses"
           ng-show="showStatus()">
@@ -50,7 +50,7 @@
         </a>
       </li>
 
-      <li ng-show="$parent.checkPostAction().showDelete">
+      <li ng-show="$parent.postActionsAcessibility().showDelete">
         <a ng-click="deletePost()">
           <svg class="iconic" role="img">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>

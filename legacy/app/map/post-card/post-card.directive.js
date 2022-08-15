@@ -15,10 +15,10 @@ function PostCardDirective(PostLockService, $rootScope, LockInfosTransferService
         },
         template: require('./card.html'),
         link: function ($scope, $element) {
-            $scope.checkPostAction = checkPostAction;
+            $scope.postActionsAcessibility = postActionsAcessibility;
             // broadcast $scope.post and action from post card to be used in post detail data
             $rootScope.$broadcast('postWithLock', $scope.post);
-            $rootScope.$broadcast('action', checkPostAction());
+            $rootScope.$broadcast('actionsAccessibility', postActionsAcessibility());
 
             $scope.isPostLocked = isPostLocked;
             $scope.clickAction = clickAction;
@@ -40,7 +40,7 @@ function PostCardDirective(PostLockService, $rootScope, LockInfosTransferService
                 return !PostLockService.isPostLockedForCurrentUser($scope.post);
             }
 
-            function checkPostAction() {
+            function postActionsAcessibility() {
                 let data;
                 data = {
                     showEdit: $scope.post.allowed_privileges.indexOf('update') !== -1 && postIsUnlocked(),
@@ -91,7 +91,7 @@ function PostCardDirective(PostLockService, $rootScope, LockInfosTransferService
 
                 $scope.externalClickAction($scope.post);
 
-                PostActionsTransferService.setPostActionsAccessibility(checkPostAction());
+                PostActionsTransferService.setPostActionsAccessibility(postActionsAcessibility());
 
                  // Set method to the (post detail) transfer service (on post card click)
                 LockInfosTransferService.setPostForShowingLockInAnyView($scope.post);
