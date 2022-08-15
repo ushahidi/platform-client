@@ -1,7 +1,7 @@
 module.exports = PostLockDirective;
 
-PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope', 'UnifiedScopeForControllingLockInfos', '$stateParams', '$state'];
-function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedScopeForControllingLockInfos, $stateParams, $state) {
+PostLockDirective.$inject = ['UserEndpoint', 'PostLockService', '$rootScope', 'LockInfosTransferService', '$stateParams', '$state'];
+function PostLockDirective(UserEndpoint, PostLockService, $rootScope, LockInfosTransferService, $stateParams, $state) {
     return {
         restrict: 'E',
         replace: true,
@@ -15,7 +15,7 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
             $scope.$on('postWithLock', function ($event, postFromCard) {
                 if (postFromCard.id === Number($stateParams.postId)) {
                     // Set method to the (post detail) transfer service (on load)
-                    UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView(postFromCard);
+                    LockInfosTransferService.setPostForShowingLockInAnyView(postFromCard);
                     getUserDetails();
                 }
             });
@@ -32,7 +32,7 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
 
             function getUserDetails() {
                 try {
-                    let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+                    let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
                     $scope.user.realname = postFromPostCard.lock.owner_name;
                     // UserEndpoint.get({id: postFromPostCard.lock.user.id}).$promise.then(function (result) {
                     //     $scope.user = result;
@@ -46,7 +46,7 @@ function PostLockDirective(UserEndpoint, PostLockService, $rootScope, UnifiedSco
             }
 
             function showLockMessage() {
-                let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+                let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
                 return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
             }
 

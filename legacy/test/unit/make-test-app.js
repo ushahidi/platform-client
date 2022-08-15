@@ -39,7 +39,7 @@ module.exports = function () {
                 };
             }
         })
-        .factory('UnifiedScopeForControllingLockInfos', function () {
+        .factory('LockInfosTransferService', function () {
             let data = {
                 lock: {}
             };
@@ -50,10 +50,10 @@ module.exports = function () {
                 setPostForShowingLockInAnyView: function () {}
             };
         })
-        .factory('PostActionCheck', function() {
+        .factory('PostActionsTransferService', function() {
             return {
-                getState: function () {},
-                setState: function () {}
+                getPostActionsAccessibility: function () {},
+                setPostActionsAccessibility: function () {}
             };
         })
         .constant('CONST', {

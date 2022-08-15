@@ -24,10 +24,10 @@ PostDetailDataController.$inject = [
     '$state',
     'PostsSdk',
     'SurveysSdk',
-    'UnifiedScopeForControllingLockInfos',
+    'LockInfosTransferService',
     'PostLockService',
     '$stateParams',
-    'PostActionCheck',
+    'PostActionsTransferService',
     '$rootScope'
 ];
 function PostDetailDataController(
@@ -40,10 +40,10 @@ function PostDetailDataController(
     $state,
     PostsSdk,
     SurveysSdk,
-    UnifiedScopeForControllingLockInfos,
+    LockInfosTransferService,
     PostLockService,
     $stateParams,
-    PostActionCheck,
+    PostActionsTransferService,
     $rootScope
 ) {
     $scope.$watch('post', function (post, oldVal) {
@@ -56,14 +56,14 @@ function PostDetailDataController(
     $scope.$on('postWithLock', function ($event, postFromCard) {
         if (postFromCard.id === Number($stateParams.postId)) {
             // Set method to the (post detail) transfer service (on load)
-            UnifiedScopeForControllingLockInfos.setPostForShowingLockInAnyView(postFromCard);
+            LockInfosTransferService.setPostForShowingLockInAnyView(postFromCard);
         }
     });
 
     $scope.$on('action', function ($event, actionsList) {
-        PostActionCheck.setState(actionsList);
+        PostActionsTransferService.setPostActionsAccessibility(actionsList);
         // Show or hide post actions on load
-        let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+        let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
         if (!postFromPostCard.lock) {
             checkPostAction().showEdit = true;
             checkPostAction().openEditMode = function(postId) {
@@ -204,13 +204,13 @@ function PostDetailDataController(
     };
 
     function isPostLocked() {
-        let postFromPostCard = UnifiedScopeForControllingLockInfos.getPostFromPostCard();
+        let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
         return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
     }
 
     function checkPostAction() {
         if ($scope.post.id === Number($stateParams.postId)) {
-            return PostActionCheck.getState();
+            return PostActionsTransferService.getPostActionsAccessibility();
         }
     }
 }

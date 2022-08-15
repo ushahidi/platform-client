@@ -216,7 +216,7 @@ angular
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
-    .factory('UnifiedScopeForControllingLockInfos', function() {
+    .factory('LockInfosTransferService', function() {
         let data = {};
 
         return {
@@ -228,14 +228,14 @@ angular
             }
         };
     })
-    .factory('PostActionCheck', function() {
+    .factory('PostActionsTransferService', function() {
         let actions = {};
 
         return {
-            getState: function () {
+            getPostActionsAccessibility: function () {
                 return actions;
             },
-            setState: function (allActions) {
+            setPostActionsAccessibility: function (allActions) {
                 actions = allActions;
             }
         };
