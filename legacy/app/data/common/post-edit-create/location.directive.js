@@ -188,15 +188,14 @@ function PostLocationDirective($document, $http, L, Geocoding, Maps, _, Notify, 
         }
         
         function handleActiveSearch(event) {
+            event.preventDefault();
             if (event.keyCode === 13) {
                 $scope.processing = true;
                 if ($scope.searchTimeout) {
                     clearTimeout($scope.searchTimeout);
                 }
                 $scope.searchTimeout = setTimeout($scope.searchLocation, 250);
-            }
-            if (event.keyCode === 13) {
-                event.preventDefault();
+                
                 return false;
             }
         }
