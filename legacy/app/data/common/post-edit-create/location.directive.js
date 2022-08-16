@@ -238,6 +238,7 @@ function PostLocationDirective(
         }
 
         function handleActiveSearch(event) {
+            event.preventDefault();
             if (event.keyCode === 13) {
                 event.preventDefault();
                 $scope.processing = true;
@@ -245,6 +246,7 @@ function PostLocationDirective(
                     clearTimeout($scope.searchTimeout);
                 }
                 $scope.searchTimeout = setTimeout($scope.searchLocation, 250);
+                
                 return false;
             }
         }
