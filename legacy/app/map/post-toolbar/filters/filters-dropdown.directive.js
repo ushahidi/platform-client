@@ -73,6 +73,15 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
         return 'app.apply_filters';
     };
 
+    $scope.setFiltersToLocalStorage = function () {
+        if ($rootScope.currentUser) {
+            localStorage.setItem('ush-filterState', JSON.stringify($scope.filters));
+        }
+        if (!$rootScope.currentUser) {
+            localStorage.setItem('ush-filterState-2', JSON.stringify($scope.filters));
+        }
+    }
+
     $scope.displayStats = function () {
         return $state.$current.includes['posts.map'];
     };

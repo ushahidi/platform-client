@@ -1,7 +1,7 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q'];
-function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
+PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q', '$rootScope'];
+function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, $rootScope) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
@@ -138,6 +138,12 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     // Get filterState
     function getFilters() {
+        if (localStorage.getItem('ush-filterState') !== null && $rootScope.currentUser) {
+            return JSON.parse(localStorage.getItem('ush-filterState'));
+        }
+        if (localStorage.getItem('ush-filterState-2') !== null && !$rootScope.currentUser) {
+            return JSON.parse(localStorage.getItem('ush-filterState-2'));
+        }
         return filterState;
     }
 
