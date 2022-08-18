@@ -77,32 +77,30 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             }
         }
 
-        function addPostsToMap(posts) {
+        function addPostsToMap(posts, shouldFitMapBoundary = true) {
             var geojson = L.geoJson(posts, {
                 pointToLayer: Maps.pointToLayer,
                 onEachFeature: onEachFeature
             });
 
             if (map.options.clustering) {
-
                 markers = markers ? markers : L.markerClusterGroup({
                     maxClusterRadius: map.options.cluster_radius
                 });
-                // This has to be done individually.
-                // Using clusterLayer.addLayers() breaks the clustering.
-                // Need to investigate as this should have been fixing in v1.0.0
-                angular.forEach(geojson.getLayers(), function (layer) {
-                    markers.addLayer(layer);
-                });
+
+                // Apparently cluster.addLayers doesn't break clustering anymore
+                markers.addLayers(geojson.getLayers());
             } else {
                 markers = geojson;
             }
             markers.addTo(map);
             geoJsonLayers.push(markers);
 
-            if (posts.features.length > 0) {
-                map.fitBounds(geojson.getBounds());
+            // Adjust map boundaries only when post fetching is first or last batch
+            if (posts.features.length > 0 && shouldFitMapBoundary) {
+                map.fitBounds(markers.getBounds());
             }
+
             // Focus map on data points but..
             // Avoid zooming further than 15 (particularly when we just have a single point)
             if (map.getZoom() > 15) {
@@ -193,7 +191,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             return getFirstPostChunk.$promise.then(function (posts) {
                 // Adding the first 200 posts to map here and getting the totals
                 $scope.stats.filteredPosts = posts.total;
-                addPostsToMap(posts)
+                addPostsToMap(posts, true)
 
                 // Moving on to request rest of the posts
                 if (posts.total > limit) {
@@ -202,9 +200,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         let request = PostEndpoint.geojson(conditions);
                         currentGeoJsonRequests.push(request);
                         request.$promise.then(result => {
+                            // var isLastPostChunk = i + limit > posts.total;
                             addPostsToMap(result)
                         });
-
                     }
                 }
             });
