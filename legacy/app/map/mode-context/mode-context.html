@@ -6,13 +6,13 @@
 
     <button class="mode-context-trigger" dropdown-toggle>
         <svg class="iconic" role="img">
-            <use xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            <use xlink:href="#chevron-bottom"></use>
         </svg>
         <span class="label hidden" translate>app.show_more_less</span>
     </button>
 
     <div class="mode-context-body">
-        <p ng-if="nav.site.description" markdown-to-html="nav.site.description"></p>
+        <p ng-if="nav.site.description" markdown-to-html="nav.site.description" class="tool"></p>
 
         <!-- <saved-search-create></saved-search-create> -->
         <mode-context-form-filter></mode-context-form-filter>
