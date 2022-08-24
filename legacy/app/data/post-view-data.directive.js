@@ -232,6 +232,7 @@ function PostViewDataController(
     }
 
     function postDoesNotMatchFilters(postObj) {
+        $scope.filters = PostFilters.getFilters();
         var deferred = $q.defer();
 
         if ($scope.hasFilters()) {
@@ -282,6 +283,7 @@ function PostViewDataController(
     }
 
     function newStatusMatchesFilters(postObj) {
+        $scope.filters = PostFilters.getFilters();
         let filters = $scope.hasFilters() ?  $scope.filters.status : PostFilters.getDefaults().status;
         let matchingStatus = false;
 
@@ -332,6 +334,7 @@ function PostViewDataController(
     }
 
     function getPosts(query, useOffset, clearPosts, callback) {
+        $scope.filters = PostFilters.getFilters();
         query = query || PostFilters.getQueryParams($scope.filters);
 
         var postQuery = _.extend({}, query, {
@@ -455,6 +458,7 @@ function PostViewDataController(
     }
 
     function hasFilters() {
+        $scope.filters = PostFilters.getFilters();
         return PostFilters.hasFilters($scope.filters);
     }
 
@@ -514,6 +518,7 @@ function PostViewDataController(
     }
 
     function getNewPosts() {
+        $scope.filters = PostFilters.getFilters();
         let existingFilters = PostFilters.getQueryParams($scope.filters);
         let filterDate = dayjs(existingFilters.date_before).utc();
 

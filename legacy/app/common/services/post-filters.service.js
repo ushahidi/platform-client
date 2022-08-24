@@ -138,6 +138,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     // Get filterState
     function getFilters() {
+        if (localStorage.getItem('ush-filterState') !== null) {
+            return JSON.parse(localStorage.getItem('ush-filterState'));
+        }
         return filterState;
     }
 
