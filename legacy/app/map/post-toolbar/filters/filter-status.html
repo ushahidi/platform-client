@@ -5,13 +5,13 @@
 
       <label>
         <svg class="iconic" role="img" ng-if="status == 'published'">
-          <use xlink:href="#globe"></use>
+          <use xlink:href="/img/iconic-sprite.svg#globe"></use>
         </svg>
         <svg class="iconic" role="img" ng-if="status == 'draft'">
-          <use xlink:href="#document"></use>
+          <use xlink:href="/img/iconic-sprite.svg#document"></use>
         </svg>
         <svg class="iconic" role="img" ng-if="status == 'archived'">
-          <use xlink:href="#box"></use>
+          <use xlink:href="/img/iconic-sprite.svg#box"></use>
         </svg>
 
         <input type="checkbox" ng-model="status" checklist-model="selectedStatuses" checklist-value="status" name="selectedStatuses">

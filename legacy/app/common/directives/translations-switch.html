@@ -6,14 +6,14 @@
     <button ng-repeat="language in languages.available track by $index" type="button" class="button button-tab" ng-class="{'active': languages.active === language}" ng-click="switchToLanguage(language)">
       {{('languages.' + language) | translate}}
         <svg class="iconic" ng-click="removeLanguage({index: $index, language:language})">
-            <use xlink:href="#x"></use>
+            <use xlink:href="/img/iconic-sprite.svg#x"></use>
         </svg>
     </button>
     <button type="button" ng-click="openLanguages()" class="button button-right modal-trigger">
       <svg class="iconic">
-          <use xlink:href="#plus"></use>
+          <use xlink:href="/img/iconic-sprite.svg#plus"></use>
       </svg>
       {{"translations.add_translation_lang" | translate}}
     </button>
-
+  
   </div>

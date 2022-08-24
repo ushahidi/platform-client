@@ -5,7 +5,7 @@
         </ol>
         <h1 class="mode-context-title">
             <svg class="iconic" role="img">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#grid-three-up"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
             </svg>
             {{collection.name}}
         </h1>
@@ -13,7 +13,7 @@
 
     <span class="mode-context-trigger" dropdown-toggle>
         <svg class="iconic" role="img">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden" translate>app.show_more_less</span>
     </span>
@@ -27,13 +27,13 @@
             <li>
                 <span class="status-indicator public tooltip" ng-if="!collection.role || collection.role.length == 0">
                     <svg class="iconic" role="img">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
                     <span class="bug" translate="collection.visible_to_public">This Collection is visible to the public</span>
                 </span>
                 <span class="status-indicator yellow tooltip" ng-if="collection.role.length > 0">
                     <svg class="iconic" role="img">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#globe"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#globe"></use>
                     </svg>
                     <span class="bug" translate="collection.visible_to_roles" translate-values="{ roles: collection.role.join(', ') }">This Collection is visible to ...</span>
                 </span>
@@ -49,14 +49,14 @@
         <div class="form-field" ng-if="canEdit" dropdown>
             <button type="button" data-modal="edit-collection" ng-click="editCollection()">
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pencil"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pencil"></use>
                 </svg>
                 <span class="button-label" translate>app.edit</span>
             </button>
 
             <button type="button" data-toggle="dropdown-menu" class="init" dropdown-toggle>
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#ellipses"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                 </svg>
                 <span class="button-label hidden" translate>app.more</span>
             </button>
@@ -64,7 +64,7 @@
                 <li ng-if="showNotificationLink">
                     <a ng-click="saveNotification(collection)">
                         <svg class="iconic" role="img">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#bell"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                         </svg>
                         <span class="label" ng-click="saveNotification(collection)" translate="app.get_notifications">Get notifications</span>
                     </a>
@@ -72,7 +72,7 @@
                 <li ng-if="!showNotificationLink">
                     <a ng-click="removeNotification(collection)">
                         <svg class="iconic" role="img">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#bell"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                         </svg>
                         <span class="label" translate="app.turn_off_notifications">Turn off notifications</span>
                     </a>
@@ -80,7 +80,7 @@
                 <li>
                     <a ng-click="deleteCollection()">
                         <svg class="iconic" role="img">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>
                         <span class="label" translate="app.delete"></span>
                     </a>
@@ -94,7 +94,7 @@
             <!-- // IF: User is not yet getting notifications about this Saved Search //-->
             <button type="button" ng-if="showNotificationLink" ng-click="saveNotification(collection)">
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#bell"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                 </svg>
                 <span class="button-label" translate="app.get_notifications">Get notifications</span>
             </button>
@@ -103,7 +103,7 @@
 
             <button type="button" ng-if="!showNotificationLink" class="button-flat">
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#bell"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#bell"></use>
                 </svg>
                 <span class="button-label" translate="app.turn_off_notifications">Turn off notifications</span>
             </button>
@@ -114,7 +114,7 @@
             <!-- mode context bar is only available in the map so it should take you back there -->
             <a ng-click="clearFilters()" type="button" class="button-link">
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-left"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#arrow-left"></use>
                 </svg>
                 <span class="button-label" translate="app.return_to_all_posts">Return to all posts</span>
             </a>

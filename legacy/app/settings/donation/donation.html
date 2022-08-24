@@ -12,7 +12,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic" role="img">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom">
                 </use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
@@ -71,7 +71,7 @@
                                         ng-show="form.title.$dirty">
                                         <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                xlink:href="#warning"></use>
+                                                xlink:href="/img/iconic-sprite.svg#warning"></use>
                                         </svg>
                                         <p>{{'settings.donation.title.' + error | translate}}</p>
                                     </div>
@@ -133,12 +133,12 @@
                                         ng-show="form.wallet.$dirty">
                                         <svg class="iconic" role="img">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                xlink:href="#warning"></use>
+                                                xlink:href="/img/iconic-sprite.svg#warning"></use>
                                         </svg>
                                         <p>{{'settings.donation.wallet.' + error | translate}}</p>
                                     </div>
                                 </div>
-
+                                
                                 <div class="form-field" ng-show="site.donation.wallet != ''">
                                     <button class="button" type="button" ng-click="deleteWallet()">
                                         Delete wallet

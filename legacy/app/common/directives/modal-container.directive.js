@@ -29,7 +29,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
         });
 
         var templateScope;
-
+        var iconPath = require('ushahidi-platform-pattern-library/assets/img/iconic-sprite.svg');
         // Modal content element
         var modalContent = $element.find('modal-content');
         let trap = FocusTrap.createFocusTrap('.modal-window');
@@ -71,7 +71,7 @@ function ModalContainer($timeout, $rootScope, $compile, ModalService, SliderServ
                 trap.activate();
             });
             $scope.title = title;
-            $scope.icon = icon ? '#' + icon : icon;
+            $scope.icon = icon ? iconPath + '#' + icon : icon;
 
             // If closeOnOverlayClick isn't passed, default to true
             if (typeof closeOnOverlayClick === 'undefined') {

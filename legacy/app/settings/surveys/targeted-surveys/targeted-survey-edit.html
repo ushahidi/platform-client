@@ -12,7 +12,7 @@
 
     <span class="mode-context-trigger" dropdown-toggle>
         <svg class="iconic" role="img">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
         </svg>
         <span class="label hidden">Show more/less</span>
     </span>
@@ -70,7 +70,7 @@
                                     ng-repeat="(error, value) in targetedSurvey.stepOne.name.$error"
                                 >
                                     <svg class="iconic" role="img">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                                     </svg>
                                     <p translate="{{'notify.form.validation.name.' + error}}"></p>
                                 </div>
@@ -86,7 +86,7 @@
                                     ng-repeat="(error, value) in targetedSurvey.stepOne.description.$error"
                                 >
                                     <svg class="iconic" role="img">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                                     </svg>
                                     <p translate="{{'notify.form.validation.description.' + error}}"></p>
                                 </div>
@@ -198,7 +198,7 @@
                                     <li class="sortable-list-item" ng-repeat="question in survey.attributes" data={{question.label}} ng-hide="question.type === 'title' || question.type === 'description'">
                                         <span class="list-handle">
                                             <svg class="iconic" role="img">
-                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#grid-four-up"></use>
+                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#grid-four-up"></use>
                                             </svg>
                                         </span>
                                         <a class="list-handle" ng-click="openQuestionModal(question)">{{question.label}}</a>

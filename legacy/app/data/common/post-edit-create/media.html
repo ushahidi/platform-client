@@ -6,7 +6,7 @@
 
       <label for="{{name}}_" class="button button-gamma" ng-show="showAdd()">
           <svg class="iconic" role="img">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#plus"></use>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
           </svg>
           <span class="button-label" translate="post.media.add_photo"></span>
       </label>
@@ -18,7 +18,7 @@
         <div class="form-field">
           <button class="button-destructive" ng-click="deleteMedia(media.id)" ng-show="showDelete()">
             <svg class="iconic" role="img">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
             </svg>
              <span class="hidden" translate="post.media.delete_photo"></span>
           </button>
@@ -26,7 +26,7 @@
           <file-upload id="{{name}}" validation="'image'" container="media" model="mediaId"></file-upload>
             <label for="{{name}}" class="button button-gamma">
               <svg class="iconic" role="img">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#image"></use>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#image"></use>
               </svg>
               <span class="button-label" translate="post.media.replace_image"></span>
             </label>

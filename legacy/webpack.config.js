@@ -43,7 +43,7 @@ module.exports = {
                     {
                         loader: 'html-loader',
                         options: {
-                            attrs: ['img:src', 'link:href'],
+                            attrs: ['img:src', 'use:xlink:href', 'link:href'],
                             root: imgPath
                         }
                     }

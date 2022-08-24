@@ -12,7 +12,7 @@
 
         <span class="mode-context-trigger" dropdown-toggle>
             <svg class="iconic" role="img">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
             </svg>
             <span class="label hidden" translate>app.show_more_less</span>
         </span>
@@ -82,7 +82,7 @@
                 >
                   <span class="legend-label" translate="app.this_category_is_child_to" translate-values="{ parent: getParentName() }">This category is a child to</span>
                   <svg class="iconic chevron">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-bottom"></use>
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                   </svg>
                 </legend>
                 <div class="dropdown-menu init" dropdown-menu>
@@ -132,7 +132,7 @@
               </div>
                 <div ng-show="showLangError" class="alert error">
                     <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
                     </svg>
                     <p translate="translations.error_translation_exists">You cannot select this language since there is already a translation for it.</p>
                 </div>
@@ -142,7 +142,7 @@
               <role-selector model="category" title="'app.who_can_see_this_category'" ng-show="!category.parent_id"></role-selector>
               <div class="form-field" ng-show="category.parent_id">
                 <svg class="iconic" role="img">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#people"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
                 </svg>
                 <span translate>category.child_permissions</span>
               </div>
@@ -159,7 +159,7 @@
 
                  <button class="button-destructive" ng-click="deleteCategory(category)">
                      <svg class="iconic" role="img">
-                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
+                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                      </svg>
                      <span class="button-label" translate>category.delete_category</span>
                  </button>

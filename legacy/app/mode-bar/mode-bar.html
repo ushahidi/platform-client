@@ -7,7 +7,7 @@
             <li ui-sref-active="{ 'active' : 'posts.map' }">
                 <a ui-sref="posts.map.all" ui-sref-opts="{reload:true}" class="view-map" data-cy="mb-map-button">
                     <svg class="iconic" role="img">
-                        <use xlink:href="#map-marker"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#map-marker"></use>
                     </svg>
                     <translate>views.map</translate>
                 </a>
@@ -16,7 +16,7 @@
             <li ui-sref-active="active">
                 <a ui-sref="posts.data" ui-sref-opts="{reload:true}" class="view-data" data-cy="mb-data-button">
                     <svg class="iconic" role="img">
-                        <use xlink:href="#list-rich"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#list-rich"></use>
                     </svg>
                     <translate>views.data</translate>
                 </a>
@@ -25,7 +25,7 @@
             <li ng-if="isActivityAvailable || hasManageSettingsPermission()" ui-sref-active="active" data-message="customize" data-cy="mb-activity-button">
                 <a ui-sref="activity">
                     <svg class="iconic" role="img">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#pulse"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#pulse"></use>
                     </svg>
                     <translate>views.activity</translate>
                 </a>
@@ -34,7 +34,7 @@
             <li>
                 <button class="more-menu-trigger" ng-class="{ active : moreActive }" ng-click="showMore($event)">
                     <svg class="iconic" role="img">
-                        <use xlink:href="#ellipses"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#ellipses"></use>
                     </svg>
                     <translate>nav.more</translate>
                 </button>
@@ -42,7 +42,7 @@
                     <li data-message="customize" ng-show="hasManageSettingsPermission()" ng-class="{active: $state.includes('settings')}" data-cy="mb-settings-button">
                         <a ui-sref="settings.list">
                             <svg class="iconic" role="img">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
                             </svg>
                             <translate>nav.settings</translate>
                         </a>
@@ -58,7 +58,7 @@
             <li>
                 <button ng-click="viewCollectionListing()" data-cy="mb-collections-button">
                     <svg class="iconic">
-                        <use xlink:href="#grid-three-up"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#grid-three-up"></use>
                     </svg>
                     <span class="label" translate>nav.collections</span>
                 </button>
@@ -67,7 +67,7 @@
             <li ng-hide="currentUser">
                 <button ng-click="login()" data-modal="login" data-cy="mb-login-page-button">
                     <svg class="iconic" role="img">
-                        <use xlink:href="#account-login"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#account-login"></use>
                     </svg>
                     <translate translate="nav.login">Log in</translate>
                 </button>
@@ -83,7 +83,7 @@
             <li ng-show="!currentUser && canRegister">
                 <button ng-click="register()" data-modal="signup" data-cy="mb-signup-page-button">
                     <svg class="iconic" role="img">
-                        <use xlink:href="#person"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#person"></use>
                     </svg>
                     <translate translate="nav.register">Sign up</translate>
                 </button>
@@ -92,7 +92,7 @@
             <li ng-show="currentUser">
                 <button ng-click="logout()" data-modal="login" data-cy="mb-logout-button">
                     <svg class="iconic" role="img">
-                        <use xlink:href="#account-logout"></use>
+                        <use xlink:href="/img/iconic-sprite.svg#account-logout"></use>
                     </svg>
                     <span class="label" translate="nav.logout">Log out</span>
                 </button>
