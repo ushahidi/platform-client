@@ -458,7 +458,6 @@ function PostViewDataController(
     }
 
     function hasFilters() {
-        $scope.filters = PostFilters.getFilters();
         return PostFilters.hasFilters($scope.filters);
     }
 
