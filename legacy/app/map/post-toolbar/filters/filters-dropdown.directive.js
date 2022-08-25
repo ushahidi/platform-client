@@ -74,11 +74,21 @@ function FiltersDropdownController($scope, $state, PostFilters, ModalService, $r
     };
 
     $scope.removeFiltersFromLocalStorage = function () {
-        localStorage.removeItem('ush-filterState');
+        if ($rootScope.currentUser) {
+            localStorage.removeItem('ush-filterState');
+        }
+        if (!$rootScope.currentUser) {
+            localStorage.removeItem('ush-filterState-2');
+        }
     }
 
     $scope.setFiltersToLocalStorage = function () {
-        localStorage.setItem('ush-filterState', JSON.stringify($scope.filters));
+        if ($rootScope.currentUser) {
+            localStorage.setItem('ush-filterState', JSON.stringify($scope.filters));
+        }
+        if (!$rootScope.currentUser) {
+            localStorage.setItem('ush-filterState-2', JSON.stringify($scope.filters));
+        }
     }
 
     $scope.displayStats = function () {
