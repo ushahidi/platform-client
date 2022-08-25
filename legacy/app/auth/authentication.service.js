@@ -140,6 +140,8 @@ function (
             if ($rootScope.hasPermission('Manage Posts')) {
                 PostLockEndpoint.unlock().$promise.finally(function () {
                     continueLogout(silent);
+                }).catch(err => {
+                    // Clean up browser console error display
                 });
             } else {
                 continueLogout(silent);
