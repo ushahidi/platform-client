@@ -35,12 +35,16 @@ function (
                     }
                 }]
             },
-            onEnter: ['$state', 'PostFilters', 'post', function ($state, PostFilters, post) {
+            onEnter: ['$state', 'PostFilters', 'post', '$timeout', function ($state, PostFilters, post, $timeout) {
                 if (!post) {
                     if (PostFilters.getMode() === 'savedsearch') {
-                        $state.go('posts.data.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                        $timeout(() => {
+                            $state.go('posts.data.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                        });
                     } else if (PostFilters.getMode() === 'collection') {
-                        $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
+                        $timeout(() => {
+                            $state.go('posts.data.collection', {collectionId: PostFilters.getModeId()});
+                        });
                     }
                 }
             }],

@@ -201,11 +201,15 @@ function (
             views: {
                 'mode-context': 'modeContext'
             },
-            onEnter: ['$state', 'PostFilters', function ($state, PostFilters) {
+            onEnter: ['$state', 'PostFilters', '$timeout', function ($state, PostFilters, $timeout) {
                 if (PostFilters.getMode() === 'savedsearch') {
-                    $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                    $timeout(() => {
+                        $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
+                    });
                 } else if (PostFilters.getMode() === 'collection') {
-                    $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
+                    $timeout(() => {
+                        $state.go('posts.map.collection', {collectionId: PostFilters.getModeId()});
+                    });
                 }
             }]
         }
