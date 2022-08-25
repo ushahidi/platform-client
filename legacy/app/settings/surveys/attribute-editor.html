@@ -11,7 +11,7 @@
           ng-show="fieldLabel.$invalid && fieldLabel.$dirty"
       >
         <svg class="iconic" role="img">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#warning"></use>
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#warning"></use>
         </svg>
         <span translate="{{'post.valid.label.required'}}"></span>
       </div>
@@ -33,7 +33,7 @@
         <input type="text" placeholder="{{ 'form.field_option_placeholder'| translate }}" ng-model="editField.options[key]">
         <button type="button" class="button-flat button-beta" ng-if="editField.options.length > 1" ng-click="removeOption(editField, key)">
           <svg class="iconic" role="img">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#trash"></use>
           </svg>
           <span class="button-label hidden">Remove</span>
         </button>
@@ -91,7 +91,7 @@
     <label for="switchprivateresponse" translate="survey.make_response_private">Make responses private</label>
     <p data-fieldgroup-target="field-private-message-3" class="init active" translate="survey.response_private_desc" ng-show="editField.response_private">
       <svg class="iconic" role="img">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#lock-locked"></use>
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock-locked"></use>
       </svg>
       {{'survey.only_edit' | translate}}
     </p>
