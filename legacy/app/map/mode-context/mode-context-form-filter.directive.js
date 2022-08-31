@@ -9,8 +9,8 @@ function ModeContextFormFilterDirective() {
         template: require('./mode-context-form-filter.html')
     };
 }
-ModeContextFormFilter.$inject = ['$scope', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$location', 'SurveysSdk','TranslationService'];
-function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $location, SurveysSdk, TranslationService) {
+ModeContextFormFilter.$inject = ['$scope', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$location', 'SurveysSdk','TranslationService', 'CONST'];
+function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $location, SurveysSdk, TranslationService, CONST) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
     $scope.hide = hide;
@@ -126,7 +126,7 @@ function ModeContextFormFilter($scope, PostEndpoint, $q, _, $rootScope, PostSurv
         var sourceStats = [];
 
         // calculating stats for each datasource, based on the current form-filter
-        _.each($rootScope.sources, function (provider) {
+        _.each(CONST.ENABLED_SOURCES, function (provider) {
             var posts = _.filter(stats.totals[0].values, function (value) {
                     // including posts without a form in the stats
                     var id = value.id === null ? 'none' : value.id;

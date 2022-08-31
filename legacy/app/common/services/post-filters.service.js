@@ -1,7 +1,7 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q', '$rootScope'];
-function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, $rootScope) {
+PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q', 'CONST'];
+function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, CONST) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
@@ -204,7 +204,7 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, $rootScope) {
             form: _.pluck(forms, 'id'),
             set: [],
             user: false,
-            source: $rootScope.sources
+            source: CONST.ENABLED_SOURCES
         };
     }
 

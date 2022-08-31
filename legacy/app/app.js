@@ -119,7 +119,8 @@ angular
             ? new Date(window.ushahidi.tosReleaseDate)
             : false, // Date in UTC
         EXPORT_POLLING_INTERVAL:
-            window.ushahidi.export_polling_interval || 30000
+            window.ushahidi.export_polling_interval || 30000,
+        ENABLED_SOURCES: window.ushahidi.sources.filter(source => source !== 'ussd' && source !== 'whatsapp')
     })
     .config([
         '$compileProvider',

@@ -5,4 +5,6 @@
 // 	backendUrl : "https://ushahidi-platform-api-release.herokuapp.com",
 // 	mapboxApiKey: ""
 // };
-window.ushahidi = {};
+window.ushahidi = {
+    sources: ['sms', 'twitter', 'web', 'email', 'whatsapp', 'ussd']
+};
