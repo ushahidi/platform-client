@@ -25,13 +25,13 @@
             <span>Web</span>
         </label>
     </div>
-    <div class="form-field checkbox icon-input">
+    <div ng-if="isAmongEnabledSources('whatsapp')" class="form-field checkbox icon-input">
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'whatsapp'" name="selectedSources">
             <span>WhatsApp</span>
         </label>
     </div>
-    <div class="form-field checkbox icon-input">
+    <div ng-if="isAmongEnabledSources('ussd')" class="form-field checkbox icon-input">
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'ussd'" name="selectedSources">
             <span>USSD</span>
