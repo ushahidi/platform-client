@@ -1,25 +1,25 @@
 <fieldset overflow-toggle has-overflow="false" ng-model-options="{ updateOn: 'default' }">
     <label translate="global_filter.source">Source</label>
 
-    <div class="form-field checkbox icon-input">
+    <div ng-if="isAmongEnabledSources('email')" class="form-field checkbox icon-input">
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'email'" name="selectedSources">
             <span>Email</span>
         </label>
     </div>
-    <div class="form-field checkbox icon-input">
+    <div ng-if="isAmongEnabledSources('sms')" class="form-field checkbox icon-input">
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'sms'" name="selectedSources">
             <span>SMS</span>
         </label>
     </div>
-    <div class="form-field checkbox icon-input">
+    <div ng-if="isAmongEnabledSources('twitter')" class="form-field checkbox icon-input">
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'twitter'" name="selectedSources">
             <span>Twitter</span>
         </label>
     </div>
-    <div class="form-field checkbox icon-input">
+    <div ng-if="isAmongEnabledSources('web')" class="form-field checkbox icon-input">
         <label>
             <input type="checkbox" ng-model="source" checklist-model="selectedSources" checklist-value="'web'" name="selectedSources">
             <span>Web</span>
