@@ -14,6 +14,4 @@ function (
     $rootScope.toggleModalVisible = function (state) {
             $rootScope.modalVisible = (typeof state !== 'undefined') ? state : !$rootScope.modalVisible;
     };
-
-    $rootScope.sources = ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd'];
 }];

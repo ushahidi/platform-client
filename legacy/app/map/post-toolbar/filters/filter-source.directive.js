@@ -1,7 +1,7 @@
 module.exports = SourceSelectDirective;
 
-SourceSelectDirective.$inject = ['$rootScope'];
-function SourceSelectDirective($rootScope) {
+SourceSelectDirective.$inject = ['$rootScope', 'CONST'];
+function SourceSelectDirective($rootScope, CONST) {
     return {
         restrict: 'E',
         replace: true,
@@ -12,6 +12,9 @@ function SourceSelectDirective($rootScope) {
     };
 
     function SourceSelectLink(scope, element, attrs, ngModel) {
+        scope.isAmongEnabledSources = function (source) {
+            return CONST.ENABLED_SOURCES.some(e_source => e_source === source);
+        };
         scope.selectedSources = [];
         scope.hasPermission = $rootScope.hasPermission;
 
