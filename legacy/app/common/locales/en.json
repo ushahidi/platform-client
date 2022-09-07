@@ -748,7 +748,8 @@
             "unlocked" : "Post successfully unlocked",
             "unlock" : "Unlock",
             "lock_broken_by_other" : "Your Post has been unlocked. Your current unsaved changes will be lost.",
-            "locked_message" : "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+            "locked_message" : "The post is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post.",
+            "locked_message_admin" : "The post is locked because <strong>{{ user }}</strong> is working on it right now. Click the unlock button to break lock."
         },
         "modify" : {
             "intro" : "Select survey:",
