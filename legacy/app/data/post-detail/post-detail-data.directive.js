@@ -23,7 +23,12 @@ PostDetailDataController.$inject = [
     'PostSurveyService',
     '$state',
     'PostsSdk',
-    'SurveysSdk'
+    'SurveysSdk',
+    'LockInfosTransferService',
+    'PostLockService',
+    '$stateParams',
+    'PostActionsTransferService',
+    '$rootScope'
 ];
 function PostDetailDataController(
     $scope,
@@ -34,7 +39,12 @@ function PostDetailDataController(
     PostSurveyService,
     $state,
     PostsSdk,
-    SurveysSdk
+    SurveysSdk,
+    LockInfosTransferService,
+    PostLockService,
+    $stateParams,
+    PostActionsTransferService,
+    $rootScope
 ) {
     $scope.$watch('post', function (post, oldVal) {
         if (post !== oldVal) {
@@ -42,6 +52,42 @@ function PostDetailDataController(
         }
     });
 
+    // broadcast is from Post Card directive
+    $scope.$on('postWithLock', function ($event, postFromCard) {
+        if (postFromCard.id === Number($stateParams.postId)) {
+            // Set method to the (post detail) transfer service (on load)
+            LockInfosTransferService.setToPostFromCard(postFromCard);
+        }
+    });
+
+    $scope.$on('actionsAccessibility', function ($event, actionsList) {
+        PostActionsTransferService.setPostActionsAccessibility(actionsList);
+        // Show or hide post actions on load
+        let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
+        if (!postFromPostCard.lock) {
+            postActionsAcessibility().showEdit = true;
+            postActionsAcessibility().openEditMode = function(postId) {
+                $state.go('posts.data.edit', {postId: postId});
+            };
+            postActionsAcessibility().showDivider = true;
+            postActionsAcessibility().showDelete = true;
+        }
+        if (postFromPostCard.lock && $rootScope.isAdmin()) {
+            postActionsAcessibility().showEdit = false;
+            postActionsAcessibility().openEditMode = function(postId) {
+                // Ensure Post is not locked before proceeding
+                if (!postIsUnlocked()) {
+                    Notify.error('post.already_locked');
+                    return;
+                }
+            };
+            postActionsAcessibility().showDivider = false;
+            postActionsAcessibility().showDelete = false;
+        }
+    });
+
+    $scope.isPostLocked = isPostLocked;
+    $scope.postActionsAcessibility = postActionsAcessibility;
     $scope.post = $scope.post.data.result;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
     $scope.selectedPost = {post: $scope.post};
@@ -156,4 +202,15 @@ function PostDetailDataController(
         }
         $scope.$parent.deselectPost();
     };
+
+    function isPostLocked() {
+        let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
+        return PostLockService.isPostLockedForCurrentUser(postFromPostCard);
+    }
+
+    function postActionsAcessibility() {
+        if ($scope.post.id === Number($stateParams.postId)) {
+            return PostActionsTransferService.getPostActionsAccessibility();
+        }
+    }
 }

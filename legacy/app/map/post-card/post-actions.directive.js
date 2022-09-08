@@ -8,6 +8,8 @@ PostActionsDirective.$inject = [
     '$state',
     'PostActionsService',
     'PostLockService',
+    'LockInfosTransferService',
+    '$stateParams',
     '_'
     ];
 function PostActionsDirective(
@@ -18,6 +20,8 @@ function PostActionsDirective(
     $state,
     PostActionsService,
     PostLockService,
+    LockInfosTransferService,
+    $stateParams,
     _) {
     return {
         restrict: 'E',
@@ -32,8 +36,19 @@ function PostActionsDirective(
     function PostActionsLink($scope) {
         $scope.deletePost = deletePost;
         $scope.updateStatus = updateStatus;
-        $scope.openEditMode = openEditMode;
-        $scope.postIsUnlocked = postIsUnlocked;
+        $scope.hasChangeStatusPrivilege = $scope.post.allowed_privileges.indexOf('change_status') !== -1;
+        $scope.postIsUnlocked = function() {
+            return !PostLockService.isPostLockedForCurrentUser($scope.post);
+        };
+        $scope.showStatus = showStatus;
+
+        function showStatus() {
+            let postFromPostCard = LockInfosTransferService.getPostFromPostCard();
+            if (postFromPostCard.lock && (postFromPostCard.id === Number($stateParams.postId))) {
+                return $scope.$parent.hasChangeStatusPrivilege && $scope.$parent.postIsUnlocked();
+            }
+            return $scope.hasChangeStatusPrivilege && $scope.postIsUnlocked();
+        }
 
         activate();
 
@@ -56,19 +71,6 @@ function PostActionsDirective(
             });
         }
 
-        function postIsUnlocked() {
-            return !PostLockService.isPostLockedForCurrentUser($scope.post);
-        }
-
-        function openEditMode(postId) {
-            // Ensure Post is not locked before proceeding
-            if (!postIsUnlocked()) {
-                Notify.error('post.already_locked');
-                return;
-            }
-
-            $state.go('posts.data.edit', {postId: postId});
-        }
         //Depending on the new endpoint we might not need this
         function getCompletedTasks() {
              return _.chain($scope.post.completed_stages)

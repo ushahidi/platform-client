@@ -29,6 +29,11 @@ describe('Post detail directive', function () {
                 }
             };
         });
+        testApp.service('$stateParams', function () {
+            return {
+                'id': '1'
+            };
+        });
 
         angular.mock.module('testApp');
     });

@@ -10,7 +10,7 @@
     <div class="toolbox" ng-if="languages.available.length > 1">
       <survey-language-selector title="'View this post in another language'" languages="languages"></survey-language-selector>
   </div>
-    <post-lock ng-if="post.lock" post="post"></post-lock>
+    <post-lock post="post"></post-lock>
     <div class="postcard-body">
       <h1 class="form-sheet-title survey-title">{{post.form.translations[languages.active].name || post.form.name}}</h1>
       <p><bdi>{{post.form.translations[languages.active].description || post.form.description}}</bdi></p>
