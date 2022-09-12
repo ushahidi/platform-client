@@ -1,7 +1,7 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q'];
-function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
+PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q', '$rootScope'];
+function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, $rootScope) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
@@ -138,6 +138,12 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
 
     // Get filterState
     function getFilters() {
+        if (localStorage.getItem('ush-filterState') !== null && $rootScope.currentUser) {
+            return JSON.parse(localStorage.getItem('ush-filterState'));
+        }
+        if (localStorage.getItem('ush-filterState-2') !== null && !$rootScope.currentUser) {
+            return JSON.parse(localStorage.getItem('ush-filterState-2'));
+        }
         return filterState;
     }
 
@@ -209,6 +215,13 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q) {
     }
 
     function getQueryParams(filters) {
+        if (filters.date_before instanceof Date) {
+            // filters.date_before to end of day time for filter by date to work properly
+            const value_toEndOfDayTime = new Date(filters.date_before).setHours(23, 59, 59, 999);
+            const value_toEndOfDayTime_toString = new Date(value_toEndOfDayTime).toString();
+            filters.date_before = new Date(value_toEndOfDayTime_toString);
+        }
+
         var defaults = getDefaults();
         var query = _.omit(
             filters,
