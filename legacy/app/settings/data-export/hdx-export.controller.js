@@ -9,6 +9,7 @@ module.exports = [
     '$anchorScroll',
     'Notify',
     'DataExport',
+    'CONST',
 function (
     $scope,
     $rootScope,
@@ -19,7 +20,8 @@ function (
     LoadingProgress,
     $anchorScroll,
     Notify,
-    DataExport
+    DataExport,
+    CONST
 ) {
     $scope.selectHxlAttribute = selectHxlAttribute;
     $scope.addAnother = addAnother;
@@ -223,7 +225,7 @@ function (
                     'orderby' : 'created',
                     'order' : 'desc',
                     'order_unlocked_on_top' : 'true',
-                    'source' : ['sms','twitter','web','email']
+                    'source' : CONST.ENABLED_SOURCES
                 },
                 'send_to_hdx': sendToHDX,
                 'include_hxl': true,

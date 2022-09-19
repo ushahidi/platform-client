@@ -49,7 +49,7 @@ describe('post filters-dropdown directive', function () {
         form: [1, 2, 3, 4],
         set: [],
         user: false,
-        source: ['sms', 'twitter','web', 'email']
+        source: ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd']
     };
     beforeEach(angular.mock.inject(function (_$rootScope_, _$compile_, _ModalService_, _PostFilters_, _SavedSearchEndpoint_, _FilterTransformers_) {
         $compile = _$compile_;

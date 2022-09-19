@@ -3,7 +3,8 @@ describe('Post Filters Service', function () {
     var $rootScope,
         $scope,
         PostFilters,
-        Notify;
+        Notify,
+        sources;
 
     beforeEach(function () {
         fixture.setBase('mocked_backend/api/v3');
@@ -20,12 +21,13 @@ describe('Post Filters Service', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _Notify_, _PostFilters_, _CONST_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
 
         PostFilters = _PostFilters_;
         Notify = _Notify_;
+        sources = _CONST_.ENABLED_SOURCES;
     }));
 
     describe('test service functions', function () {
@@ -82,7 +84,7 @@ describe('Post Filters Service', function () {
                 form: ['none'],
                 set: [],
                 user: false,
-                source: ['sms', 'twitter', 'web', 'email'],
+                source: sources,
                 saved_search: '',
                 orderby: 'created',
                 order: 'desc',
@@ -111,7 +113,7 @@ describe('Post Filters Service', function () {
             var newFilters = {
                 status: ['archived', 'draft'],
                 tags: [1,3,4],
-                source: ['sms', 'twitter', 'web', 'email'],
+                source: sources,
                 form: ['testForm1', 'testForm2', 'testForm3']
             };
             PostFilters.setFilters(newFilters);

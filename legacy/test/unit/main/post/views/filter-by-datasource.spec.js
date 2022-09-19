@@ -5,7 +5,8 @@ describe('filter by datasource directive', function () {
         element,
         ConfigEndpoint,
         isAdmin,
-        $location;
+        $location,
+        sources;
 
     beforeEach(function () {
         var testApp;
@@ -15,15 +16,16 @@ describe('filter by datasource directive', function () {
         angular.mock.module('testApp');
     });
 
-    beforeEach(inject(function (_$rootScope_, $compile, _ConfigEndpoint_, _, _$location_) {
+    beforeEach(inject(function (_$rootScope_, $compile, _ConfigEndpoint_, _, _$location_, _CONST_) {
         $rootScope = _$rootScope_;
         $scope = _$rootScope_.$new();
         $location = _$location_;
         ConfigEndpoint = _ConfigEndpoint_;
+        sources = _CONST_.ENABLED_SOURCES;
         spyOn(ConfigEndpoint, 'get').and.callThrough();
 
         $scope.filters = {
-            source: ['sms', 'twitter', 'web', 'email'],
+            source: sources,
             form: [1, 2]
         };
         $scope.postStats = [
@@ -91,7 +93,7 @@ describe('filter by datasource directive', function () {
             expect($location.path()).toEqual('/views/data');
         });
         it('should toggle the filters based on if selected filter is activated or not', function () {
-            expect(isolateScope.filters.source).toEqual(['sms', 'twitter', 'web', 'email']);
+            expect(isolateScope.filters.source).toEqual(sources);
             var filter = isolateScope.filters.source[Math.floor(Math.random() * isolateScope.filters.source.length)];
             isolateScope.toggleFilters(filter);
             expect(isolateScope.filters.source).not.toContain(filter);

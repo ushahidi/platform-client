@@ -50,7 +50,7 @@ describe('filters-posts directive', function () {
         form: [1, 2, 3, 4],
         set: [],
         user: false,
-        source: ['sms', 'twitter', 'web', 'email']
+        source: ['sms', 'twitter','web', 'email', 'whatsapp', 'ussd']
     };
     beforeEach(
         angular.mock.inject(function (

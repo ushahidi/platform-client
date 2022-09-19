@@ -18,5 +18,8 @@ window.ushahidi = {
   intercomAppId: '{{ INTERCOM_APPID }}',
   appStoreId: '{{ APP_STORE_ID }}',
   ravenUrl: '{{ RAVEN_URL }}',
-  tosReleaseDate: '{{ TOS_RELEASE_DATE }}'
+  tosReleaseDate: '{{ TOS_RELEASE_DATE }}',
+{% if ENABLED_SOURCES %}}
+    sources: {{ ENABLED_SOURCES.split(',') | map('trim') | list }},
+{% endif %}
 }
