@@ -39,6 +39,24 @@ module.exports = function () {
                 };
             }
         })
+        .factory('LockInfosTransferService', function () {
+            let data = {};
+            return {
+                getPostFromPostCard: function () {
+                    data = {
+                        lock: {}
+                    };
+                    return data;
+                },
+                setToPostFromCard: function () {}
+            };
+        })
+        .factory('PostActionsTransferService', function() {
+            return {
+                getPostActionsAccessibility: function () {},
+                setPostActionsAccessibility: function () {}
+            };
+        })
         .constant('CONST', {
             BACKEND_URL: backendUrl,
             API_URL: backendUrl + '/api/v2',

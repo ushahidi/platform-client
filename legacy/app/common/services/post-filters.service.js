@@ -1,7 +1,7 @@
 module.exports = PostFiltersService;
 
-PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q', 'CONST'];
-function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, CONST) {
+PostFiltersService.$inject = ['_', 'FormEndpoint', 'TagEndpoint', '$q', '$rootScope', 'CONST'];
+function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, $rootScope, CONST) {
     // Create initial filter state
     var filterState = window.filterState = getDefaults();
     var forms = [];
@@ -138,6 +138,12 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, CONST) {
 
     // Get filterState
     function getFilters() {
+        if (localStorage.getItem('ush-filterState') !== null && $rootScope.currentUser) {
+            return JSON.parse(localStorage.getItem('ush-filterState'));
+        }
+        if (localStorage.getItem('ush-filterState-2') !== null && !$rootScope.currentUser) {
+            return JSON.parse(localStorage.getItem('ush-filterState-2'));
+        }
         return filterState;
     }
 
@@ -209,6 +215,13 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, CONST) {
     }
 
     function getQueryParams(filters) {
+        if (filters.date_before instanceof Date) {
+            // filters.date_before to end of day time for filter by date to work properly
+            const value_toEndOfDayTime = new Date(filters.date_before).setHours(23, 59, 59, 999);
+            const value_toEndOfDayTime_toString = new Date(value_toEndOfDayTime).toString();
+            filters.date_before = new Date(value_toEndOfDayTime_toString);
+        }
+
         var defaults = getDefaults();
         var query = _.omit(
             filters,
@@ -241,6 +254,9 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, CONST) {
             }
         );
 
+        if (filters.status.length === 0) {
+            query.status = defaults.status;
+        }
         if (filters.center_point) {
             query.center_point = filters.center_point;
             query.within_km = filters.within_km || 10;

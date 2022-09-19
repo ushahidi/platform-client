@@ -217,6 +217,30 @@ angular
     .factory('FocusTrap', function () {
         return require('focus-trap');
     })
+    .factory('LockInfosTransferService', function() {
+        let data = {};
+
+        return {
+             getPostFromPostCard: function () {
+                return data;
+            },
+            setToPostFromCard: function (post) {
+                data = post;
+            }
+        };
+    })
+    .factory('PostActionsTransferService', function() {
+        let actions = {};
+
+        return {
+            getPostActionsAccessibility: function () {
+                return actions;
+            },
+            setPostActionsAccessibility: function (allActions) {
+                actions = allActions;
+            }
+        };
+    })
     .run([
         '$rootScope',
         'LoadingProgress',

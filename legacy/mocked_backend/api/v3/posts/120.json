@@ -25,5 +25,13 @@
             "created": "2014-09-29T21:10:16+00:00",
             "completed_stages": [],
             "updated": "2015-11-28T17:48:36+00:00",
-            "locale": "en_us"
+            "locale": "en_us",
+            "allowed_privileges": [
+                "read",
+                "create",
+                "update",
+                "delete",
+                "search",
+                "change_status"
+            ]
 }
