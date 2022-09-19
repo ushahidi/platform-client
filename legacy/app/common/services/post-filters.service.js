@@ -254,9 +254,6 @@ function PostFiltersService(_, FormEndpoint, TagEndpoint, $q, $rootScope, CONST)
             }
         );
 
-        if (filters.status.length === 0) {
-            query.status = defaults.status;
-        }
         if (filters.center_point) {
             query.center_point = filters.center_point;
             query.within_km = filters.within_km || 10;
