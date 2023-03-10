@@ -74,7 +74,7 @@
             </li>
 
             <li ng-show="currentUser">
-                <button ng-click="viewAccountSettings()" data-cy="mb-account-settings-button"
+                <button ng-click="viewAccountSettings()" data-cy="mb-account-settings-button">
                     <img class="avatar" ng-src="https://www.gravatar.com/avatar/{{ currentUser.gravatar || '00000000000000000000000000000000' }}?d=retro" alt="account_settings"/>
                     <span class="label" translate="nav.account_settings">Account Settings</span>
                 </button>
